@@ -14,7 +14,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author andydonoso
+ * @author Andres Donoso
  */
 @Stateless
 public class CategoriaPersistence {

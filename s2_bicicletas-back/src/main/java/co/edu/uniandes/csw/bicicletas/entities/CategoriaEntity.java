@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 
 /**
  *
- * @author andydonoso
+ * @author Andres Donoso
  */
 @Entity
 public class CategoriaEntity extends BaseEntity implements Serializable {

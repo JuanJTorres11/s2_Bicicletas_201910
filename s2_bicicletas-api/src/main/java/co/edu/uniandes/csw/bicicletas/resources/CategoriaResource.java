@@ -19,7 +19,7 @@ import javax.ws.rs.Produces;
 
 /**
  *
- * @author andydonoso
+ * @author Andres Donoso
  */
 
 @Path("categorias")
@@ -41,6 +41,7 @@ public class CategoriaResource {
     }
     
     @GET
+    @Path()
     public CategoriaDTO darCategoria(String nombre) {
         return null;
     }

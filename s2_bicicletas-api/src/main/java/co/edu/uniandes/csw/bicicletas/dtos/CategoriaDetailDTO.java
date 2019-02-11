@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author andydonoso
+ * @author Andres Donoso
  */
 public class CategoriaDetailDTO extends CategoriaDTO {
     

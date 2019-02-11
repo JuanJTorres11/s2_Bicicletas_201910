@@ -22,7 +22,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author andydonoso
+ * @author Andres Donoso
  */
 @RunWith(Arquillian.class)
 public class CategoriaPersistenceTest {

@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author andydonoso
+ * @author Andres Donoso
  */
 public class CategoriaDTO implements Serializable {
     
