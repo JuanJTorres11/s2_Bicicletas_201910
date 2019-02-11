@@ -15,6 +15,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 /**
@@ -41,18 +42,20 @@ public class CategoriaResource {
     }
     
     @GET
-    @Path()
-    public CategoriaDTO darCategoria(String nombre) {
+    @Path("{nombre: [a-zA-Z][a-zA-Z]*}")
+    public CategoriaDTO darCategoria(@PathParam("nombre") String nombre) {
         return null;
     }
     
     @DELETE
-    public void eliminarCategoria(String nombre) {
+    @Path("{nombre: [a-zA-Z][a-zA-Z]*}")
+    public void eliminarCategoria(@PathParam("nombre") String nombre) {
         
     }
     
     @PUT
-    public void modificarCategoria(String nombreViejo, String nombreNuevo) {
-        
+    @Path("{nombre: [a-zA-Z][a-zA-Z]*}")
+    public CategoriaDTO modificarCategoria(@PathParam("nombre") String nombre, CategoriaDTO categoria) {
+        return null;
     }
 }
