@@ -5,11 +5,13 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Andrea
  */
-public class ResenaDTO {
+public class ResenaDTO implements Serializable {
     
     private long id;
     

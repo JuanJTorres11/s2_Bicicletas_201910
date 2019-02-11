@@ -5,13 +5,14 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Andrea
  */
-public class BicicletaDetailDTO {
+public class BicicletaDetailDTO implements Serializable{
     
     private List<ResenaDTO> resenas;
     
