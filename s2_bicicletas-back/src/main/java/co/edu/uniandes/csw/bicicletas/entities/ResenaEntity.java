@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.bicicletas.resources;
+package co.edu.uniandes.csw.bicicletas.entities;
 
 /**
  *
  * @author Andrea
  */
-
-@Path("bicicletas")
-@Produces("application/json")
-@Consumes("application/json")
-@RequestScoped
-
-public class BicicletaResource {
+public class ResenaEntity {
     
 }
