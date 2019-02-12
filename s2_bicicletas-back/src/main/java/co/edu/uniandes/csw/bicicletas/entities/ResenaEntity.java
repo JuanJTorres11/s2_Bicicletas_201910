@@ -11,4 +11,9 @@ package co.edu.uniandes.csw.bicicletas.entities;
  */
 public class ResenaEntity {
     
+    private String titulo;
+    
+    private String descripcion;
+    
+    
 }
