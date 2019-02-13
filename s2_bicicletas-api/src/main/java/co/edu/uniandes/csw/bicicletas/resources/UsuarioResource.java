@@ -5,7 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.resources;
 
-import co.edu.uniandes.csw.bicicletas.dtos.UsuarioDTO;
+import co.edu.uniandes.csw.bicicletas.dtos.UsuarioDetailDTO;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -14,39 +14,44 @@ import javax.ws.rs.*;
 /**
  * @author Juan José Torres
  */
-@Path("bicicletas")
+@Path("usuarios")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
-public class UsuarioResource {
-
+public class UsuarioResource
+{
     private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
 
     @POST
-    public UsuarioDTO crearUsuario(UsuarioDTO user) {
+    public UsuarioDetailDTO crearUsuario(UsuarioDetailDTO user)
+    {
         return user;
     }
 
     @GET
-    public List<UsuarioDTO> darUsuarios() {
+    public List<UsuarioDetailDTO> darUsuarios()
+    {
         return null;
     }
 
     @GET
     @Path("{id: \\d+}")
-    public UsuarioDTO darUsuarioId(@PathParam("id") long id) {
+    public UsuarioDetailDTO darUsuarioId(@PathParam("id") long id)
+    {
         return null;
     }
 
     @PUT
     @Path("{id: \\d+}")
-    public UsuarioDTO actualizarUsuario(@PathParam("id") long id, UsuarioDTO user) {
+    public UsuarioDetailDTO actualizarUsuario(@PathParam("id") long id, UsuarioDetailDTO user)
+    {
         return user;
     }
 
     @DELETE
     @Path("{id: \\d+}")
-    public UsuarioDTO eliminarUsuario(@PathParam("id") long id) {
+    public UsuarioDetailDTO eliminarUsuario(@PathParam("id") long id)
+    {
         return null;
     }
 }

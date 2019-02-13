@@ -17,8 +17,6 @@ public class UsuarioDTO implements Serializable {
 
     private String nombre;
 
-    private String cedula;
-
     private String login;
 
     private String password;
@@ -38,20 +36,6 @@ public class UsuarioDTO implements Serializable {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    /**
-     * @return the cedula
-     */
-    public String getCedula() {
-        return cedula;
-    }
-
-    /**
-     * @param cedula the cedula to set
-     */
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
     }
 
     /**
