@@ -2,25 +2,28 @@
 * To change this license header, choose License Headers in Project Properties.
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
-*/
+ */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
 import java.io.Serializable;
+
 /**
  *
  * @author Juan José Torres
  */
-public class UsuarioDTO implements Serializable
-{
+public class UsuarioDTO implements Serializable {
+
+    private long id;
+
     private String nombre;
-    
+
     private String cedula;
-    
+
     private String login;
-    
+
     private String password;
-    
-    public UsuarioDTO () {
+
+    public UsuarioDTO() {
     }
 
     /**
@@ -77,5 +80,19 @@ public class UsuarioDTO implements Serializable
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the id
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(long id) {
+        this.id = id;
     }
 }

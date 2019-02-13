@@ -14,19 +14,19 @@ import javax.persistence.Entity;
  * @author Juan José Torres
  */
 @Entity
-public class UsuarioEntity extends BaseEntity implements Serializable
-{
+public class UsuarioEntity extends BaseEntity implements Serializable {
+
     private static final Logger LOGGER = Logger.getLogger(UsuarioEntity.class.getName());
-    
+
     private String nombre;
-    
+
     private String cedula;
-    
+
     private String login;
-    
+
     private String password;
 
-public UsuarioEntity  () {
-}
+    public UsuarioEntity() {
+    }
 
 }
