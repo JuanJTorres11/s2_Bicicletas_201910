@@ -13,6 +13,8 @@ import java.util.List;
 public class UsuarioDetailDTO extends UsuarioDTO
 {
 
+    private String prueba = "prueba";
+    
     private List<MedioPagoDTO> medioPagos;
 
     public UsuarioDetailDTO() {
