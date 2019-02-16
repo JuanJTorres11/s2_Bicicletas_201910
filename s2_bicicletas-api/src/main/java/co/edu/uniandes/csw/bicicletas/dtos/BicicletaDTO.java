@@ -27,7 +27,7 @@ public class BicicletaDTO implements Serializable {
     
     //private MarcaDTO marca;
     
-    //private CategoriaDTO categoria;
+    private CategoriaDTO categoria;
     
     
      /**
