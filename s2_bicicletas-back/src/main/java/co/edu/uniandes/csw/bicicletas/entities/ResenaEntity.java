@@ -6,8 +6,11 @@
 package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -22,6 +25,10 @@ public class ResenaEntity extends BaseEntity implements Serializable  {
     private String descripcion;
     
     private int calificacion;
+    
+    @PodamExclude
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private BicicletaEntity bicicleta;
 
     public ResenaEntity(){
       
@@ -66,6 +73,20 @@ public class ResenaEntity extends BaseEntity implements Serializable  {
      */
     public void setCalificacion(int calificacion) {
         this.calificacion = calificacion;
+    }
+
+    /**
+     * @return the bicicleta
+     */
+    public BicicletaEntity getBicicleta() {
+        return bicicleta;
+    }
+
+    /**
+     * @param bicicleta the bicicleta to set
+     */
+    public void setBicicleta(BicicletaEntity bicicleta) {
+        this.bicicleta = bicicleta;
     }
     
     
