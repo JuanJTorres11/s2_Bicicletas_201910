@@ -46,4 +46,24 @@ public class MarcaPersistenceTest {
         
         Assert.assertNotNull(result);
     }
+    
+    @Test
+    public void getAllTest() {
+               
+}   
+    @Test
+    public void getByNameTest(){
+        
+    }
+    
+    @Test
+    public void deleteTest(){
+        
+    }
+    
+    @Test
+    public void updateTest(){
+        
+    }
+    
 }

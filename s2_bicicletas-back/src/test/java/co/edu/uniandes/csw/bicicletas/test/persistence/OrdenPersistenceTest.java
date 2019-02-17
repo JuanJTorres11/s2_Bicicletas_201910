@@ -48,4 +48,11 @@ public class OrdenPersistenceTest {
         Assert.assertNotNull(result);
     }
     
+    public void findAllTest(){
+        
+    }
+    
+    public void findTest(){
+        
+    }
 }
