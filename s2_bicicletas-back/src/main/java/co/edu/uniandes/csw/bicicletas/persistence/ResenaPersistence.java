@@ -6,9 +6,9 @@
 package co.edu.uniandes.csw.bicicletas.persistence;
 
 import co.edu.uniandes.csw.bicicletas.entities.ResenaEntity;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,6 +20,8 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class ResenaPersistence {
+
+    private static final Logger LOGGER = Logger.getLogger(ResenaPersistence.class.getName());
 
     @PersistenceContext(unitName = "bicicletasPU")
     protected EntityManager em;
@@ -41,14 +43,14 @@ public class ResenaPersistence {
         TypedQuery query = em.createQuery("select u from ResenaEntity u", ResenaEntity.class);
         return query.getResultList();
     }
-    
+
     public ResenaEntity update(ResenaEntity resenaEntity) {
         LOGGER.log(Level.INFO, "Actualizando resena con id = {0}", resenaEntity.getId());
-         LOGGER.log(Level.INFO, "Saliendo de actualizar la resena con id = {0}", resenaEntity.getId());
+        LOGGER.log(Level.INFO, "Saliendo de actualizar la resena con id = {0}", resenaEntity.getId());
         return em.merge(resenaEntity);
     }
-    
-     public void delete(Long resenaId) {
+
+    public void delete(Long resenaId) {
         LOGGER.log(Level.INFO, "Borrando resena con id = {0}", resenaId);
         ResenaEntity entity = em.find(ResenaEntity.class, resenaId);
         em.remove(entity);
