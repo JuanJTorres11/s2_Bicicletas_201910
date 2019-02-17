@@ -31,8 +31,8 @@ public class BicicletaEntity extends BaseEntity implements Serializable{
     
     //private MarcaEntity marca;
     
-    @ManyToOne
-    private CategoriaEntity categoria;
+    //@ManyToOne
+    //private CategoriaEntity categoria;
 
     public BicicletaEntity (){
         
@@ -122,19 +122,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable{
         this.album = album;
     }
 
-    /**
-     * @return the categoria
-     */
-    public CategoriaEntity getCategoria() {
-        return categoria;
-    }
-
-    /**
-     * @param categoria the categoria to set
-     */
-    public void setCategoria(CategoriaEntity categoria) {
-        this.categoria = categoria;
-    }
+   
   
     
 }
