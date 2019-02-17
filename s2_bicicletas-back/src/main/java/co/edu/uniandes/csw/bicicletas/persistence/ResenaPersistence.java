@@ -38,7 +38,7 @@ public class ResenaPersistence {
 
     public List<ResenaEntity> findAll() {
         LOGGER.log(Level.INFO, "Consultando todas las resenas");
-        TypedQuery query = em.createQuery("select u from EditorialEntity u", ResenaEntity.class);
+        TypedQuery query = em.createQuery("select u from ResenaEntity u", ResenaEntity.class);
         return query.getResultList();
     }
     
