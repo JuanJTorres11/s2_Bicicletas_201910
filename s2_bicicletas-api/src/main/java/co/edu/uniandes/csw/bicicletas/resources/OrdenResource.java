@@ -5,13 +5,11 @@
  */
 package co.edu.uniandes.csw.bicicletas.resources;
 
-import co.edu.uniandes.csw.bicicletas.dtos.MarcaDTO;
-import co.edu.uniandes.csw.bicicletas.dtos.MarcaDetailDTO;
+import co.edu.uniandes.csw.bicicletas.dtos.OrdenDTO;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -24,38 +22,28 @@ import javax.ws.rs.Produces;
  * @author Mateo
  */
 
-@Path("marcas")
+@Path("ordenes")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
-public class MarcaResource {
-    private static final Logger LOGGER = Logger.getLogger(MarcaResource.class.getName());
+public class OrdenResource {
+    private static final Logger LOGGER = Logger.getLogger(OrdenResource.class.getName());
     
     @POST
-    public MarcaDTO createMarca(MarcaDTO marca){
-        return marca;
-    }
-    
-    @GET
-    public List<MarcaDetailDTO> getMarcas(){
-        return null;
+    public OrdenDTO createOrden(OrdenDTO orden){
+        return orden;
     }
     
     @GET
     @Path("{id: \\d+}")
-    public MarcaDTO getMarca(@PathParam("id") long id){
+    public OrdenDTO getOrden(@PathParam("id") long id){
         return null;
     }
     
-    @PUT
-    @Path("{id: \\d+}")
-    public MarcaDTO putMarca(@PathParam("id") long id){
+    @GET
+    public List<OrdenDTO> getOrdenes(){
         return null;
     }
     
-    @DELETE
-    @Path("{id: \\d+}")
-    public String deleteMarca(@PathParam("id") long id){
-        return null;
-    }
+    
 }
