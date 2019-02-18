@@ -3,38 +3,52 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.bicicletas.dtos;
+package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import org.eclipse.persistence.jpa.config.Cascade;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
  * @author Andrea
  */
-public class BicicletaDTO implements Serializable {
-    
+@Entity
+public class BicicletaEntity extends BaseEntity implements Serializable {
+
     private String descripcion;
-    
+
     private String referencia;
-    
+
     private double precio;
-    
+
     private boolean usada;
-    
+
     private int stock;
-    
+
     private String[] album;
+
+    //@ManyToOne 
+    //private MarcaEntity marca;
     
-    //private MarcaDTO marca;
-    
-    private CategoriaDTO categoria;
-    
-    
-     /**
-     * Constructor por defecto
+   // @ManyToOne
+    //private CategoriaEntity categoria;
+
+    @PodamExclude
+    @OneToMany(mappedBy = "bicicleta", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<ResenaEntity> resenas = new ArrayList<ResenaEntity>();
+
+    /**
+     * Constructor vacio
      */
-    public BicicletaDTO(){
-        
+    public BicicletaEntity() {
+
     }
 
     /**
@@ -120,6 +134,33 @@ public class BicicletaDTO implements Serializable {
     public void setAlbum(String[] album) {
         this.album = album;
     }
-       
+
+    /**
+     * @return the resenas
+     */
+    public List<ResenaEntity> getResenas() {
+        return resenas;
+    }
+
+    /**
+     * @param resenas the resenas to set
+     */
+    public void setResenas(List<ResenaEntity> resenas) {
+        this.resenas = resenas;
+    }
+
+    /**
+     * @return the categoria
+   
+    public CategoriaEntity getCategoria() {
+        return categoria;
+    }
+  */
+    /**
+     * @param categoria the categoria to set
     
+    public void setCategoria(CategoriaEntity categoria) {
+        this.categoria = categoria;
+    }
+ */
 }
