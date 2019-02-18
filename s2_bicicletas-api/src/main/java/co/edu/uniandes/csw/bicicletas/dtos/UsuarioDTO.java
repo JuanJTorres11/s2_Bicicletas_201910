@@ -11,9 +11,9 @@ import java.io.Serializable;
  *
  * @author Juan José Torres
  */
-public class UsuarioDTO implements Serializable {
-
-    private long id;
+public class UsuarioDTO implements Serializable
+{
+    private Long id;
 
     private String nombre;
 
@@ -69,14 +69,14 @@ public class UsuarioDTO implements Serializable {
     /**
      * @return the id
      */
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

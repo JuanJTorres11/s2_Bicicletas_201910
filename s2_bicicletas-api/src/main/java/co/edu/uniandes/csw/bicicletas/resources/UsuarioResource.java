@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.resources;
 
+import co.edu.uniandes.csw.bicicletas.dtos.UsuarioDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.UsuarioDetailDTO;
 import java.util.List;
 import java.util.logging.Logger;
@@ -23,7 +24,7 @@ public class UsuarioResource
     private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
 
     @POST
-    public UsuarioDetailDTO crearUsuario(UsuarioDetailDTO user)
+    public UsuarioDTO crearUsuario(UsuarioDTO user)
     {
         return user;
     }

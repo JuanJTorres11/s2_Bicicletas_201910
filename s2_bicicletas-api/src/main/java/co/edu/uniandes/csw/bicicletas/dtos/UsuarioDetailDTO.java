@@ -11,13 +11,12 @@ import java.util.List;
  * @author Juan José Torres
  */
 public class UsuarioDetailDTO extends UsuarioDTO
-{
-
-    private String prueba = "prueba";
-    
+{    
     private List<MedioPagoDTO> medioPagos;
 
-    public UsuarioDetailDTO() {
+    public UsuarioDetailDTO()
+    {
+        super();
     }
 
     /**
