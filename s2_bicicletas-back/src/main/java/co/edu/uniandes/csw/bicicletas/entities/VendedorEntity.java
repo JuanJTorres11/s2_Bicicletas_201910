@@ -20,49 +20,45 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class VendedorEntity extends UsuarioEntity implements Serializable
+public class VendedorEntity extends UsuarioEntity
 {
 
     private static final Logger LOGGER = Logger.getLogger(VendedorEntity.class.getName());
 
     private String cedula;
-    
-    @PodamExclude
-    @OneToMany (mappedBy = "vendedor")
-    private List<VentaEntity> ventas;
 
-    public VendedorEntity() {
+    // @PodamExclude
+    //@OneToMany (mappedBy = "vendedor")
+    //private List<VentaEntity> ventas;
+    public VendedorEntity()
+    {
 
     }
 
     /**
      * @return the cedula
      */
-    public String getCedula() {
+    public String getCedula()
+    {
         return cedula;
     }
 
     /**
      * @param cedula the cedula to set
      */
-    public void setCedula(String cedula) {
+    public void setCedula(String cedula)
+    {
         this.cedula = cedula;
     }
 
     /**
      * @return the ventas
+     *
+     * public List<VentaEntity> getVentas() { return ventas; }
      */
-    public List<VentaEntity> getVentas()
-    {
-        return ventas;
-    }
-
     /**
      * @param ventas the ventas to set
+     *
+     * public void setVentas(List<VentaEntity> ventas) { this.ventas = ventas; }
      */
-    public void setVentas(List<VentaEntity> ventas)
-    {
-        this.ventas = ventas;
-    }
-
 }

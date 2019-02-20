@@ -7,7 +7,7 @@ package co.edu.uniandes.csw.bicicletas.ejb;
 
 import co.edu.uniandes.csw.bicicletas.entities.UsuarioEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.bicicletas.persistence.UsuarioPersistance;
+import co.edu.uniandes.csw.bicicletas.persistence.UsuarioPersistence;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -23,7 +23,7 @@ public class UsuarioLogic
     private static final Logger LOGGER = Logger.getLogger(UsuarioLogic.class.getName());
     
     @Inject
-    private UsuarioPersistance persistencia;
+    private UsuarioPersistence persistencia;
     
     UsuarioEntity createUsuario (UsuarioEntity user) throws BusinessLogicException
     {
