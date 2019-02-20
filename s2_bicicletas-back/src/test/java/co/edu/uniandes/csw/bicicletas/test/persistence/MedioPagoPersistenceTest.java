@@ -5,8 +5,8 @@
  */
 package co.edu.uniandes.csw.bicicletas.test.persistence;
 
-import co.edu.uniandes.csw.bicicletas.entities.CategoriaEntity;
-import co.edu.uniandes.csw.bicicletas.persistence.CategoriaPersistence;
+import co.edu.uniandes.csw.bicicletas.entities.MedioPagoEntity;
+import co.edu.uniandes.csw.bicicletas.persistence.MedioPagoPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -29,23 +29,17 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Andres Donoso
  */
 @RunWith(Arquillian.class)
-public class CategoriaPersistenceTest {
-    @Inject
-    private CategoriaPersistence cp;
-    
-    @PersistenceContext
-    private EntityManager em;
-    
-    @Inject
-    UserTransaction utx;
-    
-    private List<CategoriaEntity> data = new ArrayList<>();
+public class MedioPagoPersistenceTest {
+    @Inject private MedioPagoPersistence mpp;
+    @PersistenceContext private EntityManager em;
+    @Inject UserTransaction utx;
+    private List<MedioPagoEntity> data = new ArrayList<>();
     
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(CategoriaEntity.class.getPackage())
-                .addPackage(CategoriaPersistence.class.getPackage())
+                .addPackage(MedioPagoEntity.class.getPackage())
+                .addPackage(MedioPagoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
@@ -77,7 +71,7 @@ public class CategoriaPersistenceTest {
      *
      */
     private void clearData() {
-        em.createQuery("delete from CategoriaEntity").executeUpdate();
+        em.createQuery("delete from MedioPagoEntity").executeUpdate();
     }
 
     /**
@@ -90,7 +84,7 @@ public class CategoriaPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
 
-            CategoriaEntity entity = factory.manufacturePojo(CategoriaEntity.class);
+            MedioPagoEntity entity = factory.manufacturePojo(MedioPagoEntity.class);
 
             em.persist(entity);
 
@@ -99,42 +93,44 @@ public class CategoriaPersistenceTest {
     }
     
     @Test
-    public void createCategoriaTest() {
+    public void createMedioPagoTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        CategoriaEntity newEntity = factory.manufacturePojo(CategoriaEntity.class);
-        CategoriaEntity resultado = cp.create(newEntity);
+        MedioPagoEntity newEntity = factory.manufacturePojo(MedioPagoEntity.class);
+        MedioPagoEntity resultado = mpp.create(newEntity);
         
         Assert.assertNotNull(resultado);
-        CategoriaEntity entity = em.find(CategoriaEntity.class, resultado.getId());
+        MedioPagoEntity entity = em.find(MedioPagoEntity.class, resultado.getId());
 
-        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        Assert.assertEquals(newEntity.getNumeroTarjeta(), entity.getNumeroTarjeta());
     }
     
     @Test
-    public void deleteCategoriaTest() {
-        CategoriaEntity categoria = data.get(0);
-        cp.delete(categoria.getId());
-        CategoriaEntity borrado = em.find(CategoriaEntity.class, categoria.getId());
+    public void deleteMedioPagoTest() {
+        MedioPagoEntity medioPago = data.get(0);
+        mpp.delete(medioPago.getId());
+        MedioPagoEntity borrado = em.find(MedioPagoEntity.class, medioPago.getId());
         Assert.assertNull(borrado);
     }
     
     @Test
-    public void findByNameTest() {
-        CategoriaEntity categoria = data.get(0);
-        CategoriaEntity newEntity = cp.findByName(categoria.getNombre());
+    public void findByNumberTest() {
+        MedioPagoEntity medioPago = data.get(0);
+        MedioPagoEntity newEntity = mpp.findByNumber(medioPago.getNumeroTarjeta());
         
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(newEntity.getNombre(), categoria.getNombre());
+        Assert.assertEquals(newEntity.getNumeroTarjeta(), medioPago.getNumeroTarjeta());
     }
     
     @Test
     public void updateTest() {
-        CategoriaEntity categoria = data.get(0);
-        String nombre = "nombre1";
-        categoria.setNombre(nombre);
+        MedioPagoEntity medioPago = data.get(0);
+        int mes = (int) (Math.random() * 13);
+        int anio = (int) (Math.random() * 100);
+        String fecha = mes + "/" + anio;
+        medioPago.setFechaVencimiento(fecha);
         
-        cp.update(categoria);
+        mpp.update(medioPago);
         
-        Assert.assertEquals(nombre, cp.find(data.get(0).getId()).getNombre());
+        Assert.assertEquals(fecha, mpp.find(data.get(0).getId()).getFechaVencimiento());
     }
 }
