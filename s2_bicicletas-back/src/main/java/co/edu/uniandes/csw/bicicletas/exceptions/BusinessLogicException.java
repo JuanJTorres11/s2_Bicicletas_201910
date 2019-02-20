@@ -61,7 +61,7 @@ public class BusinessLogicException extends Exception {
      *
      * @param message mensaje de la excepción
      * @param cause causa de la excepción. Usada para generar la traza.
-     */
+     */ 
     public BusinessLogicException(String message, Throwable cause) {
         super(message, cause);
     }
