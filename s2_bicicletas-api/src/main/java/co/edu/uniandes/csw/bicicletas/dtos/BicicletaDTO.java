@@ -25,7 +25,7 @@ public class BicicletaDTO implements Serializable {
     
     private String[] album;
     
-    //private MarcaDTO marca;
+    private MarcaDTO marca;
     
     private CategoriaDTO categoria;
     
