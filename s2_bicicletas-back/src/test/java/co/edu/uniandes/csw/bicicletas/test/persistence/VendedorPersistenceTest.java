@@ -126,7 +126,7 @@ public class VendedorPersistenceTest
      * 2. Prueba que se haya creado algo en la base de datos. <br>
      * 3. Prueba que lo que se haya creado sea lo que se quería.
      */
-    //TODO @Test
+    @Test
     public void createTest()
     {
         PodamFactory factory = new PodamFactoryImpl();
@@ -184,7 +184,7 @@ public class VendedorPersistenceTest
      * 1. Prueba que los demás parametros del objeto hayan sido cambiados en la
      * base de datos.
      */
-    //TODO @Test
+    @Test
     public void updateTest()
     {
         VendedorEntity local = data.get(0);
@@ -201,7 +201,7 @@ public class VendedorPersistenceTest
      * 1. Prueba que no se encuentre ningún vendedor con el id en la bd después
      * de borrarlo.
      */
-    // TODO @Test
+    @Test
     public void deleteTest()
     {
         VendedorEntity local = data.get(0);

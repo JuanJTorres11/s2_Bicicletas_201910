@@ -5,12 +5,9 @@
  */
 package co.edu.uniandes.csw.bicicletas.entities;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -19,7 +16,6 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author Juan José Torres
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
 public class VendedorEntity extends UsuarioEntity
 {
 

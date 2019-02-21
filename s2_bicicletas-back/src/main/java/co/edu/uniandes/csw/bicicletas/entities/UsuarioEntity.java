@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -16,7 +17,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  *
  * @author Juan José Torres
  */
-@Entity
+@MappedSuperclass
 public class UsuarioEntity extends BaseEntity implements Serializable
 {
 
