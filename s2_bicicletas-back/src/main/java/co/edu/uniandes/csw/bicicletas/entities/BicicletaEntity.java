@@ -34,11 +34,11 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
 
     private String[] album;
 
-    //@ManyToOne 
-    //private MarcaEntity marca;
+    @ManyToOne 
+    private MarcaEntity marca;
     
-   // @ManyToOne
-    //private CategoriaEntity categoria;
+    @ManyToOne
+    private CategoriaEntity categoria;
 
     @PodamExclude
     @OneToMany(mappedBy = "bicicleta", cascade = CascadeType.PERSIST, orphanRemoval = true)
