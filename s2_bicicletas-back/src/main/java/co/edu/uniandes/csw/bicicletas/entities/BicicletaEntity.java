@@ -34,11 +34,11 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
 
     private String[] album;
 
-    //@ManyToOne 
-    //private MarcaEntity marca;
+    @ManyToOne 
+    private MarcaEntity marca;
     
-   // @ManyToOne
-    //private CategoriaEntity categoria;
+    @ManyToOne
+    private CategoriaEntity categoria;
 
     @PodamExclude
     @OneToMany(mappedBy = "bicicleta", cascade = CascadeType.PERSIST, orphanRemoval = true)
@@ -150,17 +150,31 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     * @return the marca
+     */
+    public MarcaEntity getMarca() {
+        return marca;
+    }
+
+    /**
+     * @param marca the marca to set
+     */
+    public void setMarca(MarcaEntity marca) {
+        this.marca = marca;
+    }
+
+    /**
      * @return the categoria
-   
+     */
     public CategoriaEntity getCategoria() {
         return categoria;
     }
-  */
+
     /**
      * @param categoria the categoria to set
-    
+     */
     public void setCategoria(CategoriaEntity categoria) {
         this.categoria = categoria;
     }
- */
+   
 }

@@ -25,7 +25,7 @@ public class BicicletaDTO implements Serializable {
     
     private String[] album;
     
-    //private MarcaDTO marca;
+    private MarcaDTO marca;
     
     private CategoriaDTO categoria;
     
@@ -119,6 +119,34 @@ public class BicicletaDTO implements Serializable {
      */
     public void setAlbum(String[] album) {
         this.album = album;
+    }
+
+    /**
+     * @return the marca
+     */
+    public MarcaDTO getMarca() {
+        return marca;
+    }
+
+    /**
+     * @param marca the marca to set
+     */
+    public void setMarca(MarcaDTO marca) {
+        this.marca = marca;
+    }
+
+    /**
+     * @return the categoria
+     */
+    public CategoriaDTO getCategoria() {
+        return categoria;
+    }
+
+    /**
+     * @param categoria the categoria to set
+     */
+    public void setCategoria(CategoriaDTO categoria) {
+        this.categoria = categoria;
     }
        
     

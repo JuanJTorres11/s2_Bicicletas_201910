@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.bicicletas.test.persistence;
+package co.edu.uniandes.csw.bicicletas.test.logic;
 
+import co.edu.uniandes.csw.bicicletas.ejb.OrdenLogic;
 import co.edu.uniandes.csw.bicicletas.entities.OrdenEntity;
+import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.OrdenPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,21 +31,21 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author Mateo
  */
 @RunWith(Arquillian.class)
-public class OrdenPersistenceTest {
+public class OrdenLogicTest {
+     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
-    private OrdenPersistence ordenPersistence;
-
+    private OrdenLogic ordenLogic;
 
     @PersistenceContext
     private EntityManager em;
 
     @Inject
-    UserTransaction utx;
+    private UserTransaction utx;
 
     private List<OrdenEntity> data = new ArrayList<OrdenEntity>();
 
-    /**
+/**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
      * archivo beans.xml para resolver la inyección de dependencias.
@@ -52,20 +54,19 @@ public class OrdenPersistenceTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(OrdenEntity.class.getPackage())
+                .addPackage(OrdenLogic.class.getPackage())
                 .addPackage(OrdenPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
-
-     /**
+/**
      * Configuración inicial de la prueba.
      */
     @Before
     public void configTest() {
         try {
             utx.begin();
-            em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
@@ -78,72 +79,50 @@ public class OrdenPersistenceTest {
             }
         }
     }
+
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
         em.createQuery("delete from OrdenEntity").executeUpdate();
-    }
-
+}
+    
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
      */
     private void insertData() {
-        PodamFactory factory = new PodamFactoryImpl();
-
         for (int i = 0; i < 3; i++) {
             OrdenEntity entity = factory.manufacturePojo(OrdenEntity.class);
-
             em.persist(entity);
             data.add(entity);
         }
-    }
-
-   /**
-     * Prueba para crear un Orden.
+}
+    
+     /**
+     * Prueba para crear una Orden.
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test
-    public void createOrdenTest() {
-        PodamFactory factory = new PodamFactoryImpl();
+    public void createOrdenTest() throws BusinessLogicException {
         OrdenEntity newEntity = factory.manufacturePojo(OrdenEntity.class);
-
-        OrdenEntity result = ordenPersistence.create(newEntity);
-
+        OrdenEntity result = ordenLogic.createOrden(newEntity);
         Assert.assertNotNull(result);
-
         OrdenEntity entity = em.find(OrdenEntity.class, result.getId());
-
         Assert.assertEquals(newEntity.getId(), entity.getId());
     }
 
     /**
-     * Prueba para consultar la lista de premios.
+     * Prueba para crear una Orden con un costo negativo
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
-    @Test
-    public void getOrdensTest() {
-        List<OrdenEntity> list = ordenPersistence.findAll();
-        Assert.assertEquals(data.size(), list.size());
-        for (OrdenEntity ent : list) {
-            boolean found = false;
-            for (OrdenEntity entity : data) {
-                if (ent.getId().equals(entity.getId())) {
-                    found = true;
-                }
-            }
-            Assert.assertTrue(found);
-        }
-    }
-
-
-    /**
-     * Prueba para consultar un Orden.
-     */
-    @Test
-    public void getOrdenTest() {
-        OrdenEntity entity = data.get(0);
-        OrdenEntity newEntity = ordenPersistence.find(entity.getId());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getId(), newEntity.getId());
-    }
+    @Test(expected = BusinessLogicException.class)
+    public void createOrdenConCostoNegativoeTest() throws BusinessLogicException {
+        OrdenEntity newEntity = factory.manufacturePojo(OrdenEntity.class);
+        newEntity.setCostoTotal(-10.0);
+        ordenLogic.createOrden(newEntity);
+}
+    
 }
