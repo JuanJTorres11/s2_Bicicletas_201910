@@ -16,10 +16,7 @@ import javax.persistence.Entity;
 @Entity
 public class OrdenEntity extends BaseEntity implements Serializable {
     
-     /**
-     * Identificador de la orden
-     */
-    private Integer identificador;
+    
     
     /**
      * Fecha de realizacion de la orden
@@ -46,19 +43,7 @@ public class OrdenEntity extends BaseEntity implements Serializable {
         
     }
 
-    /**
-     * @return the identificador
-     */
-    public Integer getIdentificador() {
-        return identificador;
-    }
-
-    /**
-     * @param identificador the identificador to set
-     */
-    public void setIdentificador(Integer identificador) {
-        this.identificador = identificador;
-    }
+   
 
     /**
      * @return the fecha

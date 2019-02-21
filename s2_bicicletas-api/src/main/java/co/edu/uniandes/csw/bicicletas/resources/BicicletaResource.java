@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.bicicletas.resources;
 
 import co.edu.uniandes.csw.bicicletas.dtos.BicicletaDTO;
+import co.edu.uniandes.csw.bicicletas.dtos.BicicletaDetailDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.ResenaDTO;
 import java.util.List;
 import java.util.logging.Logger;
@@ -40,12 +41,12 @@ public class BicicletaResource {
 
     @GET
     @Path("{bicicletaReferencia: \\d+}")
-    public BicicletaDTO getBicicleta(@PathParam("bicicletaReferencia") int bicicletaId) {
+    public BicicletaDetailDTO getBicicleta(@PathParam("bicicletaReferencia") int bicicletaId) {
         return null;
     }
     
     @GET
-    public List<BicicletaDTO> getBicicletas() {
+    public List<BicicletaDetailDTO> getBicicletas() {
         return null;
     }
      
