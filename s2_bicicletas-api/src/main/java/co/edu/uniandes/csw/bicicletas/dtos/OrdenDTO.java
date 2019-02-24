@@ -17,7 +17,7 @@ public class OrdenDTO implements Serializable{
     /**
      * Identificador de la orden
      */
-    private int identificador;
+    private Integer identificador;
     
     /**
      * Fecha de realizacion de la orden
@@ -27,12 +27,12 @@ public class OrdenDTO implements Serializable{
     /**
      * Cantidad de productos comprados en la orden
      */
-    private int cantidad;
+    private Integer cantidad;
     
     /**
      * Costo total de la orden
      */
-    private double costoTotal;
+    private Double costoTotal;
     
     /**
      * Medio de pago utilizado en la orden
@@ -49,16 +49,17 @@ public class OrdenDTO implements Serializable{
     /**
      * @return the identificador
      */
-    public int getIdentificador() {
+    public Integer getIdentificador() {
         return identificador;
     }
 
     /**
      * @param identificador the identificador to set
      */
-    public void setIdentificador(int identificador) {
+    public void setIdentificador(Integer identificador) {
         this.identificador = identificador;
     }
+
     /**
      * @return the fecha
      */
@@ -76,28 +77,30 @@ public class OrdenDTO implements Serializable{
     /**
      * @return the cantidad
      */
-    public int getCantidad() {
+    public Integer getCantidad() {
         return cantidad;
     }
 
     /**
      * @param cantidad the cantidad to set
      */
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
     /**
      * @return the costoTotal
      */
-    public double getCostoTotal() {
+    public Double getCostoTotal() {
         return costoTotal;
     }
 
     /**
      * @param costoTotal the costoTotal to set
      */
-    public void setCostoTotal(double costoTotal) {
+    public void setCostoTotal(Double costoTotal) {
         this.costoTotal = costoTotal;
     }
+
+   
 }
