@@ -20,44 +20,43 @@ import javax.inject.Inject;
  */
 @Stateless
 public class OrdenLogic {
-    
+
     private static final Logger LOGGER = Logger.getLogger(OrdenLogic.class.getName());
-    
+
     @Inject
     private OrdenPersistence ordenPersistence;
-    
-     /**
+
+    /**
      * Crea una orden en la persistencia.
      *
-     * @param ordenEntity La entidad que representa la orden a
-     * persistir.
-     * @return La orden de la editorial luego de persistirla.
+     * @param ordenEntity La entidad que representa la orden a persistir.
+     * @return La orden luego de persistirla.
      * @throws BusinessLogicException Si la orden a persistir ya existe.
      */
-   public OrdenEntity createOrden(OrdenEntity ord) throws BusinessLogicException{
+    public OrdenEntity createOrden(OrdenEntity ord) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación de la orden");
         //falta completaaaaaar
-        if(ord.getCostoTotal()<0 || ord.getCantidad()<0 || ord.getFecha()==null){
+        if (ord.getCostoTotal() < 0 || ord.getCantidad() < 0 || ord.getFecha() == null) {
             throw new BusinessLogicException("El costo de una orden y la cantidad no pueden ser menor a 0");
         }
         ordenPersistence.create(ord);
         LOGGER.log(Level.INFO, "Termina proceso de creación de la orden");
         return ord;
     }
-   
-   /**
+
+    /**
      *
      * Obtener todas las ordenes existentes en la base de datos.
      *
      * @return una lista de ordenes.
      */
-    public List<OrdenEntity> getordenes() {
+    public List<OrdenEntity> getOrdenes() {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las ordenes");
         List<OrdenEntity> ordenes = ordenPersistence.findAll();
         LOGGER.log(Level.INFO, "Termina proceso de consultar todas las ordenes");
         return ordenes;
-}
-    
+    }
+
     /**
      *
      * Obtener una orden por medio de su id.
@@ -73,5 +72,5 @@ public class OrdenLogic {
         }
         LOGGER.log(Level.INFO, "Termina proceso de consultar la orden con id = {0}", ordenId);
         return ordenEntity;
-}
+    }
 }

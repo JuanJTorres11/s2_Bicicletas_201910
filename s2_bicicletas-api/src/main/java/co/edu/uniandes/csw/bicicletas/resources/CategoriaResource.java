@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.bicicletas.resources;
 
 import co.edu.uniandes.csw.bicicletas.dtos.CategoriaDTO;
+import co.edu.uniandes.csw.bicicletas.dtos.CategoriaDetailDTO;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -37,13 +38,13 @@ public class CategoriaResource {
     }
     
     @GET
-    public List<CategoriaDTO> darCategorias() {
+    public List<CategoriaDetailDTO> darCategorias() {
         return null;
     }
     
     @GET
     @Path("{nombre: [a-zA-Z][a-zA-Z]*}")
-    public CategoriaDTO darCategoria(@PathParam("nombre") String nombre) {
+    public CategoriaDetailDTO darCategoria(@PathParam("nombre") String nombre) {
         return null;
     }
     
