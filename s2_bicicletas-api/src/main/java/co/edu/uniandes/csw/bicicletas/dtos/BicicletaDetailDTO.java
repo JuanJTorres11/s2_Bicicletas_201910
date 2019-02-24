@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author Andrea
  */
-public class BicicletaDetailDTO implements Serializable{
+public class BicicletaDetailDTO extends BicicletaDTO implements Serializable{
     
     private List<ResenaDTO> resenas;
     

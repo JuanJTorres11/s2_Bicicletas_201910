@@ -17,11 +17,11 @@ public class BicicletaDTO implements Serializable {
     
     private String referencia;
     
-    private double precio;
+    private Double precio;
     
-    private boolean usada;
+    private Boolean usada;
     
-    private int stock;
+    private Integer stock;
     
     private String[] album;
     
@@ -68,42 +68,42 @@ public class BicicletaDTO implements Serializable {
     /**
      * @return the precio
      */
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
     /**
      * @param precio the precio to set
      */
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
     /**
      * @return the usada
      */
-    public boolean isUsada() {
+    public Boolean getUsada() {
         return usada;
     }
 
     /**
      * @param usada the usada to set
      */
-    public void setUsada(boolean usada) {
+    public void setUsada(Boolean usada) {
         this.usada = usada;
     }
 
     /**
      * @return the stock
      */
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
     /**
      * @param stock the stock to set
      */
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
@@ -148,6 +148,7 @@ public class BicicletaDTO implements Serializable {
     public void setCategoria(CategoriaDTO categoria) {
         this.categoria = categoria;
     }
+
        
     
 }

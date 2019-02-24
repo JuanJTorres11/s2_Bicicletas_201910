@@ -13,11 +13,11 @@ import java.io.Serializable;
  */
 public class ResenaDTO implements Serializable {
     
-    private int id;
+    private Long id;
     
     private String descripcion;
     
-    private int calificacion;
+    private Integer calificacion;
 
     private String titulo;
     
@@ -27,20 +27,6 @@ public class ResenaDTO implements Serializable {
     
     public ResenaDTO(){
         
-    }
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.id = id;
     }
 
     /**
@@ -57,20 +43,7 @@ public class ResenaDTO implements Serializable {
         this.descripcion = descripcion;
     }
 
-    /**
-     * @return the calificacion
-     */
-    public int getCalificacion() {
-        return calificacion;
-    }
-
-    /**
-     * @param calificacion the calificacion to set
-     */
-    public void setCalificacion(int calificacion) {
-        this.calificacion = calificacion;
-    }
-
+   
     /**
      * @return the titulo
      */
@@ -83,5 +56,33 @@ public class ResenaDTO implements Serializable {
      */
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return the calificacion
+     */
+    public Integer getCalificacion() {
+        return calificacion;
+    }
+
+    /**
+     * @param calificacion the calificacion to set
+     */
+    public void setCalificacion(Integer calificacion) {
+        this.calificacion = calificacion;
     }
 }
