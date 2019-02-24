@@ -89,7 +89,7 @@ public class MarcaPersistenceTest {
 
         for (int i = 0; i < 3; i++) {
             MarcaEntity entity = factory.manufacturePojo(MarcaEntity.class);
-
+            entity.setNombre("marca"+i);
             em.persist(entity);
             data.add(entity);
         }
@@ -177,6 +177,20 @@ public class MarcaPersistenceTest {
 
         Assert.assertEquals(newEntity.getId(), resp.getId());
     }
+    
+    /**
+     * Prueba para consultar una Marca por nombre.
+     */
+    @Test
+    public void findMarcaByNameTest() {
+        MarcaEntity entity = data.get(0);
+        MarcaEntity newEntity = marcaPersistence.findByName(entity.getNombre());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+
+        newEntity = marcaPersistence.findByName(null);
+        Assert.assertNull(newEntity);
+}
 
 }
 

@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -25,7 +26,7 @@ public class MarcaEntity extends BaseEntity implements Serializable{
     private String nombre;
     
     @PodamExclude
-    @OneToMany(mappedBy="marca")
+    @OneToMany(mappedBy="marca", cascade = CascadeType.PERSIST)
     private List<BicicletaEntity> bicicletas;
 
     public MarcaEntity(){

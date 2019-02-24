@@ -46,21 +46,20 @@ public class MarcaPersistence {
      * @return una marca.
      */
     public MarcaEntity find(long marcasId) {
-        LOGGER.log(Level.INFO, "Consultando editorial con id={0}", marcasId);
+        LOGGER.log(Level.INFO, "Consultando marca con id={0}", marcasId);
         return em.find(MarcaEntity.class, marcasId);
     }
 
     /**
-     * Busca si hay alguna editorial con el nombre que se envía de argumento
+     * Busca si hay alguna marca con el nombre que se envía de argumento
      *
-     * @param name: Nombre de la editorial que se está buscando
-     * @return null si no existe ninguna editorial con el nombre del argumento.
+     * @param pNombre: Nombre de la marca que se está buscando
+     * @return null si no existe ninguna marca con el nombre del argumento.
      * Si existe alguna devuelve la primera.
      */
-    public MarcaEntity findByName(String name) {
-        LOGGER.log(Level.INFO, "Consultando editorial por nombre ", name);
-        TypedQuery query = em.createQuery("Select e From MarcaEntity e where e.name = :name", MarcaEntity.class);
-        query = query.setParameter("name", name);
+    public MarcaEntity findByName(String pNombre) {
+        TypedQuery query = em.createQuery("Select e From MarcaEntity e where e.nombre = :nombre", MarcaEntity.class);
+        query = query.setParameter("nombre", pNombre);
         List<MarcaEntity> sameName = query.getResultList();
         MarcaEntity result;
         if (sameName == null) {
@@ -70,7 +69,6 @@ public class MarcaPersistence {
         } else {
             result = sameName.get(0);
         }
-        LOGGER.log(Level.INFO, "Saliendo de consultar editorial por nombre ", name);
         return result;
     }
 

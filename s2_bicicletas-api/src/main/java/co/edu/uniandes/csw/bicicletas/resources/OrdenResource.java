@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.bicicletas.resources;
 
 import co.edu.uniandes.csw.bicicletas.dtos.OrdenDTO;
+import co.edu.uniandes.csw.bicicletas.dtos.OrdenDetailDTO;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -36,12 +37,12 @@ public class OrdenResource {
     
     @GET
     @Path("{id: \\d+}")
-    public OrdenDTO getOrden(@PathParam("id") long id){
+    public OrdenDetailDTO getOrden(@PathParam("id") long id){
         return null;
     }
     
     @GET
-    public List<OrdenDTO> getOrdenes(){
+    public List<OrdenDetailDTO> getOrdenes(){
         return null;
     }
     
