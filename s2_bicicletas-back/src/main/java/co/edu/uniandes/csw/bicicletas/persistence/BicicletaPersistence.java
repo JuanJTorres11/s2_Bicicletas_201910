@@ -14,31 +14,28 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-
-
 /**
  *
  * @author Andrea
  */
 @Stateless
 public class BicicletaPersistence {
-    
-    private static final Logger LOGGER = Logger.getLogger(BicicletaPersistence.class.getName());
 
+    private static final Logger LOGGER = Logger.getLogger(BicicletaPersistence.class.getName());
 
     @PersistenceContext(unitName = "bicicletasPU")
     protected EntityManager em;
 
-    public BicicletaEntity create(BicicletaEntity resenaEntity) {
+    public BicicletaEntity create(BicicletaEntity bikeEntity) {
 
-        em.persist(resenaEntity);
+        em.persist(bikeEntity);
         LOGGER.log(Level.INFO, "Saliendo de crear una bicicleta nueva");
-        return resenaEntity;
+        return bikeEntity;
     }
 
-    public BicicletaEntity find(Long resenaId) {
-        LOGGER.log(Level.INFO, "Consultando bicicleta con id={0}", resenaId);
-        return em.find(BicicletaEntity.class, resenaId);
+    public BicicletaEntity find(Long bikeID) {
+        LOGGER.log(Level.INFO, "Consultando bicicleta con id={0}", bikeID);
+        return em.find(BicicletaEntity.class, bikeID);
     }
 
     public List<BicicletaEntity> findAll() {
@@ -47,17 +44,43 @@ public class BicicletaPersistence {
         return query.getResultList();
     }
 
-    public BicicletaEntity update(BicicletaEntity resenaEntity) {
-        LOGGER.log(Level.INFO, "Actualizando bicicleta con id = {0}", resenaEntity.getId());
-        LOGGER.log(Level.INFO, "Saliendo de actualizar la bicicleta con id = {0}", resenaEntity.getId());
-        return em.merge(resenaEntity);
+    public BicicletaEntity update(BicicletaEntity bikeEntity) {
+        LOGGER.log(Level.INFO, "Actualizando bicicleta con id = {0}", bikeEntity.getId());
+        LOGGER.log(Level.INFO, "Saliendo de actualizar la bicicleta con id = {0}", bikeEntity.getId());
+        return em.merge(bikeEntity);
     }
 
-    public void delete(Long resenaId) {
-        LOGGER.log(Level.INFO, "Borrando bicicleta con id = {0}", resenaId);
-        BicicletaEntity entity = em.find(BicicletaEntity.class, resenaId);
+    public void delete(Long bikeId) {
+        LOGGER.log(Level.INFO, "Borrando bicicleta con id = {0}", bikeId);
+        BicicletaEntity entity = em.find(BicicletaEntity.class, bikeId);
         em.remove(entity);
-        LOGGER.log(Level.INFO, "Saliendo de borrar la bicicleta con id = {0}", resenaId);
+        LOGGER.log(Level.INFO, "Saliendo de borrar la bicicleta con id = {0}", bikeId);
     }
+
+    public BicicletaEntity findByReferencia(String referencia) {
+        LOGGER.log(Level.INFO, "Consultando bicicleta por referencia", referencia);
+
+        // Se crea un query para buscar bicicletas con la referencia que recibe el método como argumento. ":ref" es un placeholder que debe ser remplazado
+        TypedQuery query = em.createQuery("Select e From BicicletaEntity e where e.referencia = :ref", BicicletaEntity.class);
+        // Se remplaza el placeholder ":ref" con el valor del argumento 
+        query = query.setParameter("ref", referencia);
+        
+        // Se invoca el query se obtiene la lista resultado
+        List<BicicletaEntity> sameRef = query.getResultList();
+        BicicletaEntity result;
+        
+        if (sameRef == null) {
+            result = null;
+        } else if (sameRef.isEmpty()) {
+            result = null;
+        } else {
+            result = sameRef.get(0);
+        }
+        LOGGER.log(Level.INFO, "Saliendo de consultar bicicleta por referencia ", referencia);
+        return result;
+    }
+    
+    
+    
 
 }

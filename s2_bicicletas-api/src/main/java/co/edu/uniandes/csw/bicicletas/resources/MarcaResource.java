@@ -43,7 +43,7 @@ public class MarcaResource {
     
     @GET
     @Path("{id: \\d+}")
-    public MarcaDTO getMarca(@PathParam("id") long id){
+    public MarcaDetailDTO getMarca(@PathParam("id") long id){
         return null;
     }
     

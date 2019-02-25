@@ -26,17 +26,19 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
 
     private String referencia;
 
-    private double precio;
+    private Double precio;
 
-    private boolean usada;
+    private Boolean usada;
 
-    private int stock;
+    private Integer stock;
 
     private String[] album;
 
+    @PodamExclude
     @ManyToOne 
     private MarcaEntity marca;
     
+    @PodamExclude
     @ManyToOne
     private CategoriaEntity categoria;
 
@@ -82,42 +84,42 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     /**
      * @return the precio
      */
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
     /**
      * @param precio the precio to set
      */
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
     /**
      * @return the usada
      */
-    public boolean isUsada() {
+    public Boolean getUsada() {
         return usada;
     }
 
     /**
      * @param usada the usada to set
      */
-    public void setUsada(boolean usada) {
+    public void setUsada(Boolean usada) {
         this.usada = usada;
     }
 
     /**
      * @return the stock
      */
-    public int getStock() {
+    public Integer getStock() {
         return stock;
     }
 
     /**
      * @param stock the stock to set
      */
-    public void setStock(int stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
@@ -133,20 +135,6 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
      */
     public void setAlbum(String[] album) {
         this.album = album;
-    }
-
-    /**
-     * @return the resenas
-     */
-    public List<ResenaEntity> getResenas() {
-        return resenas;
-    }
-
-    /**
-     * @param resenas the resenas to set
-     */
-    public void setResenas(List<ResenaEntity> resenas) {
-        this.resenas = resenas;
     }
 
     /**
@@ -176,5 +164,20 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     public void setCategoria(CategoriaEntity categoria) {
         this.categoria = categoria;
     }
+
+    /**
+     * @return the resenas
+     */
+    public List<ResenaEntity> getResenas() {
+        return resenas;
+    }
+
+    /**
+     * @param resenas the resenas to set
+     */
+    public void setResenas(List<ResenaEntity> resenas) {
+        this.resenas = resenas;
+    }
+
    
 }

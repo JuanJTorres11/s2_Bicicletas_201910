@@ -36,7 +36,9 @@ public class OrdenEntity extends BaseEntity implements Serializable {
      /**
      * Medio de pago utilizado en la orden
      */
-  //  private MedioPago medioPago;
+    //private MedioPago medioPago;
+    
+
     
     public OrdenEntity()
     {

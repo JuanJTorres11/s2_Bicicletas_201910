@@ -24,7 +24,7 @@ public class ResenaEntity extends BaseEntity implements Serializable  {
     
     private String descripcion;
     
-    private int calificacion;
+    private Integer calificacion;
     
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -64,14 +64,14 @@ public class ResenaEntity extends BaseEntity implements Serializable  {
     /**
      * @return the calificacion
      */
-    public int getCalificacion() {
+    public Integer getCalificacion() {
         return calificacion;
     }
 
     /**
      * @param calificacion the calificacion to set
      */
-    public void setCalificacion(int calificacion) {
+    public void setCalificacion(Integer calificacion) {
         this.calificacion = calificacion;
     }
 

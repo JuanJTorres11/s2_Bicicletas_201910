@@ -5,13 +5,14 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Andres Donoso
  */
-public class CategoriaDetailDTO extends CategoriaDTO {
+public class CategoriaDetailDTO extends CategoriaDTO implements Serializable {
     
     /**
      * Contiene la lista de bicicletas que pertenecen a esta categoría
