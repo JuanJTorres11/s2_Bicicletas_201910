@@ -36,8 +36,8 @@ public class ResenaLogicTest {
     private PodamFactory factory = new PodamFactoryImpl();
 
     /**
-     * Inyección de la dependencia a la clase ResenaLogic cuyos métodos se
-     * van a probar.
+     * Inyección de la dependencia a la clase ResenaLogic cuyos métodos se van a
+     * probar.
      */
     @Inject
     private ResenaLogic resenaLogic;
@@ -104,7 +104,8 @@ public class ResenaLogicTest {
     }
 
     /**
-     * Inserta los datos iniciales para el correcto funcionamiento de las pruebas.
+     * Inserta los datos iniciales para el correcto funcionamiento de las
+     * pruebas.
      */
     private void insertData() {
         for (int i = 0; i < 3; i++) {
@@ -112,9 +113,9 @@ public class ResenaLogicTest {
 
             em.persist(entity);
             data.add(entity);
-       }
+        }
     }
-    
+
     /**
      * Prueba para crear una Bicicleta.
      *
@@ -128,10 +129,10 @@ public class ResenaLogicTest {
         ResenaEntity entity = em.find(ResenaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
     }
-    
+
     /**
-     * Prueba para crear una bicicleta con la misma referencia de otra Bicicleta que ya
-     * existe.
+     * Prueba para crear una bicicleta con la misma referencia de otra Bicicleta
+     * que ya existe.
      *
      * @throws BusinessLogicException
      */
@@ -141,7 +142,7 @@ public class ResenaLogicTest {
         newEntity.setId(data.get(0).getId());
         resenaLogic.createResena(newEntity);
     }
-    
+
     /**
      * Prueba para eliminar una Bicicleta.
      *
@@ -155,20 +156,18 @@ public class ResenaLogicTest {
         Assert.assertNull(deleted);
     }
 
-
     @Test
-    public void getResenaTest(){
-        
+    public void getResenaTest() {
+
     }
 
-     @Test
-    public void getResenasTest(){
-        
-    }
-    
-     
     @Test
-    public void updateResenaTest(){
-        
+    public void getResenasTest() {
+
+    }
+
+    @Test
+    public void updateResenaTest() {
+
     }
 }

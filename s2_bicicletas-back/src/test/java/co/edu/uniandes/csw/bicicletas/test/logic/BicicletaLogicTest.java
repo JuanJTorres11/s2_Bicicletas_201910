@@ -41,7 +41,7 @@ public class BicicletaLogicTest {
      */
     @Inject
     private BicicletaLogic bicicletaLogic;
-    
+
     /**
      * Contexto de Persistencia que se va a utilizar para acceder a la Base de
      * datos por fuera de los métodos que se están probando.
@@ -55,14 +55,12 @@ public class BicicletaLogicTest {
      */
     @Inject
     private UserTransaction utx;
-    
-     /**
+
+    /**
      * Lista que tiene los datos de prueba.
      */
     private List<BicicletaEntity> data = new ArrayList<BicicletaEntity>();
 
-
-    
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
@@ -77,8 +75,8 @@ public class BicicletaLogicTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
-     /**
+
+    /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -118,7 +116,7 @@ public class BicicletaLogicTest {
 
         }
     }
-    
+
     /**
      * Prueba para crear una Bicicleta.
      *
@@ -133,10 +131,10 @@ public class BicicletaLogicTest {
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getReferencia(), entity.getReferencia());
     }
-    
+
     /**
-     * Prueba para crear una bicicleta con la misma referencia de otra Bicicleta que ya
-     * existe.
+     * Prueba para crear una bicicleta con la misma referencia de otra Bicicleta
+     * que ya existe.
      *
      * @throws BusinessLogicException
      */
@@ -146,7 +144,7 @@ public class BicicletaLogicTest {
         newEntity.setReferencia(data.get(0).getReferencia());
         bicicletaLogic.createBicicleta(newEntity);
     }
-    
+
     /**
      * Prueba para eliminar una Bicicleta.
      *
@@ -161,23 +159,23 @@ public class BicicletaLogicTest {
     }
 
     @Test
-    public void getBicicletaTest(){
-        
+    public void getBicicletaTest() {
+
     }
 
-     @Test
-    public void getBicicletasTest(){
-        
-    }
-    
     @Test
-    public void getBicicletaPorReferenciaTest(){
-        
+    public void getBicicletasTest() {
+
     }
-    
+
     @Test
-    public void updateBicicletaTest(){
-        
+    public void getBicicletaPorReferenciaTest() {
+
+    }
+
+    @Test
+    public void updateBicicletaTest() {
+
     }
 
 }
