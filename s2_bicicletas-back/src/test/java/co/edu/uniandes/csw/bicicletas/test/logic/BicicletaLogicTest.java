@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.bicicletas.test.logic;
 
 import co.edu.uniandes.csw.bicicletas.ejb.BicicletaLogic;
 import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
+import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.BicicletaPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,9 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -115,6 +118,48 @@ public class BicicletaLogicTest {
 
         }
     }
+    
+    /**
+     * Prueba para crear una Bicicleta.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test
+    public void createEditorialTest() throws BusinessLogicException {
+        BicicletaEntity newEntity = factory.manufacturePojo(BicicletaEntity.class);
+        BicicletaEntity result = bicicletaLogic.createBicicleta(newEntity);
+        Assert.assertNotNull(result);
+        BicicletaEntity entity = em.find(BicicletaEntity.class, result.getId());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getReferencia(), entity.getReferencia());
+    }
+    
+    /**
+     * Prueba para crear una bicicleta con la misma referencia de otra Bicicleta que ya
+     * existe.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createEditorialConMismoNombreTest() throws BusinessLogicException {
+        BicicletaEntity newEntity = factory.manufacturePojo(BicicletaEntity.class);
+        newEntity.setReferencia(data.get(0).getReferencia());
+        bicicletaLogic.createBicicleta(newEntity);
+    }
+    
+    /**
+     * Prueba para eliminar una Bicicleta.
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test
+    public void deleteEditorialTest() throws BusinessLogicException {
+        BicicletaEntity entity = data.get(1);
+        bicicletaLogic.deleteBicicleta(entity.getId());
+        BicicletaEntity deleted = em.find(BicicletaEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+
 
 
 }
