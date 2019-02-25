@@ -121,7 +121,7 @@ public class ResenaLogicTest {
      * @throws BusinessLogicException
      */
     @Test
-    public void createEditorialTest() throws BusinessLogicException {
+    public void createResenaTest() throws BusinessLogicException {
         ResenaEntity newEntity = factory.manufacturePojo(ResenaEntity.class);
         ResenaEntity result = resenaLogic.createResena(newEntity);
         Assert.assertNotNull(result);
@@ -136,7 +136,7 @@ public class ResenaLogicTest {
      * @throws BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
-    public void createEditorialConMismoNombreTest() throws BusinessLogicException {
+    public void createResenaConMismoIdTest() throws BusinessLogicException {
         ResenaEntity newEntity = factory.manufacturePojo(ResenaEntity.class);
         newEntity.setId(data.get(0).getId());
         resenaLogic.createResena(newEntity);
@@ -145,10 +145,10 @@ public class ResenaLogicTest {
     /**
      * Prueba para eliminar una Bicicleta.
      *
-     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     * @throws BusinessLogicException
      */
     @Test
-    public void deleteEditorialTest() throws BusinessLogicException {
+    public void deleteResenaTest() throws BusinessLogicException {
         ResenaEntity entity = data.get(1);
         resenaLogic.deleteResena(entity.getId());
         ResenaEntity deleted = em.find(ResenaEntity.class, entity.getId());
@@ -156,4 +156,19 @@ public class ResenaLogicTest {
     }
 
 
+    @Test
+    public void getResenaTest(){
+        
+    }
+
+     @Test
+    public void getResenasTest(){
+        
+    }
+    
+     
+    @Test
+    public void updateResenaTest(){
+        
+    }
 }
