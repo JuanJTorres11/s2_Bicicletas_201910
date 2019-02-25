@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.bicicletas.test.logic;
 
 import co.edu.uniandes.csw.bicicletas.ejb.CategoriaLogic;
+import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import co.edu.uniandes.csw.bicicletas.entities.CategoriaEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.CategoriaPersistence;
@@ -44,6 +45,7 @@ public class CategoriaLogicTest {
     private UserTransaction utx;
     
     private List<CategoriaEntity> data = new ArrayList<>();
+    private List<BicicletaEntity> bicicletasData = new ArrayList<>();
     
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -85,6 +87,7 @@ public class CategoriaLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from CategoriaEntity").executeUpdate();
+        em.createQuery("delete from BicicletaEntity").executeUpdate();
     }
 
     /**
@@ -93,9 +96,18 @@ public class CategoriaLogicTest {
      */
     private void insertData() {
         for (int i = 0; i < 3; i++) {
+            BicicletaEntity bicicletas = factory.manufacturePojo(BicicletaEntity.class);
+            em.persist(bicicletas);
+            bicicletasData.add(bicicletas);
+        }
+        
+        for (int i = 0; i < 3; i++) {
             CategoriaEntity categoria = factory.manufacturePojo(CategoriaEntity.class);
             em.persist(categoria);
             data.add(categoria);
+            if (i == 0) {
+                bicicletasData.get(i).setCategoria(categoria);
+            }
         }
     }
     
@@ -108,5 +120,65 @@ public class CategoriaLogicTest {
         CategoriaEntity entity = em.find(CategoriaEntity.class, resultado.getId());
         Assert.assertEquals(categoria.getId(), entity.getId());
         Assert.assertEquals(categoria.getNombre(), entity.getNombre());
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void createCategoriaConMismoNombreTest() throws BusinessLogicException {
+        CategoriaEntity categoria = factory.manufacturePojo(CategoriaEntity.class);
+        categoria.setNombre(data.get(0).getNombre());
+        
+        cl.createCategoria(categoria);
+    }
+    
+    @Test
+    public void getCategoriasTest() {
+        List<CategoriaEntity> categorias = cl.getCategorias();
+        Assert.assertEquals(data.size(), categorias.size());
+        
+        for(CategoriaEntity categoria: categorias) {
+            boolean encontrado = false;
+            for(CategoriaEntity entity: data) {
+                if(entity.getId().equals(categoria.getId())) encontrado = true;
+            }
+            
+            Assert.assertTrue(encontrado);
+        }
+    }
+    
+    @Test
+    public void getCategoriaTest() {
+        CategoriaEntity categoria = data.get(0);
+        CategoriaEntity resultado = cl.getCategoria(categoria.getId());
+        
+        Assert.assertNotNull(resultado);
+        Assert.assertEquals(categoria.getId(), resultado.getId());
+        Assert.assertEquals(categoria.getNombre(), resultado.getNombre());
+    }
+    
+    @Test
+    public void updateCategoriaTest() throws BusinessLogicException {
+        CategoriaEntity categoria = data.get(0);
+        CategoriaEntity entity = factory.manufacturePojo(CategoriaEntity.class);
+        entity.setId(categoria.getId());
+        cl.updateCategoria(entity);
+        CategoriaEntity resultado = em.find(CategoriaEntity.class, categoria.getId());
+        
+        Assert.assertEquals(entity.getId(), resultado.getId());
+        Assert.assertEquals(entity.getNombre(), resultado.getNombre());
+    }
+    
+    @Test
+    public void deleteCategoriaTest() throws BusinessLogicException {
+        CategoriaEntity categoria = data.get(1);
+        cl.deleteCategoria(categoria.getId());
+        CategoriaEntity resultado = em.find(CategoriaEntity.class, categoria.getId());
+        
+        Assert.assertNull(resultado);
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void deleteCategoriaConBicicletasTest() throws BusinessLogicException {
+        CategoriaEntity categoria = data.get(0);
+        cl.deleteCategoria(categoria.getId());
     }
 }

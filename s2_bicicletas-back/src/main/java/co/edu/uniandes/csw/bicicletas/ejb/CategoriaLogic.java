@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.ejb;
 
+import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import co.edu.uniandes.csw.bicicletas.entities.CategoriaEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.CategoriaPersistence;
@@ -109,5 +110,22 @@ public class CategoriaLogic {
         LOGGER.log(Level.INFO, "Termina proceso de actualizar categoría."); 
         
         return categoria;
+    }
+    
+    /**
+     * Elimina la categoría con el id dado por parámetro.
+     * @param categoriaId Id de la categoría. categoriaId > 0.
+     * @throws BusinessLogicException 1. Si hay bicicletas asociadas a la categoría.
+     */
+    public void deleteCategoria(Long categoriaId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Comienza proceso de eliminación de la categoría con id = {0}", categoriaId);
+        
+        List<BicicletaEntity> bicicletas = getCategoria(categoriaId).getBicicletas();
+        if(bicicletas != null && !bicicletas.isEmpty()) {
+            throw new BusinessLogicException("La categoría no puede ser eliminada porque tiene bicicletas asociadas.");
+        }
+        cp.delete(categoriaId);
+        
+        LOGGER.log(Level.INFO, "Termina proceso de eliminación de la categoría con id = {0}", categoriaId);
     }
 }
