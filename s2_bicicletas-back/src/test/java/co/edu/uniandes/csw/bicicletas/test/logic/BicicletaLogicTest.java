@@ -121,7 +121,7 @@ public class BicicletaLogicTest {
      * Prueba para crear una Bicicleta.
      *
      * @throws BusinessLogicException
-     */
+    
     @Test
     public void createBicicletaTest() throws BusinessLogicException {
         BicicletaEntity newEntity = factory.manufacturePojo(BicicletaEntity.class);
@@ -130,26 +130,26 @@ public class BicicletaLogicTest {
         BicicletaEntity entity = em.find(BicicletaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getReferencia(), entity.getReferencia());
-    }
+    } */
 
     /**
      * Prueba para crear una bicicleta con la misma referencia de otra Bicicleta
      * que ya existe.
      *
      * @throws BusinessLogicException
-     */
+     
     @Test(expected = BusinessLogicException.class)
     public void createBicicletaConMismaReferenciaTest() throws BusinessLogicException {
         BicicletaEntity newEntity = factory.manufacturePojo(BicicletaEntity.class);
         newEntity.setReferencia(data.get(0).getReferencia());
         bicicletaLogic.createBicicleta(newEntity);
-    }
+    }*/
 
     /**
      * Prueba para eliminar una Bicicleta.
      *
      * @throws BusinessLogicException
-     */
+     
     @Test
     public void deleteBicicletaTest() throws BusinessLogicException {
         BicicletaEntity entity = data.get(1);
@@ -177,5 +177,5 @@ public class BicicletaLogicTest {
     public void updateBicicletaTest() {
 
     }
-
+*/
 }
