@@ -63,6 +63,7 @@ public class BicicletaLogic {
 
     /**
      * Retorna una bicicletaEntity
+     *
      * @return Una lista con todas las BicletaEntity
      */
     public List<BicicletaEntity> getBicicletas() {
@@ -75,6 +76,7 @@ public class BicicletaLogic {
 
     /**
      * Retorna una bicicletaEntity
+     *
      * @param id: ide de la bicicleta que se quiere consultar
      * @return La entiddad de la bicicleta que se quiere consultar
      */
@@ -83,16 +85,20 @@ public class BicicletaLogic {
         BicicletaEntity bicicleta = persistence.find(id);
         LOGGER.log(Level.INFO, "Termina proceso de buscar una bicleta por id", id);
         return bicicleta;
-   }
+    }
 
     /**
      * Retorna una bicicletaEntity
+     *
      * @param referenciaBicicleta : referencia de la bicicleta que se quiere
      * consultar
      * @return La entiddad de la bicicleta que se quiere consultar
      */
     public BicicletaEntity getBicicletaPorReferencia(String referenciaBicicleta) {
-        return null;
+        LOGGER.log(Level.INFO, "Inicia proceso de buscar una bicleta por referencia ", referenciaBicicleta);
+        BicicletaEntity bicicleta = persistence.findByReferencia(referenciaBicicleta);
+        LOGGER.log(Level.INFO, "Termina proceso de buscar una bicleta por referencia", referenciaBicicleta);
+        return bicicleta;
     }
 
     /**
@@ -102,7 +108,10 @@ public class BicicletaLogic {
      * @return La Entidad de la bicicleta modificada
      */
     public BicicletaEntity ubdateBicicleta(BicicletaEntity bicicletaEntity) {
-        return null;
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar una bicicleta con id", bicicletaEntity.getId());
+        BicicletaEntity bikeE = persistence.update(bicicletaEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar una bicicleta con id", bicicletaEntity.getId());
+        return bikeE;
     }
 
 }
