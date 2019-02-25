@@ -86,8 +86,8 @@ public class CategoriaLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from CategoriaEntity").executeUpdate();
         em.createQuery("delete from BicicletaEntity").executeUpdate();
+        em.createQuery("delete from CategoriaEntity").executeUpdate();
     }
 
     /**
