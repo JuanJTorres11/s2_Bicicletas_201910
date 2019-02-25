@@ -26,6 +26,7 @@ public class VendedorEntity extends UsuarioEntity
     // @PodamExclude
     //@OneToMany (mappedBy = "vendedor")
     //private List<VentaEntity> ventas;
+    
     public VendedorEntity()
     {
 
