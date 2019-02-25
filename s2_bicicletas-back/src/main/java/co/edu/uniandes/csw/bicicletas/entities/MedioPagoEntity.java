@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -18,6 +20,10 @@ public class MedioPagoEntity extends BaseEntity implements Serializable {
     private Integer codigoVerificacion;
     private String fechaVencimiento;
     private String direccion;
+    
+    @PodamExclude
+    @ManyToOne
+    private UsuarioEntity usuario;
     
     public MedioPagoEntity() {
         
