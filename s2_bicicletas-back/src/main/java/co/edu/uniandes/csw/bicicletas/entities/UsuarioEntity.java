@@ -8,7 +8,6 @@ package co.edu.uniandes.csw.bicicletas.entities;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -29,9 +28,10 @@ public class UsuarioEntity extends BaseEntity implements Serializable
 
     private String password;
 
-    // @PodamExclude
-    //@OneToMany (mappedBy = "usuario")
-    //private List<MedioPagoEntity> medioPagos;
+    @PodamExclude
+    @OneToMany(mappedBy = "usuario")
+    private List<MedioPagoEntity> medioPagos;
+
     public UsuarioEntity()
     {
     }
