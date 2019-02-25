@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.bicicletas.test.logic;
 
 import co.edu.uniandes.csw.bicicletas.ejb.ResenaLogic;
 import co.edu.uniandes.csw.bicicletas.entities.ResenaEntity;
+import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.ResenaPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,9 @@ import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
@@ -37,7 +40,7 @@ public class ResenaLogicTest {
      * van a probar.
      */
     @Inject
-    private ResenaLogic bicicletaLogic;
+    private ResenaLogic resenaLogic;
 
     /**
      * Contexto de Persistencia que se va a utilizar para acceder a la Base de
@@ -111,5 +114,46 @@ public class ResenaLogicTest {
             data.add(entity);
        }
     }
+    
+    /**
+     * Prueba para crear una Bicicleta.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test
+    public void createEditorialTest() throws BusinessLogicException {
+        ResenaEntity newEntity = factory.manufacturePojo(ResenaEntity.class);
+        ResenaEntity result = resenaLogic.createResena(newEntity);
+        Assert.assertNotNull(result);
+        ResenaEntity entity = em.find(ResenaEntity.class, result.getId());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+    }
+    
+    /**
+     * Prueba para crear una bicicleta con la misma referencia de otra Bicicleta que ya
+     * existe.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createEditorialConMismoNombreTest() throws BusinessLogicException {
+        ResenaEntity newEntity = factory.manufacturePojo(ResenaEntity.class);
+        newEntity.setId(data.get(0).getId());
+        resenaLogic.createResena(newEntity);
+    }
+    
+    /**
+     * Prueba para eliminar una Bicicleta.
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test
+    public void deleteEditorialTest() throws BusinessLogicException {
+        ResenaEntity entity = data.get(1);
+        resenaLogic.deleteResena(entity.getId());
+        ResenaEntity deleted = em.find(ResenaEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+
 
 }
