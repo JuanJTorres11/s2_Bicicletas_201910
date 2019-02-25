@@ -34,9 +34,11 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
 
     private String[] album;
 
+    @PodamExclude
     @ManyToOne 
     private MarcaEntity marca;
     
+    @PodamExclude
     @ManyToOne
     private CategoriaEntity categoria;
 
