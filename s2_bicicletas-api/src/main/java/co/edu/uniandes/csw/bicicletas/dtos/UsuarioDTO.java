@@ -5,13 +5,14 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.UsuarioEntity;
 import java.io.Serializable;
 
 /**
  *
  * @author Juan José Torres
  */
-public abstract class UsuarioDTO implements Serializable
+public class UsuarioDTO implements Serializable
 {
 
     private Long id;
@@ -24,6 +25,17 @@ public abstract class UsuarioDTO implements Serializable
 
     public UsuarioDTO()
     {
+    }
+
+    public UsuarioDTO(UsuarioEntity user)
+    {
+        if (user != null)
+        {
+            id = user.getId();
+            nombre = user.getNombre();
+            login = user.getLogin();
+            password = user.getPassword();
+        }
     }
 
     /**
@@ -89,4 +101,5 @@ public abstract class UsuarioDTO implements Serializable
     {
         this.id = id;
     }
+
 }

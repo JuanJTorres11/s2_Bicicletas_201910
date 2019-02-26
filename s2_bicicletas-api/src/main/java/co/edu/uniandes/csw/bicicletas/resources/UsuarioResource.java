@@ -24,12 +24,6 @@ public class UsuarioResource
 
     private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
 
-    @POST
-    public UsuarioDTO crearUsuario(UsuarioDTO user)
-    {
-        return user;
-    }
-
     @GET
     public List<UsuarioDetailDTO> darUsuarios()
     {

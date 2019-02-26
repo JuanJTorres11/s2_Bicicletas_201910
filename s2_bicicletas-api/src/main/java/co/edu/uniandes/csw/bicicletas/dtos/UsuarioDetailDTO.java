@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * @author Juan José Torres
  */
-public abstract class UsuarioDetailDTO extends UsuarioDTO
+public class UsuarioDetailDTO extends UsuarioDTO
 {
 
     private List<MedioPagoDTO> medioPagos;

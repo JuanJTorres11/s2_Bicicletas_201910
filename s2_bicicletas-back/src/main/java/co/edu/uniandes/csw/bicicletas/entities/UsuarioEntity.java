@@ -28,9 +28,9 @@ public abstract class UsuarioEntity extends BaseEntity implements Serializable
 
     private String password;
 
-    @PodamExclude
-    @OneToMany(mappedBy = "usuario")
-    private List<MedioPagoEntity> medioPagos;
+    //@PodamExclude
+    //@OneToMany(mappedBy = "usuario")
+    //private List<MedioPagoEntity> medioPagos;
 
     public UsuarioEntity()
     {
