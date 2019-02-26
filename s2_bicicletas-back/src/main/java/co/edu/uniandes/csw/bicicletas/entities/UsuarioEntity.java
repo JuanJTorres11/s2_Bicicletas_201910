@@ -17,7 +17,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author Juan José Torres
  */
 @MappedSuperclass
-public class UsuarioEntity extends BaseEntity implements Serializable
+public abstract class UsuarioEntity extends BaseEntity implements Serializable
 {
 
     private static final Logger LOGGER = Logger.getLogger(UsuarioEntity.class.getName());
@@ -28,9 +28,9 @@ public class UsuarioEntity extends BaseEntity implements Serializable
 
     private String password;
 
-    @PodamExclude
-    @OneToMany(mappedBy = "usuario")
-    private List<MedioPagoEntity> medioPagos;
+    //@PodamExclude
+    //@OneToMany(mappedBy = "usuario")
+    //private List<MedioPagoEntity> medioPagos;
 
     public UsuarioEntity()
     {
