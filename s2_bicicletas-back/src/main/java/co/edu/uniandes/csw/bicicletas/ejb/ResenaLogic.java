@@ -11,12 +11,14 @@ import co.edu.uniandes.csw.bicicletas.persistence.ResenaPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
  *
  * @author Andrea
  */
+@Stateless
 public class ResenaLogic {
 
     private static final Logger LOGGER = Logger.getLogger(ResenaLogic.class.getName());
