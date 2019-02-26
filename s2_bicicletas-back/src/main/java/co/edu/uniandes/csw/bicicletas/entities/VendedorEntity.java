@@ -23,10 +23,11 @@ public class VendedorEntity extends UsuarioEntity
 
     private String cedula;
 
+    private String telefono;
+
     // @PodamExclude
     //@OneToMany (mappedBy = "vendedor")
     //private List<VentaEntity> ventas;
-    
     public VendedorEntity()
     {
 
@@ -46,6 +47,22 @@ public class VendedorEntity extends UsuarioEntity
     public void setCedula(String cedula)
     {
         this.cedula = cedula;
+    }
+
+    /**
+     * @return the telefono
+     */
+    public String getTelefono()
+    {
+        return telefono;
+    }
+
+    /**
+     * @param telefono the telefono to set
+     */
+    public void setTelefono(String telefono)
+    {
+        this.telefono = telefono;
     }
 
     /**

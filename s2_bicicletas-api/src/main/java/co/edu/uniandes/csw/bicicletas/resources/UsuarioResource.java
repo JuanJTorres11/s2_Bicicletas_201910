@@ -21,13 +21,8 @@ import javax.ws.rs.*;
 @RequestScoped
 public class UsuarioResource
 {
-    private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
 
-    @POST
-    public UsuarioDTO crearUsuario(UsuarioDTO user)
-    {
-        return user;
-    }
+    private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
 
     @GET
     public List<UsuarioDetailDTO> darUsuarios()
@@ -35,24 +30,4 @@ public class UsuarioResource
         return null;
     }
 
-    @GET
-    @Path("{id: \\d+}")
-    public UsuarioDetailDTO darUsuarioId(@PathParam("id") long id)
-    {
-        return null;
-    }
-
-    @PUT
-    @Path("{id: \\d+}")
-    public UsuarioDetailDTO actualizarUsuario(@PathParam("id") long id, UsuarioDetailDTO user)
-    {
-        return user;
-    }
-
-    @DELETE
-    @Path("{id: \\d+}")
-    public UsuarioDetailDTO eliminarUsuario(@PathParam("id") long id)
-    {
-        return null;
-    }
 }
