@@ -105,7 +105,7 @@ public class BicicletaLogicTest {
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
-     * pruebas.
+     * pruebas. 
      */
     private void insertData() {
         for (int i = 0; i < 3; i++) {

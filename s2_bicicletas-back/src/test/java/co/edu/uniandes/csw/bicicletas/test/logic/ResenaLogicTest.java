@@ -97,7 +97,7 @@ public class ResenaLogicTest {
     }
 
     /**
-     * Limpia las tablas que están implicadas en la prueba.
+     * Limpia las tablas que están implicadas en la prueba. 
      */
     private void clearData() {
         em.createQuery("delete from ResenaEntity").executeUpdate();
