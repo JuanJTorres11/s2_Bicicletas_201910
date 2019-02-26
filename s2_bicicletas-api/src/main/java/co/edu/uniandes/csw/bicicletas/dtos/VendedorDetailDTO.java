@@ -5,30 +5,40 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
 import java.util.List;
 
 /**
  * @author Juan José Torres
  */
-public class VendedorDetailDTO
+public class VendedorDetailDTO extends VendedorDTO
 {
-   private List<VentaDTO> ventas; 
 
-   public VendedorDetailDTO () {
-       
-   }
-   
+    private List<VentaDTO> ventas;
+
+    public VendedorDetailDTO()
+    {
+        super();
+    }
+
+    public VendedorDetailDTO (VendedorEntity vendedor)
+    {
+        super();
+    }
+
     /**
      * @return the ventas
      */
-    public List<VentaDTO> getVentas() {
+    public List<VentaDTO> getVentas()
+    {
         return ventas;
     }
 
     /**
      * @param ventas the ventas to set
      */
-    public void setVentas(List<VentaDTO> ventas) {
+    public void setVentas(List<VentaDTO> ventas)
+    {
         this.ventas = ventas;
     }
 }
