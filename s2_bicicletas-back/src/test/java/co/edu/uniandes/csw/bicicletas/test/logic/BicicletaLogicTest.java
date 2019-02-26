@@ -70,6 +70,7 @@ public class BicicletaLogicTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(BicicletaEntity.class.getPackage())
+                .addPackage(BicicletaLogic.class.getPackage())
                 .addPackage(BicicletaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
@@ -99,7 +100,7 @@ public class BicicletaLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from EditorialEntity").executeUpdate();
+        em.createQuery("delete from BicicletaEntity").executeUpdate();
     }
 
     /**
@@ -177,5 +178,4 @@ public class BicicletaLogicTest {
     public void updateBicicletaTest() {
         Assert.assertTrue(true);
     }*/
-
 }
