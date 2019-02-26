@@ -68,6 +68,11 @@ public class CompradorPersistence {
     public CompradorEntity update(CompradorEntity pComprador){
         return em.merge(pComprador);
     }
+
+    public CompradorEntity findByLogin(String pLoggin)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 /**
     public Object findByName(String nombre) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
