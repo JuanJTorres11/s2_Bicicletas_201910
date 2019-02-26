@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.MarcaEntity;
 import java.io.Serializable;
 
 /**
@@ -18,11 +19,27 @@ public class MarcaDTO implements Serializable{
      */
     private String nombre;
     
+    private Long id;
+        
     /**
      * Constructor por defecto
      */
     public MarcaDTO(){
         
+    }
+    
+    public MarcaDTO(MarcaEntity marcaEntity){
+        if (marcaEntity != null) {
+            this.id = marcaEntity.getId();
+            this.nombre = marcaEntity.getNombre();
+        }
+    }
+    
+    public MarcaEntity toEntity(){
+        MarcaEntity marcaEntity = new MarcaEntity();
+        marcaEntity.setId(this.id);
+        marcaEntity.setNombre(this.nombre);
+        return marcaEntity;
     }
 
     /**
@@ -37,5 +54,19 @@ public class MarcaDTO implements Serializable{
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 }
