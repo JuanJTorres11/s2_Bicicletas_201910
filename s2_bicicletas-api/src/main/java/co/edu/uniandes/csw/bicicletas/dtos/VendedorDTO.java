@@ -13,8 +13,7 @@ import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
 public class VendedorDTO extends UsuarioDTO
 {
 
-    private String cedula;
-
+    
     private String telefono;
 
     public VendedorDTO()
@@ -26,24 +25,8 @@ public class VendedorDTO extends UsuarioDTO
         super(vendedor);
         if (vendedor != null)
         {
-            cedula = vendedor.getCedula();
+            telefono = vendedor.getTelefono();
         }
-    }
-
-    /**
-     * @return the cedula
-     */
-    public String getCedula()
-    {
-        return cedula;
-    }
-
-    /**
-     * @param cedula the cedula to set
-     */
-    public void setCedula(String cedula)
-    {
-        this.cedula = cedula;
     }
 
     /**

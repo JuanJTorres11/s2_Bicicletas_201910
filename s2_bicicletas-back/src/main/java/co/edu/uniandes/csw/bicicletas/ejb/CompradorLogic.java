@@ -8,8 +8,7 @@ package co.edu.uniandes.csw.bicicletas.ejb;
 import co.edu.uniandes.csw.bicicletas.entities.CompradorEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.CompradorPersistence;
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
-import java.util.logging.Level;
+import java.util.logging.*;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -21,9 +20,12 @@ import javax.inject.Inject;
 @Stateless
 public class CompradorLogic {
     
-    @Inject private CompradorPersistence cp;
+    @Inject 
+    private CompradorPersistence cp;
     
-    public CompradorEntity createCategoria(CompradorEntity pComprador) throws BusinessLogicException {
+     private static final Logger LOGGER = Logger.getLogger(CompradorLogic.class.getName());
+     
+    public CompradorEntity createComprador(CompradorEntity pComprador) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un comprador.");
         
         if(cp.findByName(pComprador.getNombre()) != null) {
@@ -38,7 +40,7 @@ public class CompradorLogic {
         return pComprador;
     }
     
-    public CompradorEntity getCategoria(Long pCompradorId) {
+    public CompradorEntity getComprador(Long pCompradorId) {
         LOGGER.log(Level.INFO, "Inicia proceso búsqueda de un comprador.");
         
         CompradorEntity ret = cp.encontrarEntity(pCompradorId);
@@ -47,16 +49,16 @@ public class CompradorLogic {
         return ret;
     }
     
-    public CompradorEntity getCategoriaPorNombre(String pLoggin) {
+    public CompradorEntity getCompradorPorNombre(String pLoggin) {
         LOGGER.log(Level.INFO, "Inicia proceso de búsqueda de un comprador por Loggin.");
         
-        CompradorEntity ret = cp.findByLogin(pLoggin);
+        CompradorEntity ret = cp.findByName(pLoggin);
         
         LOGGER.log(Level.INFO, "Termina proceso de búsqueda de un comprador por Loggin");
         return ret;
     }
     
-     public CompradorEntity updateCategoria(CompradorEntity pComprador) throws BusinessLogicException {
+     public CompradorEntity updateComprador(CompradorEntity pComprador) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar categoría.");
         
         if(cp.findByName(pComprador.getNombre()) != null) {
@@ -69,7 +71,7 @@ public class CompradorLogic {
         
         cp.crearEntity(pComprador);
         
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar categoría."); 
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar Comprador."); 
         
         return pComprador;
     }
