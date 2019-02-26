@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author Juan Lozano
  */
-public class CompradorDTO implements Serializable { // extend usuarioDetailDTO
+public class CompradorDTO extends UsuarioDTO implements Serializable{
     
     /**
      * Atributo que representa el nombre del comprador.
