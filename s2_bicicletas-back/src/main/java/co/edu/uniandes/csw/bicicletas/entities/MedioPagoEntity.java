@@ -21,9 +21,9 @@ public class MedioPagoEntity extends BaseEntity implements Serializable {
     private String fechaVencimiento;
     private String direccion;
     
-    @PodamExclude
-    @ManyToOne
-    private UsuarioEntity usuario;
+    //@PodamExclude
+    //@ManyToOne
+    //private UsuarioEntity usuario;
     
     public MedioPagoEntity() {
         

@@ -21,32 +21,13 @@ public class VendedorEntity extends UsuarioEntity
 
     private static final Logger LOGGER = Logger.getLogger(VendedorEntity.class.getName());
 
-    private String cedula;
-
     private String telefono;
 
-    // @PodamExclude
-    //@OneToMany (mappedBy = "vendedor")
+    //@PodamExclude
+    //@OneToMany(mappedBy = "vendedor")
     //private List<VentaEntity> ventas;
     public VendedorEntity()
     {
-
-    }
-
-    /**
-     * @return the cedula
-     */
-    public String getCedula()
-    {
-        return cedula;
-    }
-
-    /**
-     * @param cedula the cedula to set
-     */
-    public void setCedula(String cedula)
-    {
-        this.cedula = cedula;
     }
 
     /**
