@@ -18,6 +18,8 @@ public class MedioPagoEntity extends BaseEntity implements Serializable {
     private Integer codigoVerificacion;
     private String fechaVencimiento;
     private String direccion;
+    private String tipoTarjeta;
+    private String tipoCredito;
     
     public MedioPagoEntity() {
         
@@ -77,5 +79,33 @@ public class MedioPagoEntity extends BaseEntity implements Serializable {
      */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    /**
+     * @return the tipoTarjeta
+     */
+    public String getTipoTarjeta() {
+        return tipoTarjeta;
+    }
+
+    /**
+     * @param tipoTarjeta the tipoTarjeta to set
+     */
+    public void setTipoTarjeta(String tipoTarjeta) {
+        this.tipoTarjeta = tipoTarjeta;
+    }
+
+    /**
+     * @return the tipoCredito
+     */
+    public String getTipoCredito() {
+        return tipoCredito;
+    }
+
+    /**
+     * @param tipoCredito the tipoCredito to set
+     */
+    public void setTipoCredito(String tipoCredito) {
+        this.tipoCredito = tipoCredito;
     }
 }

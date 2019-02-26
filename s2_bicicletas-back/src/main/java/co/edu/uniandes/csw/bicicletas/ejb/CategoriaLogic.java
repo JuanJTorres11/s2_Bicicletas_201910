@@ -35,12 +35,18 @@ public class CategoriaLogic {
     public CategoriaEntity createCategoria(CategoriaEntity categoria) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear una categoría.");
         
+        /**
+         * Reglas de negocio
+         */
         if(cp.findByName(categoria.getNombre()) != null) {
             throw new BusinessLogicException("Ya existe una categoría con el nombre \"" + categoria.getNombre() + "\"");
-        } else if(categoria.getNombre().isEmpty()) {
+        }
+        
+        if(categoria.getNombre().isEmpty()) {
             throw new BusinessLogicException("El nombre de la categoría no puede estar vacío.");
         }
         
+        //Creación de la categoría
         cp.create(categoria);
         
         LOGGER.log(Level.INFO, "Termina proceso de crear una categoría.");
