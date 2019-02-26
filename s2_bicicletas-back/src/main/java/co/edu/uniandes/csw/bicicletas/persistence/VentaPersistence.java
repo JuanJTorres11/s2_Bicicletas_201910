@@ -74,8 +74,10 @@ public class VentaPersistence
     public VentaEntity update(VentaEntity pComprador){
         return em.merge(pComprador);
     }
-
+/**
     public VentaEntity findByName(Long id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+     */
+    
 }
