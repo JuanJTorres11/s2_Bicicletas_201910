@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.bicicletas.ejb;
 
 import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
-import co.edu.uniandes.csw.bicicletas.persistence.CompradorPersistence;
 import co.edu.uniandes.csw.bicicletas.persistence.VendedorPersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -86,25 +85,25 @@ public class VendedorLogic
      */
     public VendedorEntity findVendedor(Long id)
     {
-        LOGGER.log(Level.INFO, "Se buscará el vendedor con id " + id);
+        LOGGER.log(Level.INFO, "Se buscará el vendedor con id {}", id);
         VendedorEntity buscado = pVendedor.find(id);
         if (buscado == null)
         {
-            LOGGER.log(Level.SEVERE, "No existe el vendedor con id " + id);
+            LOGGER.log(Level.SEVERE, "No existe el vendedor con id {}", id);
         }
-        LOGGER.log(Level.INFO, "Se termina la busqueda del vendedor con id " + id);
+        LOGGER.log(Level.INFO, "Se termina la busqueda del vendedor con id {}", id);
         return buscado;
     }
 
     public VendedorEntity findByLogin(String login)
     {
-        LOGGER.log(Level.INFO, "Se buscará el vendedor con login " + login);
+        LOGGER.log(Level.INFO, "Se buscará el vendedor con login {0}", login);
         VendedorEntity buscado = pVendedor.findByLogin(login);
         if (buscado == null)
         {
-            LOGGER.log(Level.SEVERE, "No existe el vendedor con login " + login);
+            LOGGER.log(Level.SEVERE, "No existe el vendedor con login {0}", login);
         }
-        LOGGER.log(Level.INFO, "Se termina la busqueda del vendedor con login " + login);
+        LOGGER.log(Level.INFO, "Se termina la busqueda del vendedor con login {0}", login);
         return buscado;
     }
 
@@ -156,7 +155,7 @@ public class VendedorLogic
         {
             throw new BusinessLogicException("El nombre no es valido");
         }
-        if (nuevo.getTelefono() != null && !nuevo.getTelefono().equals(""))
+        if (nuevo.getTelefono() != null)
         {
             if (nuevo.getTelefono() < 3000000000L || nuevo.getTelefono() >= 4000000000L)
             {
@@ -180,8 +179,8 @@ public class VendedorLogic
      */
     public void deleteVendedor(Long id)
     {
-        LOGGER.log(Level.INFO, "se borrará el Vendedor con id " + id);
-        LOGGER.log(Level.INFO, "se borró al vendedor con id " + id);
+        LOGGER.log(Level.INFO, "se borrará el Vendedor con id {}", id);
+        LOGGER.log(Level.INFO, "se borró al vendedor con id {}",id);
         pVendedor.delete(id);
     }
 }
