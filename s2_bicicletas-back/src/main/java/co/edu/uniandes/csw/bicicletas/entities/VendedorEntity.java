@@ -5,11 +5,13 @@
  */
 package co.edu.uniandes.csw.bicicletas.entities;
 
+import co.edu.uniandes.csw.bicicletas.podam.TelefonoStrategy;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
+import uk.co.jemos.podam.common.PodamStrategyValue;
 
 /**
  *
@@ -21,11 +23,13 @@ public class VendedorEntity extends UsuarioEntity
 
     private static final Logger LOGGER = Logger.getLogger(VendedorEntity.class.getName());
 
-    private String telefono;
+    @PodamStrategyValue(TelefonoStrategy.class)
+    private Long telefono;
 
     //@PodamExclude
     //@OneToMany(mappedBy = "vendedor")
     //private List<VentaEntity> ventas;
+    
     public VendedorEntity()
     {
     }
@@ -33,7 +37,7 @@ public class VendedorEntity extends UsuarioEntity
     /**
      * @return the telefono
      */
-    public String getTelefono()
+    public Long getTelefono()
     {
         return telefono;
     }
@@ -41,7 +45,7 @@ public class VendedorEntity extends UsuarioEntity
     /**
      * @param telefono the telefono to set
      */
-    public void setTelefono(String telefono)
+    public void setTelefono(Long telefono)
     {
         this.telefono = telefono;
     }
