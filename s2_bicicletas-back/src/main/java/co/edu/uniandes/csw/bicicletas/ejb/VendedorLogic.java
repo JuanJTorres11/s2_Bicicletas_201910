@@ -29,14 +29,9 @@ public class VendedorLogic
      */
     private VendedorPersistence pVendedor;
 
-    @Inject
-    /**
-     * Persistencia de comprador para verificar que no hayan logins repetidos
-     */
-    private CompradorPersistence pComprador;
-
     /**
      * Se crea un nuevo vendedor
+     *
      * @param user usuaio a crear en el sistema
      * @return el usuario creado
      * @throws BusinessLogicException si se rompe alguna regla de negocio. <br>
@@ -44,7 +39,7 @@ public class VendedorLogic
      * 2.No hay otro vendedor o comprador con el mismo login. <br>
      * 3.El número de telefono de celular es valido (10 digitos y empieza por 3)
      */
-    VendedorEntity createVendedor(VendedorEntity user) throws BusinessLogicException
+    public VendedorEntity createVendedor(VendedorEntity user) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia proceso de creación de usuario ");
         if (user.getLogin() != null && !user.getLogin().equals(""))
@@ -52,11 +47,6 @@ public class VendedorLogic
             if (pVendedor.findByLogin(user.getLogin()) != null)
             {
                 throw new BusinessLogicException("Ya existe un vendedor con ese Login");
-            }
-
-            if (pComprador.findByLogin(user.getLogin()) != null)
-            {
-                throw new BusinessLogicException("Ya existe un comprador con ese Login");
             }
         }
         else
@@ -74,17 +64,9 @@ public class VendedorLogic
         }
         if (user.getTelefono() != null && !user.getTelefono().equals(""))
         {
-            if (user.getTelefono().length() != 10 || user.getTelefono().charAt(0) == '3')
+            if (user.getTelefono() < 3000000000L || user.getTelefono() >= 4000000000L)
             {
                 throw new BusinessLogicException("El telefono no es valido");
-            }
-            try
-            {
-                Long.parseLong(user.getTelefono());
-            }
-            catch (Exception e)
-            {
-                throw new BusinessLogicException("El telefono " + user.getTelefono() + " no es valido" + e.getMessage());
             }
         }
         else
@@ -98,6 +80,7 @@ public class VendedorLogic
 
     /**
      * Se retorna el vendedor con id asignado.
+     *
      * @param id ID del vendedor a buscar
      * @return vendedor con id o null si no existe.
      */
@@ -113,9 +96,21 @@ public class VendedorLogic
         return buscado;
     }
 
+    public VendedorEntity findByLogin(String login)
+    {
+        LOGGER.log(Level.INFO, "Se buscará el vendedor con login " + login);
+        VendedorEntity buscado = pVendedor.findByLogin(login);
+        if (buscado == null)
+        {
+            LOGGER.log(Level.SEVERE, "No existe el vendedor con login " + login);
+        }
+        LOGGER.log(Level.INFO, "Se termina la busqueda del vendedor con login " + login);
+        return buscado;
+    }
+
     /**
-     * Se retornan todos los vendedores.    
-    */
+     * Se retornan todos los vendedores.
+     */
     public List<VendedorEntity> findAllVendedores()
     {
         LOGGER.log(Level.INFO, "se buscarán todos los vendedores");
@@ -128,8 +123,9 @@ public class VendedorLogic
         return vendedores;
     }
 
-     /**
+    /**
      * Se actualiza un nuevo vendedor
+     *
      * @param nuevo usuaio a actualizar en el sistema
      * @return el usuario actualizado
      * @throws BusinessLogicException si se rompe alguna regla de negocio. <br>
@@ -145,11 +141,6 @@ public class VendedorLogic
             if (pVendedor.findByLogin(nuevo.getLogin()) != null)
             {
                 throw new BusinessLogicException("Ya existe un vendedor con ese Login");
-            }
-
-            if (pComprador.findByLogin(nuevo.getLogin()) != null)
-            {
-                throw new BusinessLogicException("Ya existe un comprador con ese Login");
             }
         }
         else
@@ -167,17 +158,9 @@ public class VendedorLogic
         }
         if (nuevo.getTelefono() != null && !nuevo.getTelefono().equals(""))
         {
-            if (nuevo.getTelefono().length() != 10 || nuevo.getTelefono().charAt(0) == '3')
+            if (nuevo.getTelefono() < 3000000000L || nuevo.getTelefono() >= 4000000000L)
             {
                 throw new BusinessLogicException("El telefono no es valido");
-            }
-            try
-            {
-                Long.parseLong(nuevo.getTelefono());
-            }
-            catch (Exception e)
-            {
-                throw new BusinessLogicException("El telefono " + nuevo.getTelefono() + " no es valido" + e.getMessage());
             }
         }
         else
@@ -189,12 +172,13 @@ public class VendedorLogic
         LOGGER.log(Level.INFO, "Se termina de actualizar el vendedor");
         return bd;
     }
-    
+
     /**
      * Se elimina al vendedor con id dado
+     *
      * @param id ID del vendedor a eliminar.
      */
-    public void deleteVendedor (Long id)
+    public void deleteVendedor(Long id)
     {
         LOGGER.log(Level.INFO, "se borrará el Vendedor con id " + id);
         LOGGER.log(Level.INFO, "se borró al vendedor con id " + id);
