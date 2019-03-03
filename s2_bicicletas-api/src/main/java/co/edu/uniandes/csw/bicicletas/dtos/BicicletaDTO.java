@@ -68,6 +68,18 @@ public class BicicletaDTO implements Serializable {
             }
         }
     }
+    
+    /**
+     * Transformar el DTO a una entidad
+     *
+     * @return La entidad que representa el libro.
+     */
+    public BicicletaEntity toEntity() {
+        BicicletaEntity bicicletaEntity = new BicicletaEntity();
+        
+        
+        return bicicletaEntity;
+    }
 
     /**
      * @return the descripcion
