@@ -121,7 +121,8 @@ public class CategoriaLogic {
     /**
      * Elimina la categoría con el id dado por parámetro.
      * @param categoriaId Id de la categoría. categoriaId > 0.
-     * @throws BusinessLogicException 1. Si hay bicicletas asociadas a la categoría.
+     * @throws BusinessLogicException   1. Si hay bicicletas asociadas a la categoría.
+     *                                  2. Si la categoría no existe.
      */
     public void deleteCategoria(Long categoriaId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Comienza proceso de eliminación de la categoría con id = {0}", categoriaId);
@@ -129,6 +130,8 @@ public class CategoriaLogic {
         List<BicicletaEntity> bicicletas = getCategoria(categoriaId).getBicicletas();
         if(bicicletas != null && !bicicletas.isEmpty()) {
             throw new BusinessLogicException("La categoría no puede ser eliminada porque tiene bicicletas asociadas.");
+        } else if(cp.find(categoriaId) == null) {
+            throw new BusinessLogicException("La categoría no existe.");
         }
         cp.delete(categoriaId);
         
