@@ -12,9 +12,7 @@ import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
  */
 public class VendedorDTO extends UsuarioDTO
 {
-
-    
-    private String telefono;
+    private Long telefono;
 
     public VendedorDTO()
     {
@@ -32,7 +30,7 @@ public class VendedorDTO extends UsuarioDTO
     /**
      * @return the telefono
      */
-    public String getTelefono()
+    public Long getTelefono()
     {
         return telefono;
     }
@@ -40,7 +38,7 @@ public class VendedorDTO extends UsuarioDTO
     /**
      * @param telefono the telefono to set
      */
-    public void setTelefono(String telefono)
+    public void setTelefono(Long telefono)
     {
         this.telefono = telefono;
     }
