@@ -41,7 +41,7 @@ public class ResenaResource {
 
     @GET
     @Path("{resenaId: \\d+}")
-    public ResenaDTO getResena(@PathParam("editorialsId") Long resenaId) {
+    public ResenaDTO getResena(@PathParam("resenaId") Long resenaId) {
         return null;
     }
     
@@ -52,13 +52,13 @@ public class ResenaResource {
      
     @PUT
     @Path("{resenaId: \\d+}")
-    public ResenaDTO updateResena(@PathParam("editorialsId") Long resenaId, ResenaDTO resena) {
+    public ResenaDTO updateResena(@PathParam("resenaId") Long resenaId, ResenaDTO resena) {
         return null;
     }
     
     @DELETE
     @Path("{resenaId: \\d+}")
-    public void deleteResena(@PathParam("editorialsId") Long resenaId) {
+    public void deleteResena(@PathParam("resenaId") Long resenaId) {
     }
     
   
