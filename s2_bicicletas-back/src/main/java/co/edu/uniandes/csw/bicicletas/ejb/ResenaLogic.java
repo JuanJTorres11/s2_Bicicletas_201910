@@ -91,7 +91,7 @@ public class ResenaLogic {
      * @param resenaEntity La Entidad con los cambios
      * @return La Entidad de la resena modificada
      */
-    public ResenaEntity ubdateBicicleta(ResenaEntity resenaEntity) {
+    public ResenaEntity ubdateResena(ResenaEntity resenaEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar una resena con id", resenaEntity.getId());
         ResenaEntity resenaE = persistence.update(resenaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar una resena con id", resenaEntity.getId());
