@@ -12,10 +12,17 @@ import java.io.Serializable;
  * @author Andres Donoso
  */
 public class MedioPagoDTO implements Serializable {
+    public final static String DEBITO = "Débito";
+    public final static String CREDITO = "Crédito";
+    public final static String VISA = "VISA";
+    public final static String MASTERCARD = "MASTERCARD";
+    
     private int numeroTarjeta;
     private int codigoVerificacion;
     private String vencimiento;
     private String direccion;
+    private String tipoTarjeta;
+    private String tipoCredito;
 
     public MedioPagoDTO() {
 
@@ -75,5 +82,33 @@ public class MedioPagoDTO implements Serializable {
      */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    /**
+     * @return the tipoTarjeta
+     */
+    public String getTipoTarjeta() {
+        return tipoTarjeta;
+    }
+
+    /**
+     * @param tipoTarjeta the tipoTarjeta to set
+     */
+    public void setTipoTarjeta(String tipoTarjeta) {
+        this.tipoTarjeta = tipoTarjeta;
+    }
+
+    /**
+     * @return the tipoCredito
+     */
+    public String getTipoCredito() {
+        return tipoCredito;
+    }
+
+    /**
+     * @param tipoCredito the tipoCredito to set
+     */
+    public void setTipoCredito(String tipoCredito) {
+        this.tipoCredito = tipoCredito;
     }
 }
