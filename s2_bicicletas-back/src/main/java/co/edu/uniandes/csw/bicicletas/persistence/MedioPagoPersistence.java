@@ -48,7 +48,7 @@ public class MedioPagoPersistence {
         return query.getResultList();
     }
     
-    public MedioPagoEntity findByNumber(Integer numero) {
+    public MedioPagoEntity findByNumber(Long numero) {
         LOGGER.log(Level.INFO, "Consultando medio de pago por número ", numero);
         // Se crea un query para buscar editoriales con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
         TypedQuery query = em.createQuery("Select e From MedioPagoEntity e where e.numeroTarjeta = :numero", MedioPagoEntity.class);

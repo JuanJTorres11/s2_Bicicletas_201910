@@ -5,7 +5,10 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.CategoriaEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,8 +21,28 @@ public class CategoriaDTO implements Serializable {
      */
     private String nombre;
     
+    /**
+     * Constructor vacío
+     */
     public CategoriaDTO() {
         
+    }
+    
+    /**
+     * Construye una categoría a partir de la entidad.
+     * @param categoria entidad de la categoria.
+     */
+    public CategoriaDTO(CategoriaEntity categoria) {
+        if(categoria != null) {
+            this.nombre = categoria.getNombre();
+        }
+    }
+    
+    public CategoriaEntity toEntity() {
+        CategoriaEntity categoria = new CategoriaEntity();
+        categoria.setNombre(this.nombre);
+        
+        return categoria;
     }
 
     /**
