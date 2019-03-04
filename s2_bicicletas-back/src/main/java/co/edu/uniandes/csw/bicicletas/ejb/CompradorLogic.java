@@ -23,7 +23,7 @@ public class CompradorLogic {
     @Inject 
     private CompradorPersistence cp;
     
-     private static final Logger LOGGER = Logger.getLogger(CompradorLogic.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(CompradorLogic.class.getName());
      
     public CompradorEntity createComprador(CompradorEntity pComprador) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un comprador.");
