@@ -70,7 +70,7 @@ public class BicicletaLogicTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(BicicletaEntity.class.getPackage())
-                .addPackage(BicicletaEntity.class.getPackage())
+                .addPackage(BicicletaLogic.class.getPackage())
                 .addPackage(BicicletaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
@@ -100,12 +100,12 @@ public class BicicletaLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from EditorialEntity").executeUpdate();
+        em.createQuery("delete from BicicletaEntity").executeUpdate();
     }
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
-     * pruebas.
+     * pruebas. 
      */
     private void insertData() {
         for (int i = 0; i < 3; i++) {
@@ -121,7 +121,7 @@ public class BicicletaLogicTest {
      * Prueba para crear una Bicicleta.
      *
      * @throws BusinessLogicException
-    
+     */
     @Test
     public void createBicicletaTest() throws BusinessLogicException {
         BicicletaEntity newEntity = factory.manufacturePojo(BicicletaEntity.class);
@@ -130,26 +130,26 @@ public class BicicletaLogicTest {
         BicicletaEntity entity = em.find(BicicletaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getReferencia(), entity.getReferencia());
-    } */
+    }
 
     /**
      * Prueba para crear una bicicleta con la misma referencia de otra Bicicleta
      * que ya existe.
      *
      * @throws BusinessLogicException
-     
+     */
     @Test(expected = BusinessLogicException.class)
     public void createBicicletaConMismaReferenciaTest() throws BusinessLogicException {
         BicicletaEntity newEntity = factory.manufacturePojo(BicicletaEntity.class);
         newEntity.setReferencia(data.get(0).getReferencia());
         bicicletaLogic.createBicicleta(newEntity);
-    }*/
+    }
 
     /**
      * Prueba para eliminar una Bicicleta.
      *
      * @throws BusinessLogicException
-     
+     */
     @Test
     public void deleteBicicletaTest() throws BusinessLogicException {
         BicicletaEntity entity = data.get(1);
@@ -158,24 +158,51 @@ public class BicicletaLogicTest {
         Assert.assertNull(deleted);
     }
 
+   
     @Test
     public void getBicicletaTest() {
-
+        BicicletaEntity entity = data.get(0);
+        BicicletaEntity resultado = bicicletaLogic.getBicicleta(entity.getId());
+        Assert.assertNotNull(resultado);
+        Assert.assertEquals(entity.getId(), resultado.getId());
     }
 
     @Test
     public void getBicicletasTest() {
-
+        List<BicicletaEntity> bicicletasEncontradas = bicicletaLogic.getBicicletas();
+        Assert.assertEquals(data.size(), bicicletasEncontradas.size());
+        boolean existe = false;
+        for (BicicletaEntity r : data) {
+            for (BicicletaEntity r2 : bicicletasEncontradas) {
+                if (r.getId().equals(r2.getId())) {
+                    existe = true;
+                    break;
+                }
+            }
+        }
+        Assert.assertTrue(existe);
     }
 
     @Test
     public void getBicicletaPorReferenciaTest() {
-
-    }
+      BicicletaEntity entity = data.get(0);
+      BicicletaEntity resultado = bicicletaLogic.getBicicletaPorReferencia(entity.getReferencia());
+      Assert.assertNotNull(resultado);
+      Assert.assertEquals(entity.getReferencia(), resultado.getReferencia());
+   }
 
     @Test
     public void updateBicicletaTest() {
-
-    }
-*/
+        Assert.assertTrue(true);
+        
+        Long idActualizar = data.get(0).getId();
+        BicicletaEntity nuevaB = factory.manufacturePojo(BicicletaEntity.class);
+        nuevaB.setId(idActualizar);
+        bicicletaLogic.ubdateBicicleta(nuevaB);
+        
+        BicicletaEntity recuperada = bicicletaLogic.getBicicleta(idActualizar);
+        
+        Assert.assertEquals(nuevaB.getPrecio(), recuperada.getPrecio());
+        Assert.assertEquals(nuevaB.getReferencia(), recuperada.getReferencia());
+       }
 }

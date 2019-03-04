@@ -5,28 +5,41 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
+
 /**
  * @author Juan José Torres
  */
 public class VendedorDTO extends UsuarioDTO
 {
-    private String cedula;
-    
-    public VendedorDTO () {
-        
+    private Long telefono;
+
+    public VendedorDTO()
+    {
+    }
+
+    public VendedorDTO(VendedorEntity vendedor)
+    {
+        super(vendedor);
+        if (vendedor != null)
+        {
+            telefono = vendedor.getTelefono();
+        }
     }
 
     /**
-     * @return the cedula
+     * @return the telefono
      */
-    public String getCedula() {
-        return cedula;
+    public Long getTelefono()
+    {
+        return telefono;
     }
 
     /**
-     * @param cedula the cedula to set
+     * @param telefono the telefono to set
      */
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
+    public void setTelefono(Long telefono)
+    {
+        this.telefono = telefono;
     }
 }

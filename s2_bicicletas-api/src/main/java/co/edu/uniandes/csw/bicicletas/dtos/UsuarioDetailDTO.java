@@ -11,7 +11,8 @@ import java.util.List;
  * @author Juan José Torres
  */
 public class UsuarioDetailDTO extends UsuarioDTO
-{    
+{
+
     private List<MedioPagoDTO> medioPagos;
 
     public UsuarioDetailDTO()
@@ -22,14 +23,16 @@ public class UsuarioDetailDTO extends UsuarioDTO
     /**
      * @return the medioPagos
      */
-    public List<MedioPagoDTO> getMedioPagos() {
+    public List<MedioPagoDTO> getMedioPagos()
+    {
         return medioPagos;
     }
 
     /**
      * @param medioPagos the medioPagos to set
      */
-    public void setMedioPagos(List<MedioPagoDTO> medioPagos) {
+    public void setMedioPagos(List<MedioPagoDTO> medioPagos)
+    {
         this.medioPagos = medioPagos;
     }
 }

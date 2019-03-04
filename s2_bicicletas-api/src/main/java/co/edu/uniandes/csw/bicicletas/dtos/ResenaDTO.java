@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.ResenaEntity;
 import java.io.Serializable;
 
 /**
@@ -12,21 +13,31 @@ import java.io.Serializable;
  * @author Andrea
  */
 public class ResenaDTO implements Serializable {
-    
+
     private Long id;
-    
+
     private String descripcion;
-    
+
     private Integer calificacion;
 
     private String titulo;
-    
-     /**
+
+    /**
      * Constructor por defecto
      */
-    
-    public ResenaDTO(){
-        
+    public ResenaDTO() {
+        //constructor vacio
+    }
+
+    public ResenaDTO(ResenaEntity resenaEntitiy) {
+
+        if (resenaEntitiy != null) {
+            this.calificacion = resenaEntitiy.getCalificacion();
+            this.descripcion = resenaEntitiy.getDescripcion();
+            this.id = resenaEntitiy.getId();
+            this.titulo = resenaEntitiy.getTitulo();
+        }
+
     }
 
     /**
@@ -43,7 +54,6 @@ public class ResenaDTO implements Serializable {
         this.descripcion = descripcion;
     }
 
-   
     /**
      * @return the titulo
      */

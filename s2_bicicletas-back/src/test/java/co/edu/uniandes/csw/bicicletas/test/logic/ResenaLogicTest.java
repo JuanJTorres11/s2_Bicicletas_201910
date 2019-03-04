@@ -70,7 +70,7 @@ public class ResenaLogicTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(ResenaEntity.class.getPackage())
-                .addPackage(ResenaEntity.class.getPackage())
+                .addPackage(ResenaLogic.class.getPackage())
                 .addPackage(ResenaPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
@@ -100,7 +100,7 @@ public class ResenaLogicTest {
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from EditorialEntity").executeUpdate();
+        em.createQuery("delete from ResenaEntity").executeUpdate();
     }
 
     /**
@@ -115,14 +115,12 @@ public class ResenaLogicTest {
             data.add(entity);
         }
     }
-    
-    
 
     /**
      * Prueba para crear una Bicicleta.
      *
      * @throws BusinessLogicException
-    
+     */
     @Test
     public void createResenaTest() throws BusinessLogicException {
         ResenaEntity newEntity = factory.manufacturePojo(ResenaEntity.class);
@@ -130,52 +128,81 @@ public class ResenaLogicTest {
         Assert.assertNotNull(result);
         ResenaEntity entity = em.find(ResenaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
-    } */
+    }
 
     /**
      * Prueba para crear una bicicleta con la misma referencia de otra Bicicleta
      * que ya existe.
      *
      * @throws BusinessLogicException
-     
+     */
     @Test(expected = BusinessLogicException.class)
     public void createResenaConMismoIdTest() throws BusinessLogicException {
         ResenaEntity newEntity = factory.manufacturePojo(ResenaEntity.class);
         newEntity.setId(data.get(0).getId());
         resenaLogic.createResena(newEntity);
-    }*/
+    }
 
     /**
      * Prueba para eliminar una Bicicleta.
      *
      * @throws BusinessLogicException
-    
+     */
     @Test
     public void deleteResenaTest() throws BusinessLogicException {
         ResenaEntity entity = data.get(1);
         resenaLogic.deleteResena(entity.getId());
         ResenaEntity deleted = em.find(ResenaEntity.class, entity.getId());
         Assert.assertNull(deleted);
-    } */
+    }
 
     /**
-     * 
-     
+     * Prueba para obtener una resena por id
+     */
     @Test
     public void getResenaTest() {
 
-    }*/
+        ResenaEntity entity = data.get(0);
+        ResenaEntity resultado = resenaLogic.getResena(entity.getId());
+        Assert.assertNotNull(resultado);
+        Assert.assertEquals(entity.getId(), resultado.getId());
+    }
 
     /**
+     * Prueba para obtener todas las resenas
+     */
     @Test
     public void getResenasTest() {
 
+        List<ResenaEntity> resenasEncontradas = resenaLogic.getResenas();
+        Assert.assertEquals(data.size(), resenasEncontradas.size());
+        boolean existe = false;
+        for (ResenaEntity r : data) {
+            for (ResenaEntity r2 : resenasEncontradas) {
+                if (r.getId().equals(r2.getId())) {
+                    existe = true;
+                    break;
+                }
+            }
+        }
+        Assert.assertTrue(existe);
     }
 
+    /**
+     * Prueba para actualizar una resena
+     */
     @Test
     public void updateResenaTest() {
-
+        Long idActualizar = data.get(0).getId();
+        ResenaEntity nuevaR = factory.manufacturePojo(ResenaEntity.class);
+        nuevaR.setId(idActualizar);
+        resenaLogic.ubdateResena(nuevaR);
+        
+        ResenaEntity recuperada = resenaLogic.getResena(idActualizar);
+        
+        Assert.assertEquals(nuevaR.getCalificacion(), recuperada.getCalificacion());
+        Assert.assertEquals(nuevaR.getDescripcion(), recuperada.getDescripcion());
+        Assert.assertEquals(nuevaR.getTitulo(), recuperada.getTitulo());
+        
     }
-    
-    */
 }

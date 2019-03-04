@@ -11,12 +11,14 @@ import co.edu.uniandes.csw.bicicletas.persistence.ResenaPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
  *
  * @author Andrea
  */
+@Stateless
 public class ResenaLogic {
 
     private static final Logger LOGGER = Logger.getLogger(ResenaLogic.class.getName());
@@ -89,7 +91,7 @@ public class ResenaLogic {
      * @param resenaEntity La Entidad con los cambios
      * @return La Entidad de la resena modificada
      */
-    public ResenaEntity ubdateBicicleta(ResenaEntity resenaEntity) {
+    public ResenaEntity ubdateResena(ResenaEntity resenaEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar una resena con id", resenaEntity.getId());
         ResenaEntity resenaE = persistence.update(resenaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar una resena con id", resenaEntity.getId());

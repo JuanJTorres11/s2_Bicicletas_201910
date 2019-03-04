@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.ejb;
 
+import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import co.edu.uniandes.csw.bicicletas.entities.CategoriaEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.CategoriaPersistence;
@@ -34,12 +35,18 @@ public class CategoriaLogic {
     public CategoriaEntity createCategoria(CategoriaEntity categoria) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear una categoría.");
         
+        /**
+         * Reglas de negocio
+         */
         if(cp.findByName(categoria.getNombre()) != null) {
             throw new BusinessLogicException("Ya existe una categoría con el nombre \"" + categoria.getNombre() + "\"");
-        } else if(categoria.getNombre().isEmpty()) {
+        }
+        
+        if(categoria.getNombre().isEmpty()) {
             throw new BusinessLogicException("El nombre de la categoría no puede estar vacío.");
         }
         
+        //Creación de la categoría
         cp.create(categoria);
         
         LOGGER.log(Level.INFO, "Termina proceso de crear una categoría.");
@@ -109,5 +116,25 @@ public class CategoriaLogic {
         LOGGER.log(Level.INFO, "Termina proceso de actualizar categoría."); 
         
         return categoria;
+    }
+    
+    /**
+     * Elimina la categoría con el id dado por parámetro.
+     * @param categoriaId Id de la categoría. categoriaId > 0.
+     * @throws BusinessLogicException   1. Si hay bicicletas asociadas a la categoría.
+     *                                  2. Si la categoría no existe.
+     */
+    public void deleteCategoria(Long categoriaId) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Comienza proceso de eliminación de la categoría con id = {0}", categoriaId);
+        
+        List<BicicletaEntity> bicicletas = getCategoria(categoriaId).getBicicletas();
+        if(bicicletas != null && !bicicletas.isEmpty()) {
+            throw new BusinessLogicException("La categoría no puede ser eliminada porque tiene bicicletas asociadas.");
+        } else if(cp.find(categoriaId) == null) {
+            throw new BusinessLogicException("La categoría no existe.");
+        }
+        cp.delete(categoriaId);
+        
+        LOGGER.log(Level.INFO, "Termina proceso de eliminación de la categoría con id = {0}", categoriaId);
     }
 }

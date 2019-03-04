@@ -5,7 +5,10 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
+import co.edu.uniandes.csw.bicicletas.entities.ResenaEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +21,19 @@ public class BicicletaDetailDTO extends BicicletaDTO implements Serializable{
     
     
     public BicicletaDetailDTO(){
+       //constructor vacio
+    }
+    
+    public BicicletaDetailDTO(BicicletaEntity bikeEntity){
         
+        super(bikeEntity);
+        if(bikeEntity.getResenas() != null){
+            resenas = new ArrayList<ResenaDTO>();
+            
+            for(ResenaEntity rEntity : bikeEntity.getResenas()){
+                resenas.add(new ResenaDTO(rEntity));
+            }
+        }
     }
 
     /**

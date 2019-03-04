@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -16,30 +15,54 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class MedioPagoEntity extends BaseEntity implements Serializable {
-    private Integer numeroTarjeta;
+    private Long numeroTarjeta;
     private Integer codigoVerificacion;
     private String fechaVencimiento;
     private String direccion;
+    private String tipoTarjeta;
+    private String tipoCredito;
     
-    @PodamExclude
-    @ManyToOne
-    private UsuarioEntity usuario;
+    /*@PodamExclude
+    @*/
     
+    /**
+     * Crea un medio de pago vacío.
+     */
     public MedioPagoEntity() {
         
     }
 
     /**
+     * Crea un medio de pago con la información pasada por parámetro.
+     * @param numeroTarjeta Numero de la tarjeta.
+     * @param codigoVerificacion Código de verificación. null si no tiene.
+     * @param fechaVencimiento Fecha de vencimiento. Formato: MM/YY
+     * @param direccion Dirección de facturación
+     * @param tipoTarjeta Tipo de tarjeta. tipoTarjeta = {CREDITO, DEBITO}
+     * @param tipoCredito Tipo de crédito. tipoCredito = {VISA, MASTERCARD}. null si no es crédito.
+     */
+    public MedioPagoEntity(Long numeroTarjeta, Integer codigoVerificacion, String fechaVencimiento, String direccion, String tipoTarjeta, String tipoCredito) {
+        this.numeroTarjeta = numeroTarjeta;
+        this.codigoVerificacion = codigoVerificacion;
+        this.fechaVencimiento = fechaVencimiento;
+        this.direccion = direccion;
+        this.tipoTarjeta = tipoTarjeta;
+        this.tipoCredito = tipoCredito;
+    }
+    
+    
+
+    /**
      * @return the numeroTarjeta
      */
-    public Integer getNumeroTarjeta() {
+    public Long getNumeroTarjeta() {
         return numeroTarjeta;
     }
 
     /**
      * @param numeroTarjeta the numeroTarjeta to set
      */
-    public void setNumeroTarjeta(Integer numeroTarjeta) {
+    public void setNumeroTarjeta(Long numeroTarjeta) {
         this.numeroTarjeta = numeroTarjeta;
     }
 
@@ -83,5 +106,33 @@ public class MedioPagoEntity extends BaseEntity implements Serializable {
      */
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    /**
+     * @return the tipoTarjeta
+     */
+    public String getTipoTarjeta() {
+        return tipoTarjeta;
+    }
+
+    /**
+     * @param tipoTarjeta the tipoTarjeta to set
+     */
+    public void setTipoTarjeta(String tipoTarjeta) {
+        this.tipoTarjeta = tipoTarjeta;
+    }
+
+    /**
+     * @return the tipoCredito
+     */
+    public String getTipoCredito() {
+        return tipoCredito;
+    }
+
+    /**
+     * @param tipoCredito the tipoCredito to set
+     */
+    public void setTipoCredito(String tipoCredito) {
+        this.tipoCredito = tipoCredito;
     }
 }
