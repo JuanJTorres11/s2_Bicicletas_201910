@@ -37,10 +37,8 @@ public class BicicletaLogic {
     public BicicletaEntity createBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación de la bicicleta");
 
-        // Verifica la regla de negocio que dice que no puede haber dos biciletas con la misma referencia
-        if (persistence.findByReferencia(bicicletaEntity.getReferencia()) != null) {
-            throw new BusinessLogicException("Ya existe una Bicicletaa con la referencia \"" + bicicletaEntity.getReferencia() + "\"");
-        }
+        //Verifica las reglas de negocio
+        verificarReglasNegocioBicicleta(bicicletaEntity);
 
         // Invoca la persistencia para crear la bicileta
         persistence.create(bicicletaEntity);
@@ -112,6 +110,45 @@ public class BicicletaLogic {
         BicicletaEntity bikeE = persistence.update(bicicletaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar una bicicleta con id", bicicletaEntity.getId());
         return bikeE;
+    }
+
+    public void verificarReglasNegocioBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
+        // Verifica la regla de negocio: la misma referencia no puede ser null ni cadena vacia
+        if (bicicletaEntity.getReferencia() == null) {
+            throw new BusinessLogicException("La referencia no es valida\"" + bicicletaEntity.getReferencia() + "\"");
+        }
+
+        // Verifica la regla de negocio: no puede haber dos biciletas con la misma referencia
+        if (persistence.findByReferencia(bicicletaEntity.getReferencia()) != null) {
+            throw new BusinessLogicException("Ya existe una Bicicletaa con la referencia \"" + bicicletaEntity.getReferencia() + "\"");
+        }
+        
+         if(bicicletaEntity.getAlbum() == null || bicicletaEntity.getAlbum().length == 0){
+            throw new BusinessLogicException("La bicicleta debe tener al menos 1 foto \"" );
+        }
+
+
+        //Verifica la regla de negocio: el precio no puede ser negativo
+        //if (bicicletaEntity.getPrecio() < 0.0) {
+          //  throw new BusinessLogicException("El precio no puede ser un valor negativo \"" + bicicletaEntity.getPrecio() + "\"");
+        //}
+
+        //Verifica la regla de negocio: la marca no puede ser null
+        //if (bicicletaEntity.getMarca() == null) {
+          //  throw new BusinessLogicException("La bicicleta tiene que tener una marca \"");
+        //}
+
+        //Verifica la regla de negocio: la categoria no puede ser null
+        //if (bicicletaEntity.getCategoria() == null) {
+          //  throw new BusinessLogicException("La bicicleta tiene que tener una categoria \"");
+        //}
+
+        //Verifica la regla de negocio: el stock no puede ser menor a 0
+        //if (bicicletaEntity.getStock() < 0) {
+          //  throw new BusinessLogicException("El stock no puede ser negativo \"" + bicicletaEntity.getStock() + "\"");
+        //}
+        //Verifica la regla de negocio: debe tener al menos 1 foto
+       
     }
 
 }
