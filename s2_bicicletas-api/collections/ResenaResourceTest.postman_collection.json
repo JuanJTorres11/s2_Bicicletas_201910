@@ -1,0 +1,643 @@
+{
+	"info": {
+		"_postman_id": "7269257d-205f-4219-aad1-b757ed7eb155",
+		"name": "ResenaResourceTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear Bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "595bf9b2-68c5-4ad4-a992-9f16a7bd1483",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_b\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"name": "Content-Type",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descripcion\": \"Soy la más veloz\",\n\t\"referencia\": \"ABC123\",\n\t\"precio\": 20000.0,\n\t\"usada\": false,\n\t\"stock\": 123,\n\t\"album\": [\"ruta1\", \"ruta2\"],\n\t\"categoria\": {\"nombre\": \"Montaña\"}\n\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas"
+					],
+					"query": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crearle una reseña a una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e1b6bba-fcf9-42a7-83aa-73b7b98b2506",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_r\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descripcion\": \"Me encanta\",\n\t\"calificacion\": 1,\n\t\"titulo\": \"la odio\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_id_b}}/resenas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_id_b}}",
+						"resenas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crearle una reseña 2 a una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5c99e9a8-a430-4fa1-8a16-0ec656599273",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_r2\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descripcion\": \"Por qué diablos no funciona\",\n\t\"calificacion\": 5,\n\t\"titulo\": \"Ahhhh\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_id_b}}/resenas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_id_b}}",
+						"resenas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crearle una reseña a una bicicleta que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bdb8fdb9-6c07-4a21-9837-379dc6800566",
+						"exec": [
+							"tests[\"No se puede asociar una reseña a una bicicleta que no existe.\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /bicicletas/0/resenas no existe\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descripcion\": \"Por qué diablos no funciona\",\n\t\"calificacion\": 5,\n\t\"titulo\": \"No existes\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/0/resenas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"0",
+						"resenas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener las reseñas de una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c23d9d37-703a-4ddb-90ad-eed995152b5d",
+						"exec": [
+							"var data= JSON.parse(responseBody);\r",
+							"tests[\"no genera error en el Get All\"] = responseCode.code === 200;\r",
+							"tests[\"resenas count\"] = data.length >= 0;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_id_b}}/resenas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_id_b}}",
+						"resenas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una reseña de una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c23d9d37-703a-4ddb-90ad-eed995152b5d",
+						"exec": [
+							"console.log(responseBody);\r",
+							"var data = JSON.parse(responseBody);\r",
+							"tests[\"no genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_id_b}}/resenas/{{new_id_r}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_id_b}}",
+						"resenas",
+						"{{new_id_r}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editarle una reseña a una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dfaeff01-65a3-4c24-aca2-ccbff6565134",
+						"exec": [
+							"console.log(responseBody);\r",
+							"var data = JSON.parse(responseBody);\r",
+							"tests[\"no genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descripcion\": \"Editando reseña\",\n\t\"calificacion\": 1,\n\t\"titulo\": \"la odio\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_id_b}}/resenas/{{new_id_r}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_id_b}}",
+						"resenas",
+						"{{new_id_r}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editarle una reseña que no existe a una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "83b9c24a-ade3-47ee-92e3-576a63d04634",
+						"exec": [
+							"tests[\"No se puede editar un review que no existe.\"] = responseCode.code === 404;\r",
+							"let id = pm.variables.get(\"new_id_b\");\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /resenas/0de la bicicleta \" + id+ \" no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descripcion\": \"Editando reseña2\",\n\t\"calificacion\": 1,\n\t\"titulo\": \"la odio\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_id_b}}/resenas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_id_b}}",
+						"resenas",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editarle una reseña a una bicicleta que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0416de36-ef8f-41e6-910d-fd251b883137",
+						"exec": [
+							"tests[\"No se puede editar un resena de una bicicleta que no existe.\"] = responseCode.code === 404;\r",
+							"let id = pm.variables.get(\"new_id_b\");\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /bicicletas/0/resenas no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descripcion\": \"Editando reseña3\",\n\t\"calificacion\": 1,\n\t\"titulo\": \"la odio\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/0/resenas/{{new_id_r}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"0",
+						"resenas",
+						"{{new_id_r}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle una reseña que no existe en una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d1136442-3bc0-46e4-8d38-0e9a22f2a8dd",
+						"exec": [
+							"tests[\"No se puede borrar una resena que no existe.\"] = responseCode.code === 404;\r",
+							"let id = pm.variables.get(\"new_id_b\");\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /bicicletas/\"+id+\"/resenas/0no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_id_b}}/resenas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_id_b}}",
+						"resenas",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " Borrarle una reseña una bicicleta que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1d6add19-908e-48d1-9b2f-d9ad8da4d36f",
+						"exec": [
+							"tests[\"No se puede borrar un review sobre un book que no existe.\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /bicicletas/0/resenas no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/0/resenas/{{new_id_r}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"0",
+						"resenas",
+						"{{new_id_r}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle una reseña a una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4d18541b-58fc-4893-a171-beaba28d29c7",
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_id_b}}/resenas/{{new_id_r}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_id_b}}",
+						"resenas",
+						"{{new_id_r}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrarle una reseña 2 a una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e81090e4-a203-451c-944a-4db2d7a2cc3d",
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_id_b}}/resenas/{{new_id_r2}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_id_b}}",
+						"resenas",
+						"{{new_id_r2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33fd2ae1-eaed-478c-b0aa-48df75723420",
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_id_b}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_id_b}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

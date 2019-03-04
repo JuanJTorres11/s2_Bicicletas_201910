@@ -143,6 +143,14 @@ public class BicicletaResource {
         LOGGER.info("BicicletaResource deleteBicicleta: output: void");
     }
     
+    @Path("{bicicletaId: \\d+}/resenas")
+    public Class<ResenaResource> getResenaResource(@PathParam("bicicletaId") Long bicicletaId) {
+        if (logic.getBicicleta(bicicletaId) == null) {
+            throw new WebApplicationException("El recurso /bicicletas/" + bicicletaId + "/resenas no existe.", 404);
+        }
+        return ResenaResource.class;
+    }
+    
      /**
      * Convierte una lista de entidades a DTO.
      *

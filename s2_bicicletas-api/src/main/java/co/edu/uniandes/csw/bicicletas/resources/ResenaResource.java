@@ -126,7 +126,7 @@ public class ResenaResource {
         LOGGER.log(Level.INFO, "ResenaResource deleteResena: input: {0}", resenaId);
         ResenaEntity entity = logic.getResena(bicicletaId, resenaId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /bicicletas/" + bicicletaId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /bicicletas/" + bicicletaId + "/resenas/" + resenaId+ "no existe.", 404);
         }
         logic.deleteResena(bicicletaId, resenaId);
         LOGGER.info("ResenaResource deleteResena: output: void");
