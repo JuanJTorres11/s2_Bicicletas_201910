@@ -7,14 +7,18 @@ package co.edu.uniandes.csw.bicicletas.test.persistence;
 
 import co.edu.uniandes.csw.bicicletas.entities.ResenaEntity;
 import co.edu.uniandes.csw.bicicletas.persistence.ResenaPersistence;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 import junit.framework.Assert;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -28,10 +32,15 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 public class ResenaPersistenceTest {
 
     @Inject
-    private ResenaPersistence cp;
+    private ResenaPersistence persistence;
 
     @PersistenceContext
     private EntityManager em;
+    
+    @Inject
+    UserTransaction utx;
+
+    private List<ResenaEntity> data = new ArrayList<>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -41,17 +50,98 @@ public class ResenaPersistenceTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
+    
+     /**
+     * Configuración inicial de la prueba.
+     */
+    @Before
+    public void configTest() {
+        try {
+            utx.begin();
+            em.joinTransaction();
+            clearData();
+            insertData();
+            utx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Limpia las tablas que están implicadas en la prueba.
+     *
+     *
+     */
+    private void clearData() {
+        em.createQuery("delete from ResenaEntity").executeUpdate();
+    }
+
+    /**
+     * Inserta los datos iniciales para el correcto funcionamiento de las
+     * pruebas.
+     *
+     *
+     */
+    private void insertData() {
+        PodamFactory factory = new PodamFactoryImpl();
+        for (int i = 0; i < 3; i++) {
+
+            ResenaEntity entity = factory.manufacturePojo(ResenaEntity.class);
+
+            em.persist(entity);
+
+            data.add(entity);
+        }
+    }
 
     @Test
     public void createTest() {
         PodamFactory factory = new PodamFactoryImpl();
         ResenaEntity newEntity = factory.manufacturePojo(ResenaEntity.class);
-        ResenaEntity ee = cp.create(newEntity);
+        ResenaEntity ee = persistence.create(newEntity);
 
         Assert.assertNotNull(ee);
         ResenaEntity entity = em.find(ResenaEntity.class, ee.getId());
 
         Assert.assertEquals(newEntity.getTitulo(), entity.getTitulo());
+    }
+    
+    
+    @Test
+    public void findTest(){
+        ResenaEntity encontrado = persistence.find(data.get(0).getId());
+        Assert.assertNotNull(encontrado);
+        Assert.assertEquals(data.get(0).getId(), encontrado.getId());
+
+    }
+    
+    @Test
+    public void updateTest(){
+        PodamFactory factory = new PodamFactoryImpl();
+
+        Long idActualizar = data.get(0).getId();
+        ResenaEntity nuevaR = factory.manufacturePojo(ResenaEntity.class);
+        nuevaR.setId(idActualizar);
+        persistence.update(nuevaR);
+
+        ResenaEntity recuperada = persistence.find(idActualizar);
+
+        Assert.assertEquals(nuevaR.getId(), recuperada.getId());
+        Assert.assertEquals(nuevaR.getDescripcion(), recuperada.getDescripcion());
+    }
+    
+    @Test
+    public void deleteTest(){
+        ResenaEntity eliminar = data.get(0);
+        persistence.delete(eliminar.getId());
+        ResenaEntity eliminado = persistence.find(eliminar.getId());
+        Assert.assertNull(eliminado);
+
     }
 
 }
