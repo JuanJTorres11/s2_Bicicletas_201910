@@ -29,7 +29,6 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author Andrea
  */
-@Path("resenas")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
@@ -53,10 +52,10 @@ public class ResenaResource {
      * Error de lógica que se genera cuando ya existe la reseñaa
      */
     @POST
-    public ResenaDTO createResena(ResenaDTO resena) throws BusinessLogicException {
+    public ResenaDTO createResena(@PathParam("bicicletaId") Long bicicletaId, ResenaDTO resena) throws BusinessLogicException {
 
         LOGGER.log(Level.INFO, "ResenaResource createResena: input: {0}", resena);
-        ResenaEntity entity = logic.createResena(resena.toEntity());
+        ResenaEntity entity = logic.createResena(bicicletaId, resena.toEntity());
         ResenaDTO nuevaResenaDTO = new ResenaDTO(entity);
         LOGGER.log(Level.INFO, "ResenaResource createResena: output: {0}", nuevaResenaDTO);
 
@@ -65,17 +64,18 @@ public class ResenaResource {
 
     /**
      * 
+     * @param bicicletaId
      * @param resenaId
      * @return 
      */
     @GET
     @Path("{resenaId: \\d+}")
-    public ResenaDTO getResena(@PathParam("resenaId") Long resenaId) {
+    public ResenaDTO getResena(@PathParam("bicicletaId") Long bicicletaId, @PathParam("resenaId") Long resenaId) {
         LOGGER.log(Level.INFO, "ResenaResource getResena: input: {0}", resenaId);
-        ResenaEntity entity = logic.getResena(resenaId);
+        ResenaEntity entity = logic.getResena(bicicletaId, resenaId);
 
         if (entity == null) {
-            throw new WebApplicationException("El recurso /resenas/" + resenaId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /resenas/" + resenaId + "de la bicicleta " + bicicletaId+ " no existe.", 404);
         }
         ResenaDTO resenaDTO = new ResenaDTO(entity);
         LOGGER.log(Level.INFO, "ResenaResource getResena: output: {0}", resenaDTO);
@@ -88,28 +88,29 @@ public class ResenaResource {
      * @return 
      */
     @GET
-    public List<ResenaDTO> getResenas() {
+    public List<ResenaDTO> getResenas(@PathParam("bicicletaId") Long bicicletaId) {
          LOGGER.info("ResenaResource getResenas: input: void");
-        List<ResenaDTO> listaBooks = listEntity2DetailDTO(logic.getResenas());
+        List<ResenaDTO> listaBooks = listEntity2DetailDTO(logic.getResenas(bicicletaId));
         LOGGER.log(Level.INFO, "ResenaResource getResenas: output: {0}", listaBooks);
         return listaBooks;
     }
     
-    /**
-     * 
-     * @param resenaId
-     * @param resena
-     * @return 
-     */
+   /**
+    * 
+    * @param bicicletaId
+    * @param resenaId
+    * @param resena
+    * @return 
+    */
     @PUT
     @Path("{resenaId: \\d+}")
-    public ResenaDTO updateResena(@PathParam("resenaId") Long resenaId, ResenaDTO resena) {
+    public ResenaDTO updateResena(@PathParam("bicicletaId") Long bicicletaId, @PathParam("resenaId") Long resenaId, ResenaDTO resena) {
         LOGGER.log(Level.INFO, "ResenaResource updateResena: input: id: {0} , book: {1}", new Object[]{resenaId, resena});
         resena.setId(resenaId);
-        if (logic.getResena(resenaId) == null) {
-            throw new WebApplicationException("El recurso /books/" + resenaId + " no existe.", 404);
-        }
-        ResenaDTO detailDTO = new ResenaDTO(logic.ubdateResena(resena.toEntity()));
+        if (logic.getResena(bicicletaId, resenaId) == null) {
+             throw new WebApplicationException("El recurso /resenas/" + resenaId + "de la bicicleta " + bicicletaId+ " no existe.", 404);
+       }
+        ResenaDTO detailDTO = new ResenaDTO(logic.ubdateResena(bicicletaId, resena.toEntity()));
         LOGGER.log(Level.INFO, "ResenaResource updateResena: output: {0}", detailDTO);
         return detailDTO;  
     }
@@ -120,14 +121,14 @@ public class ResenaResource {
      */
     @DELETE
     @Path("{resenaId: \\d+}")
-    public void deleteResena(@PathParam("resenaId") Long resenaId) {
+    public void deleteResena(@PathParam("bicicletaId") Long bicicletaId, @PathParam("resenaId") Long resenaId) throws BusinessLogicException {
         
         LOGGER.log(Level.INFO, "ResenaResource deleteResena: input: {0}", resenaId);
-        ResenaEntity entity = logic.getResena(resenaId);
+        ResenaEntity entity = logic.getResena(bicicletaId, resenaId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /books/" + resenaId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /bicicletas/" + bicicletaId + " no existe.", 404);
         }
-        logic.deleteResena(resenaId);
+        logic.deleteResena(bicicletaId, resenaId);
         LOGGER.info("ResenaResource deleteResena: output: void");
     }
     

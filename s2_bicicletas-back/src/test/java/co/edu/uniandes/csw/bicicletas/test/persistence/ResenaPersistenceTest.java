@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.test.persistence;
 
+import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import co.edu.uniandes.csw.bicicletas.entities.ResenaEntity;
 import co.edu.uniandes.csw.bicicletas.persistence.ResenaPersistence;
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ public class ResenaPersistenceTest {
     UserTransaction utx;
 
     private List<ResenaEntity> data = new ArrayList<>();
+    private List<BicicletaEntity> dataBikes = new ArrayList<>();
+
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -79,6 +82,7 @@ public class ResenaPersistenceTest {
      */
     private void clearData() {
         em.createQuery("delete from ResenaEntity").executeUpdate();
+        em.createQuery("delete from BicicletaEntity").executeUpdate();
     }
 
     /**
@@ -90,13 +94,20 @@ public class ResenaPersistenceTest {
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
+            BicicletaEntity entityB = factory.manufacturePojo(BicicletaEntity.class);
+            em.persist(entityB);
+            dataBikes.add(entityB);
+        }
+        for (int i = 0; i < 3; i++) {
 
             ResenaEntity entity = factory.manufacturePojo(ResenaEntity.class);
-
+            if(i == 0)
+                entity.setBicicleta(dataBikes.get(0));
             em.persist(entity);
-
-            data.add(entity);
+          data.add(entity);
         }
+        
+        
     }
 
     @Test
@@ -114,7 +125,7 @@ public class ResenaPersistenceTest {
     
     @Test
     public void findTest(){
-        ResenaEntity encontrado = persistence.find(data.get(0).getId());
+        ResenaEntity encontrado = persistence.find(dataBikes.get(0).getId(), data.get(0).getId());
         Assert.assertNotNull(encontrado);
         Assert.assertEquals(data.get(0).getId(), encontrado.getId());
 
@@ -129,7 +140,7 @@ public class ResenaPersistenceTest {
         nuevaR.setId(idActualizar);
         persistence.update(nuevaR);
 
-        ResenaEntity recuperada = persistence.find(idActualizar);
+        ResenaEntity recuperada = em.find(ResenaEntity.class, idActualizar);
 
         Assert.assertEquals(nuevaR.getId(), recuperada.getId());
         Assert.assertEquals(nuevaR.getDescripcion(), recuperada.getDescripcion());
@@ -139,7 +150,7 @@ public class ResenaPersistenceTest {
     public void deleteTest(){
         ResenaEntity eliminar = data.get(0);
         persistence.delete(eliminar.getId());
-        ResenaEntity eliminado = persistence.find(eliminar.getId());
+        ResenaEntity eliminado = em.find(ResenaEntity.class, eliminar.getId());
         Assert.assertNull(eliminado);
 
     }
