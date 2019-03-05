@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.bicicletas.resources;
 
 import co.edu.uniandes.csw.bicicletas.dtos.UsuarioDTO;
-import co.edu.uniandes.csw.bicicletas.dtos.UsuarioDetailDTO;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -25,7 +24,7 @@ public class UsuarioResource
     private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
 
     @GET
-    public List<UsuarioDetailDTO> darUsuarios()
+    public List<UsuarioDTO> darUsuarios()
     {
         return null;
     }

@@ -12,6 +12,7 @@ import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
  */
 public class VendedorDTO extends UsuarioDTO
 {
+
     private Long telefono;
 
     public VendedorDTO()

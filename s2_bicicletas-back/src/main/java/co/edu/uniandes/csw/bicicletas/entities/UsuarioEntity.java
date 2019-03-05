@@ -76,15 +76,4 @@ public abstract class UsuarioEntity extends BaseEntity implements Serializable
         this.password = password;
     }
 
-    /**
-     * @return the medioPagos
-     *
-     * public List<MedioPagoEntity> getMedioPagos() { return medioPagos; }
-     */
-    /**
-     * @param medioPagos the medioPagos to set
-     *
-     * public void setMedioPagos(List<MedioPagoEntity> medioPagos) {
-     * this.medioPagos = medioPagos; }
-     */
 }
