@@ -40,8 +40,8 @@ public class BicicletaResource {
     }
 
     @GET
-    @Path("{bicicletaReferencia: \\d+}")
-    public BicicletaDetailDTO getBicicleta(@PathParam("bicicletaReferencia") int bicicletaId) {
+    @Path("{bicicletaId: \\d+}")
+    public BicicletaDetailDTO getBicicleta(@PathParam("bicicletaId") Long bicicletaId) {
         return null;
     }
     
@@ -51,14 +51,14 @@ public class BicicletaResource {
     }
      
     @PUT
-    @Path("{bicicletaReferencia: \\d+}")
-    public BicicletaDTO updateBicicleta(@PathParam("bicicletaReferencia") int editorialsId, BicicletaDTO bicicleta) {
+    @Path("{bicicletaId: \\d+}")
+    public BicicletaDTO updateBicicleta(@PathParam("bicicletaId") Long bicicletaId, BicicletaDTO bicicleta) {
         return null;
     }
     
     @DELETE
-    @Path("{bicicletaReferencia: \\d+}")
-    public void deleteBicicleta(@PathParam("bicicletaReferencia") int bicicletaId) {
+    @Path("{bicicletaId: \\d+}")
+    public void deleteBicicleta(@PathParam("bicicletaId") Long bicicletaId) {
     }
     
 }
