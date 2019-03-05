@@ -97,7 +97,7 @@ public class ResenaLogicTest {
     }
 
     /**
-     * Limpia las tablas que están implicadas en la prueba. 
+     * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
         em.createQuery("delete from ResenaEntity").executeUpdate();
@@ -157,20 +157,52 @@ public class ResenaLogicTest {
     }
 
     /**
-     *
-     *
-     * @Test public void getResenaTest() {
-     *
-     * }
+     * Prueba para obtener una resena por id
      */
+    @Test
+    public void getResenaTest() {
+
+        ResenaEntity entity = data.get(0);
+        ResenaEntity resultado = resenaLogic.getResena(entity.getId());
+        Assert.assertNotNull(resultado);
+        Assert.assertEquals(entity.getId(), resultado.getId());
+    }
+
     /**
-     * @Test public void getResenasTest() {
-     *
-     * }
-     *
-     * @Test public void updateResenaTest() {
-     *
-     * }
-     *
+     * Prueba para obtener todas las resenas
      */
+    @Test
+    public void getResenasTest() {
+
+        List<ResenaEntity> resenasEncontradas = resenaLogic.getResenas();
+        Assert.assertEquals(data.size(), resenasEncontradas.size());
+        boolean existe = false;
+        for (ResenaEntity r : data) {
+            for (ResenaEntity r2 : resenasEncontradas) {
+                if (r.getId().equals(r2.getId())) {
+                    existe = true;
+                    break;
+                }
+            }
+        }
+        Assert.assertTrue(existe);
+    }
+
+    /**
+     * Prueba para actualizar una resena
+     */
+    @Test
+    public void updateResenaTest() {
+        Long idActualizar = data.get(0).getId();
+        ResenaEntity nuevaR = factory.manufacturePojo(ResenaEntity.class);
+        nuevaR.setId(idActualizar);
+        resenaLogic.ubdateResena(nuevaR);
+        
+        ResenaEntity recuperada = resenaLogic.getResena(idActualizar);
+        
+        Assert.assertEquals(nuevaR.getCalificacion(), recuperada.getCalificacion());
+        Assert.assertEquals(nuevaR.getDescripcion(), recuperada.getDescripcion());
+        Assert.assertEquals(nuevaR.getTitulo(), recuperada.getTitulo());
+        
+    }
 }
