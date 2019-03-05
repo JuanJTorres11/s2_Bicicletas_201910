@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import java.io.Serializable;
 
 /**
@@ -12,29 +13,72 @@ import java.io.Serializable;
  * @author Andrea
  */
 public class BicicletaDTO implements Serializable {
-    
+
+    private Long id;
+
     private String descripcion;
-    
+
     private String referencia;
-    
+
     private Double precio;
-    
+
     private Boolean usada;
-    
+
     private Integer stock;
-    
+
     private String[] album;
-    
+
     private MarcaDTO marca;
-    
+
     private CategoriaDTO categoria;
-    
-    
-     /**
+
+    /**
      * Constructor por defecto
      */
-    public BicicletaDTO(){
+    public BicicletaDTO() {
+        //constructor vacio
+    }
+
+    /**
+     * Constructor a partir de la entidad
+     *
+     * @param bikeEntity La entidad de la bicicleta
+     */
+    public BicicletaDTO(BicicletaEntity bikeEntity) {
+        if (bikeEntity != null) {
+
+            this.id = bikeEntity.getId();
+            this.descripcion = bikeEntity.getDescripcion();
+            this.referencia = bikeEntity.getReferencia();
+            this.precio = bikeEntity.getPrecio();
+            this.usada = bikeEntity.getUsada();
+            this.stock = bikeEntity.getStock();
+            this.album = bikeEntity.getAlbum();
+
+            if (bikeEntity.getCategoria() != null) {
+                this.categoria = new CategoriaDTO(bikeEntity.getCategoria());
+            } else {
+                this.categoria = null;
+            }
+
+            if (bikeEntity.getMarca() != null) {
+                this.marca = new MarcaDTO(bikeEntity.getMarca());
+            } else {
+                this.marca = null;
+            }
+        }
+    }
+    
+    /**
+     * Transformar el DTO a una entidad
+     *
+     * @return La entidad que representa el libro.
+     */
+    public BicicletaEntity toEntity() {
+        BicicletaEntity bicicletaEntity = new BicicletaEntity();
         
+        
+        return bicicletaEntity;
     }
 
     /**
@@ -149,6 +193,18 @@ public class BicicletaDTO implements Serializable {
         this.categoria = categoria;
     }
 
-       
-    
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }

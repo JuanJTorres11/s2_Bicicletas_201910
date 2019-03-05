@@ -158,24 +158,51 @@ public class BicicletaLogicTest {
         Assert.assertNull(deleted);
     }
 
-    /*
+   
     @Test
     public void getBicicletaTest() {
-        Assert.assertTrue(true);
+        BicicletaEntity entity = data.get(0);
+        BicicletaEntity resultado = bicicletaLogic.getBicicleta(entity.getId());
+        Assert.assertNotNull(resultado);
+        Assert.assertEquals(entity.getId(), resultado.getId());
     }
 
     @Test
     public void getBicicletasTest() {
-        Assert.assertTrue(true);
+        List<BicicletaEntity> bicicletasEncontradas = bicicletaLogic.getBicicletas();
+        Assert.assertEquals(data.size(), bicicletasEncontradas.size());
+        boolean existe = false;
+        for (BicicletaEntity r : data) {
+            for (BicicletaEntity r2 : bicicletasEncontradas) {
+                if (r.getId().equals(r2.getId())) {
+                    existe = true;
+                    break;
+                }
+            }
+        }
+        Assert.assertTrue(existe);
     }
 
     @Test
     public void getBicicletaPorReferenciaTest() {
-        Assert.assertTrue(true);
-    }
+      BicicletaEntity entity = data.get(0);
+      BicicletaEntity resultado = bicicletaLogic.getBicicletaPorReferencia(entity.getReferencia());
+      Assert.assertNotNull(resultado);
+      Assert.assertEquals(entity.getReferencia(), resultado.getReferencia());
+   }
 
     @Test
     public void updateBicicletaTest() {
         Assert.assertTrue(true);
-    }*/
+        
+        Long idActualizar = data.get(0).getId();
+        BicicletaEntity nuevaB = factory.manufacturePojo(BicicletaEntity.class);
+        nuevaB.setId(idActualizar);
+        bicicletaLogic.ubdateBicicleta(nuevaB);
+        
+        BicicletaEntity recuperada = bicicletaLogic.getBicicleta(idActualizar);
+        
+        Assert.assertEquals(nuevaB.getPrecio(), recuperada.getPrecio());
+        Assert.assertEquals(nuevaB.getReferencia(), recuperada.getReferencia());
+       }
 }
