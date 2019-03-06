@@ -7,7 +7,7 @@ package co.edu.uniandes.csw.bicicletas.dtos;
 
 import co.edu.uniandes.csw.bicicletas.entities.OrdenEntity;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -18,7 +18,7 @@ public class OrdenDetailDTO extends OrdenDTO implements Serializable {
     /**
      * Lista de tipo BicicletaDTO compradas en una orden
      */
-    //private List<BicicletaDTO> bicicletas;
+    private List<BicicletaDTO> bicicletas;
     /**
      * Constructor por defecto
      */
@@ -28,26 +28,27 @@ public class OrdenDetailDTO extends OrdenDTO implements Serializable {
 
     public OrdenDetailDTO(OrdenEntity ordenEntity) {
         super(ordenEntity);
-        if (ordenEntity != null) {
-            // if (ordenEntity.getBooks() != null) {
-            // books = new ArrayList<>();
-            // for (BookEntity entityBook : ordenEntity.getBooks()) {
-            //     books.add(new BookDTO(entityBook));
-            //   }
-            // }
-        }
+        
     }
 
     @Override
     public OrdenEntity toEntity() {
         OrdenEntity ordenEntity = super.toEntity();
-       // if (books != null) {
-         //   List<BookEntity> booksEntity = new ArrayList<>();
-         //   for (BookDTO dtoBook : books) {
-        //        booksEntity.add(dtoBook.toEntity());
-       //     }
-       //     ordenEntity.setBooks(booksEntity);
-       // }
+       
         return ordenEntity;
+    }
+
+    /**
+     * @return the bicicletas
+     */
+    public List<BicicletaDTO> getBicicletas() {
+        return bicicletas;
+    }
+
+    /**
+     * @param bicicletas the bicicletas to set
+     */
+    public void setBicicletas(List<BicicletaDTO> bicicletas) {
+        this.bicicletas = bicicletas;
     }
 }

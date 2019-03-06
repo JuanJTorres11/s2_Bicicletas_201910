@@ -20,7 +20,7 @@ public class MarcaDetailDTO extends MarcaDTO implements Serializable{
     /**
      * Lista de tipo BicicletaDTO asociada a una marca
      */
-    private List<BicicletaDTO> bicicletas;
+    private List<BicicletaDTO> bicicletasMarca;
     
     /**
      * Constructor por defecto
@@ -31,26 +31,13 @@ public class MarcaDetailDTO extends MarcaDTO implements Serializable{
     
     public MarcaDetailDTO(MarcaEntity marcaEntity){
         super(marcaEntity);
-        if (marcaEntity != null) {
-            if (marcaEntity.getBicicletas() != null) {
-                bicicletas = new ArrayList<>();
-                for (BicicletaEntity entityBicicleta : marcaEntity.getBicicletas()) {
-                   // bicicletas.add(new BicicletaDTO(entityBicicleta));
-                }
-            }
-        }
+        
     }
     
     @Override
     public MarcaEntity toEntity(){
         MarcaEntity marcaEntity = super.toEntity();
-        if (bicicletas != null) {
-            List<BicicletaEntity> bicicletasEntity = new ArrayList<>();
-            for (BicicletaDTO dtoBicicleta : bicicletas) {
-             //   bicicletasEntity.add(dtoBicicleta.toEntity());
-            }
-            marcaEntity.setBicicletas(bicicletasEntity);
-        }
+        
         return marcaEntity;
     }
     
