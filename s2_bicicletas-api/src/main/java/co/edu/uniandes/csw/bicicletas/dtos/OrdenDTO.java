@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.OrdenEntity;
 import java.io.Serializable;
 
 /**
@@ -38,6 +39,25 @@ public class OrdenDTO implements Serializable{
      * Medio de pago utilizado en la orden
      */
   //  private MedioPago medioPago;
+    
+    public OrdenDTO(OrdenEntity ordenEntity){
+        if(ordenEntity!=null){
+            //this.identificador = ordenEntity.getId();
+            this.fecha = ordenEntity.getFecha();
+            this.cantidad = ordenEntity.getCantidad();
+            this.costoTotal=ordenEntity.getCostoTotal();
+            
+        }
+    }
+        
+    public OrdenEntity toEntity(){
+        OrdenEntity ordenEntity = new OrdenEntity();
+        //ordenEntity.setId(this.identificador);
+        ordenEntity.setFecha(this.fecha);
+        ordenEntity.setCantidad(this.cantidad);
+        ordenEntity.setCostoTotal(this.costoTotal);
+        return ordenEntity;
+    }
     
     /**
      * Constructor por defecto
