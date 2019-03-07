@@ -63,7 +63,7 @@ public class VendedorLogic
         {
             throw new BusinessLogicException("El nombre no es valido");
         }
-        if (user.getTelefono() != null && !user.getTelefono().equals(""))
+        if (user.getTelefono() != null)
         {
             if (user.getTelefono() < 3000000000L || user.getTelefono() >= 4000000000L)
             {
