@@ -5,10 +5,15 @@
  */
 package co.edu.uniandes.csw.bicicletas.resources;
 
+import co.edu.uniandes.csw.bicicletas.dtos.VendedorDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.VendedorDetailDTO;
+import co.edu.uniandes.csw.bicicletas.ejb.VendedorLogic;
+import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -27,12 +32,29 @@ import javax.ws.rs.Produces;
 @RequestScoped
 public class VendedorResource
 {
+
     private static final Logger LOGGER = Logger.getLogger(VendedorResource.class.getName());
 
+    @Inject
+    VendedorLogic logica;
+
     @POST
-    public VendedorDetailDTO crearVendedor(VendedorDetailDTO vendedor)
+    public VendedorDTO crearVendedor(VendedorDTO vendedor)
     {
-        return vendedor;
+        VendedorDTO nuevo = null;
+        try
+        {
+            nuevo = new VendedorDTO(logica.createVendedor(vendedor.toEntity()));
+            return nuevo;
+        }
+        catch (BusinessLogicException ex)
+        {
+            Logger.getLogger(VendedorResource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally
+        {
+            return nuevo;
+        }
     }
 
     @GET
@@ -57,7 +79,8 @@ public class VendedorResource
 
     @DELETE
     @Path("{id: \\d+}")
-    public VendedorDetailDTO eliminarVendedor(@PathParam("id") long id) {
-        return null;
+    public void eliminarVendedor(@PathParam("id") long id)
+    {
+
     }
 }

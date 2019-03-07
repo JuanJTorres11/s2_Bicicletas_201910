@@ -30,6 +30,10 @@ public class VendedorEntity extends UsuarioEntity
     @OneToMany(mappedBy = "vendedor")
     private List<VentaEntity> ventas;
     
+    @PodamExclude
+    @OneToMany(mappedBy = "vendedor")
+    private List<MedioPagoEntity> mediosPago;
+    
     public VendedorEntity()
     {
     }
@@ -64,6 +68,22 @@ public class VendedorEntity extends UsuarioEntity
     public void setVentas(List<VentaEntity> ventas)
     {
         this.ventas = ventas;
+    }
+
+    /**
+     * @return the mediosPago
+     */
+    public List<MedioPagoEntity> getMediosPago()
+    {
+        return mediosPago;
+    }
+
+    /**
+     * @param mediosPago the mediosPago to set
+     */
+    public void setMediosPago(List<MedioPagoEntity> mediosPago)
+    {
+        this.mediosPago = mediosPago;
     }
 
 }

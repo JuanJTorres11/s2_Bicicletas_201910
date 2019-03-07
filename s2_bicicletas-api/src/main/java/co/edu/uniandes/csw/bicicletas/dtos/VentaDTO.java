@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
+import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import java.io.Serializable;
 
 /**
@@ -126,4 +127,9 @@ public class VentaDTO implements Serializable{
         public void setFotos(String[] fotos) {
             this.fotos = fotos;
        }
+
+    VentaEntity toEntity()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

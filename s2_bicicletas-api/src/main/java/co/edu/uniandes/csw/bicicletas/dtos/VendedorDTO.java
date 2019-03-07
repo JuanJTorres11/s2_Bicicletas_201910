@@ -43,4 +43,15 @@ public class VendedorDTO extends UsuarioDTO
     {
         this.telefono = telefono;
     }
+    
+    public VendedorEntity toEntity()
+    {
+        VendedorEntity vendedor = new VendedorEntity();
+        vendedor.setId(id);
+        vendedor.setNombre(nombre);
+        vendedor.setLogin(login);
+        vendedor.setPassword(password);
+        vendedor.setTelefono(telefono);
+        return vendedor;
+    }
 }
