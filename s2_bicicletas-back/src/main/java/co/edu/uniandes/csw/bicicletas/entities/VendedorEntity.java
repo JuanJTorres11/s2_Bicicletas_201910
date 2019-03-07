@@ -29,11 +29,11 @@ public class VendedorEntity extends UsuarioEntity
     @PodamExclude
     @OneToMany(mappedBy = "vendedor")
     private List<VentaEntity> ventas;
-    
+
     @PodamExclude
     @OneToMany(mappedBy = "vendedor")
     private List<MedioPagoEntity> mediosPago;
-    
+
     public VendedorEntity()
     {
     }

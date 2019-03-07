@@ -17,6 +17,7 @@ public class VendedorDTO extends UsuarioDTO
 
     public VendedorDTO()
     {
+        super();
     }
 
     public VendedorDTO(VendedorEntity vendedor)
