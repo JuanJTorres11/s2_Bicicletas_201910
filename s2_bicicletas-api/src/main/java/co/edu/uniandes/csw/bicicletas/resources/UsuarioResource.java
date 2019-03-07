@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.bicicletas.resources;
 
 import co.edu.uniandes.csw.bicicletas.dtos.UsuarioDTO;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -23,10 +24,17 @@ public class UsuarioResource
 
     private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
 
+    /**
+     * Retorna una lista con todos los usuarios registrados entre vendedores y
+     * compradores.
+     * @return lista de todos los usuarios
+     */
     @GET
     public List<UsuarioDTO> darUsuarios()
     {
-        return null;
+        ArrayList<UsuarioDTO> usuarios = new ArrayList<UsuarioDTO>();
+        usuarios.addAll(new VendedorResource().darVendedores());
+        usuarios.addAll(new CompradorResource().darCompradores());
+        return usuarios;
     }
-
 }
