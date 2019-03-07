@@ -29,6 +29,14 @@ public class VendedorDetailDTO extends VendedorDTO
     public VendedorDetailDTO (VendedorEntity vendedor)
     {
         super();
+        List<VentaEntity> listaVentas = vendedor.getVentas();
+        List<MedioPagoEntity> listaPagos = vendedor.getMediosPago();
+        if (listaVentas != null)
+            for (VentaEntity vE : listaVentas)
+                ventas.add(new VentaDTO(vE));
+        if (listaPagos != null)
+            for (MedioPagoEntity mpE : listaPagos)
+                mediosPago.add(new MedioPagoDTO(mpE));
     }
 
     /**
@@ -57,14 +65,14 @@ public class VendedorDetailDTO extends VendedorDTO
         VendedorEntity vendedor = super.toEntity();
         if (ventas != null)
         {
-            ArrayList<VentaEntity> ventasEntity = new ArrayList<VentaEntity>();
+            ArrayList<VentaEntity> ventasEntity = new ArrayList<>();
             for(VentaDTO venta: ventas)
                 ventasEntity.add(venta.toEntity());
             vendedor.setVentas(ventasEntity);
         }
         if (mediosPago != null)
         {
-            ArrayList<MedioPagoEntity> pagos = new ArrayList<MedioPagoEntity>();
+            ArrayList<MedioPagoEntity> pagos = new ArrayList<>();
             for(MedioPagoDTO medios: mediosPago)
                 pagos.add(medios.toEntity());
             vendedor.setMediosPago(pagos);

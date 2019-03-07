@@ -48,6 +48,11 @@ public class VentaDTO implements Serializable{
         
     }
 
+    VentaDTO(VentaEntity vE)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * Obtiene la factura. 
      * @return the factura
