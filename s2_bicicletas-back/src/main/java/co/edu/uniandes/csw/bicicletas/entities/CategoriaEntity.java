@@ -21,7 +21,7 @@ public class CategoriaEntity extends BaseEntity implements Serializable {
     private String nombre;
     
     @PodamExclude
-    @OneToMany(mappedBy = "categoria")
+    @OneToMany(mappedBy = "categoria", cascade = CascadeType.PERSIST)
     private List<BicicletaEntity> bicicletas;
     
     public CategoriaEntity() {
