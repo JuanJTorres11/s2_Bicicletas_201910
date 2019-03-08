@@ -26,10 +26,14 @@ public class VendedorEntity extends UsuarioEntity
     @PodamStrategyValue(TelefonoStrategy.class)
     private Long telefono;
 
-    //@PodamExclude
-    //@OneToMany(mappedBy = "vendedor")
-    //private List<VentaEntity> ventas;
-    
+    @PodamExclude
+    @OneToMany(mappedBy = "vendedor")
+    private List<VentaEntity> ventas;
+
+    @PodamExclude
+    @OneToMany(mappedBy = "vendedor")
+    private List<MedioPagoEntity> mediosPago;
+
     public VendedorEntity()
     {
     }
@@ -52,12 +56,34 @@ public class VendedorEntity extends UsuarioEntity
 
     /**
      * @return the ventas
-     *
-     * public List<VentaEntity> getVentas() { return ventas; }
      */
+    public List<VentaEntity> getVentas()
+    {
+        return ventas;
+    }
+
     /**
      * @param ventas the ventas to set
-     *
-     * public void setVentas(List<VentaEntity> ventas) { this.ventas = ventas; }
      */
+    public void setVentas(List<VentaEntity> ventas)
+    {
+        this.ventas = ventas;
+    }
+
+    /**
+     * @return the mediosPago
+     */
+    public List<MedioPagoEntity> getMediosPago()
+    {
+        return mediosPago;
+    }
+
+    /**
+     * @param mediosPago the mediosPago to set
+     */
+    public void setMediosPago(List<MedioPagoEntity> mediosPago)
+    {
+        this.mediosPago = mediosPago;
+    }
+
 }

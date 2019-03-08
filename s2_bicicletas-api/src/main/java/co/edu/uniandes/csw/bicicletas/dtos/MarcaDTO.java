@@ -19,6 +19,9 @@ public class MarcaDTO implements Serializable{
      */
     private String nombre;
     
+    /**
+     * Id de la marca
+     */
     private Long id;
         
     /**
