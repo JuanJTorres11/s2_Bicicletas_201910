@@ -5,32 +5,50 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.OrdenEntity;
 import java.io.Serializable;
-import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import java.util.List;
 
 /**
  *
  * @author Mateo
  */
-public class OrdenDetailDTO extends OrdenDTO implements Serializable{
-    
+public class OrdenDetailDTO extends OrdenDTO implements Serializable {
+
     /**
      * Lista de tipo BicicletaDTO compradas en una orden
      */
-    //private List<BicicletaDTO> bicicletas;
-    
+    private List<BicicletaDTO> bicicletas;
     /**
      * Constructor por defecto
      */
-    public OrdenDetailDTO(){
+    public OrdenDetailDTO() {
+
+    }
+
+    public OrdenDetailDTO(OrdenEntity ordenEntity) {
+        super(ordenEntity);
         
     }
+
+    @Override
+    public OrdenEntity toEntity() {
+        OrdenEntity ordenEntity = super.toEntity();
+       
+        return ordenEntity;
+    }
+
+    /**
+     * @return the bicicletas
+     */
+    public List<BicicletaDTO> getBicicletas() {
+        return bicicletas;
+    }
+
+    /**
+     * @param bicicletas the bicicletas to set
+     */
+    public void setBicicletas(List<BicicletaDTO> bicicletas) {
+        this.bicicletas = bicicletas;
+    }
 }
-
-
-

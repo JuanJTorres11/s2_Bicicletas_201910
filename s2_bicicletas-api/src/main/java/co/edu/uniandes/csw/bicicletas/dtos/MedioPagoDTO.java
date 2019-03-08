@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.MedioPagoEntity;
 import java.io.Serializable;
 
 /**
@@ -26,6 +27,11 @@ public class MedioPagoDTO implements Serializable {
 
     public MedioPagoDTO() {
 
+    }
+
+    MedioPagoDTO(MedioPagoEntity mpE)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -110,5 +116,10 @@ public class MedioPagoDTO implements Serializable {
      */
     public void setTipoCredito(String tipoCredito) {
         this.tipoCredito = tipoCredito;
+    }
+
+    MedioPagoEntity toEntity()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.podam;
 
+import java.security.SecureRandom;
 import java.util.Random;
 import uk.co.jemos.podam.common.AttributeStrategy;
 
@@ -15,13 +16,13 @@ import uk.co.jemos.podam.common.AttributeStrategy;
 public class TelefonoStrategy implements AttributeStrategy<Long>
 {
 
+    private Random r = new Random();
+    
     @Override
     public Long getValue()
     {
-        Random r = new Random();
         long max = 4000000000l;
         long min = 3000000000l;
-        Long tel = (r.nextLong() % (max-min)) + min;
-        return tel;
+        return (r.nextLong() % (max-min)) + min;
     }
 }

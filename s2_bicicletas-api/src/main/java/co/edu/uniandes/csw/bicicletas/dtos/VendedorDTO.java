@@ -12,10 +12,12 @@ import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
  */
 public class VendedorDTO extends UsuarioDTO
 {
+
     private Long telefono;
 
     public VendedorDTO()
     {
+        super();
     }
 
     public VendedorDTO(VendedorEntity vendedor)
@@ -41,5 +43,16 @@ public class VendedorDTO extends UsuarioDTO
     public void setTelefono(Long telefono)
     {
         this.telefono = telefono;
+    }
+    
+    public VendedorEntity toEntity()
+    {
+        VendedorEntity vendedor = new VendedorEntity();
+        vendedor.setId(id);
+        vendedor.setNombre(nombre);
+        vendedor.setLogin(login);
+        vendedor.setPassword(password);
+        vendedor.setTelefono(telefono);
+        return vendedor;
     }
 }
