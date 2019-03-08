@@ -19,9 +19,11 @@ public class BicicletaDetailDTO extends BicicletaDTO implements Serializable{
     
     private List<ResenaDTO> resenas;
     
-    
+    /**
+     * Constructor vacio
+     */
     public BicicletaDetailDTO(){
-       //constructor vacio
+       super();
     }
     
     public BicicletaDetailDTO(BicicletaEntity bikeEntity){
@@ -34,6 +36,28 @@ public class BicicletaDetailDTO extends BicicletaDTO implements Serializable{
                 resenas.add(new ResenaDTO(rEntity));
             }
         }
+    }
+    
+    /**
+     * Transformar el DTO a una entidad
+     *
+     * @return La entidad que representa.
+     */
+    @Override
+    public BicicletaEntity toEntity(){
+        BicicletaEntity entity = super.toEntity();
+        
+        if(resenas != null){
+            List<ResenaEntity> resenasEntity = new ArrayList<ResenaEntity>();
+            
+            for(ResenaDTO dto : resenas){
+                resenasEntity.add(dto.toEntity());
+            }
+            
+            entity.setResenas(resenasEntity);
+        }
+        
+        return entity;
     }
 
     /**

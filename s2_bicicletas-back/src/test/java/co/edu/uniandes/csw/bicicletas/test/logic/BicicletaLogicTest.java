@@ -193,8 +193,7 @@ public class BicicletaLogicTest {
 
     @Test
     public void updateBicicletaTest() {
-        Assert.assertTrue(true);
-        
+         
         Long idActualizar = data.get(0).getId();
         BicicletaEntity nuevaB = factory.manufacturePojo(BicicletaEntity.class);
         nuevaB.setId(idActualizar);

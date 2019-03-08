@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.bicicletas.test.logic;
 
 import co.edu.uniandes.csw.bicicletas.ejb.ResenaLogic;
+import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import co.edu.uniandes.csw.bicicletas.entities.ResenaEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.ResenaPersistence;
@@ -61,6 +62,8 @@ public class ResenaLogicTest {
      */
     private List<ResenaEntity> data = new ArrayList<ResenaEntity>();
 
+    private List<BicicletaEntity> dataBikes = new ArrayList<>();
+
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
@@ -101,6 +104,8 @@ public class ResenaLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from ResenaEntity").executeUpdate();
+        em.createQuery("delete from BicicletaEntity").executeUpdate();
+
     }
 
     /**
@@ -108,9 +113,16 @@ public class ResenaLogicTest {
      * pruebas.
      */
     private void insertData() {
+        PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-            ResenaEntity entity = factory.manufacturePojo(ResenaEntity.class);
+            BicicletaEntity entityB = factory.manufacturePojo(BicicletaEntity.class);
+            em.persist(entityB);
+            dataBikes.add(entityB);
+        }
+        for (int i = 0; i < 3; i++) {
 
+            ResenaEntity entity = factory.manufacturePojo(ResenaEntity.class);
+            entity.setBicicleta(dataBikes.get(1));
             em.persist(entity);
             data.add(entity);
         }
@@ -124,10 +136,14 @@ public class ResenaLogicTest {
     @Test
     public void createResenaTest() throws BusinessLogicException {
         ResenaEntity newEntity = factory.manufacturePojo(ResenaEntity.class);
-        ResenaEntity result = resenaLogic.createResena(newEntity);
+        newEntity.setBicicleta(dataBikes.get(1));
+        ResenaEntity result = resenaLogic.createResena(dataBikes.get(1).getId(), newEntity);
         Assert.assertNotNull(result);
         ResenaEntity entity = em.find(ResenaEntity.class, result.getId());
         Assert.assertEquals(newEntity.getId(), entity.getId());
+        Assert.assertEquals(newEntity.getCalificacion(), entity.getCalificacion());
+        Assert.assertEquals(newEntity.getTitulo(), entity.getTitulo());
+
     }
 
     /**
@@ -139,8 +155,9 @@ public class ResenaLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createResenaConMismoIdTest() throws BusinessLogicException {
         ResenaEntity newEntity = factory.manufacturePojo(ResenaEntity.class);
+        newEntity.setBicicleta(dataBikes.get(1));
         newEntity.setId(data.get(0).getId());
-        resenaLogic.createResena(newEntity);
+        resenaLogic.createResena(dataBikes.get(1).getId(), newEntity);
     }
 
     /**
@@ -150,8 +167,8 @@ public class ResenaLogicTest {
      */
     @Test
     public void deleteResenaTest() throws BusinessLogicException {
-        ResenaEntity entity = data.get(1);
-        resenaLogic.deleteResena(entity.getId());
+        ResenaEntity entity = data.get(0);
+        resenaLogic.deleteResena(dataBikes.get(1).getId(), entity.getId());
         ResenaEntity deleted = em.find(ResenaEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
@@ -163,9 +180,12 @@ public class ResenaLogicTest {
     public void getResenaTest() {
 
         ResenaEntity entity = data.get(0);
-        ResenaEntity resultado = resenaLogic.getResena(entity.getId());
+        ResenaEntity resultado = resenaLogic.getResena(dataBikes.get(1).getId(), entity.getId());
         Assert.assertNotNull(resultado);
         Assert.assertEquals(entity.getId(), resultado.getId());
+        Assert.assertEquals(entity.getCalificacion(), resultado.getCalificacion());
+        Assert.assertEquals(entity.getDescripcion(), resultado.getDescripcion());
+
     }
 
     /**
@@ -174,9 +194,9 @@ public class ResenaLogicTest {
     @Test
     public void getResenasTest() {
 
-        List<ResenaEntity> resenasEncontradas = resenaLogic.getResenas();
-        Assert.assertEquals(data.size(), resenasEncontradas.size());
-        boolean existe = false;
+        List<ResenaEntity> resenasEncontradas = resenaLogic.getResenas(dataBikes.get(1).getId());
+        Assert.assertEquals(resenasEncontradas.size(), data.size());
+         boolean existe = false;
         for (ResenaEntity r : data) {
             for (ResenaEntity r2 : resenasEncontradas) {
                 if (r.getId().equals(r2.getId())) {
@@ -196,13 +216,13 @@ public class ResenaLogicTest {
         Long idActualizar = data.get(0).getId();
         ResenaEntity nuevaR = factory.manufacturePojo(ResenaEntity.class);
         nuevaR.setId(idActualizar);
-        resenaLogic.ubdateResena(nuevaR);
-        
-        ResenaEntity recuperada = resenaLogic.getResena(idActualizar);
-        
+        resenaLogic.ubdateResena(dataBikes.get(0).getId(), nuevaR);
+
+        ResenaEntity recuperada = resenaLogic.getResena(dataBikes.get(0).getId(), idActualizar);
+
         Assert.assertEquals(nuevaR.getCalificacion(), recuperada.getCalificacion());
         Assert.assertEquals(nuevaR.getDescripcion(), recuperada.getDescripcion());
         Assert.assertEquals(nuevaR.getTitulo(), recuperada.getTitulo());
-        
+
     }
 }

@@ -22,6 +22,12 @@ public class ResenaDTO implements Serializable {
 
     private String titulo;
 
+    /*
+    * Relación a una bicicleta
+    * dado que esta tiene cardinalidad 1.
+     */
+    private BicicletaDTO bicicleta;
+
     /**
      * Constructor por defecto
      */
@@ -36,8 +42,32 @@ public class ResenaDTO implements Serializable {
             this.descripcion = resenaEntitiy.getDescripcion();
             this.id = resenaEntitiy.getId();
             this.titulo = resenaEntitiy.getTitulo();
+
+            if (resenaEntitiy.getBicicleta() != null) {
+                this.bicicleta = new BicicletaDTO(resenaEntitiy.getBicicleta());
+            } else {
+                this.bicicleta = null;
+            }
         }
 
+    }
+
+    /**
+     * Método para transformar el DTO a una entidad.
+     *
+     * @return La entidad .
+     */
+    public ResenaEntity toEntity() {
+        ResenaEntity entity = new ResenaEntity();
+        
+        entity.setCalificacion(this.calificacion);
+        entity.setDescripcion(this.descripcion);
+        entity.setId(this.id);
+        entity.setTitulo(this.titulo);
+        if (this.getBicicleta() != null) {
+            entity.setBicicleta(this.getBicicleta().toEntity());
+        }
+        return entity;
     }
 
     /**
@@ -95,4 +125,20 @@ public class ResenaDTO implements Serializable {
     public void setCalificacion(Integer calificacion) {
         this.calificacion = calificacion;
     }
+
+    /**
+     * @return the bicicleta
+     */
+    public BicicletaDTO getBicicleta() {
+        return bicicleta;
+    }
+
+    /**
+     * @param bicicleta the bicicleta to set
+     */
+    public void setBicicleta(BicicletaDTO bicicleta) {
+        this.bicicleta = bicicleta;
+    }
+
+   
 }
