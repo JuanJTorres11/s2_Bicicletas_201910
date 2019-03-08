@@ -109,7 +109,7 @@ public class OrdenLogicTest {
      * @throws co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException
      */
     @Test
-    public void createOrdenTest() throws BusinessLogicException {
+    public void createOrdenTest() throws Exception {
         OrdenEntity newEntity = factory.manufacturePojo(OrdenEntity.class);
         newEntity.setCostoTotal(10.0);
         newEntity.setCantidad(1);
@@ -124,7 +124,8 @@ public class OrdenLogicTest {
      *
      * @throws co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException
      */
-    public void createOrdenConCostoInvalido() throws BusinessLogicException {
+    @Test
+    public void createOrdenConCostoInvalido() throws Exception {
         OrdenEntity newEntity = factory.manufacturePojo(OrdenEntity.class);
         newEntity.setCostoTotal(-10.0);
         try {

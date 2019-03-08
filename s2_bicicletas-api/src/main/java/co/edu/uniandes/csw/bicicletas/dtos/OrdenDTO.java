@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.bicicletas.dtos;
 
 import co.edu.uniandes.csw.bicicletas.entities.OrdenEntity;
 import java.io.Serializable;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -37,11 +38,12 @@ public class OrdenDTO implements Serializable {
     /**
      * Medio de pago utilizado en la orden
      */
-    //private MedioPagoDTO medioPago;
+    private MedioPagoDTO medioPago;
 
     /**
      * Comprador de la orden
      */
+    @ManyToOne
     private CompradorDTO comprador;
 
     public OrdenDTO(OrdenEntity ordenEntity) {
@@ -50,8 +52,14 @@ public class OrdenDTO implements Serializable {
             this.fecha = ordenEntity.getFecha();
             this.cantidad = ordenEntity.getCantidad();
             this.costoTotal = ordenEntity.getCostoTotal();
+            if(ordenEntity.getMedioPago()!=null){
+               this.medioPago = new MedioPagoDTO(ordenEntity.getMedioPago());
+            } else{
+                this.medioPago= null;
+            }
+            
             if (ordenEntity.getComprador() != null) {
-                // this.comprador = new CompradorDTO(ordenEntity.getComprador());
+               // this.comprador = new CompradorDTO(ordenEntity.getComprador());
             } else {
                 this.comprador = null;
             }
@@ -60,10 +68,12 @@ public class OrdenDTO implements Serializable {
 
     public OrdenEntity toEntity() {
         OrdenEntity ordenEntity = new OrdenEntity();
-        ordenEntity.setId(this.identificador);
+        ordenEntity.setId(this.getIdentificador());
         ordenEntity.setFecha(this.getFecha());
         ordenEntity.setCantidad(this.getCantidad());
         ordenEntity.setCostoTotal(this.getCostoTotal());
+        ordenEntity.setMedioPago(this.getMedioPago().toEntity());
+      //  ordenEntity.setComprador(this.comprador.toEntity());
         return ordenEntity;
     }
 
@@ -142,6 +152,20 @@ public class OrdenDTO implements Serializable {
      */
     public void setIdentificador(Long identificador) {
         this.identificador = identificador;
+    }
+
+    /**
+     * @return the medioPago
+     */
+    public MedioPagoDTO getMedioPago() {
+        return medioPago;
+    }
+
+    /**
+     * @param medioPago the medioPago to set
+     */
+    public void setMedioPago(MedioPagoDTO medioPago) {
+        this.medioPago = medioPago;
     }
 
 }

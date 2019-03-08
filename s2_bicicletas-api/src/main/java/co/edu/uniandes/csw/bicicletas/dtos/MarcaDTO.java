@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.bicicletas.dtos;
 
 import co.edu.uniandes.csw.bicicletas.entities.MarcaEntity;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -23,6 +25,7 @@ public class MarcaDTO implements Serializable{
      * Id de la marca
      */
     private Long id;
+    
         
     /**
      * Constructor por defecto
