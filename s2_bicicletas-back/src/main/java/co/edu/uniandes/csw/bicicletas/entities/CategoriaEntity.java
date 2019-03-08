@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -21,7 +20,7 @@ public class CategoriaEntity extends BaseEntity implements Serializable {
     private String nombre;
     
     @PodamExclude
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "categoria")
     private List<BicicletaEntity> bicicletas;
     
     public CategoriaEntity() {
