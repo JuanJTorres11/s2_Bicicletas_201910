@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.MedioPagoEntity;
 import java.io.Serializable;
 
 /**
@@ -17,8 +18,8 @@ public class MedioPagoDTO implements Serializable {
     public final static String VISA = "VISA";
     public final static String MASTERCARD = "MASTERCARD";
     
-    private int numeroTarjeta;
-    private int codigoVerificacion;
+    private Long numeroTarjeta;
+    private Integer codigoVerificacion;
     private String vencimiento;
     private String direccion;
     private String tipoTarjeta;
@@ -27,18 +28,25 @@ public class MedioPagoDTO implements Serializable {
     public MedioPagoDTO() {
 
     }
+    
+    public MedioPagoEntity toEntity() {
+        MedioPagoEntity medioPago = new MedioPagoEntity(numeroTarjeta, codigoVerificacion, vencimiento, 
+                direccion, tipoTarjeta, tipoCredito);
+        
+        return medioPago;
+    }
 
     /**
      * @return the numeroTarjeta
      */
-    public int getNumeroTarjeta() {
+    public Long getNumeroTarjeta() {
         return numeroTarjeta;
     }
 
     /**
      * @param numeroTarjeta the numeroTarjeta to set
      */
-    public void setNumeroTarjeta(int numeroTarjeta) {
+    public void setNumeroTarjeta(Long numeroTarjeta) {
         this.numeroTarjeta = numeroTarjeta;
     }
 

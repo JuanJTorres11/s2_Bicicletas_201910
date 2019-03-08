@@ -17,6 +17,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class CategoriaEntity extends BaseEntity implements Serializable {
+    
     private String nombre;
     
     @PodamExclude
@@ -24,6 +25,7 @@ public class CategoriaEntity extends BaseEntity implements Serializable {
     private List<BicicletaEntity> bicicletas;
     
     public CategoriaEntity() {
+       
         
     }
 
