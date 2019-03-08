@@ -3,17 +3,18 @@
   <persistence-unit name="bicicletasPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <!--Toca entity por entity, exclude-unlisted-clases = false no funciona-->
-    <class>co.edu.uniandes.csw.bicicletas.entities.BaseEntity</class>
-    <class>co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity</class>
-    <class>co.edu.uniandes.csw.bicicletas.entities.CategoriaEntity</class>
-    <class>co.edu.uniandes.csw.bicicletas.entities.CompradorEntity</class>
-    <class>co.edu.uniandes.csw.bicicletas.entities.MarcaEntity</class>
-    <class>co.edu.uniandes.csw.bicicletas.entities.MedioPagoEntity</class>
-    <class>co.edu.uniandes.csw.bicicletas.entities.OrdenEntity</class>
-    <class>co.edu.uniandes.csw.bicicletas.entities.ResenaEntity</class>
-    <class>co.edu.uniandes.csw.bicicletas.entities.UsuarioEntity</class>
-    <class>co.edu.uniandes.csw.bicicletas.entities.VendedorEntity</class>
-    <class>co.edu.uniandes.csw.bicicletas.entities.VentaEntity</class>
+
+<class>co.edu.uniandes.csw.bicicletas.entities.BaseEntity</class>
+    <class>co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity</class>
+    <class>co.edu.uniandes.csw.bicicletas.entities.CategoriaEntity</class>
+    <class>co.edu.uniandes.csw.bicicletas.entities.CompradorEntity</class>
+    <class>co.edu.uniandes.csw.bicicletas.entities.MarcaEntity</class>
+    <class>co.edu.uniandes.csw.bicicletas.entities.MedioPagoEntity</class>
+    <class>co.edu.uniandes.csw.bicicletas.entities.OrdenEntity</class>
+    <class>co.edu.uniandes.csw.bicicletas.entities.ResenaEntity</class>
+    <class>co.edu.uniandes.csw.bicicletas.entities.UsuarioEntity</class>
+    <class>co.edu.uniandes.csw.bicicletas.entities.VendedorEntity</class>
+    <class>co.edu.uniandes.csw.bicicletas.entities.VentaEntity</class>
     
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
  <shared-cache-mode>NONE</shared-cache-mode>

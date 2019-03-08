@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -21,6 +22,10 @@ public class MedioPagoEntity extends BaseEntity implements Serializable {
     private String direccion;
     private String tipoTarjeta;
     private String tipoCredito;
+    
+    @PodamExclude
+    @ManyToOne
+    private VendedorEntity vendedor;
     
     /*@PodamExclude
     @*/
@@ -134,5 +139,21 @@ public class MedioPagoEntity extends BaseEntity implements Serializable {
      */
     public void setTipoCredito(String tipoCredito) {
         this.tipoCredito = tipoCredito;
+    }
+
+    /**
+     * @return the vendedor
+     */
+    public VendedorEntity getVendedor()
+    {
+        return vendedor;
+    }
+
+    /**
+     * @param vendedor the vendedor to set
+     */
+    public void setVendedor(VendedorEntity vendedor)
+    {
+        this.vendedor = vendedor;
     }
 }

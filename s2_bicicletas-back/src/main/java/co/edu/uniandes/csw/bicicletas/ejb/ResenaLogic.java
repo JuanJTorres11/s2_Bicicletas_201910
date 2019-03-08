@@ -5,8 +5,10 @@
  */
 package co.edu.uniandes.csw.bicicletas.ejb;
 
+import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import co.edu.uniandes.csw.bicicletas.entities.ResenaEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.bicicletas.persistence.BicicletaPersistence;
 import co.edu.uniandes.csw.bicicletas.persistence.ResenaPersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,63 +27,74 @@ public class ResenaLogic {
 
     @Inject
     private ResenaPersistence persistence;
+    
+    @Inject
+    private BicicletaPersistence persistenceBike;
 
     /**
      * Crea una resena en la persistencia.
      *
-     * @param bicicletaEntity La entidad que representa la bicicleta a
-     * persistir.
+     * @param resenaEntity La entidad que representa la bicicleta a persistir.
+     * @param bicicletaId el id de la bicicleta a la que se quiere añadir la reseña
      * @return La entiddad de la resena luego de persistirla.
      * @throws BusinessLogicException Si la resena a persistir ya existe.
      */
-    public ResenaEntity createResena(ResenaEntity resenaEntity) throws BusinessLogicException {
+    public ResenaEntity createResena(Long bicicletaId, ResenaEntity resenaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación de la resena");
 
         // Verifica la regla de negocio que dice que no puede haber dos resenas con el mismo id
-        if (persistence.find(resenaEntity.getId()) != null) {
+        BicicletaEntity bike = persistenceBike.find(bicicletaId);
+        if(bike == null)
+            throw new BusinessLogicException("No existe una bicicleta con el id \"" + bicicletaId + "\"");
+            
+        if (persistence.find(bike.getId(), resenaEntity.getId()) != null) {
             throw new BusinessLogicException("Ya existe una resena con el id \"" + resenaEntity.getId() + "\"");
         }
+        resenaEntity.setBicicleta(bike);
         // Invoca la persistencia para crear la resena
-        persistence.create(resenaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación de la resena");
-        return resenaEntity;
+        return persistence.create(resenaEntity);
     }
 
     /**
      * Elimina una resena
      *
-     * @param id : id de la resena que se quiere borrar
+     * @param resenaId : id de la resena que se quiere borrar
      */
-    public void deleteResena(Long id) {
+    public void deleteResena(Long bicicletaId, Long resenaId) throws BusinessLogicException {
 
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar la resena con id = {0}", id);
-        persistence.delete(id);
-        LOGGER.log(Level.INFO, "Termina proceso de borrar la resena con id = {0}", id);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la resena con id = {0}", resenaId);
+        ResenaEntity buscada = getResena(bicicletaId, resenaId);
+        if(buscada == null)
+            throw new BusinessLogicException("La reseña con id = " + resenaId + " no existe o no está asociada a la bicicleta =" + bicicletaId + "\"");
+           
+        persistence.delete(buscada.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la resena con id = {0}", resenaId);
     }
 
     /**
-     * Retorna las resenaEntitys
+     * Retorna las resenaEntitys asociadas a una bicicleta
      *
      * @return Una lista con todas las resenaEntity
      */
-    public List<ResenaEntity> getResenas() {
+    public List<ResenaEntity> getResenas(Long bicicletaId) {
 
         LOGGER.log(Level.INFO, "Inicia proceso de buscar todas las resenas");
-        List<ResenaEntity> resenas = persistence.findAll();
+        BicicletaEntity entityBike = persistenceBike.find(bicicletaId);
         LOGGER.log(Level.INFO, "Termina proceso de buscar todas las resenas");
-        return resenas;
+        return entityBike.getResenas();
     }
 
     /**
      * Retorna una ResenaEntity
      *
-     * @param id: ide de la resena que se quiere consultar
+     * @param resenaId: ide de la resena que se quiere consultar
      * @return La entiddad de la resena que se quiere consultar
      */
-    public ResenaEntity getResena(Long id) {
-        LOGGER.log(Level.INFO, "Inicia proceso de buscar una resena por id ", id);
-        ResenaEntity resena = persistence.find(id);
-        LOGGER.log(Level.INFO, "Termina proceso de buscar una resena por id", id);
+    public ResenaEntity getResena(Long bicicletaId, Long resenaId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de buscar una resena por id ", resenaId);
+        ResenaEntity resena = persistence.find(bicicletaId, resenaId);
+        LOGGER.log(Level.INFO, "Termina proceso de buscar una resena por id", resenaId);
         return resena;
     }
 
@@ -91,10 +104,12 @@ public class ResenaLogic {
      * @param resenaEntity La Entidad con los cambios
      * @return La Entidad de la resena modificada
      */
-    public ResenaEntity ubdateResena(ResenaEntity resenaEntity) {
+    public ResenaEntity ubdateResena(Long bicicletaId, ResenaEntity resenaEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar una resena con id", resenaEntity.getId());
-        ResenaEntity resenaE = persistence.update(resenaEntity);
+        BicicletaEntity bicicleta = persistenceBike.find(bicicletaId);
+        resenaEntity.setBicicleta(bicicleta);
+        persistence.update(resenaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar una resena con id", resenaEntity.getId());
-        return resenaE;
+        return resenaEntity;
     }
 }

@@ -28,6 +28,11 @@ public class MedioPagoDTO implements Serializable {
     public MedioPagoDTO() {
 
     }
+
+    MedioPagoDTO(MedioPagoEntity mpE)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public MedioPagoEntity toEntity() {
         MedioPagoEntity medioPago = new MedioPagoEntity(numeroTarjeta, codigoVerificacion, vencimiento, 

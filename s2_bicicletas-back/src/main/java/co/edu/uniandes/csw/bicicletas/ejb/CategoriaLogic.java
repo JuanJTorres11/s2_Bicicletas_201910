@@ -37,10 +37,10 @@ public class CategoriaLogic {
         
         /**
          * Reglas de negocio
-         *
+         */
         if(cp.findByName(categoria.getNombre()) != null) {
             throw new BusinessLogicException("Ya existe una categoría con el nombre \"" + categoria.getNombre() + "\"");
-        }*/
+        }
         
         if(categoria.getNombre().isEmpty()) {
             throw new BusinessLogicException("El nombre de la categoría no puede estar vacío.");
@@ -106,6 +106,7 @@ public class CategoriaLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar categoría.");
         
         CategoriaEntity categoriaEntity = cp.findByName(categoria.getNombre());
+        
         if(categoriaEntity != null) {
             throw new BusinessLogicException("La categoría con el nombre dado ya existe");
         }
