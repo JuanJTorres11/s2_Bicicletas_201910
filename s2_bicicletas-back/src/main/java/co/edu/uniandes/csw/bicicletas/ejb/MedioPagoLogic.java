@@ -24,10 +24,10 @@ import javax.inject.Inject;
 public class MedioPagoLogic {
     private static final Logger LOGGER = Logger.getLogger(MedioPagoLogic.class.getName());
     
-    public final static String DEBITO = "Debito";
-    public final static String CREDITO = "Credito";
-    public final static String VISA = "VISA";
-    public final static String MASTERCARD = "MASTERCARD";
+    public static final String DEBITO = "Debito";
+    public static final String CREDITO = "Credito";
+    public static final String VISA = "VISA";
+    public static final String MASTERCARD = "MASTERCARD";
     
     @Inject private MedioPagoPersistence mpp;
     
