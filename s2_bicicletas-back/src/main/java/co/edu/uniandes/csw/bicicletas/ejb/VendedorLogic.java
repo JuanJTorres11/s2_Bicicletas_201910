@@ -139,10 +139,6 @@ public class VendedorLogic
         LOGGER.log(Level.INFO, "Inicia proceso de creación de usuario ");
         if (nuevo.getLogin() != null && !nuevo.getLogin().equals(""))
         {
-            if (pVendedor.findByLogin(nuevo.getLogin()) != null)
-            {
-                throw new BusinessLogicException("Ya existe un vendedor con ese Login");
-            }
         }
         else
         {
