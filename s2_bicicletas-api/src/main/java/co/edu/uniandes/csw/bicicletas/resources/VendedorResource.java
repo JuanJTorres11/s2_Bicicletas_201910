@@ -14,6 +14,7 @@ import co.edu.uniandes.csw.bicicletas.mappers.BusinessLogicExceptionMapper;
 import co.edu.uniandes.csw.bicicletas.mappers.WebApplicationExceptionMapper;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -51,6 +52,7 @@ public class VendedorResource
     @POST
     public VendedorDTO crearVendedor(VendedorDTO vendedor) throws BusinessLogicException
     {
+        LOGGER.log(Level.INFO, "Se creará al vendedor con id. {0}", vendedor.getId());
         VendedorDTO nuevo = null;
         nuevo = new VendedorDTO(logica.createVendedor(vendedor.toEntity()));
         return nuevo;
@@ -62,7 +64,8 @@ public class VendedorResource
     @GET
     public List<VendedorDetailDTO> darVendedores()
     {
-        ArrayList<VendedorDetailDTO> vendedores = new ArrayList<VendedorDetailDTO>();
+        LOGGER.log(Level.INFO, "Se dará la lista con todos los vendedores");
+        ArrayList<VendedorDetailDTO> vendedores = new ArrayList<>();
         List<VendedorEntity> vEntity = logica.findAllVendedores();
         for (VendedorEntity v : vEntity)
         {
@@ -81,6 +84,7 @@ public class VendedorResource
     @Path("{id: \\d+}")
     public VendedorDetailDTO darVendedorId(@PathParam("id") long id)
     {
+         LOGGER.log(Level.INFO, "Se buscará al vendedor con id: {0}", id);
         VendedorEntity vE = logica.findVendedor(id);
         if (vE != null)
         {
@@ -106,6 +110,7 @@ public class VendedorResource
     @Path("{id: \\d+}")
     public VendedorDetailDTO actualizarVendedor(@PathParam("id") long id, VendedorDetailDTO vendedor) throws BusinessLogicException
     {
+        LOGGER.log(Level.INFO, "Se actualizará al vendedor con id: {0}", id);
         VendedorEntity vE = logica.findVendedor(id);
         if (vE != null)
         {
@@ -126,6 +131,7 @@ public class VendedorResource
     @Path("{id: \\d+}")
     public void eliminarVendedor(@PathParam("id") long id)
     {
+        LOGGER.log(Level.INFO, "Se eliminará al vendedor con id: {0}", id);
         if (logica.findVendedor(id) != null)
         {
             logica.deleteVendedor(id);
