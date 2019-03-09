@@ -24,8 +24,8 @@ import javax.inject.Inject;
 public class MedioPagoLogic {
     private static final Logger LOGGER = Logger.getLogger(MedioPagoLogic.class.getName());
     
-    public final static String DEBITO = "Débito";
-    public final static String CREDITO = "Crédito";
+    public final static String DEBITO = "Debito";
+    public final static String CREDITO = "Credito";
     public final static String VISA = "VISA";
     public final static String MASTERCARD = "MASTERCARD";
     
@@ -51,6 +51,9 @@ public class MedioPagoLogic {
          * Reglas de negocio
          */
         verificarReglasDeNegocio(medioPago);
+        //Número de tarjeta
+        System.out.println("NUMERO: " + medioPago.getNumeroTarjeta());
+        System.out.println("NUMERO ENCONTRADO: " + mpp.findByNumber(medioPago.getNumeroTarjeta()));
         
         //Creación del medio de pago.
         mpp.create(medioPago);
@@ -70,6 +73,20 @@ public class MedioPagoLogic {
         MedioPagoEntity medioPago = mpp.find(medioPagoId);
         
         LOGGER.log(Level.INFO, "Terminando proceso de dar el medio pago con id = {0}", medioPagoId);
+        return medioPago;
+    }
+    
+    /**
+     * Retorna el medio de pago con el nùmero dado por parámetro.
+     * @param numero Nùmero de la tarjeta.
+     * @return Medio de pago encontrado.
+     */
+    public MedioPagoEntity getMedioPagoPorNumero(Long numero) {
+        LOGGER.log(Level.INFO, "Comenzando proceso de dar el medio de pago con numero = {0}", numero);
+        
+        MedioPagoEntity medioPago = mpp.findByNumber(numero);
+        
+        LOGGER.log(Level.INFO, "Terminando proceso de dar el medio de pago con numero = {0}", numero);
         return medioPago;
     }
     
@@ -171,13 +188,13 @@ public class MedioPagoLogic {
                 //Número de tarjeta
                 if(medioPago.getTipoCredito().equals(VISA) && 
                         primerDigito != 4) {
-                    throw new BusinessLogicException("El número de la tarjeta no es válido.");
+                    throw new BusinessLogicException("El número de la tarjeta no es VISA.");
                 }
 
                 int primerosDigitos = Integer.parseInt(digitos.substring(0, 2));
                 if(medioPago.getTipoCredito().equals(MASTERCARD) && primerosDigitos < 51 || 
                         primerosDigitos > 55) {
-                    throw new BusinessLogicException("El número de la tarjeta no es válido.");
+                    throw new BusinessLogicException("El número de la tarjeta no es MASTERCARD.");
                 }
             }
         }
