@@ -11,8 +11,8 @@
     <name>s2_bicicletas</name>
  
     <modules>
-        <module>s2_bicicletas-back</module>
         <module>s2_bicicletas-api</module>
+        <module>s2_bicicletas-back</module>
     </modules>
     
     <repositories>

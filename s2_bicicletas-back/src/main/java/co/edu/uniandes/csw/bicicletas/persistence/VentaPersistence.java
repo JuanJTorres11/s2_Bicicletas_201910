@@ -19,65 +19,57 @@ import javax.persistence.TypedQuery;
  *
  * @author Juan Lozano
  */
-
 @Stateless
-public class VentaPersistence 
-{
- 
+public class VentaPersistence {
+
     private static final Logger LOGGER = Logger.getLogger(VentaPersistence.class.getName());
-    
-    @PersistenceContext(unitName= "bicicletasPU")
+
+    @PersistenceContext(unitName = "bicicletasPU")
     protected EntityManager em;
-    
-    public VentaEntity crearEntity(VentaEntity pP)
-    {
+
+    public VentaEntity create(VentaEntity pP) {
         LOGGER.log(Level.INFO, "Entrando para crear una nueva venta.");
         em.persist(pP);
         LOGGER.log(Level.INFO, "Saliendo de crear una venta nueva.");
         return pP;
     }
-    
-    public VentaEntity encontrarEntity(Long ventaID)
-    {
+
+    public VentaEntity find(Long ventaID) {
         return em.find(VentaEntity.class, ventaID);
     }
-    
-     public List<VentaEntity> findAll() {
+
+    public List<VentaEntity> findAll() {
         LOGGER.log(Level.INFO, "Consultando todos las ventas");
         Query q = em.createQuery("select u from VentaEntity u");
         return q.getResultList();
     }
-     
-     public VentaEntity findById(Long id) {
-         
-        TypedQuery query = em.createQuery("Select e From VentaEntity e where e.id = : id", VentaEntity.class);
-        
-        query = query.setParameter("id", id);
-        
-        List<VentaEntity> obtiene = query.getResultList();
-        VentaEntity result;
-        if (obtiene == null) {
-            result = null;
-        } else if (obtiene.isEmpty()) {
-            result = null;
-        } else {
-            result = obtiene.get(0);
-        }
-        return result;
-    }
-    
-    public void delete(long id){
+
+    public void delete(long id) {
         VentaEntity enti = em.find(VentaEntity.class, id);
         em.remove(enti);
     }
-    
-    public VentaEntity update(VentaEntity pComprador){
+
+    public VentaEntity update(VentaEntity pComprador) {
         return em.merge(pComprador);
     }
-/**
-    public VentaEntity findByName(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    public VentaEntity findById(Long pId) {
+
+        TypedQuery query = em.createQuery("Select e From VentaEntity e where e.id = :id", VentaEntity.class);
+
+        query = query.setParameter("id", pId);
+
+        List<VentaEntity> ids = query.getResultList();
+        VentaEntity ret;
+
+        if (ids == null) {
+            ret = null;
+        } else if (ids.isEmpty()) {
+            ret = null;
+        } else {
+            ret = ids.get(0);
+        }
+
+        return ret;
     }
-     */
-    
 }

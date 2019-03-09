@@ -21,6 +21,20 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class BicicletaEntity extends BaseEntity implements Serializable {
 
+    /**
+     * @return the orden
+     */
+    public OrdenEntity getOrden() {
+        return orden;
+    }
+
+    /**
+     * @param orden the orden to set
+     */
+    public void setOrden(OrdenEntity orden) {
+        this.orden = orden;
+    }
+
     private String descripcion;
 
     private String referencia;
@@ -44,6 +58,10 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany(mappedBy = "bicicleta", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ResenaEntity> resenas = new ArrayList<ResenaEntity>();
+    
+    @PodamExclude
+    @ManyToOne
+    private OrdenEntity orden;
 
     /**
      * Constructor vacio

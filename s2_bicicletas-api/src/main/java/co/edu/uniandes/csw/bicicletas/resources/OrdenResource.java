@@ -39,7 +39,7 @@ public class OrdenResource {
     private OrdenLogic ordenLogic;
 
     @POST
-    public OrdenDTO createOrden(OrdenDTO orden) throws BusinessLogicException {
+    public OrdenDTO createOrden(OrdenDTO orden) throws Exception {
         OrdenEntity ordenEntity = orden.toEntity();
         OrdenEntity nuevaOrdenEntity = ordenLogic.createOrden(ordenEntity);
         OrdenDTO nuevaOrdenDTO = new OrdenDTO(nuevaOrdenEntity);
