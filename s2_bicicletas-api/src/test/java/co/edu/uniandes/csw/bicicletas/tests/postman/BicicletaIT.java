@@ -40,13 +40,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- *  Pruebas de integracion de la resena.
+ *  Pruebas de integracion de la bicicleta.
  * @author Andrea Bayona
  */
 @RunWith(Arquillian.class)
-public class ResenaIT {
+public class BicicletaIT {
 
-    private static final String COLLECTION = "ResenaResourceTest.postman_collection";
+    private static final String COLLECTION = "BicicletaResourceTest.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
