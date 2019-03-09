@@ -110,6 +110,11 @@ public class BicicletaLogicTest {
     private void insertData() {
         for (int i = 0; i < 3; i++) {
             BicicletaEntity entity = factory.manufacturePojo(BicicletaEntity.class);
+            Double precio = entity.getPrecio();
+            entity.setPrecio(precio < 0.0 ? precio * -1 : precio);
+            
+            Integer stock = entity.getStock();
+            entity.setStock(stock < 0 ? stock * -1 : stock);
 
             em.persist(entity);
             data.add(entity);
