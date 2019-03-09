@@ -138,10 +138,16 @@ public class BicicletaLogicTest {
     @Test
     public void createBicicletaTest() throws BusinessLogicException {
         BicicletaEntity newEntity = factory.manufacturePojo(BicicletaEntity.class);
+        
         CategoriaEntity cat = factory.manufacturePojo(CategoriaEntity.class);
         MarcaEntity marca = factory.manufacturePojo(MarcaEntity.class);
         newEntity.setCategoria(cat);
         newEntity.setMarca(marca);
+        Double precio = newEntity.getPrecio();
+        newEntity.setPrecio(precio < 0.0 ? precio * -1 : precio);
+        Integer stock = newEntity.getStock();
+         newEntity.setStock(stock < 0 ? stock * -1 : stock);
+        
         BicicletaEntity result = bicicletaLogic.createBicicleta(newEntity);
         Assert.assertNotNull(result);
         BicicletaEntity entity = em.find(BicicletaEntity.class, result.getId());
@@ -162,6 +168,10 @@ public class BicicletaLogicTest {
         MarcaEntity marca = factory.manufacturePojo(MarcaEntity.class);
         newEntity.setCategoria(cat);
         newEntity.setMarca(marca);
+        Double precio = newEntity.getPrecio();
+        newEntity.setPrecio(precio < 0.0 ? precio * -1 : precio);
+        Integer stock = newEntity.getStock();
+         newEntity.setStock(stock < 0 ? stock * -1 : stock);
         
         newEntity.setReferencia(data.get(0).getReferencia());
         bicicletaLogic.createBicicleta(newEntity);
@@ -222,6 +232,10 @@ public class BicicletaLogicTest {
         MarcaEntity marca = factory.manufacturePojo(MarcaEntity.class);
         nuevaB.setCategoria(cat);
         nuevaB.setMarca(marca);
+        Double precio = nuevaB.getPrecio();
+        nuevaB.setPrecio(precio < 0.0 ? precio * -1 : precio);
+        Integer stock = nuevaB.getStock();
+         nuevaB.setStock(stock < 0 ? stock * -1 : stock);
         
         nuevaB.setId(idActualizar);
         bicicletaLogic.ubdateBicicleta(nuevaB);
