@@ -27,6 +27,7 @@ public class ResenaDTO implements Serializable {
     * dado que esta tiene cardinalidad 1.
      */
     private BicicletaDTO bicicleta;
+    
 
     /**
      * Constructor por defecto

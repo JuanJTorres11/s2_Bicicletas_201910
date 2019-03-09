@@ -7,8 +7,12 @@ package co.edu.uniandes.csw.bicicletas.resources;
 
 import co.edu.uniandes.csw.bicicletas.dtos.BicicletaDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.BicicletaDetailDTO;
+import co.edu.uniandes.csw.bicicletas.dtos.CategoriaDTO;
+import co.edu.uniandes.csw.bicicletas.dtos.MarcaDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.ResenaDTO;
 import co.edu.uniandes.csw.bicicletas.ejb.BicicletaLogic;
+import co.edu.uniandes.csw.bicicletas.ejb.CategoriaLogic;
+import co.edu.uniandes.csw.bicicletas.ejb.MarcaLogic;
 import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -29,7 +33,7 @@ import javax.ws.rs.WebApplicationException;
 
 /**
  *
- * @author Andrea
+ * @author Andrea Bayona
  */
 @Path("bicicletas")
 @Produces("application/json")
@@ -42,6 +46,12 @@ public class BicicletaResource {
 
     @Inject
     private BicicletaLogic logic;
+
+    @Inject
+    private CategoriaLogic logicCat;
+
+    @Inject
+    private MarcaLogic logicMarca;
 
     /**
      * Crea una nueva bicicleta con la informacion que se recibe en el cuerpo de
@@ -107,15 +117,16 @@ public class BicicletaResource {
 
     /**
      * /**
-     * Actualiza la bicicleta con el id recibido en la URL con la información que se
-     * recibe en el cuerpo de la petición.
+     * Actualiza la bicicleta con el id recibido en la URL con la información
+     * que se recibe en el cuerpo de la petición.
+     *
      * @param bicicletaId
      * @param bicicleta
-     * @return 
+     * @return
      */
     @PUT
     @Path("{bicicletaId: \\d+}")
-    public BicicletaDTO updateBicicleta(@PathParam("bicicletaId") Long bicicletaId, BicicletaDTO bicicleta) {
+    public BicicletaDTO updateBicicleta(@PathParam("bicicletaId") Long bicicletaId, BicicletaDTO bicicleta) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "BicicletaResource updateBicicleta: input: id: {0} , book: {1}", new Object[]{bicicletaId, bicicleta});
         bicicleta.setId(bicicletaId);
         if (logic.getBicicleta(bicicletaId) == null) {
@@ -127,22 +138,29 @@ public class BicicletaResource {
     }
 
     /**
-     * 
-     * @param bicicletaId 
+     * Elimina la bicicleta con el id recibido
+     *
+     * @param bicicletaId
      */
     @DELETE
     @Path("{bicicletaId: \\d+}")
     public void deleteBicicleta(@PathParam("bicicletaId") Long bicicletaId) {
-        
+
         LOGGER.log(Level.INFO, "BicicletaResource deleteBicicleta: input: {0}", bicicletaId);
         BicicletaEntity entity = logic.getBicicleta(bicicletaId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /books/" + bicicletaId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /bicicletas/" + bicicletaId + " no existe.", 404);
         }
         logic.deleteBicicleta(bicicletaId);
         LOGGER.info("BicicletaResource deleteBicicleta: output: void");
     }
-    
+
+    /**
+     * Devuleve las reseñas de la bicicletas con el id recibido
+     *
+     * @param bicicletaId
+     * @return
+     */
     @Path("{bicicletaId: \\d+}/resenas")
     public Class<ResenaResource> getResenaResource(@PathParam("bicicletaId") Long bicicletaId) {
         if (logic.getBicicleta(bicicletaId) == null) {
@@ -150,8 +168,8 @@ public class BicicletaResource {
         }
         return ResenaResource.class;
     }
-    
-     /**
+
+    /**
      * Convierte una lista de entidades a DTO.
      *
      * Este método convierte una lista de objetos BicicletaEntity a una lista de
@@ -169,4 +187,59 @@ public class BicicletaResource {
         return list;
     }
 
+    /**
+     * Remplaza la instancia de Categoria asociada a una Bicicleta.
+     *
+     * @param bicicletaId Identificador de la Bicicleta que se esta
+     * actualizando. Este debe ser una cadena de dígitos.
+     * @param categoria La categoria que se será de la bicicleta.
+     * @return JSON {@link BookDetailDTO} - El arreglo de libros guardado en la
+     * editorial.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la categoria o el
+     * bicicleta.
+     */
+    @PUT
+    @Path("bicicletas/{bikeId: \\d+}/categoria")
+
+    public BicicletaDetailDTO replaceCategoria(@PathParam("bicicletaId") Long bicicletaId, CategoriaDTO categoria) {
+        LOGGER.log(Level.INFO, "Reemplazar categoria: input: bicicletaId{0} , categoria:{1}", new Object[]{bicicletaId, categoria.toString()});
+        if (logic.getBicicleta(bicicletaId) == null) {
+            throw new WebApplicationException("El recurso /bicicletas/" + bicicletaId + " no existe.", 404);
+        }
+        if (logicCat.getCategoriaPorNombre(categoria.getNombre()) == null) {
+            throw new WebApplicationException("El recurso /categorias/" + categoria.getNombre() + " no existe.", 404);
+        }
+        BicicletaDetailDTO bikekDetailDTO = new BicicletaDetailDTO(logic.replaceCategoria(bicicletaId, categoria.getNombre()));
+        LOGGER.log(Level.INFO, "Reemplazar categoria: output: {0}", bikekDetailDTO.toString());
+        return bikekDetailDTO;
+    }
+
+    /**
+     * Remplaza la instancia de Marca asociada a una Bicicleta.
+     *
+     * @param bicicletaId Identificador de la Bicicleta que se esta
+     * actualizando. Este debe ser una cadena de dígitos.
+     * @param categoria La Marca que se será de la bicicleta.
+     * @return JSON {@link BookDetailDTO} - El arreglo de libros guardado en la
+     * Marca.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la Marca o el
+     * bicicleta.
+     */
+    @PUT
+    @Path("bicicletas/{bikeId: \\d+}/marca")
+
+    public BicicletaDetailDTO replaceMarca(@PathParam("bicicletaId") Long bicicletaId, MarcaDTO marca) {
+        LOGGER.log(Level.INFO, "Reemplazar marca: input: bicicletaId{0} , categoria:{1}", new Object[]{bicicletaId, marca.toString()});
+        if (logic.getBicicleta(bicicletaId) == null) {
+            throw new WebApplicationException("El recurso /bicicletas/" + bicicletaId + " no existe.", 404);
+        }
+        if (logicMarca.getMarca(marca.getId()) == null) {
+            throw new WebApplicationException("El recurso /marcas/" + marca.getId() + " no existe.", 404);
+        }
+        BicicletaDetailDTO bikekDetailDTO = new BicicletaDetailDTO(logic.replaceMarca(bicicletaId, marca.getId()));
+        LOGGER.log(Level.INFO, "Reemplazar marca: output: {0}", bikekDetailDTO.toString());
+        return bikekDetailDTO;
+    }
 }
