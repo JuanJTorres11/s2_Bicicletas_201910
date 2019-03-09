@@ -5,8 +5,12 @@
  */
 package co.edu.uniandes.csw.bicicletas.entities;
 
-import java.io.Serializable;
+
+import java.util.List;
+import java.util.logging.Logger;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -15,13 +19,27 @@ import javax.persistence.Entity;
 
 //PodamExclude, para que no quede en un stack over flow en la creacion de objetos. 
 @Entity
-public class CompradorEntity extends BaseEntity implements Serializable {
+public class CompradorEntity extends UsuarioEntity {
     
-    private String nombre;
     
-    private String login;
+    private static final Logger LOGGER = Logger.getLogger(VendedorEntity.class.getName());
+      
+      
+    @PodamExclude
+    @OneToMany(mappedBy = "comprador")
+    private List<MedioPagoEntity> mediosPago;
     
-    private String password;
+    @PodamExclude
+    @OneToMany(mappedBy = "comprador")
+    private List<OrdenEntity> ordenes;
+    
+//    @PodamExclude
+//    @OneToMany(mappedBy = "")
+//    private List<BicicletaDTO> listaDeDeseos;
+//    
+//    @PodamExclude
+//    @OneToMany(mappedBy = "comprador"
+//    private BicicletaDTO bicicletaDTO;
     
     public CompradorEntity()
     {
@@ -29,45 +47,31 @@ public class CompradorEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the nombre
+     * @return the mediosPago
      */
-    public String getNombre() {
-        return nombre;
+    public List<MedioPagoEntity> getMediosPago() {
+        return mediosPago;
     }
 
     /**
-     * @param nombre the nombre to set
+     * @param mediosPago the mediosPago to set
      */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setMediosPago(List<MedioPagoEntity> mediosPago) {
+        this.mediosPago = mediosPago;
     }
 
     /**
-     * @return the login
+     * @return the ordenes
      */
-    public String getLogin() {
-        return login;
+    public List<OrdenEntity> getOrdenes() {
+        return ordenes;
     }
 
     /**
-     * @param login the login to set
+     * @param ordenes the ordenes to set
      */
-    public void setLogin(String login) {
-        this.login = login;
+    public void setOrdenes(List<OrdenEntity> ordenes) {
+        this.ordenes = ordenes;
     }
-
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
+       
 }

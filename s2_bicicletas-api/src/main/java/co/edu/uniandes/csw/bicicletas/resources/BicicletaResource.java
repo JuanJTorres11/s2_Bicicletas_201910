@@ -126,7 +126,7 @@ public class BicicletaResource {
      */
     @PUT
     @Path("{bicicletaId: \\d+}")
-    public BicicletaDTO updateBicicleta(@PathParam("bicicletaId") Long bicicletaId, BicicletaDTO bicicleta) {
+    public BicicletaDTO updateBicicleta(@PathParam("bicicletaId") Long bicicletaId, BicicletaDTO bicicleta) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "BicicletaResource updateBicicleta: input: id: {0} , book: {1}", new Object[]{bicicletaId, bicicleta});
         bicicleta.setId(bicicletaId);
         if (logic.getBicicleta(bicicletaId) == null) {
@@ -149,7 +149,7 @@ public class BicicletaResource {
         LOGGER.log(Level.INFO, "BicicletaResource deleteBicicleta: input: {0}", bicicletaId);
         BicicletaEntity entity = logic.getBicicleta(bicicletaId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /books/" + bicicletaId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /bicicletas/" + bicicletaId + " no existe.", 404);
         }
         logic.deleteBicicleta(bicicletaId);
         LOGGER.info("BicicletaResource deleteBicicleta: output: void");

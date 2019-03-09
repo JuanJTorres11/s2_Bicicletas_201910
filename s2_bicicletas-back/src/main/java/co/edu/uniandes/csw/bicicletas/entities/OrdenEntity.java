@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,8 +7,12 @@
 package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -17,7 +22,8 @@ import uk.co.jemos.podam.common.PodamExclude;
 
 @Entity
 public class OrdenEntity extends BaseEntity implements Serializable {
-    
+
+   
     
     
     /**
@@ -38,11 +44,17 @@ public class OrdenEntity extends BaseEntity implements Serializable {
      /**
      * Medio de pago utilizado en la orden
      */
-    //private MedioPagoEntity medioPago;
+    @PodamExclude
+    @OneToOne(mappedBy = "orden", fetch=FetchType.LAZY)
+    private MedioPagoEntity medioPago;
     
     @PodamExclude
     @ManyToOne
     private CompradorEntity comprador;
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "orden")
+    private List<BicicletaEntity> bicicletasOrden;
 
     
     public OrdenEntity()
@@ -107,6 +119,35 @@ public class OrdenEntity extends BaseEntity implements Serializable {
     public void setComprador(CompradorEntity comprador) {
         this.comprador = comprador;
     }
+
+    /**
+     * @return the bicicletasOrden
+     */
+    public List<BicicletaEntity> getBicicletasOrden() {
+        return bicicletasOrden;
+    }
+
+    /**
+     * @param bicicletasOrden the bicicletasOrden to set
+     */
+    public void setBicicletasOrden(List<BicicletaEntity> bicicletasOrden) {
+        this.bicicletasOrden = bicicletasOrden;
+    }
+    
+     /**
+     * @return the medioPago
+     */
+    public MedioPagoEntity getMedioPago() {
+        return medioPago;
+    }
+
+    /**
+     * @param medioPago the medioPago to set
+     */
+    public void setMedioPago(MedioPagoEntity medioPago) {
+        this.medioPago = medioPago;
+    }
+    
     
 
 }

@@ -214,9 +214,10 @@ public class MarcaLogicTest {
     //@Test(expected = BusinessLogicException.class)
     public void deleteMarcaConBicicletasAsociadasTest() throws BusinessLogicException {
         MarcaEntity entity = factory.manufacturePojo(MarcaEntity.class);
+        entity.setNombre("juanpablocorreapuerta");
         BicicletaEntity bike = factory.manufacturePojo(BicicletaEntity.class);
         bicicletasData.add(bike);
-        entity.setBicicletas(bicicletasData);
+        entity.setBicicletasMarca(bicicletasData);
         marcaLogic.createMarca(entity);
         marcaLogic.deleteMarca(entity.getId());
     }
