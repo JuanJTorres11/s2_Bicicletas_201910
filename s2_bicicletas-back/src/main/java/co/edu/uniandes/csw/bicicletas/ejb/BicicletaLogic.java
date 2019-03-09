@@ -45,6 +45,17 @@ public class BicicletaLogic {
      */
     public BicicletaEntity createBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación de la bicicleta");
+        
+          // Verifica la regla de negocio: la misma referencia no puede ser null ni cadena vacia
+        if (bicicletaEntity.getReferencia() == null) {
+            throw new BusinessLogicException("La referencia no es valida\"" + bicicletaEntity.getReferencia() + "\"");
+        }
+
+        // Verifica la regla de negocio: no puede haber dos bicicletas con la misma referencia
+        if (persistence.findByReferencia(bicicletaEntity.getReferencia()) != null) {
+            throw new BusinessLogicException("Ya existe una Bicicletaa con la referencia \"" + bicicletaEntity.getReferencia() + "\"");
+        }
+
 
         //Verifica las reglas de negocio
         verificarReglasNegocioBicicleta(bicicletaEntity);
@@ -116,6 +127,11 @@ public class BicicletaLogic {
      */
     public BicicletaEntity ubdateBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar una bicicleta con id", bicicletaEntity.getId());
+          // Verifica la regla de negocio: la misma referencia no puede ser null ni cadena vacia
+        if (bicicletaEntity.getReferencia() == null) {
+            throw new BusinessLogicException("La referencia no es valida\"" + bicicletaEntity.getReferencia() + "\"");
+        }
+        // verifica las demás reglas de negocio
         verificarReglasNegocioBicicleta(bicicletaEntity);
         BicicletaEntity bikeE = persistence.update(bicicletaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar una bicicleta con id", bicicletaEntity.getId());
@@ -123,16 +139,7 @@ public class BicicletaLogic {
     }
 
     public void verificarReglasNegocioBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
-        // Verifica la regla de negocio: la misma referencia no puede ser null ni cadena vacia
-        if (bicicletaEntity.getReferencia() == null) {
-            throw new BusinessLogicException("La referencia no es valida\"" + bicicletaEntity.getReferencia() + "\"");
-        }
-
-        // Verifica la regla de negocio: no puede haber dos bicicletas con la misma referencia
-        if (persistence.findByReferencia(bicicletaEntity.getReferencia()) != null) {
-            throw new BusinessLogicException("Ya existe una Bicicletaa con la referencia \"" + bicicletaEntity.getReferencia() + "\"");
-        }
-
+      
         if (bicicletaEntity.getAlbum() == null || bicicletaEntity.getAlbum().length == 0) {
             throw new BusinessLogicException("La bicicleta debe tener al menos 1 foto \"");
         }
