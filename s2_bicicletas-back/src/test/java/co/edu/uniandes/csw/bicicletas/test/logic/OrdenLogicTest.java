@@ -113,6 +113,7 @@ public class OrdenLogicTest {
         OrdenEntity newEntity = factory.manufacturePojo(OrdenEntity.class);
         newEntity.setCostoTotal(10.0);
         newEntity.setCantidad(1);
+        newEntity.setFecha("19/10/2015");
         OrdenEntity result = ordenLogic.createOrden(newEntity);
         Assert.assertNotNull(result);
         OrdenEntity entity = em.find(OrdenEntity.class, result.getId());
@@ -128,6 +129,7 @@ public class OrdenLogicTest {
     public void createOrdenConCostoInvalido() throws Exception {
         OrdenEntity newEntity = factory.manufacturePojo(OrdenEntity.class);
         newEntity.setCostoTotal(-10.0);
+        newEntity.setFecha("19/10/2015");
         try {
             ordenLogic.createOrden(newEntity);
             fail("Debió arrojar excepción");

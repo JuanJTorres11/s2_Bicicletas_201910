@@ -44,6 +44,10 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany(mappedBy = "bicicleta", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ResenaEntity> resenas = new ArrayList<ResenaEntity>();
+    
+    @PodamExclude
+    @ManyToOne
+    private OrdenEntity orden;
 
     /**
      * Constructor vacio

@@ -26,7 +26,7 @@ public class MarcaEntity extends BaseEntity implements Serializable{
     private String nombre;
     
     @PodamExclude
-    @OneToMany(mappedBy="marca", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy="marca", cascade = CascadeType.ALL)
     private List<BicicletaEntity> bicicletasMarca;
 
     public MarcaEntity(){

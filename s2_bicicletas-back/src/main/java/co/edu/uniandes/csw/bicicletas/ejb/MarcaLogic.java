@@ -102,7 +102,8 @@ public class MarcaLogic {
      */
     public void deleteMarca(Long marcasId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar la marca con id = {0}", marcasId);
-        List<BicicletaEntity> bicicletas = getMarca(marcasId).getBicicletasMarca();
+        MarcaEntity marquita = getMarca(marcasId);
+        List<BicicletaEntity> bicicletas = marquita.getBicicletasMarca();
         if (bicicletas!=null) {
             if( !bicicletas.isEmpty()){
             throw new BusinessLogicException("No se puede borrar la marca con id = " + marcasId + " porque tiene bicicletas asociados");

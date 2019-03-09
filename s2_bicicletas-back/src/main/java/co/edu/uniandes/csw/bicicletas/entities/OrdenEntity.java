@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -22,20 +23,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class OrdenEntity extends BaseEntity implements Serializable {
 
-    /**
-     * @return the medioPago
-     */
-    public MedioPagoEntity getMedioPago() {
-        return medioPago;
-    }
-
-    /**
-     * @param medioPago the medioPago to set
-     */
-    public void setMedioPago(MedioPagoEntity medioPago) {
-        this.medioPago = medioPago;
-    }
-    
+   
     
     
     /**
@@ -57,13 +45,14 @@ public class OrdenEntity extends BaseEntity implements Serializable {
      * Medio de pago utilizado en la orden
      */
     @PodamExclude
-    @OneToOne(mappedBy = "medioPago", fetch=FetchType.LAZY)
+    @OneToOne(mappedBy = "orden", fetch=FetchType.LAZY)
     private MedioPagoEntity medioPago;
     
     @PodamExclude
     @ManyToOne
     private CompradorEntity comprador;
     
+    @PodamExclude
     @OneToMany(mappedBy = "orden")
     private List<BicicletaEntity> bicicletasOrden;
 
@@ -144,6 +133,21 @@ public class OrdenEntity extends BaseEntity implements Serializable {
     public void setBicicletasOrden(List<BicicletaEntity> bicicletasOrden) {
         this.bicicletasOrden = bicicletasOrden;
     }
+    
+     /**
+     * @return the medioPago
+     */
+    public MedioPagoEntity getMedioPago() {
+        return medioPago;
+    }
+
+    /**
+     * @param medioPago the medioPago to set
+     */
+    public void setMedioPago(MedioPagoEntity medioPago) {
+        this.medioPago = medioPago;
+    }
+    
     
 
 }
