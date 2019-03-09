@@ -68,7 +68,7 @@ public class BicicletaDTO implements Serializable {
             }
         }
     }
-    
+
     /**
      * Transformar el DTO a una entidad
      *
@@ -76,8 +76,20 @@ public class BicicletaDTO implements Serializable {
      */
     public BicicletaEntity toEntity() {
         BicicletaEntity bicicletaEntity = new BicicletaEntity();
-        
-        
+        bicicletaEntity.setAlbum(this.album);
+        bicicletaEntity.setDescripcion(this.descripcion);
+        bicicletaEntity.setId(this.id);
+        bicicletaEntity.setPrecio(this.precio);
+        bicicletaEntity.setReferencia(this.referencia);
+        bicicletaEntity.setStock(this.stock);
+        bicicletaEntity.setUsada(this.usada);
+        if (this.marca != null) {
+            bicicletaEntity.setMarca(this.marca.toEntity());
+        }
+        if (this.categoria != null) {
+            bicicletaEntity.setCategoria(this.categoria.toEntity());
+        }
+
         return bicicletaEntity;
     }
 
