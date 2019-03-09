@@ -25,8 +25,6 @@ public class CategoriaPersistence {
     @PersistenceContext(unitName = "bicicletasPU")
     protected EntityManager em;
     
-    //@Inject CategoriaLogic cp;
-    
     public CategoriaEntity create(CategoriaEntity categoria) {
         LOGGER.log(Level.INFO, "Creando una categoria nueva.");
         
@@ -51,7 +49,8 @@ public class CategoriaPersistence {
     public CategoriaEntity findByName(String nombre) {
         LOGGER.log(Level.INFO, "Consultando categoria por nombre ", nombre);
         // Se crea un query para buscar editoriales con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
-        TypedQuery query = em.createQuery("Select e From CategoriaEntity e where e.nombre = :nombre", CategoriaEntity.class);
+        TypedQuery<CategoriaEntity> query = em.createQuery("SELECT c From CategoriaEntity c where c.nombre = :nombre", CategoriaEntity.class);
+        
         // Se remplaza el placeholder ":name" con el valor del argumento 
         query = query.setParameter("nombre", nombre);
         // Se invoca el query se obtiene la lista resultado
@@ -61,6 +60,14 @@ public class CategoriaPersistence {
             result = null;
         } else if (sameName.isEmpty()) {
             result = null;
+        } else if (sameName.size() > 2) {
+            for(int i = 0; i < sameName.size(); i++) {
+                System.out.println("NOMBRE: " + sameName.get(i).getNombre());
+            }
+            
+            CategoriaEntity temp = new CategoriaEntity();
+            temp.setId(Long.valueOf("-1"));
+            result = temp;
         } else {
             result = sameName.get(0);
         }

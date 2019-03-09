@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.bicicletas.test.persistence;
 import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import co.edu.uniandes.csw.bicicletas.persistence.VentaPersistence;
 import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -30,15 +31,27 @@ import org.junit.Before;
 @RunWith(Arquillian.class)
 public class VentaPersistenceTest {
     
+    /**
+     * persistencia de la veta.
+     */
     @Inject
     private VentaPersistence vp; 
     
+    /**
+     * Entity manager.
+     */
     @PersistenceContext
     private EntityManager em;
     
+    /**
+     * User Transaction
+     */
     @Inject
     private UserTransaction utx;
     
+    /**
+     * Lista con las ventas de la BD
+     */
     private ArrayList<VentaEntity> data = new ArrayList<>();
     
       /**
@@ -46,7 +59,6 @@ public class VentaPersistenceTest {
      * El jar contiene las clases, el descriptor de la base de datos y el
      * archivo beans.xml para resolver la inyección de dependencias.
      */
-    
    @Deployment
    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
@@ -56,20 +68,23 @@ public class VentaPersistenceTest {
             .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
-    
+    /**
+     * Realiza unos escenarios aleatorios para poder crear las pruebas.
+   */
     @Test
-    public void createEntityTest()
+    public void createTest()
     {
         PodamFactory factory = new PodamFactoryImpl();
+        
         VentaEntity newEntity = factory.manufacturePojo(VentaEntity.class);
         
-        VentaEntity ve = vp.crearEntity(newEntity);
+        VentaEntity ve = vp.create(newEntity);
         
         Assert.assertNotNull(ve);
         
         VentaEntity ve2 = em.find(VentaEntity.class, ve.getId());
         
-        Assert.assertEquals(ve2.getFactura(), ve.getFactura());
+        Assert.assertEquals(ve2.getId(), ve.getId());
     }
     
          /**
@@ -93,14 +108,18 @@ public class VentaPersistenceTest {
         }
     }
 
+    /**
+     * limpia la informacion anterior creada.
+     */
     private void clearData() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
         em.createQuery("delete from VentaEntity").executeUpdate();
     }
 
+    /**
+     * Almacena la informacion creada para realizar las pruebas.
+     */
     private void insertData() {
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
        
        PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
@@ -114,15 +133,21 @@ public class VentaPersistenceTest {
 
     }
     
+    /**
+     * Test de eliminacion de una venta.
+     */
      @Test
-    public void deleteVentaTest() {
+    public void deleteTest() {
         VentaEntity venta = data.get(0);
         vp.delete(venta.getId());
         VentaEntity borrado = em.find(VentaEntity.class, venta.getId());
         Assert.assertNull(borrado);
     }
     
-        @Test
+    /**
+     * Test de actualizar una venta.
+     */
+    @Test
     public void updateTest()
     {
         VentaEntity local = data.get(0);
@@ -133,16 +158,27 @@ public class VentaPersistenceTest {
         VentaEntity bd = em.find(VentaEntity.class, local.getId());
         Assert.assertEquals("No se actualizó correctamente", bd, nuevo);
     }
-  
-    /**
+        /**
+         * Test de obtener toda la lista de las ventas.
+         */
         @Test
-    public void findByNameTest() {
-        VentaEntity venta = data.get(0);
-        VentaEntity newEntity = vp.findById(venta.getIdentificador());
-        
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(newEntity.getFactura(), venta.getFactura());
+    public void findAllTest()
+    {
+//        List<VentaEntity> list = new ArrayList<VentaEntity>();
+//        vp.findAll();
+        List<VentaEntity> list = vp.findAll();
+        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
+        Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
     }
-    * */
-    
+    /**
+     * Test de buscar una venta por su id.
+     */
+        @Test
+    public void findByIdTest()
+    {
+        VentaEntity venta = data.get(0);
+        VentaEntity ventaBd = vp.findById(venta.getId());
+        Assert.assertNotNull("Lo que retorna la bd no debería se null", ventaBd);
+        Assert.assertEquals("lo que retorna la bd no es lo que se espera", venta.getIdentificador(), ventaBd.getIdentificador());
+    }
 }

@@ -18,8 +18,8 @@ public class MedioPagoDTO implements Serializable {
     public final static String VISA = "VISA";
     public final static String MASTERCARD = "MASTERCARD";
     
-    private int numeroTarjeta;
-    private int codigoVerificacion;
+    private Long numeroTarjeta;
+    private Integer codigoVerificacion;
     private String vencimiento;
     private String direccion;
     private String tipoTarjeta;
@@ -33,18 +33,25 @@ public class MedioPagoDTO implements Serializable {
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public MedioPagoEntity toEntity() {
+        MedioPagoEntity medioPago = new MedioPagoEntity(numeroTarjeta, codigoVerificacion, vencimiento, 
+                direccion, tipoTarjeta, tipoCredito);
+        
+        return medioPago;
+    }
 
     /**
      * @return the numeroTarjeta
      */
-    public int getNumeroTarjeta() {
+    public Long getNumeroTarjeta() {
         return numeroTarjeta;
     }
 
     /**
      * @param numeroTarjeta the numeroTarjeta to set
      */
-    public void setNumeroTarjeta(int numeroTarjeta) {
+    public void setNumeroTarjeta(Long numeroTarjeta) {
         this.numeroTarjeta = numeroTarjeta;
     }
 
@@ -116,10 +123,5 @@ public class MedioPagoDTO implements Serializable {
      */
     public void setTipoCredito(String tipoCredito) {
         this.tipoCredito = tipoCredito;
-    }
-
-    MedioPagoEntity toEntity()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

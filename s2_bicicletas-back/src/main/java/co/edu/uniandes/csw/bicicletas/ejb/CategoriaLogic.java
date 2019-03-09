@@ -99,11 +99,18 @@ public class CategoriaLogic {
      * Actualiza la categoría.
      * @param categoria Categoria con datos actualizados. categoria != null.
      * @return Categoría creada.
+     * @throws BusinessLogicException   1. Si la categoría ya existe.
+     *                                  2. Si el nombre de la categoría es vacío.
      */
     public CategoriaEntity updateCategoria(CategoriaEntity categoria) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar categoría.");
         
-        if(cp.findByName(categoria.getNombre()) != null) {
+        CategoriaEntity categoriaEntity = cp.findByName(categoria.getNombre());
+        
+        if(categoriaEntity != null) {
+            if(categoriaEntity.getId() < 0) {
+                throw new BusinessLogicException();
+            }
             throw new BusinessLogicException("La categoría con el nombre dado ya existe");
         }
         
@@ -122,16 +129,14 @@ public class CategoriaLogic {
      * Elimina la categoría con el id dado por parámetro.
      * @param categoriaId Id de la categoría. categoriaId > 0.
      * @throws BusinessLogicException   1. Si hay bicicletas asociadas a la categoría.
-     *                                  2. Si la categoría no existe.
      */
     public void deleteCategoria(Long categoriaId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Comienza proceso de eliminación de la categoría con id = {0}", categoriaId);
         
+        System.out.println(getCategoria(categoriaId));
         List<BicicletaEntity> bicicletas = getCategoria(categoriaId).getBicicletas();
         if(bicicletas != null && !bicicletas.isEmpty()) {
             throw new BusinessLogicException("La categoría no puede ser eliminada porque tiene bicicletas asociadas.");
-        } else if(cp.find(categoriaId) == null) {
-            throw new BusinessLogicException("La categoría no existe.");
         }
         cp.delete(categoriaId);
         

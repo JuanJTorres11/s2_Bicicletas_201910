@@ -12,8 +12,7 @@ import java.io.Serializable;
  *
  * @author Juan José Torres
  */
-public class UsuarioDTO implements Serializable
-{
+public class UsuarioDTO implements Serializable {
 
     protected Long id;
 
@@ -23,14 +22,11 @@ public class UsuarioDTO implements Serializable
 
     protected String password;
 
-    public UsuarioDTO()
-    {
+    public UsuarioDTO() {
     }
 
-    public UsuarioDTO(UsuarioEntity user)
-    {
-        if (user != null)
-        {
+    public UsuarioDTO(UsuarioEntity user) {
+        if (user != null) {
             id = user.getId();
             nombre = user.getNombre();
             login = user.getLogin();
@@ -41,64 +37,56 @@ public class UsuarioDTO implements Serializable
     /**
      * @return the nombre
      */
-    public String getNombre()
-    {
+    public String getNombre() {
         return nombre;
     }
 
     /**
      * @param nombre the nombre to set
      */
-    public void setNombre(String nombre)
-    {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
     /**
      * @return the login
      */
-    public String getLogin()
-    {
+    public String getLogin() {
         return login;
     }
 
     /**
      * @param login the login to set
      */
-    public void setLogin(String login)
-    {
+    public void setLogin(String login) {
         this.login = login;
     }
 
     /**
      * @return the password
      */
-    public String getPassword()
-    {
+    public String getPassword() {
         return password;
     }
 
     /**
      * @param password the password to set
      */
-    public void setPassword(String password)
-    {
+    public void setPassword(String password) {
         this.password = password;
     }
 
     /**
      * @return the id
      */
-    public Long getId()
-    {
+    public Long getId() {
         return id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 }
