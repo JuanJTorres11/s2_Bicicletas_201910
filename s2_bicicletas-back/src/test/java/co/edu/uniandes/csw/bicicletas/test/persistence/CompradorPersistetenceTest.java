@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.bicicletas.test.persistence;
 import co.edu.uniandes.csw.bicicletas.entities.CompradorEntity;
 import co.edu.uniandes.csw.bicicletas.persistence.CompradorPersistence;
 import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -100,12 +101,13 @@ public class CompradorPersistetenceTest {
     }
     
       @Test
-    public void createEntityTest()
+    public void createTest()
     {
         PodamFactory factory = new PodamFactoryImpl();
+        
         CompradorEntity newEntity = factory.manufacturePojo(CompradorEntity.class);
         
-        CompradorEntity ve = cp.crearEntity(newEntity);
+        CompradorEntity ve = cp.create(newEntity);
         
         Assert.assertNotNull(ve);
         
@@ -115,23 +117,21 @@ public class CompradorPersistetenceTest {
     }
     
      @Test
-    public void deleteCompradorTest() {
+    public void deleteTest() {
         CompradorEntity comprador = data.get(0);
         cp.delete(comprador.getId());
         CompradorEntity borrado = em.find(CompradorEntity.class, comprador.getId());
         Assert.assertNull(borrado);
     }
     
-    /**
-    @Test
-    public void findByLoginTest()
+        @Test
+    public void findByLogginTest()
     {
         CompradorEntity comprador = data.get(0);
-        CompradorEntity CompradorBD = cp.findByNombre(comprador.getLogin());
-        Assert.assertNotNull("Lo que retorna la bd no debería se null", CompradorBD);
-        Assert.assertEquals("lo que retorna la bd no es lo que se espera", comprador, CompradorBD);
+        CompradorEntity compradorBd = cp.findByLogin(comprador.getLogin());
+        Assert.assertNotNull("Lo que retorna la bd no debería se null", compradorBd);
+        Assert.assertEquals("lo que retorna la bd no es lo que se espera", comprador, compradorBd);
     }
-    * */
     
         @Test
     public void updateTest()
@@ -143,6 +143,14 @@ public class CompradorPersistetenceTest {
         cp.update(nuevo);
         CompradorEntity bd = em.find(CompradorEntity.class, local.getId());
         Assert.assertEquals("No se actualizó correctamente", bd, nuevo);
+    }
+    
+        @Test
+    public void findAllTest()
+    {
+        List<CompradorEntity> list = cp.findAll();
+        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
+        Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
     }
     
 }

@@ -19,65 +19,51 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class CompradorPersistence {
-    
-    
-    @PersistenceContext(unitName= "bicicletasPU")
+
+    @PersistenceContext(unitName = "bicicletasPU")
     protected EntityManager em;
-    
-    public CompradorEntity crearEntity(CompradorEntity pP)
-    {
+
+    public CompradorEntity create(CompradorEntity pP) {
         em.persist(pP);
         return pP;
     }
-    
-    public CompradorEntity findByName(String login)
-    {
-        
-        TypedQuery query = em.createQuery("Select e From VendedorEntity e where e.login = :loggin", CompradorEntity.class);
-         
-        query = query.setParameter("loggin", login);
-        
-        List<CompradorEntity> logins = query.getResultList();
-        CompradorEntity result;
 
-        if (logins == null)
-        {
-            result = null;
-        }
-        else if (logins.isEmpty())
-        {
-            result = null;
-        }
-        else
-        {
-            result = logins.get(0);
-        }
-        return result;
-    }
-    
-    public CompradorEntity encontrarEntity(Long compradorID)
-    {
+    public CompradorEntity find(Long compradorID) {
         return em.find(CompradorEntity.class, compradorID);
     }
-    
-    public void delete(long id){
+
+    public void delete(long id) {
         CompradorEntity enti = em.find(CompradorEntity.class, id);
         em.remove(enti);
     }
-    
-    public CompradorEntity update(CompradorEntity pComprador){
+
+    public CompradorEntity update(CompradorEntity pComprador) {
         return em.merge(pComprador);
     }
 
-    public CompradorEntity findByLogin(String pLoggin)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<CompradorEntity> findAll() {
+        TypedQuery<CompradorEntity> query = em.createQuery("select u from CompradorEntity u", CompradorEntity.class);
+        return query.getResultList();
     }
-/**
-    public Object findByName(String nombre) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+//    
+    public CompradorEntity findByLogin(String login) {
+        // Se crea un query para buscar editoriales con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
+        TypedQuery query = em.createQuery("Select e From CompradorEntity e where e.login = :loggin", CompradorEntity.class);
+        // Se remplaza el placeholder ":name" con el valor del argumento 
+        query = query.setParameter("loggin", login);
+        // Se invoca el query se obtiene la lista resultado
+        List<CompradorEntity> logins = query.getResultList();
+        CompradorEntity result;
+
+        if (logins == null) {
+            result = null;
+        } else if (logins.isEmpty()) {
+            result = null;
+        } else {
+            result = logins.get(0);
+        }
+
+        return result;
     }
-    
-}
-*/
 }

@@ -7,29 +7,51 @@ package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
  * @author Juan Lozano
  */
 @Entity
-public class VentaEntity extends BaseEntity implements Serializable{
-    
-    
+public class VentaEntity extends BaseEntity implements Serializable {
+
+    /**
+     * atrtibuto de la ruta de la factura.
+     */
     private String factura;
-    
+
+    /**
+     * atributo del precio de la bicicleta.
+     */
     private Double precio;
-    
+
+    /**
+     * atributo de si fue aprobada la compra.
+     */
     private Boolean aprobado;
-    
+
+    /**
+     * Identificador de la venta.
+     */
     private Long identificador;
+
+    /**
+     * rutas con las imagenes de la bicicleta.
+     */
+    private String[] fotos;
+
+//    @PodamExclude
+//    @ManyToOne
+//    private VendedorEntity vendedor;
     
     /**
      * Constructor de la clase VentaEntity
      */
-    public VentaEntity()
-    {
-        
+    public VentaEntity() {
+
     }
 
     /**
@@ -72,7 +94,7 @@ public class VentaEntity extends BaseEntity implements Serializable{
      */
     public void setAprobado(Boolean aprobado) {
         this.aprobado = aprobado;
-    }   
+    }
 
     /**
      * @return the identificador
@@ -87,5 +109,19 @@ public class VentaEntity extends BaseEntity implements Serializable{
     public void setIdentificador(Long identificador) {
         this.identificador = identificador;
     }
-    
+
+    /**
+     * @return the fotos
+     */
+    public String[] getFotos() {
+        return fotos;
+    }
+
+    /**
+     * @param fotos the fotos to set
+     */
+    public void setFotos(String[] fotos) {
+        this.fotos = fotos;
+    }
+
 }

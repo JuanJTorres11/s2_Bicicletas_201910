@@ -5,8 +5,12 @@
  */
 package co.edu.uniandes.csw.bicicletas.entities;
 
-import java.io.Serializable;
+
+import java.util.List;
+import java.util.logging.Logger;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -15,59 +19,59 @@ import javax.persistence.Entity;
 
 //PodamExclude, para que no quede en un stack over flow en la creacion de objetos. 
 @Entity
-public class CompradorEntity extends BaseEntity implements Serializable {
+public class CompradorEntity extends UsuarioEntity {
     
-    private String nombre;
     
-    private String login;
+    private static final Logger LOGGER = Logger.getLogger(VendedorEntity.class.getName());
+      
+      
+//    @PodamExclude
+//    @OneToMany(mappedBy = "comprador")
+//    private List<MedioPagoEntity> mediosPago;
+//    
+//    @PodamExclude
+//    @OneToMany(mappedBy = "comprador")
+//    private List<OrdenEntity> ordenes;
+//    
+//    @PodamExclude
+//    @OneToMany(mappedBy = "")
+    //private List<BicicletaDTO> listaDeDeseos;
     
-    private String password;
+//    @PodamExclude
+//    @OneToMany(mappedBy = "comprador"
+    //private BicicletaDTO bicicletaDTO;
     
     public CompradorEntity()
     {
         
     }
 
-    /**
-     * @return the nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * @param nombre the nombre to set
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    /**
-     * @return the login
-     */
-    public String getLogin() {
-        return login;
-    }
-
-    /**
-     * @param login the login to set
-     */
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
+//    /**
+//     * @return the mediosPago
+//     */
+//    public List<MedioPagoEntity> getMediosPago() {
+//        return mediosPago;
+//    }
+//
+//    /**
+//     * @param mediosPago the mediosPago to set
+//     */
+//    public void setMediosPago(List<MedioPagoEntity> mediosPago) {
+//        this.mediosPago = mediosPago;
+//    }
+//
+//    /**
+//     * @return the ordenes
+//     */
+//    public List<OrdenEntity> getOrdenes() {
+//        return ordenes;
+//    }
+//
+//    /**
+//     * @param ordenes the ordenes to set
+//     */
+//    public void setOrdenes(List<OrdenEntity> ordenes) {
+//        this.ordenes = ordenes;
+//    }
+       
 }

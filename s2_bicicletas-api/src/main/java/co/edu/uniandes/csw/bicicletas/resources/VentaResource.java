@@ -32,9 +32,9 @@ public class VentaResource {
     private static final Logger LOGGER = Logger.getLogger(VentaResource.class.getName());
     
     /** 
-     * 
+     * Crea una venta.
      * @param pVenta
-     * @return 
+     * @return Retorna un objeto tipo VentaDTO
      */
     @POST 
     public VentaDTO crearVenta(VentaDTO pVenta)
@@ -42,6 +42,11 @@ public class VentaResource {
         return pVenta;
     }
     
+    /**
+     * Obtiene una venta que se especifica por un id. 
+     * @param id id de la venta a buscar.
+     * @return retorna la venta respectivo al id.
+     */
     @GET 
     @Path("{id: \\d+}")
     public VentaDTO obtenerVenta(@PathParam("id") long id)
@@ -49,6 +54,11 @@ public class VentaResource {
         return null;
     }
     
+    /**
+     * Actualiza la informacion de la venta especificada.
+     * @param id id de la venta a actualizar.
+     * @return La venta actualizada. 
+     */
     @PUT
     @Path("{id: \\d+}")
     public VentaDTO actualizaVenta(@PathParam("id") long id)
@@ -56,12 +66,32 @@ public class VentaResource {
         return null;
     }
     
+    /**
+     * Elimina una venta especifica.
+     * @param id id de la venta a eliminar.
+     * @return  
+     */
     @DELETE
     @Path("{id: \\d+}")
     public VentaDTO eliminarVenta(@PathParam("id") long id)
     {
         return null;
     }
+    
+//        /**
+//     * Retorna una lista con todas las ventas registradas. 
+//     */
+//    @GET
+//    public List<VendedorDetailDTO> darVendedores()
+//    {
+//        ArrayList<VendedorDetailDTO> vendedores = new ArrayList<VendedorDetailDTO>();
+//        List<VendedorEntity> vEntity = logica.findAllVendedores();
+//        for (VendedorEntity v : vEntity)
+//        {
+//            vendedores.add(new VendedorDetailDTO(v));
+//        }
+//        return vendedores;
+//    }
     
     
 }

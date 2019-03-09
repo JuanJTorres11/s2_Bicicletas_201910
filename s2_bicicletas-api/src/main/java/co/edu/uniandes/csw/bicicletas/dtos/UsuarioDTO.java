@@ -15,13 +15,13 @@ import java.io.Serializable;
 public class UsuarioDTO implements Serializable
 {
 
-    private Long id;
+    Long id;
 
-    private String nombre;
+    String nombre;
 
-    private String login;
+    String login;
 
-    private String password;
+    String password;
 
     public UsuarioDTO()
     {
