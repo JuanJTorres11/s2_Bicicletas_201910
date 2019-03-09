@@ -1,3 +1,4 @@
+DELETE FROM BicicletaEntity;
 DELETE FROM CategoriaEntity;
 
 INSERT INTO CategoriaEntity (id, nombre) VALUES (100, 'BMX');

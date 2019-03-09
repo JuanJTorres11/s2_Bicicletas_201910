@@ -31,7 +31,7 @@ public class CategoriaDetailDTO extends CategoriaDTO implements Serializable {
         if(categoria.getBicicletas() != null) {
             this.bicicletas = new ArrayList<>();
             for(BicicletaEntity bicicleta: categoria.getBicicletas()) {
-                //this.bicicletas.add(new BicicletaDTO(bicicleta));
+                this.bicicletas.add(new BicicletaDTO(bicicleta));
             }
         }
     }

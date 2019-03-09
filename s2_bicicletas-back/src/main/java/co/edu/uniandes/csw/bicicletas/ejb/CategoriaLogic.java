@@ -108,6 +108,9 @@ public class CategoriaLogic {
         CategoriaEntity categoriaEntity = cp.findByName(categoria.getNombre());
         
         if(categoriaEntity != null) {
+            if(categoriaEntity.getId() < 0) {
+                throw new BusinessLogicException();
+            }
             throw new BusinessLogicException("La categoría con el nombre dado ya existe");
         }
         
@@ -115,7 +118,6 @@ public class CategoriaLogic {
             throw new BusinessLogicException("El nombre de la categoría no puede estar vacío.");
         }
         
-        categoria.setId(categoriaEntity.getId());
         cp.update(categoria);
         
         LOGGER.log(Level.INFO, "Termina proceso de actualizar categoría."); 
@@ -131,6 +133,7 @@ public class CategoriaLogic {
     public void deleteCategoria(Long categoriaId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Comienza proceso de eliminación de la categoría con id = {0}", categoriaId);
         
+        System.out.println(getCategoria(categoriaId));
         List<BicicletaEntity> bicicletas = getCategoria(categoriaId).getBicicletas();
         if(bicicletas != null && !bicicletas.isEmpty()) {
             throw new BusinessLogicException("La categoría no puede ser eliminada porque tiene bicicletas asociadas.");

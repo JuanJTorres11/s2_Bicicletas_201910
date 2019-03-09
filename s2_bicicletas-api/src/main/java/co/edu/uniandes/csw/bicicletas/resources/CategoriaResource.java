@@ -113,6 +113,7 @@ public class CategoriaResource {
         if(categoria == null) {
             throw new WebApplicationException("El recurso /categorias/" + nombre + " no existe.", 404);
         }
+        System.out.println("ID DE LA CATEGORIA: " + categoria.getId());
         categoriaLogic.deleteCategoria(categoria.getId());
         
         LOGGER.log(Level.INFO, "CategoriaResource eliminarCategoria: output: void");
@@ -135,7 +136,9 @@ public class CategoriaResource {
         if(categoriaLogic.getCategoriaPorNombre(nombre) == null) {
             throw new WebApplicationException("El recurso /categorias/" + nombre + " no existe.", 404);
         }
-        CategoriaDetailDTO categoriaDTO = new CategoriaDetailDTO(categoriaLogic.updateCategoria(categoria.toEntity()));
+        CategoriaEntity categoriaEntity = categoria.toEntity();
+        categoriaEntity.setId(categoriaLogic.getCategoriaPorNombre(nombre).getId());
+        CategoriaDetailDTO categoriaDTO = new CategoriaDetailDTO(categoriaLogic.updateCategoria(categoriaEntity));
         
         LOGGER.log(Level.INFO, "CategoriaResource darCategorias: output: {0}", categoriaDTO);
         return categoriaDTO;

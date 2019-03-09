@@ -60,6 +60,14 @@ public class CategoriaPersistence {
             result = null;
         } else if (sameName.isEmpty()) {
             result = null;
+        } else if (sameName.size() > 2) {
+            for(int i = 0; i < sameName.size(); i++) {
+                System.out.println("NOMBRE: " + sameName.get(i).getNombre());
+            }
+            
+            CategoriaEntity temp = new CategoriaEntity();
+            temp.setId(Long.valueOf("-1"));
+            result = temp;
         } else {
             result = sameName.get(0);
         }
