@@ -223,7 +223,7 @@ public class BicicletaLogicTest {
     }
 
     @Test
-    public void updateBicicletaTest() {
+    public void updateBicicletaTest() throws BusinessLogicException {
 
         Long idActualizar = data.get(0).getId();
         BicicletaEntity nuevaB = factory.manufacturePojo(BicicletaEntity.class);

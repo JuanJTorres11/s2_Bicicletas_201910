@@ -29,13 +29,13 @@ public class BicicletaLogic {
 
     @Inject
     private BicicletaPersistence persistence;
-     @Inject
+    @Inject
     private CategoriaPersistence persistenceCat;
-     
-      @Inject
+
+    @Inject
     private MarcaPersistence persistenceMarca;
-    
-     /**
+
+    /**
      * Crea una bicicleta en la persistencia.
      *
      * @param bicicletaEntity La entidad que representa la bicicleta a
@@ -114,8 +114,9 @@ public class BicicletaLogic {
      * @param bicicletaEntity La Entidad con los cambios
      * @return La Entidad de la bicicleta modificada
      */
-    public BicicletaEntity ubdateBicicleta(BicicletaEntity bicicletaEntity) {
+    public BicicletaEntity ubdateBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar una bicicleta con id", bicicletaEntity.getId());
+        verificarReglasNegocioBicicleta(bicicletaEntity);
         BicicletaEntity bikeE = persistence.update(bicicletaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar una bicicleta con id", bicicletaEntity.getId());
         return bikeE;
@@ -127,42 +128,43 @@ public class BicicletaLogic {
             throw new BusinessLogicException("La referencia no es valida\"" + bicicletaEntity.getReferencia() + "\"");
         }
 
-        // Verifica la regla de negocio: no puede haber dos biciletas con la misma referencia
+        // Verifica la regla de negocio: no puede haber dos bicicletas con la misma referencia
         if (persistence.findByReferencia(bicicletaEntity.getReferencia()) != null) {
             throw new BusinessLogicException("Ya existe una Bicicletaa con la referencia \"" + bicicletaEntity.getReferencia() + "\"");
         }
-        
-         if(bicicletaEntity.getAlbum() == null || bicicletaEntity.getAlbum().length == 0){
-            throw new BusinessLogicException("La bicicleta debe tener al menos 1 foto \"" );
+
+        if (bicicletaEntity.getAlbum() == null || bicicletaEntity.getAlbum().length == 0) {
+            throw new BusinessLogicException("La bicicleta debe tener al menos 1 foto \"");
         }
 
         //Verifica la regla de negocio: el precio no puede ser negativo
         if (bicicletaEntity.getPrecio() < 0.0) {
-          throw new BusinessLogicException("El precio no puede ser un valor negativo \"" + bicicletaEntity.getPrecio() + "\"");
+            throw new BusinessLogicException("El precio no puede ser un valor negativo " + bicicletaEntity.getPrecio() + "\"");
         }
 
         //Verifica la regla de negocio: la marca no puede ser null
         if (bicicletaEntity.getMarca() == null) {
-          throw new BusinessLogicException("La bicicleta tiene que tener una marca \"");
+            throw new BusinessLogicException("La bicicleta tiene que tener una marca");
         }
 
         //Verifica la regla de negocio: la categoria no puede ser null
         if (bicicletaEntity.getCategoria() == null) {
-          throw new BusinessLogicException("La bicicleta tiene que tener una categoria \"");
+            throw new BusinessLogicException("La bicicleta tiene que tener una categoria");
         }
 
         //Verifica la regla de negocio: el stock no puede ser menor a 0
         if (bicicletaEntity.getStock() < 0) {
-          throw new BusinessLogicException("El stock no puede ser negativo \"" + bicicletaEntity.getStock() + "\"");
+            throw new BusinessLogicException("El stock no puede ser negativo \"" + bicicletaEntity.getStock() + "\"");
         }
         //Verifica la regla de negocio: debe tener al menos 1 foto
-       
+
     }
-    
-       /**
+
+    /**
      * Remplazar la categoria de una bicicleta.
      *
-     * @param categoriaNombre El nombre de la categoria que se será de la bicicleta.
+     * @param categoriaNombre El nombre de la categoria que se será de la
+     * bicicleta.
      * @return el nuevo libro.
      */
     public BicicletaEntity replaceCategoria(Long bicicletaId, String categoriaNombre) {
@@ -174,7 +176,7 @@ public class BicicletaLogic {
         return bikekEntity;
     }
 
-       /**
+    /**
      * Remplazar la marca de una bicicleta.
      *
      * @param marcaId El id de la marca que se será de la bicicleta.
@@ -188,6 +190,5 @@ public class BicicletaLogic {
         LOGGER.log(Level.INFO, "Termina proceso de actualizar la bicicleta con id = {0}", bikekEntity.getId());
         return bikekEntity;
     }
-    
 
 }
