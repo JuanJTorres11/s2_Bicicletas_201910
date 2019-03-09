@@ -68,12 +68,13 @@ public class CompradorResource {
      */
     @GET
     public List<CompradorDetailDTO> darCompradores() {
-        ArrayList<CompradorDetailDTO> compradores = new ArrayList<CompradorDetailDTO>();
-        List<CompradorEntity> vEntity = logica.findAllCompradores();
-        for (CompradorEntity v : vEntity) {
-            compradores.add(new CompradorDetailDTO(v));
-        }
-        return compradores;
+//        ArrayList<CompradorDetailDTO> compradores = new ArrayList<CompradorDetailDTO>();
+//        List<CompradorEntity> vEntity = logica.findAllCompradores();
+//        for (CompradorEntity v : vEntity) {
+//            compradores.add(new CompradorDetailDTO(v));
+//        }
+//        return compradores;
+return null;
     }
 
     @GET

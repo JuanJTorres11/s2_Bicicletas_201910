@@ -30,17 +30,17 @@ public class CompradorDetailDTO extends CompradorDTO {
 
 //    public CompradorDetailDTO(CompradorEntity pComprador) {
 //        List<OrdenEntity> ordenes = pComprador.getOrdenes();
-//        List<BicicletaEntity> deseos = pComprador.getListaDeseos;
+////        List<BicicletaEntity> deseos = pComprador.;
 //        if (ordenes != null) {
 //            for (OrdenEntity oE : ordenes) {
 //                ordenDTO.add(new OrdenDTO(oE));
 //            }
 //        }
-//        if (deseos != null) {
-//            for (BicicletaEntity mpE : deseos) {
-//                listaDeDeseos.add(new BicicletaDTO(mpE));
-//            }
-//        }
+////        if (deseos != null) {
+////            for (BicicletaEntity mpE : deseos) {
+////                listaDeDeseos.add(new BicicletaDTO(mpE));
+////            }
+////        }
 //    }
 
     /**

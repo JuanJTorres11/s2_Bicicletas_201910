@@ -43,10 +43,14 @@ public class VentaEntity extends BaseEntity implements Serializable {
      */
     private String[] fotos;
 
+    @PodamExclude
+    @ManyToOne
+    private VendedorEntity vendedor;
+    
 //    @PodamExclude
 //    @ManyToOne
 //    private VendedorEntity vendedor;
-    
+
     /**
      * Constructor de la clase VentaEntity
      */
@@ -111,6 +115,7 @@ public class VentaEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     *
      * @return the fotos
      */
     public String[] getFotos() {
@@ -123,5 +128,19 @@ public class VentaEntity extends BaseEntity implements Serializable {
     public void setFotos(String[] fotos) {
         this.fotos = fotos;
     }
+
+//    /**
+//     * @return the vendedor
+//     */
+//    public VendedorEntity getVendedor() {
+//        return vendedor;
+//    }
+//
+//    /**
+//     * @param vendedor the vendedor to set
+//     */
+//    public void setVendedor(VendedorEntity vendedor) {
+//        this.vendedor = vendedor;
+//    }
 
 }

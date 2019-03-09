@@ -33,9 +33,22 @@ public class ResenaPersistence {
         return resenaEntity;
     }
 
-    public ResenaEntity find(Long resenaId) {
+    public ResenaEntity find(Long bicicletaId, Long resenaId) {
         LOGGER.log(Level.INFO, "Consultando resena con id={0}", resenaId);
-        return em.find(ResenaEntity.class, resenaId);
+         TypedQuery<ResenaEntity> q = em.createQuery("select p from ResenaEntity p where (p.bicicleta.id = :bicicletaId) and (p.id = :resenaId)", ResenaEntity.class);
+
+        q.setParameter("bicicletaId", bicicletaId);
+        q.setParameter("resenaId", resenaId);
+        List<ResenaEntity> results = q.getResultList();
+        ResenaEntity review = null;
+        if (results == null) {
+            review = null;
+        } else if (results.isEmpty()) {
+            review = null;
+        } else if (results.size() >= 1) {
+            review = results.get(0);
+        }
+        return review;
     }
 
     public List<ResenaEntity> findAll() {

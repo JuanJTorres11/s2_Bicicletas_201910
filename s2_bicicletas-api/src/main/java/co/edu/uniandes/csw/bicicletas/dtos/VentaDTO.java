@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import java.io.Serializable;
 import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 
@@ -185,4 +186,5 @@ public class VentaDTO implements Serializable {
     public void setBicicletaDTO(BicicletaDTO bicicletaDTO) {
         this.bicicletaDTO = bicicletaDTO;
     }
+
 }

@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -36,8 +38,11 @@ public class OrdenEntity extends BaseEntity implements Serializable {
      /**
      * Medio de pago utilizado en la orden
      */
-    //private MedioPago medioPago;
+    //private MedioPagoEntity medioPago;
     
+    @PodamExclude
+    @ManyToOne
+    private CompradorEntity comprador;
 
     
     public OrdenEntity()
@@ -87,6 +92,20 @@ public class OrdenEntity extends BaseEntity implements Serializable {
      */
     public void setCostoTotal(Double costoTotal) {
         this.costoTotal = costoTotal;
+    }
+
+    /**
+     * @return the comprador
+     */
+    public CompradorEntity getComprador() {
+        return comprador;
+    }
+
+    /**
+     * @param comprador the comprador to set
+     */
+    public void setComprador(CompradorEntity comprador) {
+        this.comprador = comprador;
     }
     
 

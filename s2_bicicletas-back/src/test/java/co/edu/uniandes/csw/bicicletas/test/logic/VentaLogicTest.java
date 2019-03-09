@@ -156,8 +156,6 @@ public class VentaLogicTest {
         List<VentaEntity> list = logica.findAllVentas();
         Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
         Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
-        
-
     }
 
     @Test

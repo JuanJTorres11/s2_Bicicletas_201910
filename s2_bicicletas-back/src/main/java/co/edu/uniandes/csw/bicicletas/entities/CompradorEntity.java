@@ -32,14 +32,14 @@ public class CompradorEntity extends UsuarioEntity {
 //    @PodamExclude
 //    @OneToMany(mappedBy = "comprador")
 //    private List<OrdenEntity> ordenes;
-//    
-//    @PodamExclude
-//    @OneToMany(mappedBy = "")
-    //private List<BicicletaDTO> listaDeDeseos;
     
 //    @PodamExclude
+//    @OneToMany(mappedBy = "")
+//    private List<BicicletaDTO> listaDeDeseos;
+//    
+//    @PodamExclude
 //    @OneToMany(mappedBy = "comprador"
-    //private BicicletaDTO bicicletaDTO;
+//    private BicicletaDTO bicicletaDTO;
     
     public CompradorEntity()
     {
