@@ -8,6 +8,8 @@ package co.edu.uniandes.csw.bicicletas.ejb;
 import co.edu.uniandes.csw.bicicletas.entities.OrdenEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.OrdenPersistence;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,16 +31,13 @@ public class OrdenLogic {
     /**
      * Crea una orden en la persistencia.
      *
-     * @param ordenEntity La entidad que representa la orden a persistir.
+     * @param ord La entidad que representa la orden a persistir.
      * @return La orden luego de persistirla.
      * @throws BusinessLogicException Si la orden a persistir ya existe.
      */
-    public OrdenEntity createOrden(OrdenEntity ord) throws BusinessLogicException {
+    public OrdenEntity createOrden(OrdenEntity ord) throws BusinessLogicException, ParseException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación de la orden");
-        //falta completaaaaaar
-        if (ord.getCostoTotal() < 0 || ord.getCantidad() < 0 || ord.getFecha() == null) {
-            throw new BusinessLogicException("El costo de una orden y la cantidad no pueden ser menor a 0");
-        }
+        verificarReglasNegocio(ord.getFecha(), ord.getCantidad(), ord.getCostoTotal());
         ordenPersistence.create(ord);
         LOGGER.log(Level.INFO, "Termina proceso de creación de la orden");
         return ord;
@@ -72,5 +71,30 @@ public class OrdenLogic {
         }
         LOGGER.log(Level.INFO, "Termina proceso de consultar la orden con id = {0}", ordenId);
         return ordenEntity;
+    }
+    
+    private void verificarReglasNegocio(String fecha, Integer cantidad, Double costo) throws BusinessLogicException, ParseException{
+        
+        verificarFecha(fecha, "DD/MM/YYYY");
+        if(cantidad<=0 || cantidad == null){
+            throw new BusinessLogicException("La cantidad debe estar establecida como un valor mayor a 0");
+        }
+        else if(costo<=0 || costo == null){
+            throw new BusinessLogicException("El costo debe estar establecido como un valor mayor a 0");
+        }
+        
+    }
+    
+    /**
+     * Verifica si la fecha está en el formato introducido por parámetro.
+     * @param fecha Fecha que se quiere verificar. fecha != null
+     * @param formato Formato en el que se quiere verificar. formato != null && != "".
+     * @throws ParseException   1. Si el formato no es correcto.
+     */
+    private void verificarFecha(String fecha, String formato) throws ParseException {
+        SimpleDateFormat f = new SimpleDateFormat(formato);
+        f.setLenient(false);
+        
+        f.parse(fecha);
     }
 }
