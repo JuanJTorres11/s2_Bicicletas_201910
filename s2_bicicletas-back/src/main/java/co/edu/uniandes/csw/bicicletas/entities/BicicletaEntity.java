@@ -21,6 +21,20 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class BicicletaEntity extends BaseEntity implements Serializable {
 
+    /**
+     * @return the orden
+     */
+    public OrdenEntity getOrden() {
+        return orden;
+    }
+
+    /**
+     * @param orden the orden to set
+     */
+    public void setOrden(OrdenEntity orden) {
+        this.orden = orden;
+    }
+
     private String descripcion;
 
     private String referencia;

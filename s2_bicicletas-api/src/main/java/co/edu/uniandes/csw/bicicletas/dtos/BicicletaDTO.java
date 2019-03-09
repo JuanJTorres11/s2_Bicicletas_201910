@@ -31,6 +31,8 @@ public class BicicletaDTO implements Serializable {
     private MarcaDTO marca;
 
     private CategoriaDTO categoria;
+    
+    private OrdenDTO orden;
 
     /**
      * Constructor por defecto
@@ -66,6 +68,12 @@ public class BicicletaDTO implements Serializable {
             } else {
                 this.marca = null;
             }
+            
+            if(bikeEntity.getOrden() !=null ){
+                this.orden = new OrdenDTO(bikeEntity.getOrden());
+            } else {
+                this.orden = null;
+            }
         }
     }
 
@@ -88,6 +96,10 @@ public class BicicletaDTO implements Serializable {
         }
         if (this.categoria != null) {
             bicicletaEntity.setCategoria(this.categoria.toEntity());
+        }
+        
+        if(this.orden!=null){
+            bicicletaEntity.setOrden(this.orden.toEntity());
         }
 
         return bicicletaEntity;
@@ -217,6 +229,20 @@ public class BicicletaDTO implements Serializable {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * @return the orden
+     */
+    public OrdenDTO getOrden() {
+        return orden;
+    }
+
+    /**
+     * @param orden the orden to set
+     */
+    public void setOrden(OrdenDTO orden) {
+        this.orden = orden;
     }
 
 }
