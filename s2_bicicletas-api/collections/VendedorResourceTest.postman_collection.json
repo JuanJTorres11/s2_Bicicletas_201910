@@ -107,8 +107,7 @@
 						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
 						"exec": [
 							"var data= JSON.parse(responseBody);\r",
-							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;\r",
-							"tests[\"authors count\"] = data.length >= 1;"
+							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
@@ -119,49 +118,6 @@
 			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"{{ruta}}",
-						"vendedores",
-						"{{new_id_a}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores Copy Copy",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
-						"exec": [
-							"var data= JSON.parse(responseBody);;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "DELETE",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -218,6 +174,49 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{ \n\t\"nombre\": \"Juan Torres R\",\n\t\n    \"login\":\"jj.torresr\",\n\n    \"password\":\"abc12\",\n    \n    \"telefono\": 3214032973\n}"
+				},
+				"url": {
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{ruta}}",
+						"vendedores",
+						"{{new_id_a}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores Copy Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
+						"exec": [
+							"var data= JSON.parse(responseBody);;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
 				},
 				"url": {
 					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
