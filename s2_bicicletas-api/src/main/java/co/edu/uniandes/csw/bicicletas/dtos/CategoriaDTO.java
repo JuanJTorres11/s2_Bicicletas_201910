@@ -7,8 +7,6 @@ package co.edu.uniandes.csw.bicicletas.dtos;
 
 import co.edu.uniandes.csw.bicicletas.entities.CategoriaEntity;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
