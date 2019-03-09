@@ -68,25 +68,72 @@ public class CompradorResource {
      */
     @GET
     public List<CompradorDetailDTO> darCompradores() {
-//        ArrayList<CompradorDetailDTO> compradores = new ArrayList<CompradorDetailDTO>();
-//        List<CompradorEntity> vEntity = logica.findAllCompradores();
-//        for (CompradorEntity v : vEntity) {
-//            compradores.add(new CompradorDetailDTO(v));
-//        }
-//        return compradores;
-return null;
+        ArrayList<CompradorDetailDTO> compradores = new ArrayList<CompradorDetailDTO>();
+        List<CompradorEntity> vEntity = logica.findAllCompradores();
+        for (CompradorEntity v : vEntity) {
+            compradores.add(new CompradorDetailDTO(v));
+        }
+        return compradores;
     }
-
+    
+        /**
+     * Retorna el vendedor por id
+     *
+     * @param id id del vendeodr a buscar
+     * @return el vendedor con el id si existe
+     */
+//    @GET
+//    @Path("{id: \\d+}")
+//    public CompradorDetailDTO darCompradorId(@PathParam("id") long id)
+//    {
+//        CompradorEntity cE = logica.findComprador(id);
+//        if (cE != null)
+//        {
+//            return new CompradorDetailDTO(cE);
+//        }
+//        else
+//        {
+//            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+//        }
+//    }
+    
+    /**
+     * retorna al comprador dado un id.
+     * @param pCompradorId id del comprador a buscar.
+     * @return retorna el comprador del id respectivo.
+     */
     @GET
     @Path("{id: \\d+}")
     public CompradorDTO obtenerComprador(@PathParam("id") Long pCompradorId) {
-        return null;
+        CompradorEntity cE = logica.findComprador(pCompradorId);
+        if (cE != null)
+        {
+            return new CompradorDetailDTO(cE);
+        }
+        else
+        {
+            throw new WebApplicationException("El vendedor con id: " + pCompradorId + " no existe", 404);
+        }
     }
 
+    /**
+     * actualiza la informacion de un comprador ya registrado.
+     * @param id dle comprador que se desea actualizar.
+     * @return el nuevo objeto actualizado que se encuentra en la base de datos.
+     * @throws BusinessLogicException 
+     */
     @PUT
     @Path("{id: \\d+}")
-    public CompradorDetailDTO actualizarComprador(@PathParam("id") long id, CompradorDetailDTO pComprador) {
-        return pComprador;
+    public CompradorDetailDTO actualizarComprador(@PathParam("id") long id) throws BusinessLogicException {
+        CompradorEntity cE = logica.findComprador(id);
+        if (cE != null)
+        {
+            return new CompradorDetailDTO(logica.updateComprador(cE));
+        }
+        else
+        {
+            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+        }
     }
 
     /**
@@ -94,8 +141,11 @@ return null;
      */
     @DELETE
     @Path("{id: \\d+}")
-    public CompradorDTO eliminarComprador(@PathParam("id") long id) {
-        return null;
+    public void eliminarComprador(@PathParam("id") long id) {
+        if (logica.findComprador(id) != null) {
+            logica.deleteComprador(id);
+        } else {
+            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+        }
     }
-
 }

@@ -65,7 +65,7 @@ public class CompradorLogic {
         return pComprador;
     }
 
-    public void deleteVendedor(Long id) {
+    public void deleteComprador(Long id) {
         LOGGER.log(Level.INFO, "se borrará el Vendedor con id {}", id);
         LOGGER.log(Level.INFO, "se borró al vendedor con id {}", id);
         cp.delete(id);
@@ -77,13 +77,14 @@ public class CompradorLogic {
      * @return una lista con todos los compradores.
      */
     public List<CompradorEntity> findAllCompradores() {
-        LOGGER.log(Level.INFO, "se buscarán todos los vendedores");
-        List<CompradorEntity> lista = cp.findAll();
-        if (lista == null || lista.isEmpty()) {
-            LOGGER.log(Level.SEVERE, "No existen vendedores");
+        LOGGER.log(Level.INFO, "se buscarán todos los Compradores");
+        List<CompradorEntity> compradores = cp.findAll();
+        if (compradores == null || compradores.isEmpty())
+        {
+            LOGGER.log(Level.SEVERE, "No existen Compradores");
         }
-        LOGGER.log(Level.INFO, "Se termina la busqueda de los vendedores");
-        return lista;
+        LOGGER.log(Level.INFO, "Se termina la busqueda de los Compradores");
+        return compradores;
     }
 
     /**

@@ -42,7 +42,9 @@ public class CompradorPersistence {
     }
 
     public List<CompradorEntity> findAll() {
-        TypedQuery<CompradorEntity> query = em.createQuery("select u from CompradorEntity u", CompradorEntity.class);
+//       LOGGER.log(Level.INFO, "Consultando todos los vendedores");
+        // Se crea un query para buscar todas las editoriales en la base de datos.
+        TypedQuery query = em.createQuery("select u from CompradorEntity u", CompradorEntity.class);
         return query.getResultList();
     }
 

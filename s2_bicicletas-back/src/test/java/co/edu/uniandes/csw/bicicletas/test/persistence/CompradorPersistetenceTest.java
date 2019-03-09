@@ -62,17 +62,23 @@ public class CompradorPersistetenceTest {
      */
     @Before
     public void configTest() {
-        try {
+              try
+        {
             utx.begin();
             em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
-            try {
+            try
+            {
                 utx.rollback();
-            } catch (Exception e1) {
+            }
+            catch (Exception e1)
+            {
                 e1.printStackTrace();
             }
         }
@@ -81,20 +87,17 @@ public class CompradorPersistetenceTest {
     private void clearData() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
-        em.createQuery("delete from CompradorEntity").executeUpdate();
+      em.createQuery("delete from CompradorEntity").executeUpdate();
         data.clear();
     }
 
     private void insertData() {
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
        
-       PodamFactory factory = new PodamFactoryImpl();
-        for (int i = 0; i < 3; i++) {
-
+    PodamFactory factory = new PodamFactoryImpl();
+        for (int i = 0; i < 3; i++)
+        {
             CompradorEntity entity = factory.manufacturePojo(CompradorEntity.class);
-
             em.persist(entity);
-
             data.add(entity);
         }
 

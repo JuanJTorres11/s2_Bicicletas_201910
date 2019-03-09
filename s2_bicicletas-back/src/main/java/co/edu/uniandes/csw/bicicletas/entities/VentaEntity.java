@@ -46,10 +46,6 @@ public class VentaEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private VendedorEntity vendedor;
-    
-//    @PodamExclude
-//    @ManyToOne
-//    private VendedorEntity vendedor;
 
     /**
      * Constructor de la clase VentaEntity

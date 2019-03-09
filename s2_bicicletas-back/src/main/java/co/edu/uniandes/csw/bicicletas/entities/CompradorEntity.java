@@ -25,13 +25,13 @@ public class CompradorEntity extends UsuarioEntity {
     private static final Logger LOGGER = Logger.getLogger(VendedorEntity.class.getName());
       
       
-//    @PodamExclude
-//    @OneToMany(mappedBy = "comprador")
-//    private List<MedioPagoEntity> mediosPago;
-//    
-//    @PodamExclude
-//    @OneToMany(mappedBy = "comprador")
-//    private List<OrdenEntity> ordenes;
+    @PodamExclude
+    @OneToMany(mappedBy = "comprador")
+    private List<MedioPagoEntity> mediosPago;
+    
+    @PodamExclude
+    @OneToMany(mappedBy = "comprador")
+    private List<OrdenEntity> ordenes;
     
 //    @PodamExclude
 //    @OneToMany(mappedBy = "")
@@ -46,32 +46,32 @@ public class CompradorEntity extends UsuarioEntity {
         
     }
 
-//    /**
-//     * @return the mediosPago
-//     */
-//    public List<MedioPagoEntity> getMediosPago() {
-//        return mediosPago;
-//    }
-//
-//    /**
-//     * @param mediosPago the mediosPago to set
-//     */
-//    public void setMediosPago(List<MedioPagoEntity> mediosPago) {
-//        this.mediosPago = mediosPago;
-//    }
-//
-//    /**
-//     * @return the ordenes
-//     */
-//    public List<OrdenEntity> getOrdenes() {
-//        return ordenes;
-//    }
-//
-//    /**
-//     * @param ordenes the ordenes to set
-//     */
-//    public void setOrdenes(List<OrdenEntity> ordenes) {
-//        this.ordenes = ordenes;
-//    }
+    /**
+     * @return the mediosPago
+     */
+    public List<MedioPagoEntity> getMediosPago() {
+        return mediosPago;
+    }
+
+    /**
+     * @param mediosPago the mediosPago to set
+     */
+    public void setMediosPago(List<MedioPagoEntity> mediosPago) {
+        this.mediosPago = mediosPago;
+    }
+
+    /**
+     * @return the ordenes
+     */
+    public List<OrdenEntity> getOrdenes() {
+        return ordenes;
+    }
+
+    /**
+     * @param ordenes the ordenes to set
+     */
+    public void setOrdenes(List<OrdenEntity> ordenes) {
+        this.ordenes = ordenes;
+    }
        
 }

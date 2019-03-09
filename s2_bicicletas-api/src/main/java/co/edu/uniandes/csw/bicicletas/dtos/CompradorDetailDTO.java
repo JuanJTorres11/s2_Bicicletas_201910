@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.bicicletas.dtos;
 
 import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import co.edu.uniandes.csw.bicicletas.entities.CompradorEntity;
+import co.edu.uniandes.csw.bicicletas.entities.MedioPagoEntity;
 import co.edu.uniandes.csw.bicicletas.entities.OrdenEntity;
 import java.util.List;
 
@@ -18,30 +19,39 @@ public class CompradorDetailDTO extends CompradorDTO {
 
     private List<OrdenDTO> ordenDTO;
 
-    private List<BicicletaDTO> listaDeDeseos;
-
-    private List<BicicletaDTO> compradas;
+//    private List<BicicletaDTO> listaDeDeseos;
+//
+//    private List<BicicletaDTO> compradas;
+//    
+//    private List<BicicletaDTO> carrito; 
     
-    private List<BicicletaDTO> carrito; 
+    private List<MedioPagoDTO> medioPagoDTO;
 
     public CompradorDetailDTO() {
         super();
     }
 
-//    public CompradorDetailDTO(CompradorEntity pComprador) {
-//        List<OrdenEntity> ordenes = pComprador.getOrdenes();
-////        List<BicicletaEntity> deseos = pComprador.;
-//        if (ordenes != null) {
-//            for (OrdenEntity oE : ordenes) {
-//                ordenDTO.add(new OrdenDTO(oE));
+    public CompradorDetailDTO(CompradorEntity pComprador) {
+        super();
+        List<OrdenEntity> ordenes = pComprador.getOrdenes();
+        List<MedioPagoEntity> pagos = pComprador.getMediosPago();
+//        List<BicicletaEntity> deseos = pComprador.;
+        if (ordenes != null) {
+            for (OrdenEntity oE : ordenes) {
+                ordenDTO.add(new OrdenDTO(oE));
+            }
+        }
+         if (pagos != null) {
+            for (MedioPagoEntity mPE : pagos) {
+                medioPagoDTO.add(new MedioPagoDTO(mPE));
+            }
+        }
+        
+//        if (deseos != null) {
+//            for (BicicletaEntity mpE : deseos) {
+//                listaDeDeseos.add(new BicicletaDTO(mpE));
 //            }
-//        }
-////        if (deseos != null) {
-////            for (BicicletaEntity mpE : deseos) {
-////                listaDeDeseos.add(new BicicletaDTO(mpE));
-////            }
-////        }
-//    }
+        }
 
     /**
      * @return the ordenDTO
@@ -57,45 +67,19 @@ public class CompradorDetailDTO extends CompradorDTO {
         this.ordenDTO = ordenDTO;
     }
 
-    /**
-     * @return the listaDeDeseos
-     */
-    public List<BicicletaDTO> getListaDeDeseos() {
-        return listaDeDeseos;
-    }
-
-    /**
-     * @param listaDeDeseos the listaDeDeseos to set
-     */
-    public void setListaDeDeseos(List<BicicletaDTO> listaDeDeseos) {
-        this.listaDeDeseos = listaDeDeseos;
-    }
-
-    /**
-     * @return the compradas
-     */
-    public List<BicicletaDTO> getCompradas() {
-        return compradas;
-    }
-
-    /**
-     * @param compradas the compradas to set
-     */
-    public void setCompradas(List<BicicletaDTO> compradas) {
-        this.compradas = compradas;
-    }
-
-    /**
-     * @return the carrito
-     */
-    public List<BicicletaDTO> getCarrito() {
-        return carrito;
-    }
-
-    /**
-     * @param carrito the carrito to set
-     */
-    public void setCarrito(List<BicicletaDTO> carrito) {
-        this.carrito = carrito;
-    }
+//    /**
+//     * @return the listaDeDeseos
+//     */
+//    public List<BicicletaDTO> getListaDeDeseos() {
+//        return listaDeDeseos;
+//    }
+//
+//    /**
+//     * @param listaDeDeseos the listaDeDeseos to set
+//     */
+//    public void setListaDeDeseos(List<BicicletaDTO> listaDeDeseos) {
+//        this.listaDeDeseos = listaDeDeseos;
+//    }
+    
+    
 }
