@@ -1,0 +1,511 @@
+{
+	"info": {
+		"_postman_id": "acbe226a-8d0f-4742-917d-f988f34de6c8",
+		"name": "CategoriaResourceTest",
+		"description": "Categoria Resource Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear nueva categoría",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "83bddaae-6242-45d9-a6ce-befe00e835ad",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_c_nom\", data.nombre);",
+							"tests[\"No genera error en post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Urbana\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear categoría con mismo nombre",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c8e64fd6-d1ff-4edb-aef6-972e4bb3a64b",
+						"exec": [
+							"tests[\"No crea con el mismo nombre\"] = responseCode.code === 412;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Ya existe una categoría con el nombre\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Urbana\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0288c74c-f65a-4b72-9029-3a17e02292aa",
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_b_id\",data.id);\r",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descripcion\": \"descripcion bicicleta\",\n\t\"referencia\": \"1A\",\n\t\"precio\": 2000,\n\t\"usada\": false,\n\t\"stock\": 3,\n\t\"album\": [\"ruta1\"],\n\t\"categoria\": {\n\t\t\"nombre\": \"Urbana\"\n\t},\n\t\"marca\": {\"nombre\": \"BMX\"}\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar categoría",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a210cbb6-c3f1-4975-8959-f98496c670dc",
+						"exec": [
+							"console.log(responseBody);\r",
+							"var data = JSON.parse(responseBody);\r",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Nuevo nombre\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_c_nom}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_c_nom}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar una categoría que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0655827b-95e4-47b4-b6cf-cc8d33da6e11",
+						"exec": [
+							"tests[\"No actualiza con nombre que no existe\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /categorias/deportiva no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Nuevo nombre\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/deportiva",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"deportiva"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener todas las categorías",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ff14208c-a4d8-40e1-b55b-f05530570957",
+						"exec": [
+							"var data= JSON.parse(responseBody);\r",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;\r",
+							"tests[\"categorias count\"] = data.length > 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una categoría",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "364021d5-c76f-493a-af07-10744f386596",
+						"exec": [
+							"console.log(responseBody);\r",
+							"var data = JSON.parse(responseBody);\r",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_c_nom}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_c_nom}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una categoría que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "52545d73-4053-41ad-acf4-58d258ece9ff",
+						"exec": [
+							"tests[\"No consulta con nombre que no existe\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /categorias/deportiva no existe\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/deportiva",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"deportiva"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar con bicicletas asociadas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a2671e7-b9ec-43cb-816c-fc1c55357622",
+						"exec": [
+							"tests[\"No borra con bicicletas asociadas\"] = responseCode.code === 412;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_c_nom}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_c_nom}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "197b3c55-d271-4b73-8f1a-c427784a7ca6",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_b_id}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_b_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar una categoría",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d67e8514-929a-4514-bbab-09fea3067d3e",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_c_nom}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_c_nom}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar una categoría que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9397ce59-a27e-46b8-a132-603772248cea",
+						"exec": [
+							"tests[\"No borra con nombre que no existe\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /categorias/deportiva no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/deportiva",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"deportiva"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
