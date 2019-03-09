@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.CompradorEntity;
 import java.io.Serializable;
 
 /**
@@ -14,67 +15,28 @@ import java.io.Serializable;
 public class CompradorDTO extends UsuarioDTO implements Serializable{
     
     /**
-     * Atributo que representa el nombre del comprador.
-     */
-    private String nombre;
-    
-    /** 
-     * Atributo que representa el login del comprador. 
-     */
-    private String login;
-    
-    /** 
-     * Atributo que representa la clave del comprador.
-     */
-    private String password;
-    
-    /**
      * Metodo constructor de la clase CompradorDTO
      */
-    public CompradorDTO()
-    {
+   public CompradorDTO()
+   {
+       super();
+   }
         
+       public CompradorDTO(CompradorEntity pComprador)
+    {
+        super(pComprador);
     }
-
-    /**
-     * @return the nombre
-     */
-    public String getNombre() {
-        return nombre;
-    }
-
-    /**
-     * @param nombre the nombre to set
-     */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    /**
-     * @return the login
-     */
-    public String getLogin() {
-        return login;
-    }
-
-    /**
-     * @param login the login to set
-     */
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    /**
-     * @return the password
-     */
-    public String getPassword() {
-        return password;
-    }
-
-    /**
-     * @param password the password to set
-     */
-    public void setPassword(String password) {
-        this.password = password;
+   /**
+    * Metodo que convierte un compradorEntity
+    * @return retorna un compradorEntity
+    */
+    public CompradorEntity toEntity()
+    {
+        CompradorEntity vendedor = new CompradorEntity();
+        vendedor.setId(id);
+        vendedor.setNombre(nombre);
+        vendedor.setLogin(login);
+        vendedor.setPassword(password);
+        return vendedor;
     }
 }
