@@ -164,9 +164,9 @@ public class VentaPersistenceTest {
         @Test
     public void findAllTest()
     {
-        List<VentaEntity> list = new ArrayList<VentaEntity>();
-        vp.findAll();
-//        List<VentaEntity> list = vp.findAll();
+//        List<VentaEntity> list = new ArrayList<VentaEntity>();
+//        vp.findAll();
+        List<VentaEntity> list = vp.findAll();
         Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
         Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
     }

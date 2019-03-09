@@ -126,6 +126,14 @@ public class VentaLogicTest {
             Logger.getLogger(VendedorLogicTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
+        @Test
+    public void findAllTest() {
+        List<VentaEntity> list = logica.findAllVentas();
+//        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
+        Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
+    }
 
     @Test(expected = BusinessLogicException.class)
     public void createMismoLoginTest() throws BusinessLogicException {
@@ -151,12 +159,7 @@ public class VentaLogicTest {
         Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
     }
 
-    @Test
-    public void findAllTest() {
-        List<VentaEntity> list = logica.findAllVentas();
-        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
-        Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
-    }
+
 
     @Test
     public void updateTest() {

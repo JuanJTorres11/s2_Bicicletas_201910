@@ -144,6 +144,14 @@ public class CompradorLogicTest
         }
     }
     
+         @Test
+    public void findAllTest()
+    {
+        List<CompradorEntity> list = logica.findAllCompradores();
+//        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
+        Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
+    }
+    
         @Test(expected = BusinessLogicException.class)
     public void createMismoLoginTest() throws BusinessLogicException
     {
@@ -180,13 +188,7 @@ public class CompradorLogicTest
         Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
     }
     
-        @Test
-    public void findAllTest()
-    {
-        List<CompradorEntity> list = logica.findAllCompradores();
-        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
-        Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
-    }
+   
     
         @Test
     public void updateTest()

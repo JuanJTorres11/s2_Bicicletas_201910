@@ -76,26 +76,6 @@ public class CompradorResource {
         return compradores;
     }
     
-        /**
-     * Retorna el vendedor por id
-     *
-     * @param id id del vendeodr a buscar
-     * @return el vendedor con el id si existe
-     */
-//    @GET
-//    @Path("{id: \\d+}")
-//    public CompradorDetailDTO darCompradorId(@PathParam("id") long id)
-//    {
-//        CompradorEntity cE = logica.findComprador(id);
-//        if (cE != null)
-//        {
-//            return new CompradorDetailDTO(cE);
-//        }
-//        else
-//        {
-//            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
-//        }
-//    }
     
     /**
      * retorna al comprador dado un id.
