@@ -40,7 +40,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"descripcion\": \"Soy la más veloz\",\n\t\"referencia\": \"Prueba123\",\n\t\"precio\": 20000.0,\n\t\"usada\": false,\n\t\"stock\": 123,\n\t\"album\": [\"ruta1\", \"ruta2\"],\n\t\"categoria\": {\"nombre\": \"Montaña\"},\n\t\"marca\": {\"nombre\": \"BMX\"}\n\n}"
+					"raw": "{\n\t\"descripcion\": \"Soy la más veloz\",\n\t\"referencia\": \"Prueba555\",\n\t\"precio\": 20000.0,\n\t\"usada\": false,\n\t\"stock\": 123,\n\t\"album\": [\"ruta1\", \"ruta2\"],\n\t\"categoria\": {\"nombre\": \"Montaña\"},\n\t\"marca\": {\"nombre\": \"BMX\"}\n\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas?",
@@ -74,7 +74,6 @@
 						"id": "595bf9b2-68c5-4ad4-a992-9f16a7bd1483",
 						"exec": [
 							"tests[\"No se puede crear una bicicleta sin marca.\"] = responseCode.code === 412;\r",
-							"let id = pm.variables.get(\"new_id_b\");\r",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La bicicleta tiene que tener una marca\");"
 						],
 						"type": "text/javascript"
@@ -134,7 +133,6 @@
 						"id": "595bf9b2-68c5-4ad4-a992-9f16a7bd1483",
 						"exec": [
 							"tests[\"No se puede crear una bicicleta sin categoria.\"] = responseCode.code === 412;\r",
-							"let id = pm.variables.get(\"new_id_b\");\r",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La bicicleta tiene que tener una categoria\");"
 						],
 						"type": "text/javascript"
@@ -194,7 +192,6 @@
 						"id": "595bf9b2-68c5-4ad4-a992-9f16a7bd1483",
 						"exec": [
 							"tests[\"No se puede crear una bicicleta con precio negativo.\"] = responseCode.code === 412;\r",
-							"let id = pm.variables.get(\"new_id_b\");\r",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El precio no puede ser un valor negativo -20000.0\\\"\");"
 						],
 						"type": "text/javascript"
@@ -254,7 +251,6 @@
 						"id": "595bf9b2-68c5-4ad4-a992-9f16a7bd1483",
 						"exec": [
 							"tests[\"No se puede crear una bicicleta con precio negativo.\"] = responseCode.code === 412;\r",
-							"let id = pm.variables.get(\"new_id_b\");\r",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El stock no puede ser negativo \\\"-123\\\"\");"
 						],
 						"type": "text/javascript"
@@ -314,7 +310,6 @@
 						"id": "595bf9b2-68c5-4ad4-a992-9f16a7bd1483",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_b\",data.id);",
 							"tests[\"no genera error en el GET\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
@@ -377,7 +372,6 @@
 						"id": "595bf9b2-68c5-4ad4-a992-9f16a7bd1483",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
-							"postman.setGlobalVariable(\"new_id_b\",data.id);",
 							"tests[\"no genera error en el GET\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
@@ -441,7 +435,6 @@
 						"id": "595bf9b2-68c5-4ad4-a992-9f16a7bd1483",
 						"exec": [
 							"tests[\"No se puede obteber una bicicleta que no existe.\"] = responseCode.code === 404;\r",
-							"let id = pm.variables.get(\"new_id_b\");\r",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /bicicletas/0 no existe.\");"
 						],
 						"type": "text/javascript"
@@ -505,7 +498,6 @@
 						"id": "595bf9b2-68c5-4ad4-a992-9f16a7bd1483",
 						"exec": [
 							"tests[\"No se puede editar una bicicleta que no existe.\"] = responseCode.code === 404;\r",
-							"let id = pm.variables.get(\"new_id_b\");\r",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /bicicletas/0 no existe.\");"
 						],
 						"type": "text/javascript"
@@ -627,7 +619,6 @@
 						"id": "595bf9b2-68c5-4ad4-a992-9f16a7bd1483",
 						"exec": [
 							"tests[\"No se puede actualizar una bicicleta con un precio negativo.\"] = responseCode.code === 412;\r",
-							"let id = pm.variables.get(\"new_id_b\");\r",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El precio no puede ser un valor negativo -20000.0\\\"\");"
 						],
 						"type": "text/javascript"
@@ -688,7 +679,6 @@
 						"id": "595bf9b2-68c5-4ad4-a992-9f16a7bd1483",
 						"exec": [
 							"tests[\"No se puede actualizar una bicicleta con un stock negativo.\"] = responseCode.code === 412;\r",
-							"let id = pm.variables.get(\"new_id_b\");\r",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El stock no puede ser negativo \\\"-123\\\"\");"
 						],
 						"type": "text/javascript"
@@ -749,7 +739,6 @@
 						"id": "33fd2ae1-eaed-478c-b0aa-48df75723420",
 						"exec": [
 							"tests[\"No se puede editar una bicicleta que no existe.\"] = responseCode.code === 404;\r",
-							"let id = pm.variables.get(\"new_id_b\");\r",
 							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /bicicletas/0 no existe.\");"
 						],
 						"type": "text/javascript"
