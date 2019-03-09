@@ -165,4 +165,32 @@ public class MedioPagoEntity extends BaseEntity implements Serializable {
     {
         this.vendedor = vendedor;
     }
+
+    /**
+     * @return the comprador
+     */
+    public CompradorEntity getComprador() {
+        return comprador;
+    }
+
+    /**
+     * @param comprador the comprador to set
+     */
+    public void setComprador(CompradorEntity comprador) {
+        this.comprador = comprador;
+    }
+
+    /**
+     * @return the orden
+     */
+    public OrdenEntity getOrden() {
+        return orden;
+    }
+
+    /**
+     * @param orden the orden to set
+     */
+    public void setOrden(OrdenEntity orden) {
+        this.orden = orden;
+    }
 }
