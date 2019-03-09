@@ -125,6 +125,9 @@ public class CompradorLogicTest
         }
     }
     
+    /**
+     * test que crea un comprador.
+     */
         @Test
     public void createTest()
     {
@@ -144,6 +147,9 @@ public class CompradorLogicTest
         }
     }
     
+    /**
+     * Test que verifica si estan todos los elementos de la lista con el de la base de datos.
+     */
          @Test
     public void findAllTest()
     {
@@ -152,6 +158,10 @@ public class CompradorLogicTest
         Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
     }
     
+    /**
+     * Verifica que no hayan dos compradores con el mismo login.
+     * @throws BusinessLogicException 
+     */
         @Test(expected = BusinessLogicException.class)
     public void createMismoLoginTest() throws BusinessLogicException
     {
@@ -161,15 +171,10 @@ public class CompradorLogicTest
         logica.createComprador(nuevo);
     }
     
-        @Test
-    public void findTest()
-    {
-        CompradorEntity userLocal = data.get(0);
-        CompradorEntity userBd = logica.findComprador(userLocal.getId());
-        Assert.assertNotNull("Lo que retorna la bd no debería se null", userBd);
-        Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
-    }
     
+     /**
+     * busca un comprador dado su id. 
+     */
         @Test
     public void findByIdTest()
     {
@@ -179,6 +184,9 @@ public class CompradorLogicTest
         Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
     }
     
+      /**
+     * busca un comprador dado su login. 
+     */
         @Test
     public void findByLoginTest()
     {
@@ -189,7 +197,9 @@ public class CompradorLogicTest
     }
     
    
-    
+    /** 
+     * actualiza la informacion de un comprador dado un id.
+     */
         @Test
     public void updateTest()
     {

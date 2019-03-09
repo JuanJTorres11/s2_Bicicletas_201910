@@ -13,8 +13,8 @@ import java.io.Serializable;
  * @author Andres Donoso
  */
 public class MedioPagoDTO implements Serializable {
-    public final static String DEBITO = "Débito";
-    public final static String CREDITO = "Crédito";
+    public final static String DEBITO = "Debito";
+    public final static String CREDITO = "Credito";
     public final static String VISA = "VISA";
     public final static String MASTERCARD = "MASTERCARD";
     
@@ -28,17 +28,27 @@ public class MedioPagoDTO implements Serializable {
     public MedioPagoDTO() {
 
     }
-
-    MedioPagoDTO(MedioPagoEntity mpE)
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public MedioPagoEntity toEntity() {
         MedioPagoEntity medioPago = new MedioPagoEntity(numeroTarjeta, codigoVerificacion, vencimiento, 
                 direccion, tipoTarjeta, tipoCredito);
         
         return medioPago;
+    }
+    
+    /**
+     * Construye una categoría a partir de la entidad.
+     * @param medioPago entidad de la categoria.
+     */
+    public MedioPagoDTO(MedioPagoEntity medioPago) {
+        if(medioPago != null) {
+            this.numeroTarjeta = medioPago.getNumeroTarjeta();
+            this.codigoVerificacion = medioPago.getCodigoVerificacion();
+            this.direccion = medioPago.getDireccion();
+            this.tipoCredito = medioPago.getTipoCredito();
+            this.tipoTarjeta = medioPago.getTipoTarjeta();
+            this.vencimiento = medioPago.getFechaVencimiento();
+        }
     }
 
     /**
