@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.bicicletas.test.logic;
 
 import co.edu.uniandes.csw.bicicletas.ejb.BicicletaLogic;
 import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
+import co.edu.uniandes.csw.bicicletas.entities.CategoriaEntity;
+import co.edu.uniandes.csw.bicicletas.entities.MarcaEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.BicicletaPersistence;
 import java.util.ArrayList;
@@ -105,11 +107,22 @@ public class BicicletaLogicTest {
 
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
-     * pruebas. 
+     * pruebas.
      */
     private void insertData() {
         for (int i = 0; i < 3; i++) {
             BicicletaEntity entity = factory.manufacturePojo(BicicletaEntity.class);
+
+            CategoriaEntity cat = factory.manufacturePojo(CategoriaEntity.class);
+            MarcaEntity marca = factory.manufacturePojo(MarcaEntity.class);
+            entity.setCategoria(cat);
+            entity.setMarca(marca);
+
+            Double precio = entity.getPrecio();
+            entity.setPrecio(precio < 0.0 ? precio * -1 : precio);
+
+            Integer stock = entity.getStock();
+            entity.setStock(stock < 0 ? stock * -1 : stock);
 
             em.persist(entity);
             data.add(entity);
@@ -125,6 +138,16 @@ public class BicicletaLogicTest {
     @Test
     public void createBicicletaTest() throws BusinessLogicException {
         BicicletaEntity newEntity = factory.manufacturePojo(BicicletaEntity.class);
+        
+        CategoriaEntity cat = factory.manufacturePojo(CategoriaEntity.class);
+        MarcaEntity marca = factory.manufacturePojo(MarcaEntity.class);
+        newEntity.setCategoria(cat);
+        newEntity.setMarca(marca);
+        Double precio = newEntity.getPrecio();
+        newEntity.setPrecio(precio < 0.0 ? precio * -1 : precio);
+        Integer stock = newEntity.getStock();
+         newEntity.setStock(stock < 0 ? stock * -1 : stock);
+        
         BicicletaEntity result = bicicletaLogic.createBicicleta(newEntity);
         Assert.assertNotNull(result);
         BicicletaEntity entity = em.find(BicicletaEntity.class, result.getId());
@@ -141,6 +164,15 @@ public class BicicletaLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createBicicletaConMismaReferenciaTest() throws BusinessLogicException {
         BicicletaEntity newEntity = factory.manufacturePojo(BicicletaEntity.class);
+        CategoriaEntity cat = factory.manufacturePojo(CategoriaEntity.class);
+        MarcaEntity marca = factory.manufacturePojo(MarcaEntity.class);
+        newEntity.setCategoria(cat);
+        newEntity.setMarca(marca);
+        Double precio = newEntity.getPrecio();
+        newEntity.setPrecio(precio < 0.0 ? precio * -1 : precio);
+        Integer stock = newEntity.getStock();
+         newEntity.setStock(stock < 0 ? stock * -1 : stock);
+        
         newEntity.setReferencia(data.get(0).getReferencia());
         bicicletaLogic.createBicicleta(newEntity);
     }
@@ -158,7 +190,6 @@ public class BicicletaLogicTest {
         Assert.assertNull(deleted);
     }
 
-   
     @Test
     public void getBicicletaTest() {
         BicicletaEntity entity = data.get(0);
@@ -185,23 +216,33 @@ public class BicicletaLogicTest {
 
     @Test
     public void getBicicletaPorReferenciaTest() {
-      BicicletaEntity entity = data.get(0);
-      BicicletaEntity resultado = bicicletaLogic.getBicicletaPorReferencia(entity.getReferencia());
-      Assert.assertNotNull(resultado);
-      Assert.assertEquals(entity.getReferencia(), resultado.getReferencia());
-   }
+        BicicletaEntity entity = data.get(0);
+        BicicletaEntity resultado = bicicletaLogic.getBicicletaPorReferencia(entity.getReferencia());
+        Assert.assertNotNull(resultado);
+        Assert.assertEquals(entity.getReferencia(), resultado.getReferencia());
+    }
 
     @Test
     public void updateBicicletaTest() {
-         
+
         Long idActualizar = data.get(0).getId();
         BicicletaEntity nuevaB = factory.manufacturePojo(BicicletaEntity.class);
+        
+        CategoriaEntity cat = factory.manufacturePojo(CategoriaEntity.class);
+        MarcaEntity marca = factory.manufacturePojo(MarcaEntity.class);
+        nuevaB.setCategoria(cat);
+        nuevaB.setMarca(marca);
+        Double precio = nuevaB.getPrecio();
+        nuevaB.setPrecio(precio < 0.0 ? precio * -1 : precio);
+        Integer stock = nuevaB.getStock();
+         nuevaB.setStock(stock < 0 ? stock * -1 : stock);
+        
         nuevaB.setId(idActualizar);
         bicicletaLogic.ubdateBicicleta(nuevaB);
-        
+
         BicicletaEntity recuperada = bicicletaLogic.getBicicleta(idActualizar);
-        
+
         Assert.assertEquals(nuevaB.getPrecio(), recuperada.getPrecio());
         Assert.assertEquals(nuevaB.getReferencia(), recuperada.getReferencia());
-       }
+    }
 }

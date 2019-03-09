@@ -6,8 +6,12 @@
 package co.edu.uniandes.csw.bicicletas.ejb;
 
 import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
+import co.edu.uniandes.csw.bicicletas.entities.CategoriaEntity;
+import co.edu.uniandes.csw.bicicletas.entities.MarcaEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.BicicletaPersistence;
+import co.edu.uniandes.csw.bicicletas.persistence.CategoriaPersistence;
+import co.edu.uniandes.csw.bicicletas.persistence.MarcaPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,8 +29,13 @@ public class BicicletaLogic {
 
     @Inject
     private BicicletaPersistence persistence;
-
-    /**
+     @Inject
+    private CategoriaPersistence persistenceCat;
+     
+      @Inject
+    private MarcaPersistence persistenceMarca;
+    
+     /**
      * Crea una bicicleta en la persistencia.
      *
      * @param bicicletaEntity La entidad que representa la bicicleta a
@@ -127,28 +136,58 @@ public class BicicletaLogic {
             throw new BusinessLogicException("La bicicleta debe tener al menos 1 foto \"" );
         }
 
-
         //Verifica la regla de negocio: el precio no puede ser negativo
-        //if (bicicletaEntity.getPrecio() < 0.0) {
-          //  throw new BusinessLogicException("El precio no puede ser un valor negativo \"" + bicicletaEntity.getPrecio() + "\"");
-        //}
+        if (bicicletaEntity.getPrecio() < 0.0) {
+          throw new BusinessLogicException("El precio no puede ser un valor negativo \"" + bicicletaEntity.getPrecio() + "\"");
+        }
 
         //Verifica la regla de negocio: la marca no puede ser null
-        //if (bicicletaEntity.getMarca() == null) {
-          //  throw new BusinessLogicException("La bicicleta tiene que tener una marca \"");
-        //}
+        if (bicicletaEntity.getMarca() == null) {
+          throw new BusinessLogicException("La bicicleta tiene que tener una marca \"");
+        }
 
         //Verifica la regla de negocio: la categoria no puede ser null
-        //if (bicicletaEntity.getCategoria() == null) {
-          //  throw new BusinessLogicException("La bicicleta tiene que tener una categoria \"");
-        //}
+        if (bicicletaEntity.getCategoria() == null) {
+          throw new BusinessLogicException("La bicicleta tiene que tener una categoria \"");
+        }
 
         //Verifica la regla de negocio: el stock no puede ser menor a 0
-        //if (bicicletaEntity.getStock() < 0) {
-          //  throw new BusinessLogicException("El stock no puede ser negativo \"" + bicicletaEntity.getStock() + "\"");
-        //}
+        if (bicicletaEntity.getStock() < 0) {
+          throw new BusinessLogicException("El stock no puede ser negativo \"" + bicicletaEntity.getStock() + "\"");
+        }
         //Verifica la regla de negocio: debe tener al menos 1 foto
        
     }
+    
+       /**
+     * Remplazar la categoria de una bicicleta.
+     *
+     * @param categoriaNombre El nombre de la categoria que se será de la bicicleta.
+     * @return el nuevo libro.
+     */
+    public BicicletaEntity replaceCategoria(Long bicicletaId, String categoriaNombre) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la bicicleta con id = {0}", bicicletaId);
+        CategoriaEntity catEntity = persistenceCat.findByName(categoriaNombre);
+        BicicletaEntity bikekEntity = persistence.find(bicicletaId);
+        bikekEntity.setCategoria(catEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la bicicleta con id = {0}", bikekEntity.getId());
+        return bikekEntity;
+    }
+
+       /**
+     * Remplazar la marca de una bicicleta.
+     *
+     * @param marcaId El id de la marca que se será de la bicicleta.
+     * @return el nuevo libro.
+     */
+    public BicicletaEntity replaceMarca(Long bicicletaId, Long marcaId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar la bicicleta con id = {0}", bicicletaId);
+        MarcaEntity marcaEntity = persistenceMarca.find(marcaId);
+        BicicletaEntity bikekEntity = persistence.find(bicicletaId);
+        bikekEntity.setMarca(marcaEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar la bicicleta con id = {0}", bikekEntity.getId());
+        return bikekEntity;
+    }
+    
 
 }
