@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.bicicletas.resources;
 import co.edu.uniandes.csw.bicicletas.dtos.UsuarioDTO;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.*;
@@ -32,9 +33,11 @@ public class UsuarioResource
     @GET
     public List<UsuarioDTO> darUsuarios()
     {
-        ArrayList<UsuarioDTO> usuarios = new ArrayList<UsuarioDTO>();
+        LOGGER.log(Level.INFO, "Se darán todos los autores");
+        ArrayList<UsuarioDTO> usuarios = new ArrayList<>();
         usuarios.addAll(new VendedorResource().darVendedores());
         usuarios.addAll(new CompradorResource().darCompradores());
+        LOGGER.log(Level.INFO, "Se entregaron todos los autores");
         return usuarios;
     }
 }

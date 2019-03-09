@@ -16,17 +16,11 @@ import javax.persistence.MappedSuperclass;
 public abstract class UsuarioEntity extends BaseEntity implements Serializable
 {
 
-    private static final Logger LOGGER = Logger.getLogger(UsuarioEntity.class.getName());
-
     private String nombre;
 
     private String login;
 
     private String password;
-
-    public UsuarioEntity()
-    {
-    }
 
     /**
      * @return the nombre

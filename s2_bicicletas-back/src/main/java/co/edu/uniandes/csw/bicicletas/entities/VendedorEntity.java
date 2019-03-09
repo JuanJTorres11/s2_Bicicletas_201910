@@ -34,10 +34,6 @@ public class VendedorEntity extends UsuarioEntity
     @OneToMany(mappedBy = "vendedor")
     private List<MedioPagoEntity> mediosPago;
 
-    public VendedorEntity()
-    {
-    }
-
     /**
      * @return the telefono
      */
