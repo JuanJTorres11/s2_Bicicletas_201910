@@ -69,13 +69,12 @@ public class MedioPagoResource {
      * @return JSON {@link MedioPagoDTO} - Categoria guardada.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} - 1. Si el medio de pago no existe.
      *                                  2. Si el número de la tarjeta es null.
-     *                                  3. Si el medio de pago ya existe.
-     *                                  4. Si el formato del número de la tarjeta no es válido.
-     *                                  5. Si el formato del código de verificación no es válido.
-     *                                  6. Si la dirección está vacía o es null.
-     *                                  7. Si el tipo de la tarjeta está vacía o es null.
-     *                                  8. Si el tipo de la tarjeta no es válido.
-     *                                  9. Si el tipo de crédito no es válido.
+     *                                  3. Si el formato del número de la tarjeta no es válido.
+     *                                  4. Si el formato del código de verificación no es válido.
+     *                                  5. Si la dirección está vacía o es null.
+     *                                  6. Si el tipo de la tarjeta está vacía o es null.
+     *                                  7. Si el tipo de la tarjeta no es válido.
+     *                                  8. Si el tipo de crédito no es válido.
      * @throws WebApplicationException {@lnk WebApplicationExceptionMapper} - si el medio de pago no existe.
      */
     @PUT

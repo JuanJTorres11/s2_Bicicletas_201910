@@ -50,6 +50,9 @@ public class MedioPagoLogic {
         /**
          * Reglas de negocio
          */
+        if(mpp.findByNumber(medioPago.getNumeroTarjeta()) != null) {
+            throw new BusinessLogicException("Ya existe un medio de pago con este número.");
+        }
         verificarReglasDeNegocio(medioPago);
         //Número de tarjeta
         System.out.println("NUMERO: " + medioPago.getNumeroTarjeta());
@@ -93,15 +96,14 @@ public class MedioPagoLogic {
     /**
      * Actualiza el medio de pago.
      * @param medioPago medio de pago actualizado. medioPago != null.
-     * @throws BusinessLogicException   1. Si el medio de pago no existe.
-     *                                  2. Si el número de la tarjeta es null.
-     *                                  3. Si el medio de pago ya existe.
-     *                                  4. Si el formato del número de la tarjeta no es válido.
-     *                                  5. Si el formato del código de verificación no es válido.
-     *                                  6. Si la dirección está vacía o es null.
-     *                                  7. Si el tipo de la tarjeta está vacía o es null.
-     *                                  8. Si el tipo de la tarjeta no es válido.
-     *                                  9. Si el tipo de crédito no es válido.
+     * @throws BusinessLogicException   1. Si el número de la tarjeta es null.
+     *                                  2. Si el medio de pago ya existe.
+     *                                  3. Si el formato del número de la tarjeta no es válido.
+     *                                  4. Si el formato del código de verificación no es válido.
+     *                                  5. Si la dirección está vacía o es null.
+     *                                  6. Si el tipo de la tarjeta está vacía o es null.
+     *                                  7. Si el tipo de la tarjeta no es válido.
+     *                                  8. Si el tipo de crédito no es válido.
      * @return medio de pago actualizado.
      */
     public MedioPagoEntity updateMedioPago(MedioPagoEntity medioPago) throws BusinessLogicException {
@@ -136,20 +138,17 @@ public class MedioPagoLogic {
      * Verifica las reglas de negocio.
      * @param medioPago medio de pago a verificar. medioPago != null.
      * @throws BusinessLogicException   1. Si el número de la tarjeta es null.
-     *                                  2. Si el medio de pago ya existe.
-     *                                  3. Si el formato del número de la tarjeta no es válido.
-     *                                  4. Si el formato del código de verificación no es válido.
-     *                                  5. Si la dirección está vacía o es null.
-     *                                  6. Si el tipo de la tarjeta está vacía o es null.
-     *                                  7. Si el tipo de la tarjeta no es válido.
-     *                                  8. Si el tipo de crédito no es válido.
+     *                                  2. Si el formato del número de la tarjeta no es válido.
+     *                                  3. Si el formato del código de verificación no es válido.
+     *                                  4. Si la dirección está vacía o es null.
+     *                                  5. Si el tipo de la tarjeta está vacía o es null.
+     *                                  6. Si el tipo de la tarjeta no es válido.
+     *                                  7. Si el tipo de crédito no es válido.
      */
     private void verificarReglasDeNegocio(MedioPagoEntity medioPago) throws BusinessLogicException {
         //Número de tarjeta
         if(medioPago.getNumeroTarjeta() == null) {
             throw new BusinessLogicException("El numero de la tarjeta no puede ser null");
-        } else if(mpp.findByNumber(medioPago.getNumeroTarjeta()) != null) {
-            throw new BusinessLogicException("Ya existe un medio de pago con este número.");
         }
         
         String digitos = medioPago.getNumeroTarjeta().toString().trim();
