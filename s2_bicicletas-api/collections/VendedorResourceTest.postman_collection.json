@@ -198,7 +198,7 @@
 					"script": {
 						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
 						"exec": [
-							"var data= JSON.parse(responseBody);;"
+							"var data= JSON.parse(responseBody);"
 						],
 						"type": "text/javascript"
 					}
