@@ -75,7 +75,7 @@ public class OrdenLogic {
     
     private void verificarReglasNegocio(String fecha, Integer cantidad, Double costo) throws BusinessLogicException, ParseException{
         
-        verificarFecha(fecha, "DD/MM/YYYY");
+        verificarFecha(fecha, "dd/MM/YYYY");
         if(cantidad<=0 || cantidad == null){
             throw new BusinessLogicException("La cantidad debe estar establecida como un valor mayor a 0");
         }

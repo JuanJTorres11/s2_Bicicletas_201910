@@ -26,7 +26,7 @@ public class CategoriaEntity extends BaseEntity implements Serializable {
     private List<BicicletaEntity> bicicletas;
     
     public CategoriaEntity() {
-       
+       //Constructor vacío
         
     }
 

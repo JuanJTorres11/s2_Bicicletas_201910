@@ -1,0 +1,433 @@
+{
+	"info": {
+		"_postman_id": "0efd5410-22b4-48b9-b427-345a92ebbcf6",
+		"name": "MedioPagoResourceTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear nuevo medio de pago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a4362b96-0f42-4642-85a8-05e901f71396",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_mp_numCredito\", data.numeroTarjeta);",
+							"tests[\"No genera error en el POST\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"numeroTarjeta\": 5401345858879821,\n\t\"codigoVerificacion\": 123,\n\t\"vencimiento\": \"06/20\",\n\t\"direccion\": \"direccion 1\",\n\t\"tipoTarjeta\": \"Credito\",\n\t\"tipoCredito\": \"MASTERCARD\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/medioPagos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"medioPagos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear nuevo medio de pago 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e1baa7b2-f498-4837-83d0-4585c53d654f",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_mp_numDebito\", data.numeroTarjeta);",
+							"tests[\"No genera error en el POST\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"numeroTarjeta\": 5219971858205527,\n\t\"codigoVerificacion\": 846,\n\t\"vencimiento\": \"01/23\",\n\t\"direccion\": \"direccion 1\",\n\t\"tipoTarjeta\": \"Debito\",\n\t\"tipoCredito\": null\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/medioPagos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"medioPagos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear medio de pago con nùmero existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f8f7568f-7f83-49b8-bba0-2177cccbb340",
+						"exec": [
+							"tests[\"No crea con el mismo numero\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Ya existe un medio de pago con este número.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"numeroTarjeta\": 5219971858205527,\n\t\"codigoVerificacion\": 123,\n\t\"vencimiento\": \"06/20\",\n\t\"direccion\": \"direccion 1\",\n\t\"tipoTarjeta\": \"Credito\",\n\t\"tipoCredito\": \"MASTERCARD\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/medioPagos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"medioPagos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar medio de pago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fad7d58d-ab43-4ed5-9546-f5e390821c6b",
+						"exec": [
+							"console.log(responseBody);\r",
+							"var data = JSON.parse(responseBody);\r",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"numeroTarjeta\": 5219971858205527,\n\t\"codigoVerificacion\": 846,\n\t\"vencimiento\": \"01/23\",\n\t\"direccion\": \"direccion actualizada\",\n\t\"tipoTarjeta\": \"Debito\",\n\t\"tipoCredito\": null\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/medioPagos/{{new_mp_numDebito}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"medioPagos",
+						"{{new_mp_numDebito}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar medio de pago inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f904743a-5f3c-4793-90c2-c898ab2098dc",
+						"exec": [
+							"tests[\"No actualiza con numero que no existe\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /medioPagos/1 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"numeroTarjeta\": 1,\n\t\"codigoVerificacion\": 846,\n\t\"vencimiento\": \"01/23\",\n\t\"direccion\": \"direccion 1\",\n\t\"tipoTarjeta\": \"Debito\",\n\t\"tipoCredito\": null\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/medioPagos/1",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"medioPagos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un medio de pago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ee96d7d8-b676-4b35-9276-47f26cfdae44",
+						"exec": [
+							"console.log(responseBody);\r",
+							"var data = JSON.parse(responseBody);\r",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/medioPagos/{{new_mp_numDebito}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"medioPagos",
+						"{{new_mp_numDebito}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un medio de pago inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cefec34c-b5e4-44f8-b4f1-359203e1459f",
+						"exec": [
+							"tests[\"No consulta con numero que no existe\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /medioPagos/1 no existe\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/medioPagos/1",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"medioPagos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un medio de pago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3dc9234a-9f7b-44f9-beaa-8f3bcd8e3b2c",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/medioPagos/{{new_mp_numDebito}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"medioPagos",
+						"{{new_mp_numDebito}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un medio de pago 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7d82ddff-594a-45d0-bc5d-00addf96b838",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/medioPagos/{{new_mp_numCredito}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"medioPagos",
+						"{{new_mp_numCredito}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un medio de pago inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f9c81226-4744-4f68-b14a-263363a3f44a",
+						"exec": [
+							"tests[\"No borra con numero que no existe\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /medioPagos/1 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/medioPagos/1",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"medioPagos",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -38,6 +38,7 @@ import javax.ws.rs.WebApplicationException;
 public class CategoriaResource {
     
     private static final Logger LOGGER = Logger.getLogger(CategoriaResource.class.getName());
+    private static final String DIRECCION = "El recurso /categorias/";
     
     @Inject private CategoriaLogic categoriaLogic;
     
@@ -90,7 +91,7 @@ public class CategoriaResource {
         
         CategoriaEntity categoriaEntity = categoriaLogic.getCategoriaPorNombre(nombre);
         if(categoriaEntity == null) {
-            throw new WebApplicationException("El recurso /categorias/" + nombre + " no existe", 404);
+            throw new WebApplicationException(DIRECCION + nombre + " no existe", 404);
         }
         
         CategoriaDetailDTO categoria = new CategoriaDetailDTO(categoriaEntity);
@@ -111,7 +112,7 @@ public class CategoriaResource {
         
         CategoriaEntity categoria = categoriaLogic.getCategoriaPorNombre(nombre);
         if(categoria == null) {
-            throw new WebApplicationException("El recurso /categorias/" + nombre + " no existe.", 404);
+            throw new WebApplicationException(DIRECCION + nombre + " no existe.", 404);
         }
         System.out.println("ID DE LA CATEGORIA: " + categoria.getId());
         categoriaLogic.deleteCategoria(categoria.getId());
@@ -134,7 +135,7 @@ public class CategoriaResource {
                 new Object[]{nombre, categoria});
         
         if(categoriaLogic.getCategoriaPorNombre(nombre) == null) {
-            throw new WebApplicationException("El recurso /categorias/" + nombre + " no existe.", 404);
+            throw new WebApplicationException(DIRECCION + nombre + " no existe.", 404);
         }
         CategoriaEntity categoriaEntity = categoria.toEntity();
         categoriaEntity.setId(categoriaLogic.getCategoriaPorNombre(nombre).getId());
