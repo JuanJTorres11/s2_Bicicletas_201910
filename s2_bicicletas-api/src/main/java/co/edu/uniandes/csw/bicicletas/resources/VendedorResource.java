@@ -27,6 +27,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 
 /**
  * @author Juan José Torres
@@ -138,7 +139,22 @@ public class VendedorResource
         }
         else
         {
+            
+        }
+    }
+
+    /**
+     * Redirecciona a la clase de asociación entre Vendedor y Medios de Pago
+     * @param id Identificador del vendedor
+     * @return Clase que maneja los métodos CRUD de la relación Vendedor/MediosPago
+     */
+     @Path("{vendedorId: \\d+}/mediosPago")
+    public Class<VendedorMedioPagoResource> getMediosPagoResource(@PathParam("vendedorId") Long id)
+    {
+        if (logica.findVendedor(id) == null)
+        {
             throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
         }
+        return VendedorMedioPagoResource.class;
     }
 }

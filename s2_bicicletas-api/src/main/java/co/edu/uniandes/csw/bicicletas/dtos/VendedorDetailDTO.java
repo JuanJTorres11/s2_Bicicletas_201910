@@ -8,13 +8,14 @@ package co.edu.uniandes.csw.bicicletas.dtos;
 import co.edu.uniandes.csw.bicicletas.entities.MedioPagoEntity;
 import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
 import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Juan José Torres
  */
-public class VendedorDetailDTO extends VendedorDTO
+public class VendedorDetailDTO extends VendedorDTO implements Serializable
 {
 
     private List<VentaDTO> ventas;
