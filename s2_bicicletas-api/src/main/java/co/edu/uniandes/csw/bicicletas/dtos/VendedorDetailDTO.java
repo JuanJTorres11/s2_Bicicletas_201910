@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author Juan José Torres
  */
-public class VendedorDetailDTO extends VendedorDTO implements Serializable
+public class VendedorDetailDTO extends VendedorDTO
 {
 
     private List<VentaDTO> ventas;

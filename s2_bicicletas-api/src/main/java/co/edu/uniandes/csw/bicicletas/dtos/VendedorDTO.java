@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * @author Juan José Torres
  */
-public class VendedorDTO extends UsuarioDTO implements Serializable
+public class VendedorDTO extends UsuarioDTO
 {
 
     private Long telefono;

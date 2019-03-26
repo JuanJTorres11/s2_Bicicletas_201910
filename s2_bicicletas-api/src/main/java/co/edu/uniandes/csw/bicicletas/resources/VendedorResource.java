@@ -27,7 +27,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.MediaType;
 
 /**
  * @author Juan José Torres
@@ -47,7 +46,7 @@ public class VendedorResource
     /**
      * Conexión con el front para crear un nuevo vendedor
      * @param vendedor a crear
-     * @return El vendedor creado en base de datos
+     * @return JSON {@link VendedorDTO} El vendedor creado en base de datos
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper}
      */
     @POST
@@ -59,9 +58,10 @@ public class VendedorResource
         return nuevo;
     }
 
-    /**
-     * Retorna una lista con todos los vendedores registrados
-     */
+   /**
+    * Retorna la lista de todos los vendedores
+    * @return JSONArray {@link VendedorDetailDTO} 
+    */
     @GET
     public List<VendedorDetailDTO> darVendedores()
     {
@@ -79,7 +79,7 @@ public class VendedorResource
      * Retorna el vendedor por id
      *
      * @param id id del vendeodr a buscar
-     * @return el vendedor con el id si existe
+     * @return JSON {@link VendedorDetailDTO} el vendedor con el id si existe
      */
     @GET
     @Path("{id: \\d+}")
@@ -156,5 +156,20 @@ public class VendedorResource
             throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
         }
         return VendedorMedioPagoResource.class;
+    }
+    
+     /**
+     * Redirecciona a la clase de asociación entre Vendedor y Venta
+     * @param id Identificador del vendedor
+     * @return Clase que maneja los métodos CRUD de la relación Vendedor/MediosPago
+     */
+     @Path("{vendedorId: \\d+}/ventas")
+    public Class<VendedorVentaResource> getVentasResource(@PathParam("vendedorId") Long id)
+    {
+        if (logica.findVendedor(id) == null)
+        {
+            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+        }
+        return VendedorVentaResource.class;
     }
 }

@@ -77,7 +77,7 @@ public class VendedorMedioPagoLogic
         LOGGER.log(Level.INFO, "Termina proceso de consultar el medio de pago con id = {0} del vendedor con id = " + vendedorId, medioPagoId);
         if (medioPago == null)
         {
-            throw new BusinessLogicException("El medio de pago no está asociado a la vendedor");
+            throw new BusinessLogicException("El medio de pago no está asociado al vendedor");
         }
         return medioPago;
     }
@@ -109,6 +109,12 @@ public class VendedorMedioPagoLogic
         return mediosPago;
     }
     
+    /**
+     * Se elimina un medio de pago asociado a un vendedor
+     * @param vendedorId Identificador del Vendedor.
+     * @param medioPagoId Identificador del medio de pago.
+     * @throws BusinessLogicException Si el medio de pago no existe o no está asociado al vendedor indicado.
+     */
     public void eliminarMedioPago (Long vendedorId, Long medioPagoId) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el medio de pago con id = {0} del vendedor con id = " + vendedorId, medioPagoId);

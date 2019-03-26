@@ -139,4 +139,20 @@ public class VentaEntity extends BaseEntity implements Serializable {
 //        this.vendedor = vendedor;
 //    }
 
+    /**
+     * @return the vendedor
+     */
+    public VendedorEntity getVendedor()
+    {
+        return vendedor;
+    }
+
+    /**
+     * @param vendedor the vendedor to set
+     */
+    public void setVendedor(VendedorEntity vendedor)
+    {
+        this.vendedor = vendedor;
+    }
+
 }

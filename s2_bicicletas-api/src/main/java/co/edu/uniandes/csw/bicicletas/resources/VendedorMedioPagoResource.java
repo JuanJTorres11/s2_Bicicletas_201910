@@ -67,7 +67,7 @@ public class VendedorMedioPagoResource
     /**
      * Busca y devuelve todos los medios de pagos de un vendedor.
      *
-     * @param vendedorsId Identificador del vendedor que se esta buscando.
+     * @param vendedorId Identificador del vendedor que se esta buscando.
      * @return JSONArray {@link MedioPagoDTO} - Los medios de pago encontrados
      * en el vendedor. Si no hay ninguno retorna una lista vacía.
      */
@@ -84,7 +84,7 @@ public class VendedorMedioPagoResource
      * Busca el medio de pago con el id asociado dentro del vendedor con id
      * asociado.
      *
-     * @param vendedorsId Identificador del vendedor que se esta buscando. Este
+     * @param vendedorId Identificador del vendedor que se esta buscando. Este
      * debe ser una cadena de dígitos.
      * @param mediosPagoId Identificador del medio de pago que se esta buscando.
      * Este debe ser una cadena de dígitos.
@@ -107,9 +107,9 @@ public class VendedorMedioPagoResource
         {
             throw new WebApplicationException("El recurso /vendedors/" + vendedorId + "/mediosPago/" + mediosPagoId + " no existe.", 404);
         }
-        MedioPagoDTO bookDetailDTO = new MedioPagoDTO(vendedorMediosPagoLogic.getMedioPago(vendedorId, mediosPagoId));
-        LOGGER.log(Level.INFO, "VendedorMedioPagosResource getMedioPago: output: {0}", bookDetailDTO);
-        return bookDetailDTO;
+        MedioPagoDTO medioPagoDTO = new MedioPagoDTO(vendedorMediosPagoLogic.getMedioPago(vendedorId, mediosPagoId));
+        LOGGER.log(Level.INFO, "VendedorMedioPagosResource getMedioPago: output: {0}", medioPagoDTO);
+        return medioPagoDTO;
     }
 
     /**

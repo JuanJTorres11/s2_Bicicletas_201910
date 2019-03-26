@@ -1,0 +1,178 @@
+{
+	"info": {
+		"_postman_id": "17f02599-3e48-4a14-9615-200ef617a410",
+		"name": "Vendedor/MediosPago",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
+						"exec": [
+							"postman.setGlobalVariable(\"new_id_a\",data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"nombre\": \"Juan Torres R\",\n\t\n    \"login\":\"jj.torres\",\n\n    \"password\":\"abc123\",\n    \n    \"telefono\": 3214032973\n}"
+				},
+				"url": {
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{ruta}}",
+						"vendedores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}/mediosPago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_id_m\",data.id);\r",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;\r",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"numeroTarjeta\": 5401345858879821,\n\t\"codigoVerificacion\": 123,\n\t\"vencimiento\": \"06/20\",\n\t\"direccion\": \"direccion 1\",\n\t\"tipoTarjeta\": \"Credito\",\n\t\"tipoCredito\": \"MASTERCARD\"\n}"
+				},
+				"url": {
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}/mediosPago",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{ruta}}",
+						"vendedores",
+						"{{new_id_a}}",
+						"mediosPago"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores/mediosPago",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
+						"exec": [
+							"var data= JSON.parse(responseBody);\r",
+							"tests[\"No genera error en el Get All \"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}/mediosPago/{{new_id_m}}",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{ruta}}",
+						"vendedores",
+						"{{new_id_a}}",
+						"mediosPago",
+						"{{new_id_m}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores/mediosPago Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
+						"exec": [
+							"var data= JSON.parse(responseBody);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}/mediosPago/{{new_id_m}}",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{ruta}}",
+						"vendedores",
+						"{{new_id_a}}",
+						"mediosPago",
+						"{{new_id_m}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
