@@ -15,11 +15,11 @@ import java.util.List;
 /**
  * @author Juan José Torres
  */
-public class VendedorDetailDTO extends VendedorDTO
+public class VendedorDetailDTO extends VendedorDTO implements Serializable
 {
 
     private List<VentaDTO> ventas;
-    
+
     private List<MedioPagoDTO> mediosPago;
 
     public VendedorDetailDTO()
@@ -27,17 +27,22 @@ public class VendedorDetailDTO extends VendedorDTO
         super();
     }
 
-    public VendedorDetailDTO (VendedorEntity vendedor)
+    public VendedorDetailDTO(VendedorEntity vendedor)
     {
-        super();
+        super(vendedor);
+        ventas = new ArrayList<>();
+        mediosPago = new ArrayList<>();
         List<VentaEntity> listaVentas = vendedor.getVentas();
         List<MedioPagoEntity> listaPagos = vendedor.getMediosPago();
-        if (listaVentas != null)
-            for (VentaEntity vE : listaVentas)
-                ventas.add(new VentaDTO(vE));
+        //if (listaVentas != null)
+        //  for (VentaEntity vE : listaVentas)
+        //    ventas.add(new VentaDTO(vE));
         if (listaPagos != null)
+        {
             for (MedioPagoEntity mpE : listaPagos)
                 mediosPago.add(new MedioPagoDTO(mpE));
+
+        }
     }
 
     /**
@@ -55,9 +60,10 @@ public class VendedorDetailDTO extends VendedorDTO
     {
         this.ventas = ventas;
     }
-    
+
     /**
      * Crea un objeto de tipo VendedorEntity con los atributos de las listas.
+     *
      * @return
      */
     @Override
@@ -67,15 +73,19 @@ public class VendedorDetailDTO extends VendedorDTO
         if (ventas != null)
         {
             ArrayList<VentaEntity> ventasEntity = new ArrayList<>();
-            for(VentaDTO venta: ventas)
+            for (VentaDTO venta : ventas)
+            {
                 ventasEntity.add(venta.toEntity());
+            }
             vendedor.setVentas(ventasEntity);
         }
         if (mediosPago != null)
         {
             ArrayList<MedioPagoEntity> pagos = new ArrayList<>();
-            for(MedioPagoDTO medios: mediosPago)
+            for (MedioPagoDTO medios : mediosPago)
+            {
                 pagos.add(medios.toEntity());
+            }
             vendedor.setMediosPago(pagos);
         }
         return vendedor;

@@ -25,7 +25,8 @@ public class UsuarioDTO implements Serializable {
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(UsuarioEntity user) {
+    public UsuarioDTO(UsuarioEntity user)
+    {
         if (user != null) {
             id = user.getId();
             nombre = user.getNombre();

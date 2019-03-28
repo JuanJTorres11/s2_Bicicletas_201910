@@ -43,8 +43,7 @@ public class VentaEntity extends BaseEntity implements Serializable {
      */
     private String[] fotos;
 
-    @PodamExclude
-    @ManyToOne
+  
     private VendedorEntity vendedor;
 
     /**

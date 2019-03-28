@@ -66,7 +66,7 @@ public class VendedorResource
     public List<VendedorDetailDTO> darVendedores()
     {
         LOGGER.log(Level.INFO, "Se dará la lista con todos los vendedores");
-        ArrayList<VendedorDetailDTO> vendedores = new ArrayList<>();
+        List<VendedorDetailDTO> vendedores = new ArrayList<>();
         List<VendedorEntity> vEntity = logica.findAllVendedores();
         for (VendedorEntity v : vEntity)
         {
