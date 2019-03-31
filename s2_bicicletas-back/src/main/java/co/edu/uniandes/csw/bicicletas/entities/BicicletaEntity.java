@@ -15,50 +15,68 @@ import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
- *
+ * Clase que representa una biciclceta en la persistencia y permite su serialización
  * @author Andrea
  */
 @Entity
 public class BicicletaEntity extends BaseEntity implements Serializable {
 
+    
     /**
-     * @return the orden
+     * La descripcion de la bicicleta
      */
-    public OrdenEntity getOrden() {
-        return orden;
-    }
-
-    /**
-     * @param orden the orden to set
-     */
-    public void setOrden(OrdenEntity orden) {
-        this.orden = orden;
-    }
-
     private String descripcion;
 
+    /**
+     * La referencia de la bicicleta
+     */
     private String referencia;
 
+    
+    /**
+     * El precio de la bicicleta
+     */
     private Double precio;
 
+    /**
+     * Indica si la bicicleta es usada o no
+     */
     private Boolean usada;
 
+    /**
+     * Indica la cantidad de bicicletas disponibles en la tienda
+     */
     private Integer stock;
 
+    /**
+     * Las rutas de las imagenes de la bicicleta
+     */
     private String[] album;
 
+    /**
+     * La marca de la bicicleta
+     */
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private MarcaEntity marca;
     
+    /**
+     * LA categoria de la bicicleta
+     */
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private CategoriaEntity categoria;
 
+    /**
+     * Las reseñas asociadas a la bicicleta
+     */
     @PodamExclude
     @OneToMany(mappedBy = "bicicleta", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ResenaEntity> resenas = new ArrayList<ResenaEntity>();
     
+    /**
+     * La orden asociada a la bicicleta
+     */
     @PodamExclude
     @ManyToOne
     private OrdenEntity orden;
@@ -71,6 +89,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     * Devuelve la descripcion de la bicicleta
      * @return the descripcion
      */
     public String getDescripcion() {
@@ -78,6 +97,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     * Modifica la descripcion de la bicicleta
      * @param descripcion the descripcion to set
      */
     public void setDescripcion(String descripcion) {
@@ -85,6 +105,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     * Devuelve la referencia de la bicicleta
      * @return the referencia
      */
     public String getReferencia() {
@@ -92,6 +113,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     * Modifica la referencia de la bicicleta
      * @param referencia the referencia to set
      */
     public void setReferencia(String referencia) {
@@ -99,6 +121,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     * Devuelve el precio de la bicicleta
      * @return the precio
      */
     public Double getPrecio() {
@@ -106,6 +129,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     * Modifica el precio de la bicicleta
      * @param precio the precio to set
      */
     public void setPrecio(Double precio) {
@@ -194,6 +218,20 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
      */
     public void setResenas(List<ResenaEntity> resenas) {
         this.resenas = resenas;
+    }
+    
+    /**
+     * @return the orden
+     */
+    public OrdenEntity getOrden() {
+        return orden;
+    }
+
+    /**
+     * @param orden the orden to set
+     */
+    public void setOrden(OrdenEntity orden) {
+        this.orden = orden;
     }
 
    

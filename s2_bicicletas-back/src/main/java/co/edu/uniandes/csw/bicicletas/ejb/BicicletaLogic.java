@@ -137,8 +137,13 @@ public class BicicletaLogic {
         LOGGER.log(Level.INFO, "Termina proceso de actualizar una bicicleta con id", bicicletaEntity.getId());
         return bikeE;
     }
-
-    public void verificarReglasNegocioBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
+    
+    /**
+     * Se encarga de verificar que la entidad que se pasa por parametro cumpla con las relgas de negocio
+     * @param bicicletaEntity
+     * @throws BusinessLogicException 
+     */
+   public void verificarReglasNegocioBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
       
         if (bicicletaEntity.getAlbum() == null || bicicletaEntity.getAlbum().length == 0) {
             throw new BusinessLogicException("La bicicleta debe tener al menos 1 foto \"");

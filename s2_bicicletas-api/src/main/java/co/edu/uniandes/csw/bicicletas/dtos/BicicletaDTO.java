@@ -16,22 +16,49 @@ public class BicicletaDTO implements Serializable {
 
     private Long id;
 
+    /**
+     * La descripcion de la bicicleta
+     */
     private String descripcion;
 
+    /**
+     * La referencia de la bicicleta
+     */
     private String referencia;
 
+    /**
+     * El precio de la bicicleta
+     */
     private Double precio;
 
+     /**
+     * Indica si la bicicleta es usada o no
+     */
     private Boolean usada;
 
+     /**
+     * Indica la cantidad de bicicletas disponibles en la tienda
+     */
     private Integer stock;
 
+    /**
+     * Las rutas de las imagenes de la bicicleta
+     */
     private String[] album;
 
+    /**
+     * La marca de la bicicleta
+     */
     private MarcaDTO marca;
 
+     /**
+     * LA categoria de la bicicleta
+     */
     private CategoriaDTO categoria;
-    
+     
+    /**
+     * La orden asociada a la bicicleta
+     */
     private OrdenDTO orden;
 
     /**
