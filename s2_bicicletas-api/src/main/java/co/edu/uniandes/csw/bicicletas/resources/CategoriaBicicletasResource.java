@@ -62,7 +62,7 @@ public class CategoriaBicicletasResource {
      */
     @POST
     @Path("{bicicletaId: \\d+}")
-    public BicicletaDTO addBicicleta(@PathParam("categoriaNombre") String categoriaNombre, @PathParam("bicicletaId") Long bicicletaId) {
+    public BicicletaDTO addBicicleta(@PathParam("categoriaNombre") String categoriaNombre, @PathParam("bicicletaId") Long bicicletaId) throws WebApplicationException {
         LOGGER.log(Level.INFO, "CategoriaBicicletasResource addBicicleta: input: categoriaNombre: {0} , bicicletaId: {1}", new Object[]{categoriaNombre, bicicletaId});
         if (bikeLogic.getBicicleta(bicicletaId) == null) {
             throw new WebApplicationException("El recurso /bicicletas/" + bicicletaId + " no existe.", 404);

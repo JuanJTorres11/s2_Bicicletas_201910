@@ -38,6 +38,7 @@ import javax.ws.rs.WebApplicationException;
 public class CategoriaResource {
     
     private static final Logger LOGGER = Logger.getLogger(CategoriaResource.class.getName());
+    private static final String DIRECCION = "El recurso /categorias/";
     
     @Inject private CategoriaLogic categoriaLogic;
     
@@ -90,7 +91,7 @@ public class CategoriaResource {
         
         CategoriaEntity categoriaEntity = categoriaLogic.getCategoriaPorNombre(nombre);
         if(categoriaEntity == null) {
-            throw new WebApplicationException("El recurso /categorias/" + nombre + " no existe", 404);
+            throw new WebApplicationException(DIRECCION + nombre + " no existe", 404);
         }
         
         CategoriaDetailDTO categoria = new CategoriaDetailDTO(categoriaEntity);
@@ -111,7 +112,7 @@ public class CategoriaResource {
         
         CategoriaEntity categoria = categoriaLogic.getCategoriaPorNombre(nombre);
         if(categoria == null) {
-            throw new WebApplicationException("El recurso /categorias/" + nombre + " no existe.", 404);
+            throw new WebApplicationException(DIRECCION + nombre + " no existe.", 404);
         }
         System.out.println("ID DE LA CATEGORIA: " + categoria.getId());
         categoriaLogic.deleteCategoria(categoria.getId());
@@ -134,7 +135,7 @@ public class CategoriaResource {
                 new Object[]{nombre, categoria});
         
         if(categoriaLogic.getCategoriaPorNombre(nombre) == null) {
-            throw new WebApplicationException("El recurso /categorias/" + nombre + " no existe.", 404);
+            throw new WebApplicationException(DIRECCION + nombre + " no existe.", 404);
         }
         CategoriaEntity categoriaEntity = categoria.toEntity();
         categoriaEntity.setId(categoriaLogic.getCategoriaPorNombre(nombre).getId());
@@ -142,5 +143,27 @@ public class CategoriaResource {
         
         LOGGER.log(Level.INFO, "CategoriaResource darCategorias: output: {0}", categoriaDTO);
         return categoriaDTO;
+    }
+    
+    /**
+     * Conexión con el servicio de bicicletas para una categoria.
+     * {@link CategoriaBicicletasResource}
+     *
+     * Este método conecta la ruta de /categorias con las rutas de /bicicletas que
+     * dependen de la categoria, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de las bicicletas de una categoria.
+     *
+     * @param categoriaNombre El nombre de la categoria con respecto a la cual se
+     * accede al servicio.
+     * @return El servicio de bicicletas para esta categoria en paricular.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la categoria.
+     */
+    @Path("{categoriaNombre: [a-zA-Z][a-zA-Z]*}/bicicletas")
+    public Class<CategoriaBicicletasResource> getCategoriaBicicletasResource(@PathParam("categoriaNombre") String categoriaNombre) {
+        if (categoriaLogic.getCategoriaPorNombre(categoriaNombre) == null) {
+            throw new WebApplicationException("El recurso /categoriaNombre/" + categoriaNombre + " no existe.", 404);
+        }
+        return CategoriaBicicletasResource.class;
     }
 }
