@@ -14,12 +14,24 @@ import java.io.Serializable;
  */
 public class ResenaDTO implements Serializable {
 
+    /**
+     * El id de la reseña
+     */
     private Long id;
 
+    /**
+     * La descripcion de la reseña
+     */
     private String descripcion;
 
+    /**
+     * La calificacion de la reseña
+     */
     private Integer calificacion;
 
+    /**
+     * El titulo de la reseña
+     */
     private String titulo;
 
     /*
