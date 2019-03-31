@@ -16,7 +16,7 @@ import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 public class VentaDTO implements Serializable {
 
     /**
-     * Atrinuto que representa la factura.
+     * Atributo que representa la factura.
      */
     private String factura;
 
@@ -31,15 +31,12 @@ public class VentaDTO implements Serializable {
     private boolean aprobado;
 
     /**
-     * Atributo que representa el identificador de la venta.
-     */
-    private long identificador;
-
-    /**
      * Atributo que representa un arreglo con las fotos de la bicicleta
      * asociada.
      */
     private String[] fotos;
+    
+    private Long id;
 
     /**
      * Objeto bicicleta a vender.
@@ -60,11 +57,11 @@ public class VentaDTO implements Serializable {
      */
     public VentaDTO(VentaEntity venta) {
         if (venta != null) {
-            this.identificador = venta.getIdentificador();
             this.factura = venta.getFactura();
             this.precio = venta.getPrecio();
             this.aprobado = venta.getAprobado();
             this.fotos = venta.getFotos();
+            this.id = venta.getId();
 
         }
     }
@@ -76,10 +73,11 @@ public class VentaDTO implements Serializable {
      */
     public VentaEntity toEntity() {
         VentaEntity venta = new VentaEntity();
-        venta.setIdentificador(this.identificador);
         venta.setPrecio(this.precio);
         venta.setFactura(this.factura);
         venta.setFotos(this.fotos);
+        venta.setAprobado(this.aprobado);
+        venta.setId(this.id);
 
         return venta;
     }
@@ -139,29 +137,12 @@ public class VentaDTO implements Serializable {
     }
 
     /**
-     * Obtiene el ID asociado a la bicicleta.
-     *
-     * @return the id
-     */
-    public long getId() {
-        return identificador;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(int id) {
-        this.identificador = id;
-    }
-
-    /**
      * Obtiene todas las fotos asociadas a la bicicleta.
      *
      * @return the fotos
      */
     public String[] getFotos() {
         return fotos;
-
     }
 
     /**
@@ -187,4 +168,17 @@ public class VentaDTO implements Serializable {
         this.bicicletaDTO = bicicletaDTO;
     }
 
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
