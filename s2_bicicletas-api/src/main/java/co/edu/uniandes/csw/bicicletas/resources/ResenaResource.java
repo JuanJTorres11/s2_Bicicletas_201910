@@ -96,7 +96,7 @@ public class ResenaResource {
      * bicicleta. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List<ResenaDTO> getResenas(@PathParam("bicicletaId") Long bicicletaId) {
+    public List<ResenaDTO> getResenas(@PathParam("bicicletaId") Long bicicletaId) throws BusinessLogicException{
          LOGGER.info("ResenaResource getResenas: input: void");
         List<ResenaDTO> listaBooks = listEntity2DetailDTO(logic.getResenas(bicicletaId));
         LOGGER.log(Level.INFO, "ResenaResource getResenas: output: {0}", listaBooks);
