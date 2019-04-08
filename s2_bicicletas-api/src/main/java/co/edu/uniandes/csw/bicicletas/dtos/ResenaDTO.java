@@ -14,12 +14,24 @@ import java.io.Serializable;
  */
 public class ResenaDTO implements Serializable {
 
+    /**
+     * El id de la reseña
+     */
     private Long id;
 
+    /**
+     * La descripcion de la reseña
+     */
     private String descripcion;
 
+    /**
+     * La calificacion de la reseña
+     */
     private Integer calificacion;
 
+    /**
+     * El titulo de la reseña
+     */
     private String titulo;
 
     /*
@@ -27,6 +39,11 @@ public class ResenaDTO implements Serializable {
     * dado que esta tiene cardinalidad 1.
      */
     private BicicletaDTO bicicleta;
+    
+    /*
+    * Nombre usuario calificador
+     */
+    private String usuario;
     
 
     /**
@@ -43,6 +60,7 @@ public class ResenaDTO implements Serializable {
             this.descripcion = resenaEntitiy.getDescripcion();
             this.id = resenaEntitiy.getId();
             this.titulo = resenaEntitiy.getTitulo();
+            this.usuario = resenaEntitiy.getUsuario();
 
             if (resenaEntitiy.getBicicleta() != null) {
                 this.bicicleta = new BicicletaDTO(resenaEntitiy.getBicicleta());
@@ -65,6 +83,7 @@ public class ResenaDTO implements Serializable {
         entity.setDescripcion(this.descripcion);
         entity.setId(this.id);
         entity.setTitulo(this.titulo);
+        entity.setUsuario(this.usuario);
         if (this.getBicicleta() != null) {
             entity.setBicicleta(this.getBicicleta().toEntity());
         }
@@ -139,6 +158,20 @@ public class ResenaDTO implements Serializable {
      */
     public void setBicicleta(BicicletaDTO bicicleta) {
         this.bicicleta = bicicleta;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public String getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
    
