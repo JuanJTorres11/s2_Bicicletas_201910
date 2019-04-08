@@ -21,9 +21,15 @@ import javax.inject.Inject;
 @Stateless
 public class OrdenBicicletasLogic {
     
+    /**
+     * Persistencia de la bicicleta
+     */
     @Inject
     private BicicletaPersistence bicicletaPersistence;
 
+    /**
+     * Persistencia de la orden
+     */
     @Inject
     private OrdenPersistence ordenPersistence;
     

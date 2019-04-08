@@ -22,9 +22,15 @@ import javax.inject.Inject;
 @Stateless
 public class MarcaBicicletasLogic {
     
+    /**
+     * Lógica de la bicicleta
+     */
      @Inject
     private BicicletaPersistence bicicletaPersistence;
 
+     /**
+      * Lógica de la marca
+      */
     @Inject
     private MarcaPersistence marcaPersistence;
     

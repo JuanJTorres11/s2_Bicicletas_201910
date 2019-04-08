@@ -22,7 +22,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
-/*/**
+/**
  * Clase que implementa el recurso "orden/{id}/bicicletas".
  *
  * @author Mateo
@@ -31,18 +31,27 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class OrdenBicicletasResource {
     
+    /**
+     * Lógica de la asociación entre una orden y sus bicicletas
+     */
     @Inject
     private OrdenBicicletasLogic ordenBicicletasLogic;
 
+    /**
+     * Lógica de una bicicleta
+     */
     @Inject
     private BicicletaLogic bikeLogic; 
     
+    /**
+     * Lógica de una orden
+     */
     @Inject
     private OrdenLogic ordenLogic;
     
     /**
      * Busca y devuelve todos las bicicletas que existen en la orden.
-     *
+     * 
      * @param ordenId Identificador de la orden que se esta
      * buscando. Este debe ser una cadena de dígitos.
      * @return JSONArray {@link BicicletaDetailDTO} - Las bicicletas encontradas
@@ -57,10 +66,12 @@ public class OrdenBicicletasResource {
     /**
      * Busca la bicicleta con el id asociado dentro de la orden con el
      * id asociado.
-     *
-     * @param ordenId
-     * @param bikeId
-     * @return
+     * 
+     * @param ordenId Identificador de la orden que se esta
+     * buscando. Este debe ser una cadena de dígitos.
+     * @param bikeId Identificador de la bicicleta que se esta
+     * buscando. Este debe ser una cadena de dígitos.
+     * @return Detalle de la bicicleta buscada
      * @throws BusinessLogicException Error de lógica que se genera cuando no se
      * encuentra la bicicleta en la orden.
      */
@@ -76,8 +87,9 @@ public class OrdenBicicletasResource {
     
     /**
      *Convierte una lista de Entity a una lista de DetailDTO.
-     * @param bicicletas
-     * @return
+     * 
+     * @param bicicletas Lista de entities a convertir
+     * @return Lista de detalles
      */
     private List<BicicletaDetailDTO> listEntity2DTO(List<BicicletaEntity> bicicletas) {
         List<BicicletaDetailDTO> list = new ArrayList();

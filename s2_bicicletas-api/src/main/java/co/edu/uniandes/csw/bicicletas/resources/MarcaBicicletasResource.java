@@ -35,12 +35,21 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class MarcaBicicletasResource {
     
+    /**
+     * Lógica de la asociación entre una marca y sus bicicletas
+     */
     @Inject
     private MarcaBicicletasLogic marcaBicicletasLogic;
 
+    /**
+     * Lógica de una bicicleta
+     */
     @Inject
     private BicicletaLogic bikeLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
 
+    /**
+     * Lógica de una marca
+     */
     @Inject
     private MarcaLogic marLogic; // Variable para acceder a la lógica de la aplicación. Es una inyección de dependencias.
 
@@ -48,7 +57,7 @@ public class MarcaBicicletasResource {
     /**
      * Guarda una bicicleta dentro de una marca con la informacion que
      * recibe el la URL. Se devuelve la bicicleta que se guarda en la marca.
-     *
+     * 
      * @param marcaNombre Identificador de la marca que se esta
      * actualizando. Este debe ser una cadena de dígitos.
      * @param bicicletaId Identificador de la bicicleta que se desea guardar.
@@ -86,9 +95,9 @@ public class MarcaBicicletasResource {
      * Busca la bicicleta con el id asociado dentro de la marca con el
      * nombre asociado.
      *
-     * @param marcaNombre
-     * @param bikeId
-     * @return
+     * @param marcaNombre Nombre de la marca
+     * @param bikeId Id de la bicicleta a obtener
+     * @return Detalle de la bicicleta buscada
      * @throws BusinessLogicException Error de lógica que se genera cuando no se
      * encuentra la bicicleta en la marca.
      */
@@ -113,7 +122,7 @@ public class MarcaBicicletasResource {
      * @return JSON {@link List<BicicletaDetailDTO>} - El arreglo de bicicletas guardado en la
      * marca.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra la bici.
+     * Error de lógica que se genera cuando no se encuentra la bicicleta.
      */
     @PUT
     public List<BicicletaDetailDTO> replaceBicicletas(@PathParam("marcaNombre") String marcaNombre, List<BicicletaDetailDTO> bicicletas) {
@@ -128,8 +137,9 @@ public class MarcaBicicletasResource {
     
     /**
      *Convierte una lista de Entity a una lista de DetailDTO.
-     * @param bicicletas
-     * @return
+     * 
+     * @param bicicletas Lista de entities a convertir
+     * @return Lista de detalles
      */
     private List<BicicletaDetailDTO> listEntity2DTO(List<BicicletaEntity> bicicletas) {
         List<BicicletaDetailDTO> list = new ArrayList();
