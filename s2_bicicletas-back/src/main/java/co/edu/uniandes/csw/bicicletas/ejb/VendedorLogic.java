@@ -97,6 +97,11 @@ public class VendedorLogic
         return buscado;
     }
 
+    /**
+     * Encuentra un vendedor por su login
+     * @param login Login del vendedor
+     * @return Vendedor con login dado
+     */
     public VendedorEntity findByLogin(String login)
     {
         LOGGER.log(Level.INFO, "Se buscará el vendedor con login {0}", login);
@@ -110,7 +115,26 @@ public class VendedorLogic
     }
 
     /**
+     * Encuentra un vendedor por su login y contraseña
+     * @param login Login del vendedor
+     * @param contraseña Contraseña del vendedor
+     * @return Vendedor buscado (si existe)
+     */
+    public VendedorEntity authVendedor(String login, String contraseña)
+    {
+        LOGGER.log(Level.INFO, "Se buscará el vendedor con login {0}", login);
+        VendedorEntity buscado = pVendedor.authVendedor(login, contraseña);
+        if (buscado == null)
+        {
+            LOGGER.log(Level.SEVERE, "No existe el vendedor con login {0}", login);
+        }
+        LOGGER.log(Level.INFO, "Se termina la busqueda del vendedor con login {0}", login);
+        return buscado;
+    }
+
+    /**
      * Se retornan todos los vendedores.
+     * @return Lista con todos los vendedores.
      */
     public List<VendedorEntity> findAllVendedores()
     {

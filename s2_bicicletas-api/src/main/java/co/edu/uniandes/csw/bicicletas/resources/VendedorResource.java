@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.resources;
 
+import co.edu.uniandes.csw.bicicletas.dtos.InicioSesionDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.VendedorDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.VendedorDetailDTO;
 import co.edu.uniandes.csw.bicicletas.ejb.VendedorLogic;
@@ -97,6 +98,27 @@ public class VendedorResource
         }
     }
 
+    /**
+     * Retorna un vendedor por su login y contraseña
+     * @param credenciales login y password del vendeodr a buscar
+     * @return JSON {@link VendedorDetailDTO} el vendedor si existe
+     */
+    @POST
+    @Path("/auth")
+    public VendedorDetailDTO autenticarVendedor(InicioSesionDTO credenciales)
+    {
+        LOGGER.log(Level.INFO, "Se buscará al vendedor por sus credenciales");
+        VendedorEntity vE = logica.authVendedor(credenciales.getLogin(), credenciales.getPassword());
+        if (vE != null)
+        {
+            return new VendedorDetailDTO(vE);
+        }
+        else
+        {
+            throw new WebApplicationException("El vendedor con no existe", 404);
+        }
+    }
+    
     /**
      * ACtualiza la información de un Vendedor ya registrado
      *
