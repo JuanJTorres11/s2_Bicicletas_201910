@@ -1,0 +1,686 @@
+{
+	"info": {
+		"_postman_id": "c77b1ef0-f4c8-4a48-8d93-8ec5ec96d25f",
+		"name": "CategoriaBicicletasResourceTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear una categoria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a590575-0705-4742-9814-6b81c36c47ea",
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_categoria_nom\",data.nombre);\r",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"CategoriaA\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una categoria 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86d26dd2-69ae-4da3-b151-5d2561fa14d9",
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_categoria2_nom\",data.nombre);\r",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"CategoriaB\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "38d01736-caf8-48b5-838d-021307c5430b",
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_bicicleta_id\",data.id);\r",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descripcion\": \"Soy la más veloz\",\n\t\"referencia\": \"Prueba555\",\n\t\"precio\": 20000.0,\n\t\"usada\": false,\n\t\"stock\": 123,\n\t\"album\": [\"ruta1\", \"ruta2\"],\n\t\"categoria\": {\"nombre\": \"CategoriaA\" },\n\t\"marca\": {\"nombre\": \"marca1\"}\n\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear una bicicleta 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c1ceb001-79d4-4a00-a0cc-39ab7bf3f9a0",
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_bicicleta2_id\",data.id);\r",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descripcion\": \"descripcion bicicleta2\",\n\t\"referencia\": \"referencia001\",\n\t\"precio\": 20000.0,\n\t\"usada\": false,\n\t\"stock\": 200,\n\t\"album\": [\"ruta1\", \"ruta2\"],\n\t\"categoria\": {\"nombre\": \"CategoriaB\" },\n\t\"marca\": {\"nombre\": \"marca1\"}\n\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar una bicicleta a una categoria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "23e29cc5-a954-40e6-b99b-197b77402082",
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_categoria_nom}}/bicicletas/{{new_bicicleta_id}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_categoria_nom}}",
+						"bicicletas",
+						"{{new_bicicleta_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregar una bicicleta que no existe a una categoria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "42136a8e-8181-4d04-ab30-137c403f0586",
+						"exec": [
+							"tests[\"No agrega una bicicleta con un id que no existe\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /bicicletas/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_categoria_nom}}/bicicletas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_categoria_nom}}",
+						"bicicletas",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener las bicicletas de una categoria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cbef3012-e7dd-4021-8810-6706ea9b9bfd",
+						"exec": [
+							"var data= JSON.parse(responseBody);\r",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;\r",
+							"tests[\"categorias count with bicicletas\"] = data.length >= 0;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_categoria_nom}}/bicicletas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_categoria_nom}}",
+						"bicicletas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una bicicleta de una categoria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f2d656df-8e4d-42d4-8a96-f60d6900cc00",
+						"exec": [
+							"console.log(responseBody);\r",
+							"var data = JSON.parse(responseBody);\r",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_categoria_nom}}/bicicletas/{{new_bicicleta_id}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_categoria_nom}}",
+						"bicicletas",
+						"{{new_bicicleta_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una bicicleta no asociada de una categoria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cca5bb1b-0cbb-433e-8e32-289032dd4913",
+						"exec": [
+							"tests[\"No se puede obtener una bicicleta que no esta asociada\"] = responseCode.code === 412;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"La bicicleta no está asociada a la categoria\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_categoria_nom}}/bicicletas/{{new_bicicleta2_id}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_categoria_nom}}",
+						"bicicletas",
+						"{{new_bicicleta2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener una bicicleta inexistente de una categoria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2e6e10c8-87bd-49a5-a65a-8b7e9ee92948",
+						"exec": [
+							"tests[\"No se puede obtener una bicicleta que no existe\"] = responseCode.code === 404;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_categoria_nom}}/bicicletas/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_categoria_nom}}",
+						"bicicletas",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Asociar una bicicleta a una categoria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02752efd-bcb3-43b2-baa9-0b459dcdf7b6",
+						"exec": [
+							"console.log(responseBody);\r",
+							"var data = JSON.parse(responseBody);\r",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t\t\"id\": {{new_bicicleta_id}},\n\t\t\"descripcion\": \"Soy la más veloz\",\n\t\t\"referencia\": \"Prueba555\",\n\t\t\"precio\": 20000.0,\n\t\t\"usada\": false,\n\t\t\"stock\": 123,\n\t\t\"album\": [\"ruta1\", \"ruta2\"],\n\t\t\"categoria\": {\"nombre\": \"CategoriaA\" },\n\t\t\"marca\": {\"nombre\": \"marca1\"}\n\t},\n\t\n\t{\n\t\t\"id\": {{new_bicicleta2_id}},\n\t\t\"descripcion\": \"descripcion bicicleta2\",\n\t\t\"referencia\": \"referencia001\",\n\t\t\"precio\": 20000.0,\n\t\t\"usada\": false,\n\t\t\"stock\": 200,\n\t\t\"album\": [\"ruta1\", \"ruta2\"],\n\t\t\"categoria\": {\"nombre\": \"CategoriaB\" },\n\t\t\"marca\": {\"nombre\": \"marca1\"}\n\t}\n]"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_categoria2_nom}}/bicicletas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_categoria2_nom}}",
+						"bicicletas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar una bicicleta que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "58124f77-0c89-4cd1-9755-338c04bef967",
+						"exec": [
+							"tests[\"No se pueden asociar los books ya que estos no existen\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /bicicletas/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t\t\"id\": 0,\n\t\t\"descripcion\": \"Soy la más veloz\",\n\t\t\"referencia\": \"Prueba555\",\n\t\t\"precio\": 20000.0,\n\t\t\"usada\": false,\n\t\t\"stock\": 123,\n\t\t\"album\": [\"ruta1\", \"ruta2\"],\n\t\t\"categoria\": {\"nombre\": \"CategoriaA\" },\n\t\t\"marca\": {\"nombre\": \"marca1\"}\n\t}\n]"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_categoria2_nom}}/bicicletas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_categoria2_nom}}",
+						"bicicletas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar una bicicleta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66af5244-f0ef-40a3-8472-5f359638f1f5",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_bicicleta_id}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_bicicleta_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar una bicicleta 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ec1d8fb-92c8-4381-acba-a5d6b1f66e80",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas/{{new_bicicleta2_id}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"bicicletas",
+						"{{new_bicicleta2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar una categoria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "76f14000-0a17-4f64-9658-0e2be317dbaf",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_categoria_nom}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_categoria_nom}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar una categoria 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e0a052e5-525c-43c0-8910-9cac7a84bdb3",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_categoria2_nom}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_categoria2_nom}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

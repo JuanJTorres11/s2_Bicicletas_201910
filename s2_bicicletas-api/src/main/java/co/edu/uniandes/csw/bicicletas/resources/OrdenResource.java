@@ -33,11 +33,19 @@ import javax.ws.rs.WebApplicationException;
 @RequestScoped
 public class OrdenResource {
 
-    private static final Logger LOGGER = Logger.getLogger(OrdenResource.class.getName());
 
+    /**
+     * Logica de la orden
+     */
     @Inject
     private OrdenLogic ordenLogic;
 
+    /**
+     * Servicio que crea una orden y la persiste
+     * @param orden Orden a crear y persistir
+     * @return ordenDTO. El DTO de la orden creada
+     * @throws Exception  Si hubo un problema de lógica al crear la orden
+     */
     @POST
     public OrdenDTO createOrden(OrdenDTO orden) throws Exception {
         OrdenEntity ordenEntity = orden.toEntity();
@@ -46,6 +54,12 @@ public class OrdenResource {
         return nuevaOrdenDTO;
     }
 
+    /**
+     * Servicio que obtiene el detalle de una orden con un id especificado
+     * @param id Id de la orden a obtener
+     * @return la orden obtenida
+     * @throws WebApplicationException Si la orden a obtener no existe
+     */
     @GET
     @Path("{id: \\d+}")
     public OrdenDetailDTO getOrden(@PathParam("id") long id) throws WebApplicationException {
@@ -58,14 +72,21 @@ public class OrdenResource {
         return detailDTO;
     }
 
+    /**
+     * Servicio que obtiene la lista de ordenes
+     * @return Lista de ordenes
+     */
     @GET
     public List<OrdenDetailDTO> getOrdenes() {
         List<OrdenDetailDTO> listaOrdenes = listEntity2DetailDTO(ordenLogic.getOrdenes());
         return listaOrdenes;
     }
     
-    
-
+    /**
+     * Método auxiliar para convertir una lista de entities a una lista de detalles
+     * @param entityList Lista de entities a convertir
+     * @return Lista de detalles
+     */
     private List<OrdenDetailDTO> listEntity2DetailDTO(List<OrdenEntity> entityList) {
         List<OrdenDetailDTO> list = new ArrayList<>();
         for (OrdenEntity entity : entityList) {
@@ -73,5 +94,17 @@ public class OrdenResource {
         }
         return list;
 }
+    /**
+     * Obtener la clase de asociación que relaciona las bicicletas de una orden con la orden
+     * @param ordenId Id de la orden cuyas bicicletas se quieren obtener
+     * @return Clase de asociación de una orden y sus bicicletas
+     */
+    @Path("{ordenId: \\d+}/bicicletas")
+    public Class<OrdenBicicletasResource> getOrdenBicicletasResource(@PathParam("ordenId") Long ordenId) {
+        if (ordenLogic.getOrden(ordenId) == null) {
+            throw new WebApplicationException("El recurso /categoriaNombre/" + ordenId + " no existe.", 404);
+        }
+        return OrdenBicicletasResource.class;
+    }
 
 }

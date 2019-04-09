@@ -63,14 +63,20 @@ public class ResenaResource {
     }
 
     /**
-     * 
-     * @param bicicletaId
-     * @param resenaId
-     * @return 
+     * Busca y devuelve la reseña con el ID recibido en la URL, relativa a una
+     * bicicleta.
+     *
+     * @param bicicletaId El ID de la bicicleta del cual se buscan las reseñas
+     * @param resenaId El ID de la reseña que se busca
+     * @return {@link ReviewDTO} - La reseña encontradas en la bicicleta.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la bicicleta.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la reseña.
      */
     @GET
     @Path("{resenaId: \\d+}")
-    public ResenaDTO getResena(@PathParam("bicicletaId") Long bicicletaId, @PathParam("resenaId") Long resenaId) {
+    public ResenaDTO getResena(@PathParam("bicicletaId") Long bicicletaId, @PathParam("resenaId") Long resenaId)throws BusinessLogicException {
         LOGGER.log(Level.INFO, "ResenaResource getResena: input: {0}", resenaId);
         ResenaEntity entity = logic.getResena(bicicletaId, resenaId);
 
@@ -82,13 +88,15 @@ public class ResenaResource {
 
         return resenaDTO;
     }
-
-    /**
-     * 
-     * @return 
+/**
+     * Busca y devuelve todas las reseñas que existen en una bicicleta.
+     *
+     * @param bicicletaId El ID de la bicicleta del cual se buscan las reseñas
+     * @return JSONArray {@link ResenaDTO} - Las reseñas encontradas en la
+     * bicicleta. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List<ResenaDTO> getResenas(@PathParam("bicicletaId") Long bicicletaId) {
+    public List<ResenaDTO> getResenas(@PathParam("bicicletaId") Long bicicletaId) throws BusinessLogicException{
          LOGGER.info("ResenaResource getResenas: input: void");
         List<ResenaDTO> listaBooks = listEntity2DetailDTO(logic.getResenas(bicicletaId));
         LOGGER.log(Level.INFO, "ResenaResource getResenas: output: {0}", listaBooks);
@@ -96,15 +104,21 @@ public class ResenaResource {
     }
     
    /**
-    * 
-    * @param bicicletaId
-    * @param resenaId
-    * @param resena
-    * @return 
-    */
+     * Actualiza una reseña con la informacion que se recibe en el cuerpo de la
+     * petición y se regresa el objeto actualizado.
+     *
+     * @param bicicletaId El ID de la bicicleta del cual se guarda la reseña
+     * @param resenaId El ID de la reseña que se va a actualizar
+     * @param resena {@link ResenaDTO} - La reseña que se desea guardar.
+     * @return JSON {@link ResenaDTO} - La reseña actualizada.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando ya existe la reseña.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la reseña.
+     */
     @PUT
     @Path("{resenaId: \\d+}")
-    public ResenaDTO updateResena(@PathParam("bicicletaId") Long bicicletaId, @PathParam("resenaId") Long resenaId, ResenaDTO resena) {
+    public ResenaDTO updateResena(@PathParam("bicicletaId") Long bicicletaId, @PathParam("resenaId") Long resenaId, ResenaDTO resena) throws BusinessLogicException{
         LOGGER.log(Level.INFO, "ResenaResource updateResena: input: id: {0} , book: {1}", new Object[]{resenaId, resena});
         resena.setId(resenaId);
         if (logic.getResena(bicicletaId, resenaId) == null) {
@@ -116,8 +130,14 @@ public class ResenaResource {
     }
     
     /**
-     * 
-     * @param resenaId 
+     * Borra la reseña con el id asociado recibido en la URL.
+     *
+     * @param bicicletaId El ID de la bicicleta del cual se guarda la reseña
+     * @param resenaId El ID de la reseña que se va a eliminar.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando no se puede eliminar la reseña.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la reseña.
      */
     @DELETE
     @Path("{resenaId: \\d+}")

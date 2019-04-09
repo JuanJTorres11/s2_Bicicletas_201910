@@ -122,7 +122,10 @@ public class BicicletaResource {
      *
      * @param bicicletaId
      * @param bicicleta
-     * @return
+     * @return la bicicleta actualizada
+     * @throws BusinessLogicException
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} - cuando el recurso no existe
+   
      */
     @PUT
     @Path("{bicicletaId: \\d+}")

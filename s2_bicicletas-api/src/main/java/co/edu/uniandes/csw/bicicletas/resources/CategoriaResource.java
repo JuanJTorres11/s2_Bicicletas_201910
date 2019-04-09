@@ -144,4 +144,26 @@ public class CategoriaResource {
         LOGGER.log(Level.INFO, "CategoriaResource darCategorias: output: {0}", categoriaDTO);
         return categoriaDTO;
     }
+    
+    /**
+     * Conexión con el servicio de bicicletas para una categoria.
+     * {@link CategoriaBicicletasResource}
+     *
+     * Este método conecta la ruta de /categorias con las rutas de /bicicletas que
+     * dependen de la categoria, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de las bicicletas de una categoria.
+     *
+     * @param categoriaNombre El nombre de la categoria con respecto a la cual se
+     * accede al servicio.
+     * @return El servicio de bicicletas para esta categoria en paricular.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la categoria.
+     */
+    @Path("{categoriaNombre: [a-zA-Z][a-zA-Z]*}/bicicletas")
+    public Class<CategoriaBicicletasResource> getCategoriaBicicletasResource(@PathParam("categoriaNombre") String categoriaNombre) {
+        if (categoriaLogic.getCategoriaPorNombre(categoriaNombre) == null) {
+            throw new WebApplicationException("El recurso /categoriaNombre/" + categoriaNombre + " no existe.", 404);
+        }
+        return CategoriaBicicletasResource.class;
+    }
 }
