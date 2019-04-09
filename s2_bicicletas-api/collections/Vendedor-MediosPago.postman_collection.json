@@ -6,14 +6,17 @@
 	},
 	"item": [
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores Copy",
+			"name": "Post Vendedores-Medios Pago nuevo vendedor",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
 						"exec": [
-							"postman.setGlobalVariable(\"new_id_a\",data.id);"
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_id_b\",data.id);\r",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;\r",
+							"console.log(data.id);"
 						],
 						"type": "text/javascript"
 					}
@@ -21,7 +24,14 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{ \n\t\"nombre\": \"Juan Torres R\",\n\t\n    \"login\":\"jj.torres\",\n\n    \"password\":\"abc123\",\n    \n    \"telefono\": 3214032973\n}"
@@ -41,7 +51,7 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}/mediosPago",
+			"name": "Post Vendedores-Medios Pago  nuevo medioPago",
 			"event": [
 				{
 					"listen": "test",
@@ -59,13 +69,20 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n\t\"numeroTarjeta\": 5401345858879821,\n\t\"codigoVerificacion\": 123,\n\t\"vencimiento\": \"06/20\",\n\t\"direccion\": \"direccion 1\",\n\t\"tipoTarjeta\": \"Credito\",\n\t\"tipoCredito\": \"MASTERCARD\"\n}"
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}/mediosPago",
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_b}}/mediosPago",
 					"host": [
 						"{{ip}}"
 					],
@@ -73,7 +90,7 @@
 					"path": [
 						"{{ruta}}",
 						"vendedores",
-						"{{new_id_a}}",
+						"{{new_id_b}}",
 						"mediosPago"
 					]
 				}
@@ -81,7 +98,7 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores/mediosPago",
+			"name": "Get Vendedores-Medios Pago  da un medio de pago",
 			"event": [
 				{
 					"listen": "test",
@@ -113,7 +130,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}/mediosPago/{{new_id_m}}",
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_b}}/mediosPago/{{new_id_m}}",
 					"host": [
 						"{{ip}}"
 					],
@@ -121,7 +138,7 @@
 					"path": [
 						"{{ruta}}",
 						"vendedores",
-						"{{new_id_a}}",
+						"{{new_id_b}}",
 						"mediosPago",
 						"{{new_id_m}}"
 					]
@@ -130,14 +147,14 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores/mediosPago Copy",
+			"name": "Del Vendedores-Medios Pago borra medioPago",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
 						"exec": [
-							"var data= JSON.parse(responseBody);"
+							"tests[\"No genera error\"] = responseCode.code === 200 || responseCode.code === 204;"
 						],
 						"type": "text/javascript"
 					}
@@ -158,7 +175,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}/mediosPago/{{new_id_m}}",
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_b}}/mediosPago/{{new_id_m}}",
 					"host": [
 						"{{ip}}"
 					],
@@ -166,7 +183,7 @@
 					"path": [
 						"{{ruta}}",
 						"vendedores",
-						"{{new_id_a}}",
+						"{{new_id_b}}",
 						"mediosPago",
 						"{{new_id_m}}"
 					]

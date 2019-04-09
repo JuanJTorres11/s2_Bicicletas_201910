@@ -202,7 +202,7 @@ public class VendedorLogic
     public void deleteVendedor(Long id)
     {
         LOGGER.log(Level.INFO, "se borrará el Vendedor con id {}", id);
-        LOGGER.log(Level.INFO, "se borró al vendedor con id {}",id);
         pVendedor.delete(id);
+        LOGGER.log(Level.INFO, "se borró al vendedor con id {}",id);
     }
 }

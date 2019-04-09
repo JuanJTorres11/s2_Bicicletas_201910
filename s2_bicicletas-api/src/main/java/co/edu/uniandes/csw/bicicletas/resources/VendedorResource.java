@@ -161,7 +161,7 @@ public class VendedorResource
         }
         else
         {
-            
+             throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
         }
     }
 

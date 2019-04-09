@@ -18,6 +18,7 @@ public class MedioPagoDTO implements Serializable {
     public final static String VISA = "VISA";
     public final static String MASTERCARD = "MASTERCARD";
     
+    private Long id;
     private Long numeroTarjeta;
     private Integer codigoVerificacion;
     private String vencimiento;
@@ -32,7 +33,7 @@ public class MedioPagoDTO implements Serializable {
     public MedioPagoEntity toEntity() {
         MedioPagoEntity medioPago = new MedioPagoEntity(numeroTarjeta, codigoVerificacion, vencimiento, 
                 direccion, tipoTarjeta, tipoCredito);
-        
+        medioPago.setId(id);
         return medioPago;
     }
     
@@ -42,6 +43,7 @@ public class MedioPagoDTO implements Serializable {
      */
     public MedioPagoDTO(MedioPagoEntity medioPago) {
         if(medioPago != null) {
+            this.id = medioPago.getId();
             this.numeroTarjeta = medioPago.getNumeroTarjeta();
             this.codigoVerificacion = medioPago.getCodigoVerificacion();
             this.direccion = medioPago.getDireccion();
@@ -133,5 +135,21 @@ public class MedioPagoDTO implements Serializable {
      */
     public void setTipoCredito(String tipoCredito) {
         this.tipoCredito = tipoCredito;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId()
+    {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 }
