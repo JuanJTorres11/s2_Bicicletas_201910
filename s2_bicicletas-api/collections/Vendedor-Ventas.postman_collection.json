@@ -6,14 +6,17 @@
 	},
 	"item": [
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores Copy",
+			"name": "Post Vendedor-Ventas nuevo vendedor",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
 						"exec": [
-							"postman.setGlobalVariable(\"new_id_b\",data.id);"
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_id_c\",data.id);\r",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;\r",
+							"console.log(data.id);"
 						],
 						"type": "text/javascript"
 					}
@@ -21,7 +24,14 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{ \n\t\"nombre\": \"Juan Torres R\",\n\t\n    \"login\":\"jj.torresr1\",\n\n    \"password\":\"abc123\",\n    \n    \"telefono\": 3214032973\n}"
@@ -41,7 +51,7 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}/mediosPago",
+			"name": "Post Vendedor-Ventas nueva venta",
 			"event": [
 				{
 					"listen": "test",
@@ -65,7 +75,7 @@
 					"raw": "{\n\t\"factura\": \"./factura.pdf\",\n\t\"precio\": 123000,\n\t\"aprobado\": false,\n\t\"fotos\": [\"./foto1\", \"./foto2\", \"./foto3\"]\n}"
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_b}}/ventas",
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/ventas",
 					"host": [
 						"{{ip}}"
 					],
@@ -73,7 +83,7 @@
 					"path": [
 						"{{ruta}}",
 						"vendedores",
-						"{{new_id_b}}",
+						"{{new_id_c}}",
 						"ventas"
 					]
 				}
@@ -81,7 +91,7 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores/mediosPago",
+			"name": "Get Vendedor-Venta da una venta",
 			"event": [
 				{
 					"listen": "test",
@@ -113,7 +123,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_b}}/mediosPago/{{new_id_v}}",
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/mediosPago/{{new_id_v}}",
 					"host": [
 						"{{ip}}"
 					],
@@ -121,7 +131,7 @@
 					"path": [
 						"{{ruta}}",
 						"vendedores",
-						"{{new_id_b}}",
+						"{{new_id_c}}",
 						"mediosPago",
 						"{{new_id_v}}"
 					]
@@ -130,14 +140,14 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores/mediosPago Copy",
+			"name": "Del Vendedor-Venta borra una venta",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
 						"exec": [
-							"var data= JSON.parse(responseBody);"
+							"tests[\"No genera error\"] = responseCode.code === 200 || responseCode.code === 204;"
 						],
 						"type": "text/javascript"
 					}
@@ -158,7 +168,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_b}}/mediosPago/{{new_id_v}}",
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/mediosPago/{{new_id_v}}",
 					"host": [
 						"{{ip}}"
 					],
@@ -166,7 +176,7 @@
 					"path": [
 						"{{ruta}}",
 						"vendedores",
-						"{{new_id_b}}",
+						"{{new_id_c}}",
 						"mediosPago",
 						"{{new_id_v}}"
 					]

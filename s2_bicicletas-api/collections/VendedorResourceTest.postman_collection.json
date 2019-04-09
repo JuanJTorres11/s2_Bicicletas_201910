@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores",
+			"name": "Post Vendedor nuevo Vendedor",
 			"event": [
 				{
 					"listen": "test",
@@ -52,7 +52,7 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores auth",
+			"name": "Post Vendedor autentica vendedor",
 			"event": [
 				{
 					"listen": "test",
@@ -95,7 +95,7 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores",
+			"name": "Get Vendedores dar todos los vendedores",
 			"event": [
 				{
 					"listen": "test",
@@ -142,7 +142,7 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores Copy",
+			"name": "Get Vendedores dar vendedor",
 			"event": [
 				{
 					"listen": "test",
@@ -188,7 +188,7 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+			"name": "Put Vendedores actualizar",
 			"event": [
 				{
 					"listen": "test",
@@ -233,7 +233,7 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores Copy Copy",
+			"name": "Del Vendedores borrar",
 			"event": [
 				{
 					"listen": "test",
