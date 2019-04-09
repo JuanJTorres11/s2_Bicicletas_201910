@@ -36,6 +36,9 @@ public class VentaDTO implements Serializable {
      */
     private String[] fotos;
     
+    /**
+     * Atributo que representa el id de una venta. 
+     */
     private Long id;
 
     /**
