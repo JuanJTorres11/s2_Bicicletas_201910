@@ -105,7 +105,7 @@ public class VendedorMedioPagoResource
         });
         if (medioPagoLogic.getMedioPago(mediosPagoId) == null)
         {
-            throw new WebApplicationException("El recurso /vendedors/" + vendedorId + "/mediosPago/" + mediosPagoId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /vendedores/" + vendedorId + "/mediosPago/" + mediosPagoId + " no existe.", 404);
         }
         MedioPagoDTO medioPagoDTO = new MedioPagoDTO(vendedorMediosPagoLogic.getMedioPago(vendedorId, mediosPagoId));
         LOGGER.log(Level.INFO, "VendedorMedioPagosResource getMedioPago: output: {0}", medioPagoDTO);

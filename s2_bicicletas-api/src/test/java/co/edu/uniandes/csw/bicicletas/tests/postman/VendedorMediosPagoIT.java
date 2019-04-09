@@ -23,10 +23,10 @@ import org.junit.Test;
  *
  * @author Juan José Torres <jj.torresr@uniandes.edu.co>
  */
-public class VendedorIT
+public class VendedorMediosPagoIT
 {
 
-    private static final String COLLECTION = "VendedorResourceTest.postman_collection";
+    private static final String COLLECTION = "Vendedor-MediosPago.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment()
