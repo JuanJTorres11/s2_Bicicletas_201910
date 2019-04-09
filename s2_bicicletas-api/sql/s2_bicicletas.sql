@@ -3,4 +3,5 @@ DELETE FROM CategoriaEntity;
 DELETE FROM CompradorEntity;
 DELETE FROM MedioPagoEntity;
 delete from VendedorEntity;
+SELECT * FROM VendedorEntity;
 

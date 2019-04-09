@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.resources;
 
+import co.edu.uniandes.csw.bicicletas.dtos.InicioSesionDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.VendedorDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.VendedorDetailDTO;
 import co.edu.uniandes.csw.bicicletas.ejb.VendedorLogic;
@@ -46,7 +47,7 @@ public class VendedorResource
     /**
      * Conexión con el front para crear un nuevo vendedor
      * @param vendedor a crear
-     * @return El vendedor creado en base de datos
+     * @return JSON {@link VendedorDTO} El vendedor creado en base de datos
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper}
      */
     @POST
@@ -58,14 +59,15 @@ public class VendedorResource
         return nuevo;
     }
 
-    /**
-     * Retorna una lista con todos los vendedores registrados
-     */
+   /**
+    * Retorna la lista de todos los vendedores
+    * @return JSONArray {@link VendedorDetailDTO} 
+    */
     @GET
     public List<VendedorDetailDTO> darVendedores()
     {
         LOGGER.log(Level.INFO, "Se dará la lista con todos los vendedores");
-        ArrayList<VendedorDetailDTO> vendedores = new ArrayList<>();
+        List<VendedorDetailDTO> vendedores = new ArrayList<>();
         List<VendedorEntity> vEntity = logica.findAllVendedores();
         for (VendedorEntity v : vEntity)
         {
@@ -78,7 +80,7 @@ public class VendedorResource
      * Retorna el vendedor por id
      *
      * @param id id del vendeodr a buscar
-     * @return el vendedor con el id si existe
+     * @return JSON {@link VendedorDetailDTO} el vendedor con el id si existe
      */
     @GET
     @Path("{id: \\d+}")
@@ -96,6 +98,27 @@ public class VendedorResource
         }
     }
 
+    /**
+     * Retorna un vendedor por su login y contraseña
+     * @param credenciales login y password del vendeodr a buscar
+     * @return JSON {@link VendedorDetailDTO} el vendedor si existe
+     */
+    @POST
+    @Path("/auth")
+    public VendedorDetailDTO autenticarVendedor(InicioSesionDTO credenciales)
+    {
+        LOGGER.log(Level.INFO, "Se buscará al vendedor por sus credenciales");
+        VendedorEntity vE = logica.authVendedor(credenciales.getLogin(), credenciales.getPassword());
+        if (vE != null)
+        {
+            return new VendedorDetailDTO(vE);
+        }
+        else
+        {
+            throw new WebApplicationException("El vendedor con no existe", 404);
+        }
+    }
+    
     /**
      * ACtualiza la información de un Vendedor ya registrado
      *
@@ -138,7 +161,37 @@ public class VendedorResource
         }
         else
         {
+            
+        }
+    }
+
+    /**
+     * Redirecciona a la clase de asociación entre Vendedor y Medios de Pago
+     * @param id Identificador del vendedor
+     * @return Clase que maneja los métodos CRUD de la relación Vendedor/MediosPago
+     */
+     @Path("{vendedorId: \\d+}/mediosPago")
+    public Class<VendedorMedioPagoResource> getMediosPagoResource(@PathParam("vendedorId") Long id)
+    {
+        if (logica.findVendedor(id) == null)
+        {
             throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
         }
+        return VendedorMedioPagoResource.class;
+    }
+    
+     /**
+     * Redirecciona a la clase de asociación entre Vendedor y Venta
+     * @param id Identificador del vendedor
+     * @return Clase que maneja los métodos CRUD de la relación Vendedor/MediosPago
+     */
+     @Path("{vendedorId: \\d+}/ventas")
+    public Class<VendedorVentaResource> getVentasResource(@PathParam("vendedorId") Long id)
+    {
+        if (logica.findVendedor(id) == null)
+        {
+            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+        }
+        return VendedorVentaResource.class;
     }
 }

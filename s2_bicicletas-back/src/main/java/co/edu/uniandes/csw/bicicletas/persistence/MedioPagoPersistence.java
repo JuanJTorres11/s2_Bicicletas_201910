@@ -40,6 +40,25 @@ public class MedioPagoPersistence {
         return em.find(MedioPagoEntity.class, medioPagosId);
     }
     
+    public MedioPagoEntity findByVendedor(Long vendedorId, Long medioPagoId)
+    {
+        LOGGER.log(Level.INFO, "Consultando el medio de pago con id = {0} del vendedor con id = " + vendedorId, medioPagoId);
+        TypedQuery<MedioPagoEntity> q = em.createQuery("select p from MedioPagoEntity m where (m.vendedor_id = :vendedorId) and (m.id = :medioPagoId)", MedioPagoEntity.class);
+        q.setParameter("vendedorId", vendedorId);
+        q.setParameter("medioPagoId", medioPagoId);
+        List<MedioPagoEntity> results = q.getResultList();
+        MedioPagoEntity medio = null;
+        if (results == null)
+            medio = null;
+          else if (results.isEmpty())
+            medio = null;
+          else if (results.size() >= 1)
+            medio = results.get(0);
+        
+        LOGGER.log(Level.INFO, "Saliendo de consultar el medio de pago con id = {0} del vendedor con id = " + vendedorId, medioPagoId);
+        return medio;
+    }
+    
     public List<MedioPagoEntity> findAll() {
         LOGGER.log(Level.INFO, "Entrando a buscar todos los ids.");
         TypedQuery<MedioPagoEntity> query = em.createQuery("Select u from MedioPagoEntity u", MedioPagoEntity.class);
