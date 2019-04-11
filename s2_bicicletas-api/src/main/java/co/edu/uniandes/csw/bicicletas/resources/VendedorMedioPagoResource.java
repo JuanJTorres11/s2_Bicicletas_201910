@@ -57,7 +57,8 @@ public class VendedorMedioPagoResource
     {
         LOGGER.log(Level.INFO, "VendedorMedioPagosResource addMedioPago: input: vendedorsID: {0} , medioPagosId: {1}", new Object[]
         {
-            vendedorId
+            vendedorId,
+            medio.getId()
         });
         MedioPagoDTO medioPagoDTO = new MedioPagoDTO(vendedorMediosPagoLogic.addMedioPago(vendedorId, medio.toEntity()));
         LOGGER.log(Level.INFO, "EditorialMedioPagosResource addMedioPago: output: {0}", medioPagoDTO);
