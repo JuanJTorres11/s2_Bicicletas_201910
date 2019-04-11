@@ -43,8 +43,7 @@ public class VentaEntity extends BaseEntity implements Serializable {
      */
     private String[] fotos;
 
-    @PodamExclude
-    @ManyToOne
+  
     private VendedorEntity vendedor;
 
     /**
@@ -138,5 +137,21 @@ public class VentaEntity extends BaseEntity implements Serializable {
 //    public void setVendedor(VendedorEntity vendedor) {
 //        this.vendedor = vendedor;
 //    }
+
+    /**
+     * @return the vendedor
+     */
+    public VendedorEntity getVendedor()
+    {
+        return vendedor;
+    }
+
+    /**
+     * @param vendedor the vendedor to set
+     */
+    public void setVendedor(VendedorEntity vendedor)
+    {
+        this.vendedor = vendedor;
+    }
 
 }

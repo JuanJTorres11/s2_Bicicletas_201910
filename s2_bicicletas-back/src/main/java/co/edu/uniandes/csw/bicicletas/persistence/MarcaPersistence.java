@@ -21,8 +21,14 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class MarcaPersistence {
 
+    /**
+     * Logger que permite imprimir eventos
+     */
     private static final Logger LOGGER = Logger.getLogger(MarcaPersistence.class.getName());
 
+    /**
+     * Manejador de la persistencia
+     */
     @PersistenceContext(unitName = "bicicletasPU")
     protected EntityManager em;
 
