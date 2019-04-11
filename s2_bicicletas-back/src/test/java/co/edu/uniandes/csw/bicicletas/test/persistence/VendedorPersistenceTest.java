@@ -165,6 +165,20 @@ public class VendedorPersistenceTest
         Assert.assertNotNull("Lo que retorna la bd no debería se null", userBd);
         Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
     }
+    
+    /**
+     * Prueba el método authVendedor de la clase VendedorPersistence <br>
+     * 1. Prueba que se encuentre algo en la base de datos. <br>
+     * 2. Prueba que lo que se encontró sea lo que se esperaba.
+     */
+    @Test
+    public void authVendedorTest()
+    {
+        VendedorEntity userLocal = data.get(0);
+        VendedorEntity userBd = persistencia.authVendedor(userLocal.getLogin(), userLocal.getPassword());
+        Assert.assertNotNull("Lo que retorna la bd no debería se null", userBd);
+        Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
+    }
 
     /**
      * Prueba el método findAll en la clase VendedorPesistence <br>

@@ -12,7 +12,8 @@ import java.io.Serializable;
  *
  * @author Juan José Torres
  */
-public class UsuarioDTO implements Serializable {
+public class UsuarioDTO implements Serializable
+{
 
     protected Long id;
 
@@ -25,7 +26,8 @@ public class UsuarioDTO implements Serializable {
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(UsuarioEntity user) {
+    public UsuarioDTO(UsuarioEntity user)
+    {
         if (user != null) {
             id = user.getId();
             nombre = user.getNombre();

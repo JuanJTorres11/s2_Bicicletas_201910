@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.bicicletas.entities;
 import co.edu.uniandes.csw.bicicletas.podam.TelefonoStrategy;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -31,7 +32,7 @@ public class VendedorEntity extends UsuarioEntity
     private List<VentaEntity> ventas;
 
     @PodamExclude
-    @OneToMany(mappedBy = "vendedor")
+    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MedioPagoEntity> mediosPago;
 
     /**
