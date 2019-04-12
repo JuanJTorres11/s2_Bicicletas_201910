@@ -6,8 +6,8 @@
 package co.edu.uniandes.csw.bicicletas.entities;
 
 import co.edu.uniandes.csw.bicicletas.podam.TelefonoStrategy;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -22,8 +22,6 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 public class VendedorEntity extends UsuarioEntity
 {
 
-    private static final Logger LOGGER = Logger.getLogger(VendedorEntity.class.getName());
-
     @PodamStrategyValue(TelefonoStrategy.class)
     private Long telefono;
 
@@ -35,6 +33,15 @@ public class VendedorEntity extends UsuarioEntity
     @OneToMany(mappedBy = "vendedor", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MedioPagoEntity> mediosPago;
 
+    public VendedorEntity ()
+    {
+        this.nombre = "";
+        this.login = "";
+        this.password = "";
+        this.telefono = -1L;
+        this.ventas = new ArrayList<>();
+        this.mediosPago = new ArrayList<>();
+    }
     /**
      * @return the telefono
      */
@@ -82,5 +89,4 @@ public class VendedorEntity extends UsuarioEntity
     {
         this.mediosPago = mediosPago;
     }
-
 }
