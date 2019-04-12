@@ -42,12 +42,12 @@ public class VentaEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private VendedorEntity vendedor;
-
+    
     /**
      * Constructor de la clase VentaEntity
      */
     public VentaEntity() {
-
+        //Constructor vacio.
     }
 
     /**
