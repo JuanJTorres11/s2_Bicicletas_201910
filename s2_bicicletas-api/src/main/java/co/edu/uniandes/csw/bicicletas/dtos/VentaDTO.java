@@ -54,7 +54,7 @@ public class VentaDTO implements Serializable {
      */
     public VentaDTO(VentaEntity venta) {
         if (venta != null) {
-            this.id = venta.getIdentificador();
+            this.id = venta.getId();
             this.factura = venta.getFactura();
             this.precio = venta.getPrecio();
             this.aprobado = venta.getAprobado();
@@ -70,7 +70,7 @@ public class VentaDTO implements Serializable {
      */
     public VentaEntity toEntity() {
         VentaEntity venta = new VentaEntity();
-        venta.setIdentificador(this.id);
+        venta.setId(this.id);
         venta.setPrecio(this.precio);
         venta.setFactura(this.factura);
         venta.setFotos(this.fotos);

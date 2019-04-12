@@ -50,7 +50,7 @@ public class VendedorVentaResource
     {
         LOGGER.log(Level.INFO, "VendedorVentasResource addVenta: input: vendedorsID: {0}", vendedorId);
         VentaDTO ventaDTO = new VentaDTO(logica.addVenta(vendedorId, venta.toEntity()));
-        LOGGER.log(Level.INFO, "EditorialVentasResource addVenta: output: {0}", ventaDTO);
+        LOGGER.log(Level.INFO, "EditorialVentasResource addVenta: output: {0}", ventaDTO.getId());
         return ventaDTO;
     }
 

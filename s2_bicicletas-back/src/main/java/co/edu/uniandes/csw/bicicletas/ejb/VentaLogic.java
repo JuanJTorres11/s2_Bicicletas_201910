@@ -43,22 +43,17 @@ public class VentaLogic {
     public VentaEntity createVenta(VentaEntity pVenta) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear una venta.");
 
-        if (pVenta.getId() > 0) {
-            throw new BusinessLogicException("El id de la venta no puede ser menor a 0.");
-        } else if (vp.findById(pVenta.getId()) != null) {
+        
+        if (pVenta.getId() != null) {
             throw new BusinessLogicException("Ya existe una venta con dicho id \"" + pVenta.getId() + "\"");
         }
 
-        if (pVenta.getFactura().isEmpty()) {
+        if (pVenta.getFactura() == null) {
             throw new BusinessLogicException("La ruta de la imagen no puede estar vacío.");
         }
 
-        if (pVenta.getPrecio() > 0) {
+        if (pVenta.getPrecio() < 0) {
             throw new BusinessLogicException("El precio no puede ser un valor menor a 0.");
-        }
-
-        if (pVenta.getAprobado() != true) {
-            throw new BusinessLogicException("No fue aprobada la compra.");
         }
 
         if (0 > pVenta.getFotos().length) {
@@ -109,29 +104,23 @@ public class VentaLogic {
     public VentaEntity updateVenta(VentaEntity pVenta) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar una venta.");
 
-        if (pVenta.getId() > 0) {
-            throw new BusinessLogicException("El login del venta no puede ser menor a 0.");
-        } else if (vp.findById(pVenta.getId()) != null) {
-            throw new BusinessLogicException("Ya existe una venta con el id \"" + pVenta.getId() + "\"");
+        if (vp.findById(pVenta.getId()) == null) {
+            throw new BusinessLogicException("No existe una venta con el id \"" + pVenta.getId() + "\"");
         }
 
         if (pVenta.getFactura().isEmpty()) {
             throw new BusinessLogicException("La ruta de la imagen no puede estar vacío.");
         }
 
-        if (pVenta.getPrecio() > 0) {
+        if (pVenta.getPrecio() < 0) {
             throw new BusinessLogicException("El precio no puede ser menor a cero.");
-        }
-
-        if (pVenta.getAprobado() != true) {
-            throw new BusinessLogicException("No fue aprobada la compra.");
         }
 
         if (0 >= pVenta.getFotos().length) {
             throw new BusinessLogicException("La ruta de la imagen no puede estar vacío.");
         }
 
-        VentaEntity ret = vp.create(pVenta);
+        VentaEntity ret = vp.update(pVenta);
 
         LOGGER.log(Level.INFO, "Termina proceso de crear una venta.");
         return ret;

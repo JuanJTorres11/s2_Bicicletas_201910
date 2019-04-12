@@ -179,6 +179,6 @@ public class VentaPersistenceTest {
         VentaEntity venta = data.get(0);
         VentaEntity ventaBd = vp.findById(venta.getId());
         Assert.assertNotNull("Lo que retorna la bd no debería se null", ventaBd);
-        Assert.assertEquals("lo que retorna la bd no es lo que se espera", venta.getIdentificador(), ventaBd.getIdentificador());
+        Assert.assertEquals("lo que retorna la bd no es lo que se espera", venta.getId(), ventaBd.getId());
     }
 }
