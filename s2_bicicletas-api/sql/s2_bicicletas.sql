@@ -6,3 +6,4 @@ delete from VendedorEntity;
 DELETE FROM CompradorEntity;
 SELECT * FROM VendedorEntity;
 SELECT * FROM MedioPagoEntity;
+SELECT * FROM VentaEntity;

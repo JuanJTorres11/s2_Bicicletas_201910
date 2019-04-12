@@ -74,6 +74,7 @@ public class VentaDTO implements Serializable {
         venta.setPrecio(this.precio);
         venta.setFactura(this.factura);
         venta.setFotos(this.fotos);
+        venta.setAprobado(this.aprobado);
 
         return venta;
     }
