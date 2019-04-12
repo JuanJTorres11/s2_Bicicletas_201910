@@ -37,7 +37,8 @@
 					"raw": "{ \n\t\"nombre\": \"Juan Torres R\",\n\t\n    \"login\":\"jj.torres\",\n\n    \"password\":\"abc123\",\n    \n    \"telefono\": 3214032973\n}"
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -82,7 +83,8 @@
 					"raw": "{\n\t\"numeroTarjeta\": 5401345858879821,\n\t\"codigoVerificacion\": 123,\n\t\"vencimiento\": \"06/20\",\n\t\"direccion\": \"direccion 1\",\n\t\"tipoTarjeta\": \"Credito\",\n\t\"tipoCredito\": \"MASTERCARD\"\n}"
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_b}}/mediosPago",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_b}}/mediosPago",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -130,7 +132,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_b}}/mediosPago/{{new_id_m}}",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_b}}/mediosPago/{{new_id_m}}",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -175,7 +178,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_b}}/mediosPago/{{new_id_m}}",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_b}}/mediosPago/{{new_id_m}}",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],

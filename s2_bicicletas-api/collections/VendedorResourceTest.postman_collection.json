@@ -38,7 +38,8 @@
 					"raw": "{ \n\t\"nombre\": \"Juan Torres R\",\n\t\n    \"login\":\"jj.torresr\",\n\n    \"password\":\"abc123\",\n    \n    \"telefono\": 3214032973\n}"
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -80,7 +81,8 @@
 					"raw": "{ \n    \"login\":\"jj.torresr\",\n\n    \"password\":\"abc123\"\n}"
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/auth",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/auth",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -128,7 +130,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -173,7 +176,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -218,7 +222,8 @@
 					"raw": "{ \n\t\"nombre\": \"Juan Torres R\",\n\t\n    \"login\":\"jj.torresr\",\n\n    \"password\":\"abc12\",\n    \n    \"telefono\": 3214032973\n}"
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -261,7 +266,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
