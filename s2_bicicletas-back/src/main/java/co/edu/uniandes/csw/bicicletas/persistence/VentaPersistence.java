@@ -112,4 +112,23 @@ public class VentaPersistence {
         }
         return ret;
     }
+
+    public VentaEntity findByVendedor(Long vendedorId, Long ventaId)
+    {
+        LOGGER.log(Level.INFO, "Consultando la venta con id = {0} del vendedor con id = " + vendedorId, ventaId);
+        TypedQuery<VentaEntity> q = em.createQuery("select p from VentaEntity m where (m.vendedor_id = :vendedorId) and (m.id = :ventaId)", VentaEntity.class);
+        q.setParameter("vendedorId", vendedorId);
+        q.setParameter("medioPagoId", ventaId);
+        List<VentaEntity> results = q.getResultList();
+        VentaEntity medio = null;
+        if (results == null)
+            medio = null;
+          else if (results.isEmpty())
+            medio = null;
+          else if (results.size() >= 1)
+            medio = results.get(0);
+        
+        LOGGER.log(Level.INFO, "Saliendo de consultar la venta con id = {0} del vendedor con id = " + vendedorId, ventaId);
+        return medio;
+    }
 }

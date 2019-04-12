@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "0386b620-e226-4a1b-af8c-110a7ad90b38",
+		"name": "Vendedor/Ventas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Post Vendedor-Ventas nuevo vendedor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_id_c\",data.id);\r",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;\r",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n\t\"nombre\": \"Juan Torres R\",\n\t\n    \"login\":\"jj.torresr1\",\n\n    \"password\":\"abc123\",\n    \n    \"telefono\": 3214032973\n}"
+				},
+				"url": {
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{ruta}}",
+						"vendedores"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Vendedor-Ventas nueva venta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
+						"exec": [
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_id_v\",data.id);\r",
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;\r",
+							"console.log(data.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"factura\": \"./factura.pdf\",\n\t\"precio\": 123000,\n\t\"aprobado\": false,\n\t\"fotos\": [\"./foto1\", \"./foto2\", \"./foto3\"]\n}"
+				},
+				"url": {
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/ventas",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{ruta}}",
+						"vendedores",
+						"{{new_id_c}}",
+						"ventas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Vendedor-Venta da una venta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
+						"exec": [
+							"var data= JSON.parse(responseBody);\r",
+							"tests[\"No genera error en el Get All \"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/mediosPago/{{new_id_v}}",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{ruta}}",
+						"vendedores",
+						"{{new_id_c}}",
+						"mediosPago",
+						"{{new_id_v}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Del Vendedor-Venta borra una venta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
+						"exec": [
+							"tests[\"No genera error\"] = responseCode.code === 200 || responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/mediosPago/{{new_id_v}}",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{ruta}}",
+						"vendedores",
+						"{{new_id_c}}",
+						"mediosPago",
+						"{{new_id_v}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

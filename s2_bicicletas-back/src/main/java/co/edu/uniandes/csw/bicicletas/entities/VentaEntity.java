@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -39,7 +40,7 @@ public class VentaEntity extends BaseEntity implements Serializable {
     private String[] fotos;
 
     @PodamExclude
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private VendedorEntity vendedor;
     
     /**
@@ -119,5 +120,4 @@ public class VentaEntity extends BaseEntity implements Serializable {
     public void setVendedor(VendedorEntity vendedor) {
         this.vendedor = vendedor;
     }
-
 }

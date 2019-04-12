@@ -23,8 +23,14 @@ import javax.inject.Inject;
 @Stateless
 public class OrdenLogic {
 
+    /**
+     * Logger que permite imprimir eventos
+     */
     private static final Logger LOGGER = Logger.getLogger(OrdenLogic.class.getName());
 
+    /**
+     * Persistencia de la orden
+     */
     @Inject
     private OrdenPersistence ordenPersistence;
 
@@ -73,6 +79,14 @@ public class OrdenLogic {
         return ordenEntity;
     }
     
+    /**
+     * Verifica las reglas de negocio de creación de una orden
+     * @param fecha Fecha de la orden
+     * @param cantidad Cantidad de bicicletas compradas en la orden
+     * @param costo Costo de la orden
+     * @throws BusinessLogicException Si hubo un error en las reglas de negocio
+     * @throws ParseException Si hubo un error en el formato de los parámetros
+     */
     private void verificarReglasNegocio(String fecha, Integer cantidad, Double costo) throws BusinessLogicException, ParseException{
         
         verificarFecha(fecha, "dd/MM/YYYY");

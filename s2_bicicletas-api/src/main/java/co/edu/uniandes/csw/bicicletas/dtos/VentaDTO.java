@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
-import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import java.io.Serializable;
 import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 
@@ -16,6 +15,11 @@ import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 public class VentaDTO implements Serializable {
 
     /**
+     * Atributo que representa el identificador de la venta.
+     */
+    private Long id;
+    
+    /**
      * Atributo que representa la factura.
      */
     private String factura;
@@ -23,12 +27,12 @@ public class VentaDTO implements Serializable {
     /**
      * Atributo que representa el precio.
      */
-    private double precio;
+    private Double precio;
 
     /**
      * Atributo que representa True si fue aprobado.False de lo contrario.
      */
-    private boolean aprobado;
+    private Boolean aprobado;
 
     /**
      * Atributo que representa un arreglo con las fotos de la bicicleta
@@ -40,11 +44,6 @@ public class VentaDTO implements Serializable {
      * Atributo que representa el id de una venta. 
      */
     private Long id;
-
-    /**
-     * Objeto bicicleta a vender.
-     */
-    private BicicletaDTO bicicletaDTO;
 
     /**
      * Metodo constructor de la clase VentaDTO.
@@ -60,12 +59,11 @@ public class VentaDTO implements Serializable {
      */
     public VentaDTO(VentaEntity venta) {
         if (venta != null) {
+            this.id = venta.getId();
             this.factura = venta.getFactura();
             this.precio = venta.getPrecio();
             this.aprobado = venta.getAprobado();
             this.fotos = venta.getFotos();
-            this.id = venta.getId();
-
         }
     }
 
@@ -76,12 +74,12 @@ public class VentaDTO implements Serializable {
      */
     public VentaEntity toEntity() {
         VentaEntity venta = new VentaEntity();
+        venta.setId(this.id);]
         venta.setPrecio(this.precio);
         venta.setFactura(this.factura);
         venta.setFotos(this.fotos);
         venta.setAprobado(this.aprobado);
         venta.setId(this.id);
-
         return venta;
     }
 
@@ -108,7 +106,7 @@ public class VentaDTO implements Serializable {
      *
      * @return the precio
      */
-    public double getPrecio() {
+    public Double getPrecio() {
         return precio;
     }
 
@@ -117,7 +115,7 @@ public class VentaDTO implements Serializable {
      *
      * @param precio the precio to set
      */
-    public void setPrecio(double precio) {
+    public void setPrecio(Double precio) {
         this.precio = precio;
     }
 
@@ -126,7 +124,7 @@ public class VentaDTO implements Serializable {
      *
      * @return the aprobado
      */
-    public boolean isAprobado() {
+    public Boolean isAprobado() {
         return aprobado;
     }
 
@@ -135,43 +133,12 @@ public class VentaDTO implements Serializable {
      *
      * @param aprobado the aprobado to set
      */
-    public void setAprobado(boolean aprobado) {
+    public void setAprobado(Boolean aprobado) {
         this.aprobado = aprobado;
     }
 
     /**
-     * Obtiene todas las fotos asociadas a la bicicleta.
-     *
-     * @return the fotos
-     */
-    public String[] getFotos() {
-        return fotos;
-    }
-
-    /**
-     * Cambia las fotos que recibe por las que pudiese tener.
-     *
-     * @param fotos the fotos to set
-     */
-    public void setFotos(String[] fotos) {
-        this.fotos = fotos;
-    }
-
-    /**
-     * @return the bicicletaDTO
-     */
-    public BicicletaDTO getBicicletaDTO() {
-        return bicicletaDTO;
-    }
-
-    /**
-     * @param bicicletaDTO the bicicletaDTO to set
-     */
-    public void setBicicletaDTO(BicicletaDTO bicicletaDTO) {
-        this.bicicletaDTO = bicicletaDTO;
-    }
-
-    /**
+     * Obtiene el ID asociado a la bicicleta
      * @return the id
      */
     public Long getId() {
@@ -183,5 +150,21 @@ public class VentaDTO implements Serializable {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * Obtiene todas las fotos asociadas a la bicicleta.
+     * @return the fotos
+     */
+    public String[] getFotos() {
+        return fotos;
+    }
+
+    /**
+     * Cambia las fotos que recibe por las que pudiese tener.
+     * @param fotos the fotos to set
+     */
+    public void setFotos(String[] fotos) {
+        this.fotos = fotos;
     }
 }

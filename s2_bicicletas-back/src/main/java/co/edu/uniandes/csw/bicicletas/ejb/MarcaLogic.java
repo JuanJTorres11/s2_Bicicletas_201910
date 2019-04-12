@@ -22,15 +22,21 @@ import javax.inject.Inject;
 @Stateless
 public class MarcaLogic {
 
+    /**
+     * Logger que permite imprimir eventos
+     */
     private static final Logger LOGGER = Logger.getLogger(MarcaLogic.class.getName());
 
+    /**
+     * Persistencia de la marca
+     */
     @Inject
     private MarcaPersistence marcaPersistence;
 
     /**
      * Crea una marca en la persistencia.
      *
-     * @param MarcaEntity La entidad que representa la marca a persistir.
+     * @param mar La entidad que representa la marca a persistir.
      * @return La marca de la marca luego de persistirla.
      * @throws BusinessLogicException Si ya existe una marca con ese nombre.
      */

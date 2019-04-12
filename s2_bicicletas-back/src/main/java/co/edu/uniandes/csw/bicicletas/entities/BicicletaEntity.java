@@ -21,6 +21,10 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class BicicletaEntity extends BaseEntity implements Serializable {
 
+     /**
+     * La calificacion promedio de la bicicleta
+     */
+    private Double calificacion;
     
     /**
      * La descripcion de la bicicleta
@@ -232,6 +236,20 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
      */
     public void setOrden(OrdenEntity orden) {
         this.orden = orden;
+    }
+
+    /**
+     * @return the calificacion
+     */
+    public Double getCalificacion() {
+        return calificacion;
+    }
+
+    /**
+     * @param calificacion the calificacion to set
+     */
+    public void setCalificacion(Double calificacion) {
+        this.calificacion = calificacion;
     }
 
    

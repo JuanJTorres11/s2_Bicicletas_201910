@@ -21,6 +21,11 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class ResenaEntity extends BaseEntity implements Serializable  {
     
     /**
+     * Login del usuario calificador
+     */
+    private String usuario;
+    
+    /**
      * El titulo de la reseña
      */
     private String titulo;
@@ -42,6 +47,7 @@ public class ResenaEntity extends BaseEntity implements Serializable  {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private BicicletaEntity bicicleta;
 
+    
     /**
      * Constructor vacio
      */
@@ -111,6 +117,20 @@ public class ResenaEntity extends BaseEntity implements Serializable  {
      */
     public void setBicicleta(BicicletaEntity bicicleta) {
         this.bicicleta = bicicleta;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public String getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
     
     
