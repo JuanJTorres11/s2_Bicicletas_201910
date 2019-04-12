@@ -153,7 +153,7 @@ public class CompradorLogicTest
          @Test
     public void findAllTest()
     {
-        List<CompradorEntity> list = logica.findAllCompradores();
+        List<CompradorEntity> list = logica.getCompradores();
 //        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
         Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
     }
@@ -179,7 +179,7 @@ public class CompradorLogicTest
     public void findByIdTest()
     {
         CompradorEntity userLocal = data.get(0);
-        CompradorEntity userBd = logica.findComprador(userLocal.getId());
+        CompradorEntity userBd = logica.getComprador(userLocal.getId());
         Assert.assertNotNull("Lo que retorna la bd no debería se null", userBd);
         Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
     }
@@ -191,7 +191,7 @@ public class CompradorLogicTest
     public void findByLoginTest()
     {
         CompradorEntity userLocal = data.get(0);
-        CompradorEntity userBd = logica.findLogin(userLocal.getLogin());
+        CompradorEntity userBd = logica.getByLogin(userLocal.getLogin());
         Assert.assertNotNull("Lo que retorna la bd no debería se null", userBd);
         Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
     }
