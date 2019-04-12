@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.bicicletas.ejb;
 
 import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
@@ -42,7 +37,7 @@ public class VendedorLogic
      */
     public VendedorEntity createVendedor(VendedorEntity user) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de creación de usuario ");
+        LOGGER.log(Level.INFO, "Inicia proceso de creación de usuario");
         if (user.getLogin() != null && !user.getLogin().equals(""))
         {
             if (pVendedor.findByLogin(user.getLogin()) != null)
@@ -87,16 +82,21 @@ public class VendedorLogic
      */
     public VendedorEntity findVendedor(Long id)
     {
-        LOGGER.log(Level.INFO, "Se buscará el vendedor con id {}", id);
+        LOGGER.log(Level.INFO, "Se buscará el vendedor con id: {0}", id);
         VendedorEntity buscado = pVendedor.find(id);
         if (buscado == null)
         {
-            LOGGER.log(Level.SEVERE, "No existe el vendedor con id {}", id);
+            LOGGER.log(Level.SEVERE, "No existe el vendedor con id: {0}", id);
         }
-        LOGGER.log(Level.INFO, "Se termina la busqueda del vendedor con id {}", id);
+        LOGGER.log(Level.INFO, "Se termina la busqueda del vendedor con id: {0}", id);
         return buscado;
     }
 
+    /**
+     * Encuentra un vendedor por su login
+     * @param login Login del vendedor
+     * @return Vendedor con login dado
+     */
     public VendedorEntity findByLogin(String login)
     {
         LOGGER.log(Level.INFO, "Se buscará el vendedor con login {0}", login);
@@ -110,7 +110,26 @@ public class VendedorLogic
     }
 
     /**
+     * Encuentra un vendedor por su login y contraseña
+     * @param login Login del vendedor
+     * @param contrasena Contraseña del vendedor
+     * @return Vendedor buscado (si existe)
+     */
+    public VendedorEntity authVendedor(String login, String contrasena)
+    {
+        LOGGER.log(Level.INFO, "Se buscará el vendedor con login {0}", login);
+        VendedorEntity buscado = pVendedor.authVendedor(login, contrasena);
+        if (buscado == null)
+        {
+            LOGGER.log(Level.SEVERE, "No existe el vendedor con login {0}", login);
+        }
+        LOGGER.log(Level.INFO, "Se termina la busqueda del vendedor con login {0}", login);
+        return buscado;
+    }
+
+    /**
      * Se retornan todos los vendedores.
+     * @return Lista con todos los vendedores.
      */
     public List<VendedorEntity> findAllVendedores()
     {
@@ -137,10 +156,7 @@ public class VendedorLogic
     public VendedorEntity updateVendedor(VendedorEntity nuevo) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia proceso de creación de usuario ");
-        if (nuevo.getLogin() != null && !nuevo.getLogin().equals(""))
-        {
-        }
-        else
+        if (nuevo.getLogin() == null || !nuevo.getLogin().equals(""))
         {
             throw new BusinessLogicException("El login no es valido");
         }
@@ -177,8 +193,8 @@ public class VendedorLogic
      */
     public void deleteVendedor(Long id)
     {
-        LOGGER.log(Level.INFO, "se borrará el Vendedor con id {}", id);
-        LOGGER.log(Level.INFO, "se borró al vendedor con id {}",id);
+        LOGGER.log(Level.INFO, "se borrará el Vendedor con id: {0}", id);
         pVendedor.delete(id);
+        LOGGER.log(Level.INFO, "se borró al vendedor con id: {0}",id);
     }
 }

@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores",
+			"name": "Post Vendedor nuevo Vendedor",
 			"event": [
 				{
 					"listen": "test",
@@ -35,10 +35,11 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \n\t\"nombre\": \"Juan Torres R\",\n\t\n    \"login\":\"jj.torres\",\n\n    \"password\":\"abc123\",\n    \n    \"telefono\": 3214032973\n}"
+					"raw": "{ \n\t\"nombre\": \"Juan Torres R\",\n\t\n    \"login\":\"jj.torresr\",\n\n    \"password\":\"abc123\",\n    \n    \"telefono\": 3214032973\n}"
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -52,7 +53,51 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores",
+			"name": "Post Vendedor autentica vendedor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
+						"exec": [
+							"tests[\"No genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \n    \"login\":\"jj.torresr\",\n\n    \"password\":\"abc123\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/auth",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"{{ruta}}",
+						"vendedores",
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Vendedores dar todos los vendedores",
 			"event": [
 				{
 					"listen": "test",
@@ -85,7 +130,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -99,15 +145,14 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores Copy",
+			"name": "Get Vendedores dar vendedor",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
 						"exec": [
-							"var data= JSON.parse(responseBody);\r",
-							"tests[\"No genera error en el Gell All\"] = responseCode.code === 200;"
+							"tests[\"No genera error en el Gell \"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
@@ -131,7 +176,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -146,7 +192,7 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+			"name": "Put Vendedores actualizar",
 			"event": [
 				{
 					"listen": "test",
@@ -176,7 +222,8 @@
 					"raw": "{ \n\t\"nombre\": \"Juan Torres R\",\n\t\n    \"login\":\"jj.torresr\",\n\n    \"password\":\"abc12\",\n    \n    \"telefono\": 3214032973\n}"
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -191,14 +238,14 @@
 			"response": []
 		},
 		{
-			"name": "{{ip}}:{{port}}/{{ruta}}/vendedores Copy Copy",
+			"name": "Del Vendedores borrar",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"id": "9d62a63f-a71e-4803-b068-3687e4c6f4eb",
 						"exec": [
-							"var data= JSON.parse(responseBody);"
+							"tests[\"No genera error\"] = responseCode.code === 200 || responseCode.code === 204;"
 						],
 						"type": "text/javascript"
 					}
@@ -219,7 +266,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_a}}",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],

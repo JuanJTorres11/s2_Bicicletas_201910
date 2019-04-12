@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.bicicletas.persistence;
 
 import co.edu.uniandes.csw.bicicletas.entities.CompradorEntity;
-import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -23,38 +22,76 @@ public class CompradorPersistence {
     @PersistenceContext(unitName = "bicicletasPU")
     protected EntityManager em;
 
-    public CompradorEntity create(CompradorEntity pP) {
-        em.persist(pP);
-        return pP;
+    /**
+     * Método para persisitir la entidad en la base de datos.
+     *
+     * @param pCompradorEntity objeto Comprador que se creará en la base de
+     * datos
+     * @return devuelve la entidad creada con un id dado por la base de datos.
+     */
+    public CompradorEntity create(CompradorEntity pCompradorEntity) {
+        em.persist(pCompradorEntity);
+        return pCompradorEntity;
     }
 
+    /**
+     * Busca si hay alguna comprador con el id que se envía de argumento
+     *
+     * @param compradorID: id correspondiente a la comprador buscada.
+     * @return un comprador.
+     */
     public CompradorEntity find(Long compradorID) {
         return em.find(CompradorEntity.class, compradorID);
     }
 
-    public void delete(long id) {
+    /**
+     *
+     * Borra una comprador de la base de datos recibiendo como argumento el id
+     * de la compador
+     *
+     * @param id: id correspondiente a la comprador a borrar.
+     */
+    public void delete(Long id) {
         CompradorEntity enti = em.find(CompradorEntity.class, id);
         em.remove(enti);
     }
 
+    /**
+     * Actualiza un comprador.
+     *
+     * @param pComprador: la comprador que viene con los nuevos cambios. Por
+     * ejemplo el nombre pudo cambiar. En ese caso, se haria uso del método
+     * update.
+     * @return una Comprador con los cambios aplicados.
+     */
     public CompradorEntity update(CompradorEntity pComprador) {
         return em.merge(pComprador);
     }
 
+    /**
+     * Devuelve todas las compradores de la base de datos.
+     *
+     * @return una lista con todas las compradores que encuentre en la base de
+     * datos, "select u from CompradorEntity u" es como un "select * from
+     * CompradorEntity;" - "SELECT * FROM table_name" en SQL.
+     */
     public List<CompradorEntity> findAll() {
-//       LOGGER.log(Level.INFO, "Consultando todos los vendedores");
-        // Se crea un query para buscar todas las editoriales en la base de datos.
         TypedQuery query = em.createQuery("select u from CompradorEntity u", CompradorEntity.class);
         return query.getResultList();
     }
 
-//    
+        /**
+     * Buscar una comprador
+     *
+     * Busca si hay algun comprador con un login específico
+     *
+     * @param login El ID del comprador con respecto al cual se busca
+     * @return El comprador encontrada o null. Nota: Si existe uno o mas.
+     * devuelve siempre la primera que encuentra
+     */
     public CompradorEntity findByLogin(String login) {
-        // Se crea un query para buscar editoriales con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
-        TypedQuery query = em.createQuery("Select e From CompradorEntity e where e.login = :loggin", CompradorEntity.class);
-        // Se remplaza el placeholder ":name" con el valor del argumento 
-        query = query.setParameter("loggin", login);
-        // Se invoca el query se obtiene la lista resultado
+        TypedQuery query = em.createQuery("Select e From CompradorEntity e where e.login = :login", CompradorEntity.class);
+        query = query.setParameter("login", login);
         List<CompradorEntity> logins = query.getResultList();
         CompradorEntity result;
 

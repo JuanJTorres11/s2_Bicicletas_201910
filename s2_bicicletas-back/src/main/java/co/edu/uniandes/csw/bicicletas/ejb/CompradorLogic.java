@@ -55,8 +55,6 @@ public class CompradorLogic {
 
         if (pComprador.getNombre().isEmpty()) {
             throw new BusinessLogicException("El nombre del comprador no puede estar vacío.");
-        } else if (cp.findByLogin(pComprador.getNombre()) != null) {
-            throw new BusinessLogicException("Ya existe un comprador con el nombre \"" + pComprador.getLogin() + "\"");
         }
 
         cp.create(pComprador);
@@ -65,10 +63,15 @@ public class CompradorLogic {
         return pComprador;
     }
 
+    /**
+     * Elimina una venta asignada por parametro.
+     *
+     * @param id de la venta a eliminar.
+     */
     public void deleteComprador(Long id) {
-        LOGGER.log(Level.INFO, "se borrará el Vendedor con id {}", id);
-        LOGGER.log(Level.INFO, "se borró al vendedor con id {}", id);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la comprador con id = {0}", id);
         cp.delete(id);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la editorial con id = {0}", id);
     }
 
     /**
@@ -76,14 +79,11 @@ public class CompradorLogic {
      *
      * @return una lista con todos los compradores.
      */
-    public List<CompradorEntity> findAllCompradores() {
-        LOGGER.log(Level.INFO, "se buscarán todos los Compradores");
+    public List<CompradorEntity> getCompradores() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las editoriales");
+        // Note que, por medio de la inyección de dependencias se llama al método "findAll()" que se encuentra en la persistencia.
         List<CompradorEntity> compradores = cp.findAll();
-        if (compradores == null || compradores.isEmpty())
-        {
-            LOGGER.log(Level.SEVERE, "No existen Compradores");
-        }
-        LOGGER.log(Level.INFO, "Se termina la busqueda de los Compradores");
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las editoriales");
         return compradores;
     }
 
@@ -93,10 +93,13 @@ public class CompradorLogic {
      * @param pLoggin el login del comprador a buscar.
      * @return el comprador con el login correspondiente.
      */
-    public CompradorEntity findLogin(String pLoggin) {
+    public CompradorEntity getByLogin(String pLoggin) {
         LOGGER.log(Level.INFO, "Inicia proceso de búsqueda de un comprador por Loggin.");
 
         CompradorEntity ret = cp.findByLogin(pLoggin);
+        if (ret == null) {
+            LOGGER.log(Level.SEVERE, "No existe el vendedor con login {0}", pLoggin);
+        }
 
         LOGGER.log(Level.INFO, "Termina proceso de búsqueda de un comprador por Loggin");
         return ret;
@@ -104,6 +107,7 @@ public class CompradorLogic {
 
     /**
      * Se actualiza un nuevo vendedor
+     *
      * @param pComprador usuario a actualizar en el sistema
      * @return el Comprador actualizado
      * @throws BusinessLogicException si se rompe alguna regla de negocio. <br>
@@ -114,8 +118,6 @@ public class CompradorLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar Comprador.");
         if (pComprador.getLogin().isEmpty()) {
             throw new BusinessLogicException("El login del comprador no puede estar vacío.");
-        } else if (cp.findByLogin(pComprador.getLogin()) != null) {
-            throw new BusinessLogicException("Ya existe un comprador con el nombre \"" + pComprador.getLogin() + "\"");
         }
 
         if (pComprador.getPassword().isEmpty()) {
@@ -124,8 +126,6 @@ public class CompradorLogic {
 
         if (pComprador.getNombre().isEmpty()) {
             throw new BusinessLogicException("El nombre del comprador no puede estar vacío.");
-        } else if (cp.findByLogin(pComprador.getNombre()) != null) {
-            throw new BusinessLogicException("Ya existe un comprador con el nombre \"" + pComprador.getLogin() + "\"");
         }
 
         CompradorEntity ret = cp.update(pComprador);
@@ -141,14 +141,15 @@ public class CompradorLogic {
      * @param id ID del comprador a buscar
      * @return comprador con id o null si no existe.
      */
-    public CompradorEntity findComprador(Long id) {
-        LOGGER.log(Level.INFO, "Se buscará el comprador con id {}", id);
-        CompradorEntity buscado = cp.find(id);
-        if (buscado == null) {
-            LOGGER.log(Level.SEVERE, "No existe el comprador con id {}", id);
+    public CompradorEntity getComprador(Long id) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el comprador con id = {0}", id);
+        // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.
+        CompradorEntity compradorEntity = cp.find(id);
+        if (compradorEntity == null) {
+            LOGGER.log(Level.SEVERE, "La comprador con el id = {0} no existe", id);
         }
-        LOGGER.log(Level.INFO, "Se termina la busqueda del comprador con id {}", id);
-        return buscado;
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el comprador con id = {0}", id);
+        return compradorEntity;
     }
 
 }

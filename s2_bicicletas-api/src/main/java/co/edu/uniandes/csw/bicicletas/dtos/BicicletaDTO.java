@@ -16,22 +16,53 @@ public class BicicletaDTO implements Serializable {
 
     private Long id;
 
+     /**
+     * La calificacion promedio de la bicicleta
+     */
+    private Double calificacion;
+    /**
+     * La descripcion de la bicicleta
+     */
     private String descripcion;
 
+    /**
+     * La referencia de la bicicleta
+     */
     private String referencia;
 
+    /**
+     * El precio de la bicicleta
+     */
     private Double precio;
 
+     /**
+     * Indica si la bicicleta es usada o no
+     */
     private Boolean usada;
 
+     /**
+     * Indica la cantidad de bicicletas disponibles en la tienda
+     */
     private Integer stock;
 
+    /**
+     * Las rutas de las imagenes de la bicicleta
+     */
     private String[] album;
 
+    /**
+     * La marca de la bicicleta
+     */
     private MarcaDTO marca;
 
+     /**
+     * LA categoria de la bicicleta
+     */
     private CategoriaDTO categoria;
-    
+     
+    /**
+     * La orden asociada a la bicicleta
+     */
     private OrdenDTO orden;
 
     /**
@@ -56,6 +87,8 @@ public class BicicletaDTO implements Serializable {
             this.usada = bikeEntity.getUsada();
             this.stock = bikeEntity.getStock();
             this.album = bikeEntity.getAlbum();
+            this.calificacion = bikeEntity.getCalificacion();
+            
 
             if (bikeEntity.getCategoria() != null) {
                 this.categoria = new CategoriaDTO(bikeEntity.getCategoria());
@@ -91,6 +124,7 @@ public class BicicletaDTO implements Serializable {
         bicicletaEntity.setReferencia(this.referencia);
         bicicletaEntity.setStock(this.stock);
         bicicletaEntity.setUsada(this.usada);
+        bicicletaEntity.setCalificacion(this.calificacion);
         if (this.marca != null) {
             bicicletaEntity.setMarca(this.marca.toEntity());
         }
@@ -243,6 +277,20 @@ public class BicicletaDTO implements Serializable {
      */
     public void setOrden(OrdenDTO orden) {
         this.orden = orden;
+    }
+
+    /**
+     * @return the calificacion
+     */
+    public Double getCalificacion() {
+        return calificacion;
+    }
+
+    /**
+     * @param calificacion the calificacion to set
+     */
+    public void setCalificacion(Double calificacion) {
+        this.calificacion = calificacion;
     }
 
 }

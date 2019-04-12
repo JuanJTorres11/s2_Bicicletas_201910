@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -25,7 +26,7 @@ public class MedioPagoEntity extends BaseEntity implements Serializable {
     private String tipoCredito;
     
     @PodamExclude
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private VendedorEntity vendedor;
     
     @PodamExclude
