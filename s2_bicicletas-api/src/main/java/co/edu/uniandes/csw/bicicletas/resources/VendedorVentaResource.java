@@ -92,7 +92,7 @@ public class VendedorVentaResource
         {
             vendedorId, ventaId
         });
-        if (logicaVenta.findVenta(ventaId) == null)
+        if (logicaVenta.getVenta(ventaId) == null)
         {
             throw new WebApplicationException("El recurso /vendedores/" + vendedorId + "/ventas/" + ventaId + " no existe.", 404);
         }

@@ -39,11 +39,6 @@ public class VentaDTO implements Serializable {
      * asociada.
      */
     private String[] fotos;
-    
-    /**
-     * Atributo que representa el id de una venta. 
-     */
-    private Long id;
 
     /**
      * Metodo constructor de la clase VentaDTO.
@@ -74,7 +69,6 @@ public class VentaDTO implements Serializable {
      */
     public VentaEntity toEntity() {
         VentaEntity venta = new VentaEntity();
-        venta.setId(this.id);]
         venta.setPrecio(this.precio);
         venta.setFactura(this.factura);
         venta.setFotos(this.fotos);
