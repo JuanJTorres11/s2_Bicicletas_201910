@@ -39,6 +39,7 @@ public class VendedorVentaResource
     /**
      * Guarda un medio de pago en el vendedor con el id dado.
      * @param vendedorId Id del vendedor.
+     * @param venta
      * @return JSON {@link VentaDTO} - Medio de pago guardado en el
      * vendedor.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
@@ -49,7 +50,7 @@ public class VendedorVentaResource
     {
         LOGGER.log(Level.INFO, "VendedorVentasResource addVenta: input: vendedorsID: {0}", vendedorId);
         VentaDTO ventaDTO = new VentaDTO(logica.addVenta(vendedorId, venta.toEntity()));
-        LOGGER.log(Level.INFO, "EditorialVentasResource addVenta: output: {0}", ventaDTO);
+        LOGGER.log(Level.INFO, "EditorialVentasResource addVenta: output: {0}", ventaDTO.getId());
         return ventaDTO;
     }
 
@@ -75,8 +76,7 @@ public class VendedorVentaResource
      *
      * @param vendedorId Identificador del vendedor que se esta buscando. Este
      * debe ser una cadena de dígitos.
-     * @param mediosPagoId Identificador del medio de pago que se esta buscando.
-     * Este debe ser una cadena de dígitos.
+     * @param ventaId
      * @return JSON {@link VentaDTO} - El medio de pago buscado
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la venta.
@@ -116,6 +116,7 @@ public class VendedorVentaResource
             throw new WebApplicationException("El recurso vendedor/" + vendedorId + "/ventas/ "  + ventaId + " no existe.", 404);
         logica.eliminarVenta(vendedorId, ventaId);
     }
+    
     /**
      * Convierte una lista de VentaEntity a una lista de VentaDTO.
      * @param entityList Lista de VentaEntity a convertir.

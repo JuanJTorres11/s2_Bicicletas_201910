@@ -26,7 +26,7 @@ public class VendedorEntity extends UsuarioEntity
     private Long telefono;
 
     @PodamExclude
-    @OneToMany(mappedBy = "vendedor")
+    @OneToMany(mappedBy = "vendedor", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<VentaEntity> ventas;
 
     @PodamExclude

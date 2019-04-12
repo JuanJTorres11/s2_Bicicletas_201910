@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -34,16 +35,12 @@ public class VentaEntity extends BaseEntity implements Serializable {
     private Boolean aprobado;
 
     /**
-     * Identificador de la venta.
-     */
-    private Long identificador;
-
-    /**
      * rutas con las imagenes de la bicicleta.
      */
     private String[] fotos;
 
-  
+    @PodamExclude
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private VendedorEntity vendedor;
 
     /**
@@ -96,20 +93,6 @@ public class VentaEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the identificador
-     */
-    public Long getIdentificador() {
-        return identificador;
-    }
-
-    /**
-     * @param identificador the identificador to set
-     */
-    public void setIdentificador(Long identificador) {
-        this.identificador = identificador;
-    }
-
-    /**
      *
      * @return the fotos
      */
@@ -124,34 +107,17 @@ public class VentaEntity extends BaseEntity implements Serializable {
         this.fotos = fotos;
     }
 
-//    /**
-//     * @return the vendedor
-//     */
-//    public VendedorEntity getVendedor() {
-//        return vendedor;
-//    }
-//
-//    /**
-//     * @param vendedor the vendedor to set
-//     */
-//    public void setVendedor(VendedorEntity vendedor) {
-//        this.vendedor = vendedor;
-//    }
-
     /**
      * @return the vendedor
      */
-    public VendedorEntity getVendedor()
-    {
+    public VendedorEntity getVendedor() {
         return vendedor;
     }
 
     /**
      * @param vendedor the vendedor to set
      */
-    public void setVendedor(VendedorEntity vendedor)
-    {
+    public void setVendedor(VendedorEntity vendedor) {
         this.vendedor = vendedor;
     }
-
 }

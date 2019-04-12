@@ -2,12 +2,16 @@ DELETE FROM BicicletaEntity;
 DELETE FROM CategoriaEntity;
 DELETE FROM MedioPagoEntity;
 DELETE from VentaEntity;
-delete from VendedorEntity;
-DELETE FROM CompradorEntity;
 DELETE FROM OrdenEntity;
 DELETE FROM MarcaEntity;
+delete from VendedorEntity;
+DELETE FROM CompradorEntity;
 
-
+SELECT * FROM VendedorEntity;
+SELECT * FROM MedioPagoEntity;
+SELECT * FROM VentaEntity;
+SELECT * FROM MarcaEntity;
+SELECT * FROM OrdenEntity;
 
 insert into OrdenEntity (fecha, cantidad, costoTotal) values ('07/11/2018', 2, 104.04);
 insert into OrdenEntity (fecha, cantidad, costoTotal) values ('21/06/2018', 5, 126.01);
@@ -30,6 +34,3 @@ insert into MarcaEntity (nombre) values ('BMX');
 insert into MarcaEntity (nombre) values ('Rover');
 insert into MarcaEntity (nombre) values ('XTreme');
 insert into MarcaEntity (nombre) values ('Chrysler');
-
-SELECT * FROM MarcaEntity;
-SELECT * FROM OrdenEntity;

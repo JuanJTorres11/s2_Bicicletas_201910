@@ -40,6 +40,7 @@ public class VendedorMedioPagoResource
     /**
      * Guarda un medio de pago en el vendedor con el id dado.
      * @param vendedorId Id del vendedor.
+     * @param medio
      * @return JSON {@link MedioPagoDTO} - Medio de pago guardado en el
      * vendedor.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
