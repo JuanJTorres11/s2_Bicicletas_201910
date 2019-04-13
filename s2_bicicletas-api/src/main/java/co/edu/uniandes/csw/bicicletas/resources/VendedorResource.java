@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.bicicletas.resources;
 
+import co.edu.uniandes.csw.bicicletas.dtos.InicioSesionDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.VendedorDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.VendedorDetailDTO;
 import co.edu.uniandes.csw.bicicletas.ejb.VendedorLogic;
@@ -46,7 +42,7 @@ public class VendedorResource
     /**
      * Conexión con el front para crear un nuevo vendedor
      * @param vendedor a crear
-     * @return El vendedor creado en base de datos
+     * @return JSON {@link VendedorDTO} El vendedor creado en base de datos
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper}
      */
     @POST
@@ -58,14 +54,15 @@ public class VendedorResource
         return nuevo;
     }
 
-    /**
-     * Retorna una lista con todos los vendedores registrados
-     */
+   /**
+    * Retorna la lista de todos los vendedores
+    * @return JSONArray {@link VendedorDetailDTO} 
+    */
     @GET
     public List<VendedorDetailDTO> darVendedores()
     {
         LOGGER.log(Level.INFO, "Se dará la lista con todos los vendedores");
-        ArrayList<VendedorDetailDTO> vendedores = new ArrayList<>();
+        List<VendedorDetailDTO> vendedores = new ArrayList<>();
         List<VendedorEntity> vEntity = logica.findAllVendedores();
         for (VendedorEntity v : vEntity)
         {
@@ -78,24 +75,42 @@ public class VendedorResource
      * Retorna el vendedor por id
      *
      * @param id id del vendeodr a buscar
-     * @return el vendedor con el id si existe
+     * @return JSON {@link VendedorDetailDTO} el vendedor con el id si existe
      */
     @GET
     @Path("{id: \\d+}")
-    public VendedorDetailDTO darVendedorId(@PathParam("id") long id)
+    public VendedorDetailDTO darVendedorId(@PathParam("id") long id) throws WebApplicationException
     {
          LOGGER.log(Level.INFO, "Se buscará al vendedor con id: {0}", id);
         VendedorEntity vE = logica.findVendedor(id);
+        if (vE == null)
+        {
+           noExisteException(id);
+        }
+         return new VendedorDetailDTO(vE);
+    }
+
+    /**
+     * Retorna un vendedor por su login y contraseña
+     * @param credenciales login y password del vendeodr a buscar
+     * @return JSON {@link VendedorDetailDTO} el vendedor si existe
+     */
+    @POST
+    @Path("/auth")
+    public VendedorDetailDTO autenticarVendedor(InicioSesionDTO credenciales) throws WebApplicationException
+    {
+        LOGGER.log(Level.INFO, "Se buscará al vendedor por sus credenciales");
+        VendedorEntity vE = logica.authVendedor(credenciales.getLogin(), credenciales.getPassword());
         if (vE != null)
         {
             return new VendedorDetailDTO(vE);
         }
         else
         {
-            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+            throw new WebApplicationException("El vendedor con no existe", 404);
         }
     }
-
+    
     /**
      * ACtualiza la información de un Vendedor ya registrado
      *
@@ -108,18 +123,15 @@ public class VendedorResource
      */
     @PUT
     @Path("{id: \\d+}")
-    public VendedorDetailDTO actualizarVendedor(@PathParam("id") long id, VendedorDetailDTO vendedor) throws BusinessLogicException
+    public VendedorDetailDTO actualizarVendedor(@PathParam("id") long id, VendedorDetailDTO vendedor) throws BusinessLogicException, WebApplicationException
     {
         LOGGER.log(Level.INFO, "Se actualizará al vendedor con id: {0}", id);
         VendedorEntity vE = logica.findVendedor(id);
-        if (vE != null)
+        if (vE == null) 
         {
-            return new VendedorDetailDTO(logica.updateVendedor(vE));
+            noExisteException(id);
         }
-        else
-        {
-            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
-        }
+        return new VendedorDetailDTO(logica.updateVendedor(vE));
     }
 
     /**
@@ -129,7 +141,7 @@ public class VendedorResource
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void eliminarVendedor(@PathParam("id") long id)
+    public void eliminarVendedor(@PathParam("id") long id) throws WebApplicationException
     {
         LOGGER.log(Level.INFO, "Se eliminará al vendedor con id: {0}", id);
         if (logica.findVendedor(id) != null)
@@ -138,7 +150,42 @@ public class VendedorResource
         }
         else
         {
-            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+             noExisteException(id);
         }
+    }
+
+    /**
+     * Redirecciona a la clase de asociación entre Vendedor y Medios de Pago
+     * @param id Identificador del vendedor
+     * @return Clase que maneja los métodos CRUD de la relación Vendedor/MediosPago
+     */
+     @Path("{vendedorId: \\d+}/mediosPago")
+    public Class<VendedorMedioPagoResource> getMediosPagoResource(@PathParam("vendedorId") Long id) throws WebApplicationException
+    {
+        if (logica.findVendedor(id) == null)
+        {
+            noExisteException(id);
+        }
+        return VendedorMedioPagoResource.class;
+    }
+    
+     /**
+     * Redirecciona a la clase de asociación entre Vendedor y Venta
+     * @param id Identificador del vendedor
+     * @return Clase que maneja los métodos CRUD de la relación Vendedor/MediosPago
+     */
+     @Path("{vendedorId: \\d+}/ventas")
+    public Class<VendedorVentaResource> getVentasResource(@PathParam("vendedorId") Long id) throws WebApplicationException
+    {
+        if (logica.findVendedor(id) == null)
+        {
+            noExisteException(id);
+        }
+        return VendedorVentaResource.class;
+    }
+    
+    private void noExisteException (Long id) throws WebApplicationException
+    {
+        throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
     }
 }
