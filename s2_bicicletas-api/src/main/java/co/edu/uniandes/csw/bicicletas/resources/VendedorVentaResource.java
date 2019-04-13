@@ -30,9 +30,15 @@ public class VendedorVentaResource
 {
      private static final Logger LOGGER = Logger.getLogger(VendedorVentaResource.class.getName());
 
+     /**
+      * Lógica de la asociación
+      */
     @Inject
     private VendedorVentaLogic logica;
 
+    /**
+     * Lógica especifica de la venta.
+     */
     @Inject
     private VentaLogic logicaVenta;
 

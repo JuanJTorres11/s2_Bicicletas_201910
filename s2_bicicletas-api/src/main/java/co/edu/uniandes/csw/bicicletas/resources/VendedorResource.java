@@ -184,6 +184,11 @@ public class VendedorResource
         return VendedorVentaResource.class;
     }
     
+    /**
+     * Lanza una excepción cuando un vendedor no existe, para evitar un code smell ya que se repite varias veces.
+     * @param id Identificador del vendedor
+     * @throws WebApplicationException Excepción cuando el vendedor no existe.
+     */
     private void noExisteException (Long id) throws WebApplicationException
     {
         throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);

@@ -19,10 +19,10 @@ public class VendedorLogic
 
     private static final Logger LOGGER = Logger.getLogger(VendedorLogic.class.getName());
 
-    @Inject
     /**
      * Persistencia de vendedor para probar sus métodos.
      */
+    @Inject
     private VendedorPersistence pVendedor;
 
     /**
@@ -188,7 +188,6 @@ public class VendedorLogic
 
     /**
      * Se elimina al vendedor con id dado
-     *
      * @param id ID del vendedor a eliminar.
      */
     public void deleteVendedor(Long id)
