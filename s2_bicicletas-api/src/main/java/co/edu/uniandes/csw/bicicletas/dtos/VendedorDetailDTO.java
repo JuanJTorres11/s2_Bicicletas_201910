@@ -18,8 +18,14 @@ import java.util.List;
 public class VendedorDetailDTO extends VendedorDTO implements Serializable
 {
 
+    /**
+     * Lista de ventas del vendedor.
+     */
     private List<VentaDTO> ventas;
 
+    /**
+     * Lista de medios ed pago del vendedor.
+     */
     private List<MedioPagoDTO> mediosPago;
 
     public VendedorDetailDTO()
@@ -34,13 +40,19 @@ public class VendedorDetailDTO extends VendedorDTO implements Serializable
         mediosPago = new ArrayList<>();
         List<VentaEntity> listaVentas = vendedor.getVentas();
         List<MedioPagoEntity> listaPagos = vendedor.getMediosPago();
-        //if (listaVentas != null)
-        //  for (VentaEntity vE : listaVentas)
-        //    ventas.add(new VentaDTO(vE));
+        if (listaVentas != null)
+        {
+            for (VentaEntity vE : listaVentas)
+            {
+                ventas.add(new VentaDTO(vE));
+            }
+        }
         if (listaPagos != null)
         {
             for (MedioPagoEntity mpE : listaPagos)
+            {
                 mediosPago.add(new MedioPagoDTO(mpE));
+            }
 
         }
     }

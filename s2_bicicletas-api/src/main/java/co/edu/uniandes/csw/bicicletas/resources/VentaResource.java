@@ -11,6 +11,7 @@ import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import javax.ws.rs.*;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
@@ -24,7 +25,7 @@ import javax.ws.rs.Produces;
  *
  * @author Juan Lozano
  */
-@Path("ventas")
+@Path("venta")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
@@ -47,9 +48,12 @@ public class VentaResource {
      */
     @POST
     public VentaDTO crearVenta(VentaDTO pVenta) throws BusinessLogicException {
-        VentaDTO nuevo = null;
-        nuevo = new VentaDTO(logica.createVenta(pVenta.toEntity()));
-        return nuevo;
+        LOGGER.log(Level.INFO, "VentaResource Venta: input: {0}", pVenta);
+        VentaEntity VentaEntity = pVenta.toEntity();
+        VentaEntity nuevoVentaEntity = logica.createVenta(VentaEntity);
+        VentaDTO VentaDTO = new VentaDTO(nuevoVentaEntity);
+        LOGGER.log(Level.INFO, "VentaResource Venta: output: {0}", VentaDTO);
+        return VentaDTO;
     }
 
     /**
@@ -59,14 +63,16 @@ public class VentaResource {
      * @return retorna la venta respectivo al id.
      */
     @GET
-    @Path("{id: \\d+}")
-    public VentaDTO obtenerVenta(@PathParam("id") long id) {
-        VentaEntity cE = logica.findVenta(id);
-        if (cE != null) {
-            return new VentaDTO(cE);
-        } else {
-            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+    @Path("{pVentaId: \\d+}")
+    public VentaDTO getVenta(@PathParam("pVentaId") long pVentaId) {
+        LOGGER.log(Level.INFO, "ventaResource getVenta: input: {0}", pVentaId);
+        VentaEntity VentaEntity = logica.getVenta(pVentaId);
+        if (VentaEntity == null) {
+            throw new WebApplicationException("El recurso /ventas/" + pVentaId + " no existe.", 404);
         }
+        VentaDTO ventaDTO = new VentaDTO(VentaEntity);
+        LOGGER.log(Level.INFO, "VentaResource Venta: output: {0}", ventaDTO);
+        return ventaDTO;
     }
 
     /**
@@ -77,13 +83,15 @@ public class VentaResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public VentaDTO actualizaVenta(@PathParam("id") long id) throws BusinessLogicException {
-        VentaEntity vE = logica.findVenta(id);
-        if (vE != null) {
-            return new VentaDTO(logica.updateVenta(vE));
-        } else {
-            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+    public VentaDTO actualizaVenta(@PathParam("id") Long id, VentaDTO pVenta) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "VentaResource updateVenta: input: id:{0} , Venta: {1}", new Object[]{id, pVenta});
+        pVenta.setId(id);
+        if (logica.getVenta(id) == null) {
+            throw new WebApplicationException("El recurso /venta/" + id + " no existe.", 404);
         }
+        VentaDTO detailDTO = new VentaDTO(logica.updateVenta(pVenta.toEntity()));
+        LOGGER.log(Level.INFO, "ventaResource updateVenta: output: {0}", detailDTO);
+        return detailDTO;
     }
 
     /**
@@ -95,11 +103,12 @@ public class VentaResource {
     @DELETE
     @Path("{id: \\d+}")
     public void eliminarVenta(@PathParam("id") long id) {
-        if (logica.findVenta(id) != null) {
-            logica.deleteVenta(id);
-        } else {
-            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+        LOGGER.log(Level.INFO, "VentaResource deleteVenta: input: {0}", id);
+        if (logica.getVenta(id) == null) {
+            throw new WebApplicationException("El recurso /venta/" + id + " no existe.", 404);
         }
+        logica.deleteVenta(id);
+        LOGGER.info("VentaResource deleteVenta: output: void");
     }
 
     /**
@@ -109,12 +118,22 @@ public class VentaResource {
      */
     @GET
     public List<VentaDTO> darVendedores() {
-        ArrayList<VentaDTO> ventas = new ArrayList<VentaDTO>();
-        List<VentaEntity> vEntity = logica.findAllVentas();
-        for (VentaEntity v : vEntity) {
-            ventas.add(new VentaDTO(v));
+        List<VentaDTO> listaVentas = listEntity2DetailDTO(logica.getVentas());
+        return listaVentas;
+    }
+
+    /**
+     * Convierte una lista de entity en una lista de Dto
+     *
+     * @param entityList
+     * @return
+     */
+    private List<VentaDTO> listEntity2DetailDTO(List<VentaEntity> entityList) {
+        List<VentaDTO> list = new ArrayList<>();
+        for (VentaEntity entity : entityList) {
+            list.add(new VentaDTO(entity));
         }
-        return ventas;
+        return list;
     }
 
 }

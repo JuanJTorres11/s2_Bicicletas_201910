@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.bicicletas.ejb;
 
 import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
@@ -67,9 +62,9 @@ public class VendedorVentaLogic
      */
     public VentaEntity getVenta(Long vendedorId, Long ventaId) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el venta con id = {0} del vendedor con id = " + vendedorId, ventaId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el venta con id = {0} del vendedor con id: {1}", new Object[] {vendedorId, ventaId});
         VentaEntity venta = ventaPersistence.findByVendedor(vendedorId, ventaId);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar el venta con id = {0} del vendedor con id = " + vendedorId, ventaId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el venta con id = {0} del vendedor con id: {1}", new Object[] {vendedorId, ventaId});
         if (venta == null)
         {
             throw new BusinessLogicException("El venta no está asociado al vendedor");
@@ -85,13 +80,13 @@ public class VendedorVentaLogic
      */
     public void eliminarVenta (Long vendedorId, Long ventaId) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar el venta con id = {0} del vendedor con id = " + vendedorId, ventaId);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el venta con id = {0} del vendedor con id: {1}", new Object[] {vendedorId, ventaId});
         VentaEntity borrar = getVenta(vendedorId, ventaId);
         
         if (borrar == null)
             throw new BusinessLogicException("El venta con id = " + ventaId + " no esta asociado a el vendedor con id = " + vendedorId);
         
         ventaPersistence.delete(borrar.getId());
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el venta con id = {0} del vendedor con id = " + vendedorId, ventaId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el venta con id = {0} del vendedor con id: {1}", new Object[] {vendedorId, ventaId});
     }   
 }
