@@ -13,16 +13,20 @@ import java.io.File;
 import java.io.IOException;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
+import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  *
  * @author Juan José Torres <jj.torresr@uniandes.edu.co>
  */
+
+@RunWith(Arquillian.class)
 public class VendedorIT
 {
 
