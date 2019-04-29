@@ -59,7 +59,11 @@ public class ResenaLogic {
         resenaEntity.setBicicleta(bike);
         // Invoca la persistencia para crear la resena
         LOGGER.log(Level.INFO, "Termina proceso de creación de la resena");
-        return persistence.create(resenaEntity);
+        
+        ResenaEntity retornar = persistence.create(resenaEntity);
+         this.actualizarCalificacionPromedioBicicleta(bike);
+        
+        return retornar;
     }
 
    
@@ -144,5 +148,21 @@ public class ResenaLogic {
         persistence.update(resenaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar una resena con id", resenaEntity.getId());
         return resenaEntity;
+    }
+    
+    private void actualizarCalificacionPromedioBicicleta(BicicletaEntity bike) throws BusinessLogicException {
+          Double promedio = 0.0;
+          Double suma = 0.0;
+          List<ResenaEntity> resenas  = this.getResenas(bike.getId());
+          
+          for(ResenaEntity r : resenas){
+              suma += (double)r.getCalificacion();
+          }
+          
+          promedio = resenas.size() == 0.0 ? 0 : (suma / resenas.size());
+          
+          bike.setCalificacion(promedio);
+          
+          this.persistenceBike.update(bike);
     }
 }
