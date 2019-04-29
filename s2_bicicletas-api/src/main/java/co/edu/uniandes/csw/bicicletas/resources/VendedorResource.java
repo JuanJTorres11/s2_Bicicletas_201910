@@ -131,6 +131,10 @@ public class VendedorResource
         {
             noExisteException(id);
         }
+        LOGGER.log(Level.INFO, "El id del vendedor retornado es {0}", vE.getId());
+        LOGGER.log(Level.INFO, "El nombre del vendedor retornado es {0}", vE.getNombre());
+        LOGGER.log(Level.INFO, "El login del vendedor retornado es {0}", vE.getLogin());
+        LOGGER.log(Level.INFO, "El telefono del vendedor retornado es {0}", vE.getTelefono());
         return new VendedorDetailDTO(logica.updateVendedor(vE));
     }
 
