@@ -81,7 +81,7 @@ public class MedioPagoDTO implements Serializable
     /**
      * @return the codigoVerificacion
      */
-    public int getCodigoVerificacion()
+    public Integer getCodigoVerificacion()
     {
         return codigoVerificacion;
     }
@@ -89,7 +89,7 @@ public class MedioPagoDTO implements Serializable
     /**
      * @param codigoVerificacion the codigoVerificacion to set
      */
-    public void setCodigoVerificacion(int codigoVerificacion)
+    public void setCodigoVerificacion(Integer codigoVerificacion)
     {
         this.codigoVerificacion = codigoVerificacion;
     }

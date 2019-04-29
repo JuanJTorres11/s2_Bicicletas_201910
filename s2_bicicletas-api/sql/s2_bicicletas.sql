@@ -10,8 +10,7 @@ DELETE FROM CompradorEntity;
 INSERT INTO CategoriaEntity VALUES(1, 'Urbana');
 INSERT INTO CategoriaEntity VALUES(2, 'Estatica');
 INSERT INTO CategoriaEntity VALUES(3, 'BMX');
-INSERT INTO CategoriaEntity VALUES(4, 'Montaña');
-INSERT INTO CategoriaEntity VALUES(5, 'Deportiva');
+INSERT INTO CategoriaEntity VALUES(4, 'Deportiva');
 
 insert into OrdenEntity (fecha, cantidad, costoTotal) values ('07/11/2018', 2, 104.04);
 insert into OrdenEntity (fecha, cantidad, costoTotal) values ('21/06/2018', 5, 126.01);
