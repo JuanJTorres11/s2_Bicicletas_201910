@@ -47,7 +47,7 @@ public class VendedorMedioPagoResource
      * Error de lógica que se genera cuando no se encuentra el medio de pago.
      */
     @POST
-    public MedioPagoDTO addMedioPago(@PathParam("vendedorId") Long vendedorId, MedioPagoDTO medio)
+    public MedioPagoDTO addMedioPago(@PathParam("vendedorId") Long vendedorId, MedioPagoDTO medio) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "VendedorMedioPagosResource addMedioPago: input: vendedorsID: {0} , medioPagosId: {1}", new Object[]
         {

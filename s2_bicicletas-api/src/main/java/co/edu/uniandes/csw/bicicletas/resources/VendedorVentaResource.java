@@ -54,7 +54,7 @@ public class VendedorVentaResource
     @POST
     public VentaDTO addVenta(@PathParam("vendedorId") Long vendedorId, VentaDTO venta)
     {
-        LOGGER.log(Level.INFO, "VendedorVentasResource addVenta: input: vendedorsID: {0}", vendedorId);
+        LOGGER.log(Level.INFO, "VendedorVentasResource addVenta: input: vendedorID: {0}", vendedorId);
         VentaDTO ventaDTO = new VentaDTO(logica.addVenta(vendedorId, venta.toEntity()));
         LOGGER.log(Level.INFO, "EditorialVentasResource addVenta: output: {0}", ventaDTO.getId());
         return ventaDTO;

@@ -8,12 +8,14 @@ import co.edu.uniandes.csw.bicicletas.persistence.VendedorPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
  *
  * @author Juan José Torres <jj.torresr@uniandes.edu.co>
  */
+@Stateless
 public class VendedorVentaLogic
 {
  private static final Logger LOGGER = Logger.getLogger(VendedorVentaLogic.class.getName());
