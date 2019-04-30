@@ -59,12 +59,6 @@ public class BicicletaLogic {
         //Verifica las reglas de negocio
         verificarReglasNegocioBicicleta(bicicletaEntity);
         
-        CategoriaEntity catEntity = persistenceCat.findByName(bicicletaEntity.getCategoria().getNombre());
-         bicicletaEntity.setCategoria(catEntity);
-         
-         MarcaEntity maEntity = persistenceMarca.find(bicicletaEntity.getMarca().getId());
-         bicicletaEntity.setMarca(maEntity);
-
         // Invoca la persistencia para crear la bicileta
         persistence.create(bicicletaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación de la bicicleta");
