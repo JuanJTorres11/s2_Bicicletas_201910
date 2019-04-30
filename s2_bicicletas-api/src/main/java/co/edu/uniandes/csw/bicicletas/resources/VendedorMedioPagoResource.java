@@ -141,6 +141,12 @@ public class VendedorMedioPagoResource
         return listaDetailDTOs;
     }
 
+    /**
+     * Elimina un métood de pago asociado a un vendedor.
+     * @param vendedorId Identificar del vendedor.
+     * @param mediosPagoId Identificador del medio de pago.
+     * @throws BusinessLogicException Si el vendedor no existe.
+     */
     @DELETE
     @Path("{mediosPagoId: \\d+}")
     public void borrarMedioPago (@PathParam("vendedorId") Long vendedorId, @PathParam("mediosPagoId") Long mediosPagoId) throws BusinessLogicException

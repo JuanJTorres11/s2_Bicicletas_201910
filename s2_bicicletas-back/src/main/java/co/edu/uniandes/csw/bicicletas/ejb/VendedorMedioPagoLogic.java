@@ -12,7 +12,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
- *
  * Juan José Torres-Andres Donoso
  */
 @Stateless
@@ -21,9 +20,15 @@ public class VendedorMedioPagoLogic
 
     private static final Logger LOGGER = Logger.getLogger(VendedorMedioPagoLogic.class.getName());
 
+    /**
+     * Conexión a la persistencia del vendedor.
+     */
     @Inject
     private VendedorPersistence vendedorPersistence;
 
+    /**
+     * Conexión a la persistencia del medio de pago.
+     */
     @Inject
     private MedioPagoPersistence medioPagoPersistence;
 
@@ -47,7 +52,6 @@ public class VendedorMedioPagoLogic
 
     /**
      * Retorna una lista con los medios de pago del vendedor.
-     *
      * @param vendedorId Id del vendedor.
      * @return lista con los medios de pago.
      */
@@ -59,7 +63,6 @@ public class VendedorMedioPagoLogic
 
     /**
      * Retorna el medio de pago asociado al vendedor.
-     *
      * @param vendedorId Id del vendedor.
      * @param medioPagoId Id del medio de pago.
      * @return medio de pago asociado al vendedor.
@@ -79,7 +82,6 @@ public class VendedorMedioPagoLogic
 
     /**
      * Reemplaza los medios de pago de un vendedor.
-     *
      * @param vendedorId Id del vendedor.
      * @param mediosPago Medios de pago que se agregarán.
      * @return lista de medios de pago actualizada.

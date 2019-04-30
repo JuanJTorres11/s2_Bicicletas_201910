@@ -18,15 +18,20 @@ public class VendedorVentaLogic
 {
  private static final Logger LOGGER = Logger.getLogger(VendedorVentaLogic.class.getName());
 
+    /**
+    *Conexíón con la persistencia del vendedor. 
+    */
     @Inject
     private VendedorPersistence vendedorPersistence;
 
+    /**
+    *Conexíón con la persistencia de la venta. 
+    */
     @Inject
     private VentaPersistence ventaPersistence;
 
     /**
      * Agrega una nueva venta al vendedor.
-     *
      * @param venta Venta que se desea agregar.
      * @param vendedorId Id del vendedor al que se la va a agregar el medio de
      * pago.
