@@ -61,7 +61,7 @@ public class ResenaLogic {
         LOGGER.log(Level.INFO, "Termina proceso de creación de la resena");
         
         ResenaEntity retornar = persistence.create(resenaEntity);
-         this.actualizarCalificacionPromedioBicicleta(bike);
+         this.actualizarCalificacionPromedioBicicleta(bike, resenaEntity);
         
         return retornar;
     }
@@ -150,16 +150,25 @@ public class ResenaLogic {
         return resenaEntity;
     }
     
-    private void actualizarCalificacionPromedioBicicleta(BicicletaEntity bike) throws BusinessLogicException {
+    private void actualizarCalificacionPromedioBicicleta(BicicletaEntity bike, ResenaEntity rActual) throws BusinessLogicException {
           Double promedio = 0.0;
           Double suma = 0.0;
           List<ResenaEntity> resenas  = this.getResenas(bike.getId());
           
           for(ResenaEntity r : resenas){
-              suma += (double)r.getCalificacion();
+              suma += r.getCalificacion();
           }
           
-          promedio = resenas.size() == 0.0 ? 0 : (suma / resenas.size());
+          System.out.println("********************************************************");
+          System.out.println("suma 1: " + suma);
+          System.out.println("size : " + resenas.size());
+          
+         
+          suma += (double)rActual.getCalificacion(); //la reseña aun no se ha añadido a la DB
+          System.out.println("suma 2: " + suma);
+          
+          promedio = Math.floor(suma / (resenas.size()+1)); //se suma la reseña que se está añadiendo
+          System.out.println("promedio: " + promedio);
           
           bike.setCalificacion(promedio);
           
