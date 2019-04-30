@@ -39,10 +39,14 @@ public class VendedorMedioPagoLogic
      * @param vendedorId Id del vendedor al que se la va a agregar el medio de
      * pago.
      * @return medio de pago agregado.
+     * @throws co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException
      */
-    public MedioPagoEntity addMedioPago(Long vendedorId, MedioPagoEntity medio)
+    public MedioPagoEntity addMedioPago(Long vendedorId, MedioPagoEntity medio) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia proceso de agregarle un medio de pago a un vendedor con id = {0}", vendedorId);
+        if(medioPagoPersistence.findByNumberAndVendedor(vendedorId, medio.getNumeroTarjeta()) != null) {
+            throw new BusinessLogicException("Ya existe un medio de pago con este número.");
+        }
         VendedorEntity vendedorEntity = vendedorPersistence.find(vendedorId);
         vendedorEntity.getMediosPago().add(medio);
         medio.setVendedor(vendedorEntity);
