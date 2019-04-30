@@ -56,9 +56,14 @@ public class BicicletaLogic {
             throw new BusinessLogicException("Ya existe una Bicicletaa con la referencia \"" + bicicletaEntity.getReferencia() + "\"");
         }
 
-
         //Verifica las reglas de negocio
         verificarReglasNegocioBicicleta(bicicletaEntity);
+        
+        CategoriaEntity catEntity = persistenceCat.findByName(bicicletaEntity.getCategoria().getNombre());
+         bicicletaEntity.setCategoria(catEntity);
+         
+         MarcaEntity maEntity = persistenceMarca.find(bicicletaEntity.getMarca().getId());
+         bicicletaEntity.setMarca(maEntity);
 
         // Invoca la persistencia para crear la bicileta
         persistence.create(bicicletaEntity);
