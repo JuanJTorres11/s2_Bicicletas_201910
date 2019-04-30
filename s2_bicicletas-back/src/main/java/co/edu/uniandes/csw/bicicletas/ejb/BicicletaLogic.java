@@ -59,6 +59,13 @@ public class BicicletaLogic {
         //Verifica las reglas de negocio
         verificarReglasNegocioBicicleta(bicicletaEntity);
         
+        if(persistenceCat.findByName(bicicletaEntity.getCategoria().getNombre()) == null){
+            throw new BusinessLogicException("No exite la categoria con nombre: \"" + bicicletaEntity.getCategoria().getNombre() + "\"");
+        }
+        if(persistenceMarca.find(bicicletaEntity.getMarca().getId()) == null){
+            throw new BusinessLogicException("No exite la marca con id\"" + bicicletaEntity.getMarca().getId() + "\"");
+        }
+        
         // Invoca la persistencia para crear la bicileta
         persistence.create(bicicletaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación de la bicicleta");
