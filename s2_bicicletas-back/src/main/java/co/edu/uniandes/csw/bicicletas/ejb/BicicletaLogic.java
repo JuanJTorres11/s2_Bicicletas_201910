@@ -171,9 +171,9 @@ public class BicicletaLogic {
         }
 
         //Verifica la regla de negocio: la categoria no puede ser null
-        //if (bicicletaEntity.getCategoria() == null) {
-        //throw new BusinessLogicException("La bicicleta tiene que tener una categoria");
-        //}
+        if (bicicletaEntity.getCategoria() == null) {
+        throw new BusinessLogicException("La bicicleta tiene que tener una categoria");
+        }
         //Verifica la regla de negocio: el stock no puede ser menor a 0
         if (bicicletaEntity.getStock() < 0) {
             throw new BusinessLogicException("El stock no puede ser negativo \"" + bicicletaEntity.getStock() + "\"");
