@@ -20,6 +20,12 @@ public class CategoriaDTO implements Serializable {
     private String nombre;
     
     /**
+     * Id de la categoria
+     */
+    
+    private Long id;
+    
+    /**
      * Constructor vacío
      */
     public CategoriaDTO() {
@@ -32,6 +38,7 @@ public class CategoriaDTO implements Serializable {
      */
     public CategoriaDTO(CategoriaEntity categoria) {
         if(categoria != null) {
+            this.id = categoria.getId();
             this.nombre = categoria.getNombre();
         }
     }
@@ -39,6 +46,7 @@ public class CategoriaDTO implements Serializable {
     public CategoriaEntity toEntity() {
         CategoriaEntity categoria = new CategoriaEntity();
         categoria.setNombre(this.nombre);
+        categoria.setId(this.id);
         
         return categoria;
     }
@@ -55,5 +63,19 @@ public class CategoriaDTO implements Serializable {
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 }

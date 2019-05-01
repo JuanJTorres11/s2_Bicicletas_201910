@@ -1,11 +1,71 @@
 {
 	"info": {
-		"_postman_id": "acbe226a-8d0f-4742-917d-f988f34de6c8",
+		"_postman_id": "4db7854e-e791-40a5-9909-65b524a1ff87",
 		"name": "CategoriaResourceTest",
 		"description": "Categoria Resource Test",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "Crear Marca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b956c7ce-b571-422b-871e-5d084085c58b",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_marca\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"BikeB7\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/marcas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"marcas"
+					],
+					"query": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
 		{
 			"name": "Crear nueva categoría",
 			"event": [
@@ -34,7 +94,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Urbana\"\n}"
+					"raw": "{\n\t\"nombre\": \"UrbanaXXYYYB\"\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias",
@@ -79,7 +139,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Urbana\"\n}"
+					"raw": "{\n\t\"nombre\": \"UrbanaXXYYYB\"\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias",
@@ -125,7 +185,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"descripcion\": \"descripcion bicicleta\",\n\t\"referencia\": \"1A\",\n\t\"precio\": 2000,\n\t\"usada\": false,\n\t\"stock\": 3,\n\t\"album\": [\"ruta1\"],\n\t\"categoria\": {\n\t\t\"nombre\": \"Urbana\"\n\t},\n\t\"marca\": {\"nombre\": \"BMX\"}\n}"
+					"raw": "{\n\t\"descripcion\": \"descripcion bicicleta\",\n\t\"referencia\": \"Ref128\",\n\t\"precio\": 2000,\n\t\"usada\": false,\n\t\"stock\": 3,\n\t\"album\": [\"ruta1\"],\n\t\"categoria\": {\"nombre\": \"{{new_c_nom}}\" },\n\t\"marca\": {\"id\": {{new_id_marca}}}\n\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas",
@@ -144,99 +204,6 @@
 			"response": []
 		},
 		{
-			"name": "Editar categoría",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "a210cbb6-c3f1-4975-8959-f98496c670dc",
-						"exec": [
-							"console.log(responseBody);\r",
-							"var data = JSON.parse(responseBody);\r",
-							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Nuevo nombre\"\n}"
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_c_nom}}",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s2_bicicletas-api",
-						"api",
-						"categorias",
-						"{{new_c_nom}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Editar una categoría que no existe",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "0655827b-95e4-47b4-b6cf-cc8d33da6e11",
-						"exec": [
-							"tests[\"No actualiza con nombre que no existe\"] = responseCode.code === 404;\r",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /categorias/deportiva no existe.\");"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"nombre\": \"Nuevo nombre\"\n}"
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/deportiva",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s2_bicicletas-api",
-						"api",
-						"categorias",
-						"deportiva"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Obtener todas las categorías",
 			"event": [
 				{
@@ -246,7 +213,7 @@
 						"exec": [
 							"var data= JSON.parse(responseBody);\r",
 							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;\r",
-							"tests[\"categorias count\"] = data.length > 1;"
+							"tests[\"categorias count\"] = data.length >= 1;"
 						],
 						"type": "text/javascript"
 					}
@@ -336,6 +303,100 @@
 				"body": {
 					"mode": "raw",
 					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/deportiva",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"deportiva"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar categoría",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a210cbb6-c3f1-4975-8959-f98496c670dc",
+						"exec": [
+							"console.log(responseBody);\r",
+							"var data = JSON.parse(responseBody);\r",
+							"postman.setGlobalVariable(\"new_c_nom\", data.nombre);\r",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"NuevoNombreXXC\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_c_nom}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_c_nom}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar una categoría que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0655827b-95e4-47b4-b6cf-cc8d33da6e11",
+						"exec": [
+							"tests[\"No actualiza con nombre que no existe\"] = responseCode.code === 404;\r",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /categorias/deportiva no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"Nuevo nombre\"\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/deportiva",
@@ -502,6 +563,44 @@
 						"api",
 						"categorias",
 						"deportiva"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar marca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33fd2ae1-eaed-478c-b0aa-48df75723420",
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/marcas/{{new_id_marca}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"marcas",
+						"{{new_id_marca}}"
 					]
 				}
 			},
