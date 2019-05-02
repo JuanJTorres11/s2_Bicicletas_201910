@@ -78,44 +78,44 @@ public class CompradorEntity extends UsuarioEntity {
     public void setOrdenes(List<OrdenEntity> ordenes) {
         this.ordenes = ordenes;
     }
-//
-//    /** 
-//     * La lista de deseos de un comprador. 
-//     */
-//    
-//    public void setListaDeseos(List<BicicletaEntity> bicicletas)
-//    {
-//        this.listaDeDeseos = bicicletas;
-//    }
-//    
-//    /**
-//     * Retorna la lista de deseos de un comprador. 
-//     * @return La lista de deseos
-//      */
-//
-//      public List<BicicletaEntity> getListaDeseos()
-//      {
-//          return listaDeDeseos;
-//      }
-//
-//    /** 
-//     * Carrito de un comprador. 
-//     * @param bicicletasCarrito
-//     */
-//    
-//    public void setCarrito(List<BicicletaEntity> bicicletasCarrito)
-//    {
-//        this.carrito = bicicletasCarrito;
-//    }
-//    
-//    /**
-//     * Retorna el carrito de un comprador. 
-//     * @return la lista del carrito
-//      */
-//
-//      public List<BicicletaEntity> getCarrito()
-//      {
-//          return carrito;
-//      }
+
+    /** 
+     * La lista de deseos de un comprador. 
+     */
+    
+    public void setListaDeseos(List<BicicletaEntity> bicicletas)
+    {
+        this.listaDeDeseos = bicicletas;
+    }
+    
+    /**
+     * Retorna la lista de deseos de un comprador. 
+     * @return La lista de deseos
+      */
+
+      public List<BicicletaEntity> getListaDeseos()
+      {
+          return listaDeDeseos;
+      }
+
+    /** 
+     * Carrito de un comprador. 
+     * @param bicicletasCarrito
+     */
+    
+    public void setCarrito(List<BicicletaEntity> bicicletasCarrito)
+    {
+        this.carrito = bicicletasCarrito;
+    }
+    
+    /**
+     * Retorna el carrito de un comprador. 
+     * @return la lista del carrito
+      */
+
+      public List<BicicletaEntity> getCarrito()
+      {
+          return carrito;
+      }
 
 }
