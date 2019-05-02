@@ -6,6 +6,126 @@
 	},
 	"item": [
 		{
+			"name": "Crear marca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b956c7ce-b571-422b-871e-5d084085c58b",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_mr\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"BMXZ\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/marcas",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"marcas"
+					],
+					"query": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear categoria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e15cac5-3690-4353-937f-cc98c08edc25",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_ct\", data.nombre);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nombre\": \"MontanasXX\"\n}"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias"
+					],
+					"query": [
+						{
+							"key": "Content-Type",
+							"value": "application/json",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Crear una bicicleta",
 			"event": [
 				{
@@ -40,7 +160,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"descripcion\": \"Soy la más veloz\",\n\t\"referencia\": \"Prueba555\",\n\t\"precio\": 20000.0,\n\t\"usada\": false,\n\t\"stock\": 123,\n\t\"album\": [\"ruta1\", \"ruta2\"],\n\t\"categoria\": {\"nombre\": \"Montaña\"},\n\t\"marca\": {\"nombre\": \"BMX\"}\n\n}"
+					"raw": "{\n\t\"descripcion\": \"Soy la más veloz\",\n\t\"referencia\": \"PruebaXXXX\",\n\t\"precio\": 20000.0,\n\t\"usada\": false,\n\t\"stock\": 123,\n\t\"album\": [\"ruta1\", \"ruta2\"],\n\t\"marca\": {\"id\": {{new_id_mr}} },\n\t\"categoria\": {\"nombre\": \"{{new_id_ct}}\" }\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/bicicletas?",
@@ -802,6 +922,82 @@
 						"api",
 						"bicicletas",
 						"{{new_id_b}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar categoria",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33fd2ae1-eaed-478c-b0aa-48df75723420",
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/categorias/{{new_id_ct}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"categorias",
+						"{{new_id_ct}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar marca",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "33fd2ae1-eaed-478c-b0aa-48df75723420",
+						"exec": [
+							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/marcas/{{new_id_mr}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s2_bicicletas-api",
+						"api",
+						"marcas",
+						"{{new_id_mr}}"
 					]
 				}
 			},

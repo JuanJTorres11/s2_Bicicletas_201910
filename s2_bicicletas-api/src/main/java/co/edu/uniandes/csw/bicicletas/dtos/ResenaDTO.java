@@ -40,6 +40,11 @@ public class ResenaDTO implements Serializable {
      */
     private BicicletaDTO bicicleta;
     
+    /*
+    * Nombre usuario calificador
+     */
+    private String usuario;
+    
 
     /**
      * Constructor por defecto
@@ -55,6 +60,7 @@ public class ResenaDTO implements Serializable {
             this.descripcion = resenaEntitiy.getDescripcion();
             this.id = resenaEntitiy.getId();
             this.titulo = resenaEntitiy.getTitulo();
+            this.usuario = resenaEntitiy.getUsuario();
 
             if (resenaEntitiy.getBicicleta() != null) {
                 this.bicicleta = new BicicletaDTO(resenaEntitiy.getBicicleta());
@@ -77,6 +83,7 @@ public class ResenaDTO implements Serializable {
         entity.setDescripcion(this.descripcion);
         entity.setId(this.id);
         entity.setTitulo(this.titulo);
+        entity.setUsuario(this.usuario);
         if (this.getBicicleta() != null) {
             entity.setBicicleta(this.getBicicleta().toEntity());
         }
@@ -151,6 +158,20 @@ public class ResenaDTO implements Serializable {
      */
     public void setBicicleta(BicicletaDTO bicicleta) {
         this.bicicleta = bicicleta;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public String getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
    

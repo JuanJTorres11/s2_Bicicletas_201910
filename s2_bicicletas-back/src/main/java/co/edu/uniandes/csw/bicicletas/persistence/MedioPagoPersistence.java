@@ -40,6 +40,25 @@ public class MedioPagoPersistence {
         return em.find(MedioPagoEntity.class, medioPagosId);
     }
     
+    public MedioPagoEntity findByVendedor(Long vendedorId, Long medioPagoId)
+    {
+        LOGGER.log(Level.INFO, "Consultando el medio de pago con id = {0} del vendedor con id = " + vendedorId, medioPagoId);
+        TypedQuery<MedioPagoEntity> q = em.createQuery("select m from MedioPagoEntity m where (m.vendedor.id = :vendedorId) and (m.id = :medioPagoId)", MedioPagoEntity.class);
+        q.setParameter("vendedorId", vendedorId);
+        q.setParameter("medioPagoId", medioPagoId);
+        List<MedioPagoEntity> results = q.getResultList();
+        MedioPagoEntity medio = null;
+        if (results == null)
+            medio = null;
+          else if (results.isEmpty())
+            medio = null;
+          else if (results.size() >= 1)
+            medio = results.get(0);
+        
+        LOGGER.log(Level.INFO, "Saliendo de consultar el medio de pago con id = {0} del vendedor con id = " + vendedorId, medioPagoId);
+        return medio;
+    }
+    
     public List<MedioPagoEntity> findAll() {
         LOGGER.log(Level.INFO, "Entrando a buscar todos los ids.");
         TypedQuery<MedioPagoEntity> query = em.createQuery("Select u from MedioPagoEntity u", MedioPagoEntity.class);
@@ -49,6 +68,27 @@ public class MedioPagoPersistence {
     }
     
     public MedioPagoEntity findByNumber(Long numero) {
+        LOGGER.log(Level.INFO, "Consultando medio de pago por número ", numero);
+        // Se crea un query para buscar editoriales con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
+        TypedQuery query = em.createQuery("Select e From MedioPagoEntity e where (e.numeroTarjeta = :numero)", MedioPagoEntity.class);
+        // Se remplaza el placeholder ":name" con el valor del argumento 
+        query = query.setParameter("numero", numero);
+        // Se invoca el query se obtiene la lista resultado
+        List<MedioPagoEntity> sameName = query.getResultList();
+        MedioPagoEntity result;
+        if (sameName == null) {
+            result = null;
+        } else if (sameName.isEmpty()) {
+            result = null;
+        } else {
+            result = sameName.get(0);
+        }
+        LOGGER.log(Level.INFO, "Saliendo de consultar medio de pago por número ", numero);
+        return result;
+    }
+    
+    public MedioPagoEntity findByNumberAndVendedor (Long idVendedor, Long numero)
+    {
         LOGGER.log(Level.INFO, "Consultando medio de pago por número ", numero);
         // Se crea un query para buscar editoriales con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
         TypedQuery query = em.createQuery("Select e From MedioPagoEntity e where e.numeroTarjeta = :numero", MedioPagoEntity.class);

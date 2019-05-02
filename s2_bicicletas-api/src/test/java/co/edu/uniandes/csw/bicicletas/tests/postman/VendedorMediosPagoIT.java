@@ -1,30 +1,12 @@
 /*
-MIT License
-
-Copyright (c) 2019 Universidad de los Andes - ISIS2603
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package co.edu.uniandes.csw.bicicletas.tests.postman;
 
-import co.edu.uniandes.csw.bicicletas.mappers.BusinessLogicExceptionMapper;
 import co.edu.uniandes.csw.bicicletas.dtos.BicicletaDTO;
+import co.edu.uniandes.csw.bicicletas.mappers.BusinessLogicExceptionMapper;
 import co.edu.uniandes.csw.bicicletas.resources.RestConfig;
 import co.edu.uniandes.csw.postman.tests.PostmanTestBuilder;
 import java.io.File;
@@ -40,16 +22,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- *  Pruebas de integracion de la resena.
- * @author Andrea Bayona
+ *
+ * @author Juan José Torres <jj.torresr@uniandes.edu.co>
  */
 @RunWith(Arquillian.class)
-public class ResenaIT {
+public class VendedorMediosPagoIT
+{
 
-    private static final String COLLECTION = "ResenaResourceTest.postman_collection";
+    private static final String COLLECTION = "Vendedor-MediosPago.postman_collection";
 
     @Deployment(testable = true)
-    public static WebArchive createDeployment() {
+    public static WebArchive createDeployment()
+    {
         return ShrinkWrap.create(WebArchive.class, "s2_bicicletas-api.war")//War del modulo api
                 // Se agrega las dependencias
                 .addAsLibraries(Maven.resolver().loadPomFromFile("pom.xml")
@@ -70,7 +54,8 @@ public class ResenaIT {
 
     @Test
     @RunAsClient
-    public void postman() throws IOException {
+    public void postman() throws IOException
+    {
         PostmanTestBuilder tp = new PostmanTestBuilder();
         tp.setTestWithoutLogin(COLLECTION, "Entorno-IT.postman_environment");
         String desiredResult = "0";

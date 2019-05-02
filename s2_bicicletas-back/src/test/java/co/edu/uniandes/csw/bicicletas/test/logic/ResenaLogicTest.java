@@ -123,6 +123,7 @@ public class ResenaLogicTest {
 
             ResenaEntity entity = factory.manufacturePojo(ResenaEntity.class);
             entity.setBicicleta(dataBikes.get(1));
+            entity.setCalificacion(i);
             em.persist(entity);
             data.add(entity);
         }
@@ -137,6 +138,7 @@ public class ResenaLogicTest {
     public void createResenaTest() throws BusinessLogicException {
         ResenaEntity newEntity = factory.manufacturePojo(ResenaEntity.class);
         newEntity.setBicicleta(dataBikes.get(1));
+        newEntity.setCalificacion(1);
         ResenaEntity result = resenaLogic.createResena(dataBikes.get(1).getId(), newEntity);
         Assert.assertNotNull(result);
         ResenaEntity entity = em.find(ResenaEntity.class, result.getId());
@@ -156,6 +158,7 @@ public class ResenaLogicTest {
     public void createResenaConMismoIdTest() throws BusinessLogicException {
         ResenaEntity newEntity = factory.manufacturePojo(ResenaEntity.class);
         newEntity.setBicicleta(dataBikes.get(1));
+        newEntity.setCalificacion(5);
         newEntity.setId(data.get(0).getId());
         resenaLogic.createResena(dataBikes.get(1).getId(), newEntity);
     }
@@ -177,7 +180,7 @@ public class ResenaLogicTest {
      * Prueba para obtener una resena por id
      */
     @Test
-    public void getResenaTest() {
+    public void getResenaTest() throws BusinessLogicException{
 
         ResenaEntity entity = data.get(0);
         ResenaEntity resultado = resenaLogic.getResena(dataBikes.get(1).getId(), entity.getId());
@@ -192,7 +195,7 @@ public class ResenaLogicTest {
      * Prueba para obtener todas las resenas
      */
     @Test
-    public void getResenasTest() {
+    public void getResenasTest() throws BusinessLogicException{
 
         List<ResenaEntity> resenasEncontradas = resenaLogic.getResenas(dataBikes.get(1).getId());
         Assert.assertEquals(resenasEncontradas.size(), data.size());
@@ -212,13 +215,14 @@ public class ResenaLogicTest {
      * Prueba para actualizar una resena
      */
     @Test
-    public void updateResenaTest() {
-        Long idActualizar = data.get(0).getId();
+    public void updateResenaTest() throws BusinessLogicException {
+        Long idActualizar = data.get(1).getId();
         ResenaEntity nuevaR = factory.manufacturePojo(ResenaEntity.class);
+        nuevaR.setCalificacion(0);
         nuevaR.setId(idActualizar);
-        resenaLogic.ubdateResena(dataBikes.get(0).getId(), nuevaR);
+        resenaLogic.ubdateResena(dataBikes.get(1).getId(), nuevaR);
 
-        ResenaEntity recuperada = resenaLogic.getResena(dataBikes.get(0).getId(), idActualizar);
+        ResenaEntity recuperada = resenaLogic.getResena(dataBikes.get(1).getId(), idActualizar);
 
         Assert.assertEquals(nuevaR.getCalificacion(), recuperada.getCalificacion());
         Assert.assertEquals(nuevaR.getDescripcion(), recuperada.getDescripcion());

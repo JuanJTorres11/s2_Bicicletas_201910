@@ -6,11 +6,12 @@
 package co.edu.uniandes.csw.bicicletas.dtos;
 
 import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
+import java.io.Serializable;
 
 /**
  * @author Juan José Torres
  */
-public class VendedorDTO extends UsuarioDTO
+public class VendedorDTO extends UsuarioDTO implements Serializable
 {
 
     private Long telefono;

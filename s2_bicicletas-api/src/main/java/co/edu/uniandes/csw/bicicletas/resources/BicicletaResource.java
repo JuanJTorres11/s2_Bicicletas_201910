@@ -69,6 +69,10 @@ public class BicicletaResource {
     public BicicletaDTO createBicicleta(BicicletaDTO bicicleta) throws BusinessLogicException {
 
         LOGGER.log(Level.INFO, "BicicletaResource createBicicleta: input: {0}", bicicleta);
+        //TODO validar que marca existe
+        
+        //TODO validad que categoria existe
+        
         BicicletaEntity nuevaEntity = logic.createBicicleta(bicicleta.toEntity());
         BicicletaDTO nuevaBicicletaDTO = new BicicletaDTO(nuevaEntity);
         LOGGER.log(Level.INFO, "BicicletaResource createBicicleta: output: {0}", nuevaBicicletaDTO);
@@ -129,7 +133,7 @@ public class BicicletaResource {
      */
     @PUT
     @Path("{bicicletaId: \\d+}")
-    public BicicletaDTO updateBicicleta(@PathParam("bicicletaId") Long bicicletaId, BicicletaDTO bicicleta) throws BusinessLogicException {
+    public BicicletaDTO updateBicicleta(@PathParam("bicicletaId") Long bicicletaId, BicicletaDetailDTO bicicleta) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "BicicletaResource updateBicicleta: input: id: {0} , book: {1}", new Object[]{bicicletaId, bicicleta});
         bicicleta.setId(bicicletaId);
         if (logic.getBicicleta(bicicletaId) == null) {
