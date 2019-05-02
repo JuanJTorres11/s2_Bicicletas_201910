@@ -26,16 +26,20 @@ public class CompradorEntity extends UsuarioEntity {
       
       
     @PodamExclude
-    @OneToMany(mappedBy = "comprador")
+    @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MedioPagoEntity> mediosPago;
     
     @PodamExclude
-    @OneToMany(mappedBy = "comprador")
+    @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<OrdenEntity> ordenes;
     
-//    @PodamExclude
-//    @OneToMany(mappedBy = "")
-//    private List<BicicletaDTO> listaDeDeseos;
+   @PodamExclude
+   @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
+   private List<BicicletaEntity> listaDeDeseos;
+
+   @PodamExclude
+   @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
+   private List<BicicletaEntity> carrito;
 //    
 //    @PodamExclude
 //    @OneToMany(mappedBy = "comprador"
@@ -43,7 +47,7 @@ public class CompradorEntity extends UsuarioEntity {
     
     public CompradorEntity()
     {
-        
+
     }
 
     /**
@@ -73,5 +77,43 @@ public class CompradorEntity extends UsuarioEntity {
     public void setOrdenes(List<OrdenEntity> ordenes) {
         this.ordenes = ordenes;
     }
-       
+
+    /** 
+     * La lista de deseos de un comprador. 
+     */
+    
+    public void setListaDeseos(List<BicicletaEntity> bicicletas)
+    {
+        this.listaDeDeseos = bicicletas;
+    }
+    
+    /**
+     * Retorna la lista de deseos de un comprador. 
+     * @return La lista de deseos
+      */
+
+      public List<BicicletaEntity> getListaDeseos()
+      {
+          return listaDeDeseos;
+      }
+
+    /** 
+     * Carrito de un comprador. 
+     */
+    
+    public void setListaDeseos(List<BicicletaEntity> bicicletasCarrito)
+    {
+        this.carrito = bicicletasCarrito;
+    }
+    
+    /**
+     * Retorna el carrito de un comprador. 
+     * @return la lista del carrito
+      */
+
+      public List<BicicletaEntity> getCarrito()
+      {
+          return carrito;
+      }
+
 }
