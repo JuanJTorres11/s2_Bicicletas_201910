@@ -80,7 +80,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"factura\": \"./factura.pdf\",\n\t\"precio\": 123000,\n\t\"aprobado\": false,\n\t\"fotos\": [\"./foto1\", \"./foto2\", \"./foto3\"]\n}"
+					"raw": "{\n\t\"factura\": \"./factura.pdf\",\n\t\"precio\": 123000,\n\t\"aprobado\": null,\n\t\"fotos\": [\"./foto1\", \"./foto2\", \"./foto3\"]\n}"
 				},
 				"url": {
 					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/ventas",
@@ -132,7 +132,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/mediosPago/{{new_id_v}}",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/ventas/{{new_id_v}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -142,7 +142,7 @@
 						"{{ruta}}",
 						"vendedores",
 						"{{new_id_c}}",
-						"mediosPago",
+						"ventas",
 						"{{new_id_v}}"
 					]
 				}
@@ -178,7 +178,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/mediosPago/{{new_id_v}}",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/ventas/{{new_id_v}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -188,7 +188,7 @@
 						"{{ruta}}",
 						"vendedores",
 						"{{new_id_c}}",
-						"mediosPago",
+						"ventas",
 						"{{new_id_v}}"
 					]
 				}

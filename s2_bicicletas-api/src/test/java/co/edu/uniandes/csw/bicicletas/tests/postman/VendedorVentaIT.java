@@ -26,10 +26,10 @@ import org.junit.runner.RunWith;
  * @author Juan José Torres <jj.torresr@uniandes.edu.co>
  */
 @RunWith(Arquillian.class)
-public class VendedorMediosPagoIT
+public class VendedorVentaIT
 {
 
-    private static final String COLLECTION = "Vendedor-MediosPago.postman_collection";
+    private static final String COLLECTION = "Vendedor-Ventas.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment()

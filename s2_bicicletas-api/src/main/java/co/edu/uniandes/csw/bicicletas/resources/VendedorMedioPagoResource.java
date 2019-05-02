@@ -47,7 +47,7 @@ public class VendedorMedioPagoResource
      * Error de lógica que se genera cuando no se encuentra el medio de pago.
      */
     @POST
-    public MedioPagoDTO addMedioPago(@PathParam("vendedorId") Long vendedorId, MedioPagoDTO medio)
+    public MedioPagoDTO addMedioPago(@PathParam("vendedorId") Long vendedorId, MedioPagoDTO medio) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "VendedorMedioPagosResource addMedioPago: input: vendedorsID: {0} , medioPagosId: {1}", new Object[]
         {
@@ -141,6 +141,12 @@ public class VendedorMedioPagoResource
         return listaDetailDTOs;
     }
 
+    /**
+     * Elimina un métood de pago asociado a un vendedor.
+     * @param vendedorId Identificar del vendedor.
+     * @param mediosPagoId Identificador del medio de pago.
+     * @throws BusinessLogicException Si el vendedor no existe.
+     */
     @DELETE
     @Path("{mediosPagoId: \\d+}")
     public void borrarMedioPago (@PathParam("vendedorId") Long vendedorId, @PathParam("mediosPagoId") Long mediosPagoId) throws BusinessLogicException

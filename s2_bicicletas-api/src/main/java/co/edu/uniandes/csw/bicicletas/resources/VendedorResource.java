@@ -131,6 +131,10 @@ public class VendedorResource
         {
             noExisteException(id);
         }
+        LOGGER.log(Level.INFO, "El id del vendedor retornado es {0}", vE.getId());
+        LOGGER.log(Level.INFO, "El nombre del vendedor retornado es {0}", vE.getNombre());
+        LOGGER.log(Level.INFO, "El login del vendedor retornado es {0}", vE.getLogin());
+        LOGGER.log(Level.INFO, "El telefono del vendedor retornado es {0}", vE.getTelefono());
         return new VendedorDetailDTO(logica.updateVendedor(vE));
     }
 
@@ -184,6 +188,11 @@ public class VendedorResource
         return VendedorVentaResource.class;
     }
     
+    /**
+     * Lanza una excepción cuando un vendedor no existe, para evitar un code smell ya que se repite varias veces.
+     * @param id Identificador del vendedor
+     * @throws WebApplicationException Excepción cuando el vendedor no existe.
+     */
     private void noExisteException (Long id) throws WebApplicationException
     {
         throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);

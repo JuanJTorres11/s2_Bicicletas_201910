@@ -33,3 +33,10 @@ insert into MarcaEntity (nombre) values ('BMX');
 insert into MarcaEntity (nombre) values ('Rover');
 insert into MarcaEntity (nombre) values ('XTreme');
 insert into MarcaEntity (nombre) values ('Chrysler');
+
+INSERT INTO VendedorEntity (id, nombre, login, password, telefono) values (1,'Juan Torres', 'jj.torresr', 'abc123', 3102345678);
+INSERT INTO VendedorEntity (id, nombre, login, password, telefono) values (2,'Andres Torres', 'aa@gmail.com', 'abc123', 3156345678);
+INSERT INTO VendedorEntity (id, nombre, login, password, telefono) values (3,'Andrea', 'gp@outlook.com', 'abc123', 3212345678);
+INSERT INTO MedioPagoEntity (numerotarjeta, tipocredito, tipotarjeta, vendedor_id) values (5401345858879821, 'VISA', 'Credito', 1);
+INSERT INTO MedioPagoEntity (numerotarjeta, tipocredito, tipotarjeta, vendedor_id) values (5401345858879828, 'MASTERCARD', 'Credito', 3);
+INSERT INTO VentaEntity (precio, factura, fotos, vendedor_id) values (123000, 'factura.pdf', CAST (X'FFFF' AS BLOB), 2);
