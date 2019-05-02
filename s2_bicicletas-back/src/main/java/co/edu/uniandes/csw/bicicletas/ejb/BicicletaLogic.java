@@ -24,14 +24,14 @@ import javax.inject.Inject;
  */
 @Stateless
 public class BicicletaLogic {
-
+    
     private static final Logger LOGGER = Logger.getLogger(BicicletaLogic.class.getName());
-
+    
     @Inject
     private BicicletaPersistence persistence;
     @Inject
     private CategoriaPersistence persistenceCat;
-
+    
     @Inject
     private MarcaPersistence persistenceMarca;
 
@@ -45,8 +45,8 @@ public class BicicletaLogic {
      */
     public BicicletaEntity createBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación de la bicicleta");
-        
-          // Verifica la regla de negocio: la misma referencia no puede ser null ni cadena vacia
+
+        // Verifica la regla de negocio: la misma referencia no puede ser null ni cadena vacia
         if (bicicletaEntity.getReferencia() == null) {
             throw new BusinessLogicException("La referencia no es valida\"" + bicicletaEntity.getReferencia() + "\"");
         }
@@ -56,14 +56,23 @@ public class BicicletaLogic {
             throw new BusinessLogicException("Ya existe una Bicicletaa con la referencia \"" + bicicletaEntity.getReferencia() + "\"");
         }
 
-
         //Verifica las reglas de negocio
         verificarReglasNegocioBicicleta(bicicletaEntity);
-
+        
+        if (persistenceMarca.find(bicicletaEntity.getMarca().getId()) == null) {
+            throw new BusinessLogicException("No exite la marca con id: \"" + bicicletaEntity.getMarca().getId() + "\"");
+        }
+        
+        CategoriaEntity cat = persistenceCat.findByName(bicicletaEntity.getCategoria().getNombre());
+        if (cat == null) {
+            throw new BusinessLogicException("No exite categoria con nombre: \"" + bicicletaEntity.getCategoria().getNombre() + "\"");
+            
+        }
+        bicicletaEntity.setCategoria(cat);
         // Invoca la persistencia para crear la bicileta
         persistence.create(bicicletaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de creación de la bicicleta");
-
+        
         return bicicletaEntity;
     }
 
@@ -73,7 +82,7 @@ public class BicicletaLogic {
      * @param id : id de la bicicleta que se quiere borrar
      */
     public void deleteBicicleta(Long id) {
-
+        
         LOGGER.log(Level.INFO, "Inicia proceso de borrar la bicicleta con id = {0}", id);
         persistence.delete(id);
         LOGGER.log(Level.INFO, "Termina proceso de borrar la bicicleta con id = {0}", id);
@@ -85,7 +94,7 @@ public class BicicletaLogic {
      * @return Una lista con todas las BicletaEntity
      */
     public List<BicicletaEntity> getBicicletas() {
-
+        
         LOGGER.log(Level.INFO, "Inicia proceso de buscar todas las bicletas");
         List<BicicletaEntity> bicicletas = persistence.findAll();
         LOGGER.log(Level.INFO, "Termina proceso de buscar todas las bicletas");
@@ -127,7 +136,7 @@ public class BicicletaLogic {
      */
     public BicicletaEntity ubdateBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar una bicicleta con id", bicicletaEntity.getId());
-          // Verifica la regla de negocio: la misma referencia no puede ser null ni cadena vacia
+        // Verifica la regla de negocio: la misma referencia no puede ser null ni cadena vacia
         if (bicicletaEntity.getReferencia() == null) {
             throw new BusinessLogicException("La referencia no es valida\"" + bicicletaEntity.getReferencia() + "\"");
         }
@@ -137,14 +146,16 @@ public class BicicletaLogic {
         LOGGER.log(Level.INFO, "Termina proceso de actualizar una bicicleta con id", bicicletaEntity.getId());
         return bikeE;
     }
-    
+
     /**
-     * Se encarga de verificar que la entidad que se pasa por parametro cumpla con las relgas de negocio
+     * Se encarga de verificar que la entidad que se pasa por parametro cumpla
+     * con las relgas de negocio
+     *
      * @param bicicletaEntity
-     * @throws BusinessLogicException 
+     * @throws BusinessLogicException
      */
-   public void verificarReglasNegocioBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
-      
+    public void verificarReglasNegocioBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
+        
         if (bicicletaEntity.getAlbum() == null || bicicletaEntity.getAlbum().length == 0) {
             throw new BusinessLogicException("La bicicleta debe tener al menos 1 foto \"");
         }
@@ -161,9 +172,8 @@ public class BicicletaLogic {
 
         //Verifica la regla de negocio: la categoria no puede ser null
         if (bicicletaEntity.getCategoria() == null) {
-            throw new BusinessLogicException("La bicicleta tiene que tener una categoria");
+        throw new BusinessLogicException("La bicicleta tiene que tener una categoria");
         }
-
         //Verifica la regla de negocio: el stock no puede ser menor a 0
         if (bicicletaEntity.getStock() < 0) {
             throw new BusinessLogicException("El stock no puede ser negativo \"" + bicicletaEntity.getStock() + "\"");
@@ -202,5 +212,5 @@ public class BicicletaLogic {
         LOGGER.log(Level.INFO, "Termina proceso de actualizar la bicicleta con id = {0}", bikekEntity.getId());
         return bikekEntity;
     }
-
+    
 }

@@ -56,9 +56,12 @@ public class CompradorResource {
      */
     @POST
     public CompradorDTO crearComprador(CompradorDTO pComprador) throws BusinessLogicException {
-        CompradorDTO nuevo = null;
-        nuevo = new CompradorDTO(logica.createComprador(pComprador.toEntity()));
-        return nuevo;
+        LOGGER.log(Level.INFO, "CompradorResource Comprador: input: {0}", pComprador);
+        CompradorEntity compradorEntity = pComprador.toEntity();
+        CompradorEntity nuevoCompradorEntity = logica.createComprador(compradorEntity);
+        CompradorDTO compradorDTO = new CompradorDTO(nuevoCompradorEntity);
+        LOGGER.log(Level.INFO, "CompradorResource createComprador: output: {0}", compradorDTO);
+        return compradorDTO;
     }
 
     /**
@@ -68,52 +71,47 @@ public class CompradorResource {
      */
     @GET
     public List<CompradorDetailDTO> darCompradores() {
-        ArrayList<CompradorDetailDTO> compradores = new ArrayList<CompradorDetailDTO>();
-        List<CompradorEntity> vEntity = logica.findAllCompradores();
-        for (CompradorEntity v : vEntity) {
-            compradores.add(new CompradorDetailDTO(v));
-        }
-        return compradores;
+        List<CompradorDetailDTO> listaCompradores = listEntity2DetailDTO(logica.getCompradores());
+        return listaCompradores;
     }
-    
-    
+
     /**
      * retorna al comprador dado un id.
+     *
      * @param pCompradorId id del comprador a buscar.
      * @return retorna el comprador del id respectivo.
      */
     @GET
-    @Path("{id: \\d+}")
-    public CompradorDTO obtenerComprador(@PathParam("id") Long pCompradorId) {
-        CompradorEntity cE = logica.findComprador(pCompradorId);
-        if (cE != null)
-        {
-            return new CompradorDetailDTO(cE);
+    @Path("{pCompradorId: \\d+}")
+    public CompradorDetailDTO getComprador(@PathParam("pCompradorId") long pCompradorId) {
+        LOGGER.log(Level.INFO, "CompradorResource getComprador: input: {0}", pCompradorId);
+        CompradorEntity CompradorEntity = logica.getComprador(pCompradorId);
+        if (CompradorEntity == null) {
+            throw new WebApplicationException("El recurso /comprador/" + pCompradorId + " no existe.", 404);
         }
-        else
-        {
-            throw new WebApplicationException("El vendedor con id: " + pCompradorId + " no existe", 404);
-        }
+        CompradorDetailDTO compradorDetailDTO = new CompradorDetailDTO(CompradorEntity);
+        LOGGER.log(Level.INFO, "CompradorResource getComprador: output: {0}", compradorDetailDTO);
+        return compradorDetailDTO;
     }
 
     /**
      * actualiza la informacion de un comprador ya registrado.
+     *
      * @param id dle comprador que se desea actualizar.
      * @return el nuevo objeto actualizado que se encuentra en la base de datos.
-     * @throws BusinessLogicException 
+     * @throws BusinessLogicException
      */
     @PUT
     @Path("{id: \\d+}")
-    public CompradorDetailDTO actualizarComprador(@PathParam("id") long id) throws BusinessLogicException {
-        CompradorEntity cE = logica.findComprador(id);
-        if (cE != null)
-        {
-            return new CompradorDetailDTO(logica.updateComprador(cE));
+    public CompradorDetailDTO actualizarComprador(@PathParam("id") long id, CompradorDTO pComprador) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "CompradorResource updateComprador: input: id:{0} , Comprador: {1}", new Object[]{id, pComprador});
+        pComprador.setId(id);
+        if (logica.getComprador(id) == null) {
+            throw new WebApplicationException("El recurso /Comprador/" + id + " no existe.", 404);
         }
-        else
-        {
-            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
-        }
+        CompradorDetailDTO compradorDetailDTO = new CompradorDetailDTO(logica.updateComprador(pComprador.toEntity()));
+        LOGGER.log(Level.INFO, "CompradorResource updateComprador: output: {0}", compradorDetailDTO);
+        return compradorDetailDTO;
     }
 
     /**
@@ -121,11 +119,27 @@ public class CompradorResource {
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void eliminarComprador(@PathParam("id") long id) {
-        if (logica.findComprador(id) != null) {
-            logica.deleteComprador(id);
-        } else {
-            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+    public void eliminarComprador(@PathParam("id") long id) throws BusinessLogicException
+    {
+        LOGGER.log(Level.INFO, "CompradorResource deleteComprador: input: {0}", id);
+        if (logica.getComprador(id) == null) {
+            throw new WebApplicationException("El recurso /comprador/" + id + " no existe.", 404);
         }
+        logica.deleteComprador(id);
+        LOGGER.info("EditorialResource deleteEditorial: output: void");
+    }
+
+    /**
+     * Convierte una lista de entity en una lista de detailDto
+     *
+     * @param entityList
+     * @return
+     */
+    private List<CompradorDetailDTO> listEntity2DetailDTO(List<CompradorEntity> entityList) {
+        List<CompradorDetailDTO> list = new ArrayList<>();
+        for (CompradorEntity entity : entityList) {
+            list.add(new CompradorDetailDTO(entity));
+        }
+        return list;
     }
 }

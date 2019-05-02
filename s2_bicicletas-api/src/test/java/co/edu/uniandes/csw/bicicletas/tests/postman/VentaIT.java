@@ -23,11 +23,12 @@ import org.junit.runner.RunWith;
 
 /**
  *
- * @author Andres Donoso
+ * @author estudiante
  */
 @RunWith(Arquillian.class)
-public class CategoriaBicicletasIT {
-    private static final String COLLECTION = "CategoriaBicicletasResourceTest.postman_collection";
+public class VentaIT {
+
+    private static final String COLLECTION = "CompradorResourceTest.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {
@@ -63,4 +64,5 @@ public class CategoriaBicicletasIT {
 
         Assert.assertEquals("Error en Assertions de: " + COLLECTION, desiredResult, tp.getAssertions_failed());
     }
+
 }

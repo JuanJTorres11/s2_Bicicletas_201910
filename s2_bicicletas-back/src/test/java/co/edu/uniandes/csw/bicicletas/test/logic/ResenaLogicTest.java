@@ -138,7 +138,7 @@ public class ResenaLogicTest {
     public void createResenaTest() throws BusinessLogicException {
         ResenaEntity newEntity = factory.manufacturePojo(ResenaEntity.class);
         newEntity.setBicicleta(dataBikes.get(1));
-        newEntity.setCalificacion(3);
+        newEntity.setCalificacion(1);
         ResenaEntity result = resenaLogic.createResena(dataBikes.get(1).getId(), newEntity);
         Assert.assertNotNull(result);
         ResenaEntity entity = em.find(ResenaEntity.class, result.getId());

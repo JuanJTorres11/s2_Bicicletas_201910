@@ -23,11 +23,12 @@ import org.junit.runner.RunWith;
 
 /**
  *
- * @author Andres Donoso
+ * @author Juan Lozano
  */
 @RunWith(Arquillian.class)
-public class CategoriaBicicletasIT {
-    private static final String COLLECTION = "CategoriaBicicletasResourceTest.postman_collection";
+public class CompradorIT 
+{
+    private static final String COLLECTION = "CompradorResourceTest.postman_collection";
 
     @Deployment(testable = true)
     public static WebArchive createDeployment() {

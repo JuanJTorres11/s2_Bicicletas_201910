@@ -61,14 +61,14 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
      * La marca de la bicicleta
      */
     @PodamExclude
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private MarcaEntity marca;
     
     /**
      * LA categoria de la bicicleta
      */
     @PodamExclude
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private CategoriaEntity categoria;
 
     /**

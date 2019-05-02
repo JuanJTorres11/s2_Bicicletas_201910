@@ -20,7 +20,7 @@ public class VentaDTO implements Serializable {
     private Long id;
     
     /**
-     * Atrinuto que representa la factura.
+     * Atributo que representa la factura.
      */
     private String factura;
 
@@ -54,12 +54,11 @@ public class VentaDTO implements Serializable {
      */
     public VentaDTO(VentaEntity venta) {
         if (venta != null) {
-            this.id = venta.getIdentificador();
+            this.id = venta.getId();
             this.factura = venta.getFactura();
             this.precio = venta.getPrecio();
             this.aprobado = venta.getAprobado();
             this.fotos = venta.getFotos();
-
         }
     }
 
@@ -70,11 +69,11 @@ public class VentaDTO implements Serializable {
      */
     public VentaEntity toEntity() {
         VentaEntity venta = new VentaEntity();
-        venta.setIdentificador(this.id);
         venta.setPrecio(this.precio);
         venta.setFactura(this.factura);
         venta.setFotos(this.fotos);
-
+        venta.setAprobado(this.aprobado);
+        venta.setId(this.id);
         return venta;
     }
 
@@ -133,8 +132,7 @@ public class VentaDTO implements Serializable {
     }
 
     /**
-     * Obtiene el ID asociado a la bicicleta.
-     *
+     * Obtiene el ID asociado a la bicicleta
      * @return the id
      */
     public Long getId() {
@@ -150,17 +148,14 @@ public class VentaDTO implements Serializable {
 
     /**
      * Obtiene todas las fotos asociadas a la bicicleta.
-     *
      * @return the fotos
      */
     public String[] getFotos() {
         return fotos;
-
     }
 
     /**
      * Cambia las fotos que recibe por las que pudiese tener.
-     *
      * @param fotos the fotos to set
      */
     public void setFotos(String[] fotos) {

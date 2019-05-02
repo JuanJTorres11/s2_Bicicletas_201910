@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.bicicletas.resources;
 
 import co.edu.uniandes.csw.bicicletas.dtos.InicioSesionDTO;
@@ -84,18 +79,15 @@ public class VendedorResource
      */
     @GET
     @Path("{id: \\d+}")
-    public VendedorDetailDTO darVendedorId(@PathParam("id") long id)
+    public VendedorDetailDTO darVendedorId(@PathParam("id") long id) throws WebApplicationException
     {
          LOGGER.log(Level.INFO, "Se buscará al vendedor con id: {0}", id);
         VendedorEntity vE = logica.findVendedor(id);
-        if (vE != null)
+        if (vE == null)
         {
-            return new VendedorDetailDTO(vE);
+           noExisteException(id);
         }
-        else
-        {
-            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
-        }
+         return new VendedorDetailDTO(vE);
     }
 
     /**
@@ -105,7 +97,7 @@ public class VendedorResource
      */
     @POST
     @Path("/auth")
-    public VendedorDetailDTO autenticarVendedor(InicioSesionDTO credenciales)
+    public VendedorDetailDTO autenticarVendedor(InicioSesionDTO credenciales) throws WebApplicationException
     {
         LOGGER.log(Level.INFO, "Se buscará al vendedor por sus credenciales");
         VendedorEntity vE = logica.authVendedor(credenciales.getLogin(), credenciales.getPassword());
@@ -131,18 +123,19 @@ public class VendedorResource
      */
     @PUT
     @Path("{id: \\d+}")
-    public VendedorDetailDTO actualizarVendedor(@PathParam("id") long id, VendedorDetailDTO vendedor) throws BusinessLogicException
+    public VendedorDetailDTO actualizarVendedor(@PathParam("id") long id, VendedorDetailDTO vendedor) throws BusinessLogicException, WebApplicationException
     {
         LOGGER.log(Level.INFO, "Se actualizará al vendedor con id: {0}", id);
         VendedorEntity vE = logica.findVendedor(id);
-        if (vE != null)
+        if (vE == null) 
         {
-            return new VendedorDetailDTO(logica.updateVendedor(vE));
+            noExisteException(id);
         }
-        else
-        {
-            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
-        }
+        LOGGER.log(Level.INFO, "El id del vendedor retornado es {0}", vE.getId());
+        LOGGER.log(Level.INFO, "El nombre del vendedor retornado es {0}", vE.getNombre());
+        LOGGER.log(Level.INFO, "El login del vendedor retornado es {0}", vE.getLogin());
+        LOGGER.log(Level.INFO, "El telefono del vendedor retornado es {0}", vE.getTelefono());
+        return new VendedorDetailDTO(logica.updateVendedor(vE));
     }
 
     /**
@@ -152,7 +145,7 @@ public class VendedorResource
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void eliminarVendedor(@PathParam("id") long id)
+    public void eliminarVendedor(@PathParam("id") long id) throws WebApplicationException
     {
         LOGGER.log(Level.INFO, "Se eliminará al vendedor con id: {0}", id);
         if (logica.findVendedor(id) != null)
@@ -161,7 +154,7 @@ public class VendedorResource
         }
         else
         {
-             throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+             noExisteException(id);
         }
     }
 
@@ -171,11 +164,11 @@ public class VendedorResource
      * @return Clase que maneja los métodos CRUD de la relación Vendedor/MediosPago
      */
      @Path("{vendedorId: \\d+}/mediosPago")
-    public Class<VendedorMedioPagoResource> getMediosPagoResource(@PathParam("vendedorId") Long id)
+    public Class<VendedorMedioPagoResource> getMediosPagoResource(@PathParam("vendedorId") Long id) throws WebApplicationException
     {
         if (logica.findVendedor(id) == null)
         {
-            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+            noExisteException(id);
         }
         return VendedorMedioPagoResource.class;
     }
@@ -186,12 +179,22 @@ public class VendedorResource
      * @return Clase que maneja los métodos CRUD de la relación Vendedor/MediosPago
      */
      @Path("{vendedorId: \\d+}/ventas")
-    public Class<VendedorVentaResource> getVentasResource(@PathParam("vendedorId") Long id)
+    public Class<VendedorVentaResource> getVentasResource(@PathParam("vendedorId") Long id) throws WebApplicationException
     {
         if (logica.findVendedor(id) == null)
         {
-            throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
+            noExisteException(id);
         }
         return VendedorVentaResource.class;
+    }
+    
+    /**
+     * Lanza una excepción cuando un vendedor no existe, para evitar un code smell ya que se repite varias veces.
+     * @param id Identificador del vendedor
+     * @throws WebApplicationException Excepción cuando el vendedor no existe.
+     */
+    private void noExisteException (Long id) throws WebApplicationException
+    {
+        throw new WebApplicationException("El vendedor con id: " + id + " no existe", 404);
     }
 }
