@@ -37,7 +37,7 @@ public class CompradorDetailDTO extends CompradorDTO {
 
         List<MedioPagoEntity> pagos = pComprador.getMediosPago();
 
-        List<BicicletaEntity> deseos = pComprador.getListaDeDeseos();
+        List<BicicletaEntity> deseos = pComprador.getListaDeseos();
 
         List<BicicletaEntity> carr = pComprador.getCarrito();
 
@@ -89,7 +89,7 @@ public class CompradorDetailDTO extends CompradorDTO {
     /**
      * @return the ordenDTO
      */
-    public List<OrdenDTO> getMediosPago() {
+    public List<MedioPagoDTO> getMediosPago() {
         return medioPagoDTO;
     }
 

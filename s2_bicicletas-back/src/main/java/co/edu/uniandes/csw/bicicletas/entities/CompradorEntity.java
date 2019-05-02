@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.util.List;
 import java.util.logging.Logger;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -99,9 +100,10 @@ public class CompradorEntity extends UsuarioEntity {
 
     /** 
      * Carrito de un comprador. 
+     * @param bicicletasCarrito
      */
     
-    public void setListaDeseos(List<BicicletaEntity> bicicletasCarrito)
+    public void setCarrito(List<BicicletaEntity> bicicletasCarrito)
     {
         this.carrito = bicicletasCarrito;
     }
