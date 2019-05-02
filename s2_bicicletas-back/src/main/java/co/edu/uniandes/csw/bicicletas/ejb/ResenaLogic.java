@@ -145,6 +145,7 @@ public class ResenaLogic {
         if(resenaEntity.getCalificacion() > 5 || resenaEntity.getCalificacion() < 0){
             throw new BusinessLogicException("La calificacion debe ser menor a 5 y mayor a 0 \"" + resenaEntity.getCalificacion() + "\"");
         }
+        this.actualizarCalificacionPromedioBicicleta(bicicleta, resenaEntity);
         persistence.update(resenaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar una resena con id", resenaEntity.getId());
         return resenaEntity;
