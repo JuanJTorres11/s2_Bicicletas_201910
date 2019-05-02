@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import co.edu.uniandes.csw.bicicletas.entities.OrdenEntity;
 import java.io.Serializable;
 import java.util.List;
@@ -28,7 +29,12 @@ public class OrdenDetailDTO extends OrdenDTO implements Serializable {
 
     public OrdenDetailDTO(OrdenEntity ordenEntity) {
         super(ordenEntity);
-        
+        if(ordenEntity != null) {
+            List<BicicletaEntity> listaB = ordenEntity.getBicicletasOrden();
+            for(BicicletaEntity be: listaB){
+                bicicletas.add(new BicicletaDTO(be));
+            }
+        }
     }
 
     @Override
