@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
-import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import java.io.Serializable;
 import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 
