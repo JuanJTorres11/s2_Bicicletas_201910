@@ -77,9 +77,10 @@ public class ResenaLogic {
 
         LOGGER.log(Level.INFO, "Inicia proceso de borrar la resena con id = {0}", resenaId);
         ResenaEntity buscada = getResena(bicicletaId, resenaId);
+        
         if(buscada == null)
             throw new BusinessLogicException("La reseña con id = " + resenaId + " no existe o no está asociada a la bicicleta =" + bicicletaId + "\"");
-           
+        
         persistence.delete(buscada.getId());
         LOGGER.log(Level.INFO, "Termina proceso de borrar la resena con id = {0}", resenaId);
     }
@@ -145,6 +146,7 @@ public class ResenaLogic {
         if(resenaEntity.getCalificacion() > 5 || resenaEntity.getCalificacion() < 0){
             throw new BusinessLogicException("La calificacion debe ser menor a 5 y mayor a 0 \"" + resenaEntity.getCalificacion() + "\"");
         }
+        this.actualizarCalificacionPromedioBicicleta(bicicleta, resenaEntity);
         persistence.update(resenaEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar una resena con id", resenaEntity.getId());
         return resenaEntity;

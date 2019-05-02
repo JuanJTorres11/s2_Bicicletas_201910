@@ -32,10 +32,8 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  *
  * @author Juan L
  */
- @RunWith(Arquillian.class)
-public class CompradorLogicTest 
-{
-   
+@RunWith(Arquillian.class)
+public class CompradorLogicTest {
 
     /**
      * Declaración de la instancia de lógica con los métodos a probar
@@ -63,8 +61,7 @@ public class CompradorLogicTest
     private List<CompradorEntity> data = new ArrayList<CompradorEntity>();
 
     @Deployment
-    public static JavaArchive createDeployment()
-    {
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(CompradorEntity.class.getPackage())
                 .addPackage(CompradorPersistence.class.getPackage())
@@ -78,25 +75,18 @@ public class CompradorLogicTest
      * ejecutar cada prueba
      */
     @Before
-    public void setUp()
-    {
-        try
-        {
+    public void setUp() {
+        try {
             utx.begin();
             em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            try
-            {
+            try {
                 utx.rollback();
-            }
-            catch (Exception e1)
-            {
+            } catch (Exception e1) {
                 e1.printStackTrace();
             }
         }
@@ -105,8 +95,7 @@ public class CompradorLogicTest
     /**
      * Borra toda la información de la base de datos
      */
-    private void clearData()
-    {
+    private void clearData() {
         em.createQuery("delete from VendedorEntity").executeUpdate();
         data.clear();
     }
@@ -114,25 +103,21 @@ public class CompradorLogicTest
     /**
      * Crea vendedors en la base de datos y los agrega a data
      */
-    private void insertData()
-    {
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-        for (int i = 0; i < 3; i++)
-        {
+        for (int i = 0; i < 3; i++) {
             CompradorEntity entity = factory.manufacturePojo(CompradorEntity.class);
             em.persist(entity);
             data.add(entity);
         }
     }
-    
+
     /**
      * test que crea un comprador.
      */
-        @Test
-    public void createTest()
-    {
-        try
-        {
+    @Test
+    public void createTest() {
+        try {
             PodamFactory factory = new PodamFactoryImpl();
             CompradorEntity nuevo = factory.manufacturePojo(CompradorEntity.class);
             CompradorEntity resultado = logica.createComprador(nuevo);
@@ -140,71 +125,71 @@ public class CompradorLogicTest
             CompradorEntity userBd = em.find(resultado.getClass(), resultado.getId());
             Assert.assertNotNull("lo que retorna la base de datos no debería ser null", userBd);
             Assert.assertEquals("lo que retorna la base de datos no es lo que se esperaba", resultado, userBd);
-        }
-        catch (BusinessLogicException ex)
-        {
+        } catch (BusinessLogicException ex) {
             Logger.getLogger(VendedorLogicTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
-     * Test que verifica si estan todos los elementos de la lista con el de la base de datos.
+     * Test que verifica si estan todos los elementos de la lista con el de la
+     * base de datos.
      */
-         @Test
-    public void findAllTest()
-    {
+    @Test
+    public void findAllTest() {
         List<CompradorEntity> list = logica.getCompradores();
-//        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
-        Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
+        Assert.assertEquals(data.size(), list.size());
+        for (CompradorEntity entity : list) {
+            boolean found = false;
+            for (CompradorEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
     }
-    
+
     /**
      * Verifica que no hayan dos compradores con el mismo login.
-     * @throws BusinessLogicException 
+     *
+     * @throws BusinessLogicException
      */
-        @Test(expected = BusinessLogicException.class)
-    public void createMismoLoginTest() throws BusinessLogicException
-    {
+    @Test(expected = BusinessLogicException.class)
+    public void createMismoLoginTest() throws BusinessLogicException {
         PodamFactory factory = new PodamFactoryImpl();
         CompradorEntity nuevo = factory.manufacturePojo(CompradorEntity.class);
         nuevo.setLogin(data.get(0).getLogin());
         logica.createComprador(nuevo);
     }
-    
-    
-     /**
-     * busca un comprador dado su id. 
+
+    /**
+     * busca un comprador dado su id.
      */
-        @Test
-    public void findByIdTest()
-    {
+    @Test
+    public void findByIdTest() {
         CompradorEntity userLocal = data.get(0);
         CompradorEntity userBd = logica.getComprador(userLocal.getId());
         Assert.assertNotNull("Lo que retorna la bd no debería se null", userBd);
         Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
     }
-    
-      /**
-     * busca un comprador dado su login. 
+
+    /**
+     * busca un comprador dado su login.
      */
-        @Test
-    public void findByLoginTest()
-    {
+    @Test
+    public void findByLoginTest() {
         CompradorEntity userLocal = data.get(0);
         CompradorEntity userBd = logica.getByLogin(userLocal.getLogin());
         Assert.assertNotNull("Lo que retorna la bd no debería se null", userBd);
         Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
     }
-    
-   
-    /** 
+
+    /**
      * actualiza la informacion de un comprador dado un id.
      */
-        @Test
-    public void updateTest()
-    {
-        try
-        {
+    @Test
+    public void updateTest() {
+        try {
             CompradorEntity local = data.get(0);
             PodamFactory factory = new PodamFactoryImpl();
             CompradorEntity nuevo = factory.manufacturePojo(CompradorEntity.class);
@@ -212,11 +197,9 @@ public class CompradorLogicTest
             logica.updateComprador(nuevo);
             CompradorEntity bd = em.find(CompradorEntity.class, local.getId());
             Assert.assertEquals("No se actualizó correctamente", bd, nuevo);
-        }
-        catch (BusinessLogicException ex)
-        {
+        } catch (BusinessLogicException ex) {
             Logger.getLogger(VendedorLogicTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }
