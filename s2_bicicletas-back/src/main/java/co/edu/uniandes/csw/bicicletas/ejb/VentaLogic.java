@@ -43,25 +43,22 @@ public class VentaLogic {
     public VentaEntity createVenta(VentaEntity pVenta) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de crear una venta.");
 
-        if (pVenta.getId() > 0) {
-            throw new BusinessLogicException("El id de la venta no puede ser menor a 0.");
-        } else if (vp.findById(pVenta.getId()) != null) {
+        if (pVenta.getId() != null) {
             throw new BusinessLogicException("Ya existe una venta con dicho id \"" + pVenta.getId() + "\"");
         }
 
-        if (pVenta.getFactura().isEmpty()) {
+        if (pVenta.getFactura() == null) {
             throw new BusinessLogicException("La ruta de la imagen no puede estar vacío.");
+        } 
+        if (vp.findById(pVenta.getId()) != null) {
+            throw new BusinessLogicException("Ya existe un comprador con el nombre \"" + pVenta.getId() + "\"");
         }
 
-        if (pVenta.getPrecio() > 0) {
+        if (pVenta.getPrecio() < 0.0) {
             throw new BusinessLogicException("El precio no puede ser un valor menor a 0.");
         }
 
-        if (pVenta.getAprobado() != true) {
-            throw new BusinessLogicException("No fue aprobada la compra.");
-        }
-
-        if (0 > pVenta.getFotos().length) {
+        if (pVenta.getFotos().length < 0) {
             throw new BusinessLogicException("La ruta de la imagen no puede estar vacío.");
         }
 
@@ -77,9 +74,9 @@ public class VentaLogic {
      * @param id de la venta a eliminar.
      */
     public void deleteVenta(Long id) {
-        LOGGER.log(Level.INFO, "se borrará la venta con id {}", id);
-        LOGGER.log(Level.INFO, "se borró la venta con id {}", id);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la editorial con id = {0}", id);
         vp.delete(id);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la editorial con id = {0}", id);
     }
 
     /**
@@ -87,53 +84,44 @@ public class VentaLogic {
      *
      * @return
      */
-    public List<VentaEntity> findAllVentas() {
-        LOGGER.log(Level.INFO, "se buscarán todos las ventas");
-        List<VentaEntity> lista = vp.findAll();
-        if (lista == null || lista.isEmpty()) {
-            LOGGER.log(Level.SEVERE, "No existen ventas");
-        }
-        LOGGER.log(Level.INFO, "Se termina la busqueda de los ventas");
-        return lista;
+    public List<VentaEntity> getVentas() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las editoriales");
+        // Note que, por medio de la inyección de dependencias se llama al método "findAll()" que se encuentra en la persistencia.
+        List<VentaEntity> ventas = vp.findAll();
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las editoriales");
+        return ventas;
     }
 
     /**
      * Actualiza una venta.
      *
      * @param pVenta los valores a actualizar.
-     * @return la venta actualizada, 
-     * 1.Ninguno de los atributos es vacio o nulo. <br>
+     * @return la venta actualizada, 1.Ninguno de los atributos es vacio o nulo.
+     * <br>
      * 2.No hay otro vendedor o comprador con el mismo login. <br>
      * @throws BusinessLogicException
      */
     public VentaEntity updateVenta(VentaEntity pVenta) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar una venta.");
 
-        if (pVenta.getId() > 0) {
-            throw new BusinessLogicException("El login del venta no puede ser menor a 0.");
-        } else if (vp.findById(pVenta.getId()) != null) {
-            throw new BusinessLogicException("Ya existe una venta con el id \"" + pVenta.getId() + "\"");
+        if (vp.findById(pVenta.getId()) == null) {
+            throw new BusinessLogicException("No existe una venta con el id \"" + pVenta.getId() + "\"");
         }
-
-        if (pVenta.getFactura().isEmpty()) {
+        if (pVenta.getFactura() == null) {
             throw new BusinessLogicException("La ruta de la imagen no puede estar vacío.");
         }
 
-        if (pVenta.getPrecio() > 0) {
-            throw new BusinessLogicException("El precio no puede ser menor a cero.");
-        }
-
-        if (pVenta.getAprobado() != true) {
-            throw new BusinessLogicException("No fue aprobada la compra.");
+        if (pVenta.getPrecio() < 0.0) {
+            throw new BusinessLogicException("El precio no puede ser un valor menor a 0.");
         }
 
         if (0 >= pVenta.getFotos().length) {
             throw new BusinessLogicException("La ruta de la imagen no puede estar vacío.");
         }
 
-        VentaEntity ret = vp.create(pVenta);
+        VentaEntity ret = vp.update(pVenta);
 
-        LOGGER.log(Level.INFO, "Termina proceso de crear una venta.");
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar una venta.");
         return ret;
     }
 
@@ -143,13 +131,26 @@ public class VentaLogic {
      * @param id de la venta a buscar.
      * @return la venta con el id relacionado.
      */
-    public VentaEntity findVenta(Long id) {
-        LOGGER.log(Level.INFO, "Se buscará el venta con id {}", id);
-        VentaEntity buscado = vp.find(id);
-        if (buscado == null) {
-            LOGGER.log(Level.SEVERE, "No existe una venta con id {}", id);
+    public VentaEntity getVenta(Long id) {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la venta con id = {0}", id);
+        // Note que, por medio de la inyección de dependencias se llama al método "find(id)" que se encuentra en la persistencia.
+        VentaEntity ventaEntity = vp.find(id);
+        if (ventaEntity == null) {
+            LOGGER.log(Level.SEVERE, "La venta con el id = {0} no existe", id);
         }
-        LOGGER.log(Level.INFO, "Se termina la busqueda del venta con id {}", id);
-        return buscado;
+        LOGGER.log(Level.INFO, "Termina proceso de consultar la venta con id = {0}", id);
+        return ventaEntity;
+    }
+
+    public VentaEntity getById(Long pId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de búsqueda de un comprador por Loggin.");
+
+        VentaEntity ret = vp.findById(pId);
+        if (ret == null) {
+            LOGGER.log(Level.SEVERE, "No existe el vendedor con login {0}", pId);
+        }
+
+        LOGGER.log(Level.INFO, "Termina proceso de búsqueda de un comprador por Loggin");
+        return ret;
     }
 }

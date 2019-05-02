@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.bicicletas.ejb;
 
 import co.edu.uniandes.csw.bicicletas.entities.MedioPagoEntity;
@@ -17,7 +12,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
- *
  * Juan José Torres-Andres Donoso
  */
 @Stateless
@@ -26,9 +20,15 @@ public class VendedorMedioPagoLogic
 
     private static final Logger LOGGER = Logger.getLogger(VendedorMedioPagoLogic.class.getName());
 
+    /**
+     * Conexión a la persistencia del vendedor.
+     */
     @Inject
     private VendedorPersistence vendedorPersistence;
 
+    /**
+     * Conexión a la persistencia del medio de pago.
+     */
     @Inject
     private MedioPagoPersistence medioPagoPersistence;
 
@@ -39,10 +39,14 @@ public class VendedorMedioPagoLogic
      * @param vendedorId Id del vendedor al que se la va a agregar el medio de
      * pago.
      * @return medio de pago agregado.
+     * @throws co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException
      */
-    public MedioPagoEntity addMedioPago(Long vendedorId, MedioPagoEntity medio)
+    public MedioPagoEntity addMedioPago(Long vendedorId, MedioPagoEntity medio) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia proceso de agregarle un medio de pago a un vendedor con id = {0}", vendedorId);
+        if(medioPagoPersistence.findByNumberAndVendedor(vendedorId, medio.getNumeroTarjeta()) != null) {
+            throw new BusinessLogicException("Ya existe un medio de pago con este número.");
+        }
         VendedorEntity vendedorEntity = vendedorPersistence.find(vendedorId);
         vendedorEntity.getMediosPago().add(medio);
         medio.setVendedor(vendedorEntity);
@@ -52,7 +56,6 @@ public class VendedorMedioPagoLogic
 
     /**
      * Retorna una lista con los medios de pago del vendedor.
-     *
      * @param vendedorId Id del vendedor.
      * @return lista con los medios de pago.
      */
@@ -64,7 +67,6 @@ public class VendedorMedioPagoLogic
 
     /**
      * Retorna el medio de pago asociado al vendedor.
-     *
      * @param vendedorId Id del vendedor.
      * @param medioPagoId Id del medio de pago.
      * @return medio de pago asociado al vendedor.
@@ -72,9 +74,9 @@ public class VendedorMedioPagoLogic
      */
     public MedioPagoEntity getMedioPago(Long vendedorId, Long medioPagoId) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el medio de pago con id = {0} del vendedor con id = " + vendedorId, medioPagoId);
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar el medio de pago con id: {0} del vendedor con id: {1}", new Object[] {vendedorId, medioPagoId});
         MedioPagoEntity medioPago = medioPagoPersistence.findByVendedor(vendedorId, medioPagoId);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar el medio de pago con id = {0} del vendedor con id = " + vendedorId, medioPagoId);
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el medio de pago con id: {0} del vendedor con id: {1} ", new Object[] {vendedorId, medioPagoId});
         if (medioPago == null)
         {
             throw new BusinessLogicException("El medio de pago no está asociado al vendedor");
@@ -84,7 +86,6 @@ public class VendedorMedioPagoLogic
 
     /**
      * Reemplaza los medios de pago de un vendedor.
-     *
      * @param vendedorId Id del vendedor.
      * @param mediosPago Medios de pago que se agregarán.
      * @return lista de medios de pago actualizada.
@@ -117,12 +118,12 @@ public class VendedorMedioPagoLogic
      */
     public void eliminarMedioPago (Long vendedorId, Long medioPagoId) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de borrar el medio de pago con id = {0} del vendedor con id = " + vendedorId, medioPagoId);
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar el medio de pago con id: {0} del vendedor con id: {1} ", new Object[] {vendedorId, medioPagoId});
         MedioPagoEntity borrar = getMedioPago(vendedorId, medioPagoId);
         if (borrar == null)
-            throw new BusinessLogicException("El medio de pago con id = " + medioPagoId + " no esta asociado a el vendedor con id = " + vendedorId);
+            throw new BusinessLogicException("El medio de pago con id = " + medioPagoId + " no esta asociado a el vendedor con id: " + vendedorId);
         
         medioPagoPersistence.delete(borrar.getId());
-        LOGGER.log(Level.INFO, "Termina proceso de borrar el medio de pago con id = {0} del vendedor con id = " + vendedorId, medioPagoId);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar el medio de pago con id = {0} del vendedor con id: {1}", new Object[] {vendedorId, medioPagoId});
     }
 }

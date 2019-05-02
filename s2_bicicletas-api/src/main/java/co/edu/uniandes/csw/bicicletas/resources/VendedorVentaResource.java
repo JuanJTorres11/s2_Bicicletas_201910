@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package co.edu.uniandes.csw.bicicletas.resources;
 
 import co.edu.uniandes.csw.bicicletas.dtos.VentaDTO;
@@ -19,7 +14,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -34,17 +28,24 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class VendedorVentaResource
 {
-     private final static Logger LOGGER = Logger.getLogger(VendedorVentaResource.class.getName());
+     private static final Logger LOGGER = Logger.getLogger(VendedorVentaResource.class.getName());
 
+     /**
+      * Lógica de la asociación
+      */
     @Inject
     private VendedorVentaLogic logica;
 
+    /**
+     * Lógica especifica de la venta.
+     */
     @Inject
     private VentaLogic logicaVenta;
 
     /**
      * Guarda un medio de pago en el vendedor con el id dado.
      * @param vendedorId Id del vendedor.
+     * @param venta
      * @return JSON {@link VentaDTO} - Medio de pago guardado en el
      * vendedor.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
@@ -53,9 +54,9 @@ public class VendedorVentaResource
     @POST
     public VentaDTO addVenta(@PathParam("vendedorId") Long vendedorId, VentaDTO venta)
     {
-        LOGGER.log(Level.INFO, "VendedorVentasResource addVenta: input: vendedorsID: {0}", vendedorId);
+        LOGGER.log(Level.INFO, "VendedorVentasResource addVenta: input: vendedorID: {0}", vendedorId);
         VentaDTO ventaDTO = new VentaDTO(logica.addVenta(vendedorId, venta.toEntity()));
-        LOGGER.log(Level.INFO, "EditorialVentasResource addVenta: output: {0}", ventaDTO);
+        LOGGER.log(Level.INFO, "EditorialVentasResource addVenta: output: {0}", ventaDTO.getId());
         return ventaDTO;
     }
 
@@ -81,8 +82,7 @@ public class VendedorVentaResource
      *
      * @param vendedorId Identificador del vendedor que se esta buscando. Este
      * debe ser una cadena de dígitos.
-     * @param mediosPagoId Identificador del medio de pago que se esta buscando.
-     * Este debe ser una cadena de dígitos.
+     * @param ventaId
      * @return JSON {@link VentaDTO} - El medio de pago buscado
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra la venta.
@@ -98,7 +98,7 @@ public class VendedorVentaResource
         {
             vendedorId, ventaId
         });
-        if (logicaVenta.findVenta(ventaId) == null)
+        if (logicaVenta.getVenta(ventaId) == null)
         {
             throw new WebApplicationException("El recurso /vendedores/" + vendedorId + "/ventas/" + ventaId + " no existe.", 404);
         }
@@ -122,6 +122,7 @@ public class VendedorVentaResource
             throw new WebApplicationException("El recurso vendedor/" + vendedorId + "/ventas/ "  + ventaId + " no existe.", 404);
         logica.eliminarVenta(vendedorId, ventaId);
     }
+    
     /**
      * Convierte una lista de VentaEntity a una lista de VentaDTO.
      * @param entityList Lista de VentaEntity a convertir.

@@ -5,12 +5,14 @@
  */
 package co.edu.uniandes.csw.bicicletas.dtos;
 
+import java.io.Serializable;
+
 /**
  * Representa un objeto con login y password para poderlo enviar como JSON y
  * autenticar usuarios.
  * @author Juan José Torres <jj.torresr@uniandes.edu.co>
  */
-public class InicioSesionDTO
+public class InicioSesionDTO implements Serializable
 {
 
     private String login;

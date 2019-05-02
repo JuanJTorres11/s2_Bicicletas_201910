@@ -37,7 +37,8 @@
 					"raw": "{ \n\t\"nombre\": \"Juan Torres R\",\n\t\n    \"login\":\"jj.torresr1\",\n\n    \"password\":\"abc123\",\n    \n    \"telefono\": 3214032973\n}"
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -69,13 +70,21 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"factura\": \"./factura.pdf\",\n\t\"precio\": 123000,\n\t\"aprobado\": false,\n\t\"fotos\": [\"./foto1\", \"./foto2\", \"./foto3\"]\n}"
+					"raw": "{\n\t\"factura\": \"./factura.pdf\",\n\t\"precio\": 123000,\n\t\"aprobado\": null,\n\t\"fotos\": [\"./foto1\", \"./foto2\", \"./foto3\"]\n}"
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/ventas",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/ventas",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -123,7 +132,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/mediosPago/{{new_id_v}}",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/ventas/{{new_id_v}}",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -132,7 +142,7 @@
 						"{{ruta}}",
 						"vendedores",
 						"{{new_id_c}}",
-						"mediosPago",
+						"ventas",
 						"{{new_id_v}}"
 					]
 				}
@@ -168,7 +178,8 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/mediosPago/{{new_id_v}}",
+					"raw": "http://{{ip}}:{{port}}/{{ruta}}/vendedores/{{new_id_c}}/ventas/{{new_id_v}}",
+					"protocol": "http",
 					"host": [
 						"{{ip}}"
 					],
@@ -177,7 +188,7 @@
 						"{{ruta}}",
 						"vendedores",
 						"{{new_id_c}}",
-						"mediosPago",
+						"ventas",
 						"{{new_id_v}}"
 					]
 				}

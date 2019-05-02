@@ -58,7 +58,7 @@ public class VentaLogicTest {
     /**
      * Lista con los datos a probar
      */
-    private List<VentaEntity> data = new ArrayList<>();
+    private List<VentaEntity> data = new ArrayList<VentaEntity>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -96,7 +96,7 @@ public class VentaLogicTest {
      * Borra toda la información de la base de datos
      */
     private void clearData() {
-        em.createQuery("delete from VendedorEntity").executeUpdate();
+        em.createQuery("delete from VentaEntity").executeUpdate();
         data.clear();
     }
 
@@ -130,8 +130,8 @@ public class VentaLogicTest {
     
         @Test
     public void findAllTest() {
-        List<VentaEntity> list = logica.findAllVentas();
-//        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
+        List<VentaEntity> list = logica.getVentas();
+        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
         Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
     }
 
@@ -146,7 +146,7 @@ public class VentaLogicTest {
     @Test
     public void findTest() {
         VentaEntity userLocal = data.get(0);
-        VentaEntity userBd = logica.findVenta(userLocal.getId());
+        VentaEntity userBd = logica.getVenta(userLocal.getId());
         Assert.assertNotNull("Lo que retorna la bd no debería se null", userBd);
         Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
     }
@@ -154,7 +154,7 @@ public class VentaLogicTest {
     @Test
     public void findByIdTest() {
         VentaEntity userLocal = data.get(0);
-        VentaEntity userBd = logica.findVenta(userLocal.getId());
+        VentaEntity userBd = logica.getVenta(userLocal.getId());
         Assert.assertNotNull("Lo que retorna la bd no debería se null", userBd);
         Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
     }

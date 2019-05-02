@@ -62,6 +62,8 @@ public class BicicletaLogicTest {
      * Lista que tiene los datos de prueba.
      */
     private List<BicicletaEntity> data = new ArrayList<BicicletaEntity>();
+    private List<MarcaEntity> dataMarcas = new ArrayList<MarcaEntity>();
+    private List<CategoriaEntity> dataCategorias = new ArrayList<CategoriaEntity>();
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -110,13 +112,23 @@ public class BicicletaLogicTest {
      * pruebas.
      */
     private void insertData() {
+        
+        for (int i = 0; i < 3; i++) {
+        
+            CategoriaEntity cat = factory.manufacturePojo(CategoriaEntity.class);
+            MarcaEntity marca = factory.manufacturePojo(MarcaEntity.class);
+         
+            em.persist(cat);
+            em.persist(marca);
+            dataMarcas.add(marca);
+            dataCategorias.add(cat);
+
+        }
         for (int i = 0; i < 3; i++) {
             BicicletaEntity entity = factory.manufacturePojo(BicicletaEntity.class);
 
-            CategoriaEntity cat = factory.manufacturePojo(CategoriaEntity.class);
-            MarcaEntity marca = factory.manufacturePojo(MarcaEntity.class);
-            entity.setCategoria(cat);
-            entity.setMarca(marca);
+            entity.setCategoria(dataCategorias.get(i));
+            entity.setMarca(dataMarcas.get(i));
 
             Double precio = entity.getPrecio();
             entity.setPrecio(precio < 0.0 ? precio * -1 : precio);
@@ -128,6 +140,7 @@ public class BicicletaLogicTest {
             data.add(entity);
 
         }
+           
     }
 
     /**
@@ -139,10 +152,8 @@ public class BicicletaLogicTest {
     public void createBicicletaTest() throws BusinessLogicException {
         BicicletaEntity newEntity = factory.manufacturePojo(BicicletaEntity.class);
         
-        CategoriaEntity cat = factory.manufacturePojo(CategoriaEntity.class);
-        MarcaEntity marca = factory.manufacturePojo(MarcaEntity.class);
-        newEntity.setCategoria(cat);
-        newEntity.setMarca(marca);
+        newEntity.setCategoria(dataCategorias.get(0));
+        newEntity.setMarca(dataMarcas.get(0));
         Double precio = newEntity.getPrecio();
         newEntity.setPrecio(precio < 0.0 ? precio * -1 : precio);
         Integer stock = newEntity.getStock();
@@ -164,10 +175,10 @@ public class BicicletaLogicTest {
     @Test(expected = BusinessLogicException.class)
     public void createBicicletaConMismaReferenciaTest() throws BusinessLogicException {
         BicicletaEntity newEntity = factory.manufacturePojo(BicicletaEntity.class);
-        CategoriaEntity cat = factory.manufacturePojo(CategoriaEntity.class);
-        MarcaEntity marca = factory.manufacturePojo(MarcaEntity.class);
-        newEntity.setCategoria(cat);
-        newEntity.setMarca(marca);
+        
+        newEntity.setCategoria(dataCategorias.get(0));
+        newEntity.setMarca(dataMarcas.get(0));
+     
         Double precio = newEntity.getPrecio();
         newEntity.setPrecio(precio < 0.0 ? precio * -1 : precio);
         Integer stock = newEntity.getStock();
