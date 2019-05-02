@@ -77,14 +77,10 @@ public class ResenaLogic {
 
         LOGGER.log(Level.INFO, "Inicia proceso de borrar la resena con id = {0}", resenaId);
         ResenaEntity buscada = getResena(bicicletaId, resenaId);
-        BicicletaEntity bicicleta = persistenceBike.find(bicicletaId);
         
         if(buscada == null)
             throw new BusinessLogicException("La reseña con id = " + resenaId + " no existe o no está asociada a la bicicleta =" + bicicletaId + "\"");
         
-        buscada.setCalificacion(0);
-        this.actualizarCalificacionPromedioBicicleta(bicicleta, buscada);
-    
         persistence.delete(buscada.getId());
         LOGGER.log(Level.INFO, "Termina proceso de borrar la resena con id = {0}", resenaId);
     }
