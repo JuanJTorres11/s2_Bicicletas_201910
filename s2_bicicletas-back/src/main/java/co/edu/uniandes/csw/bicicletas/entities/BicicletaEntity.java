@@ -267,6 +267,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
         this.album = album;
     }
   
+    /**
      * @return the carrito
      */
     public CompradorEntity getComprador() {
