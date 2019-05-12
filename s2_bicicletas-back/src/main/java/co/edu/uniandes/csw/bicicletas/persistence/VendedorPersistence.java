@@ -10,7 +10,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
- *
  * @author Juan José Torres <jj.torresr@uniandes.edu.co>
  */
 @Stateless
@@ -19,6 +18,9 @@ public class VendedorPersistence
 
     private static final Logger LOGGER = Logger.getLogger(VendedorPersistence.class.getName());
 
+    /**
+     * Manejador de la persistencia.
+     */
     @PersistenceContext(unitName = "bicicletasPU")
     protected EntityManager em;
 

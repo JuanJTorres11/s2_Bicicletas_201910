@@ -12,7 +12,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 /**
- *
  * Juan José Torres-Andres Donoso
  */
 @Stateless
@@ -21,9 +20,15 @@ public class VendedorMedioPagoLogic
 
     private static final Logger LOGGER = Logger.getLogger(VendedorMedioPagoLogic.class.getName());
 
+    /**
+     * Conexión a la persistencia del vendedor.
+     */
     @Inject
     private VendedorPersistence vendedorPersistence;
 
+    /**
+     * Conexión a la persistencia del medio de pago.
+     */
     @Inject
     private MedioPagoPersistence medioPagoPersistence;
 
@@ -34,10 +39,14 @@ public class VendedorMedioPagoLogic
      * @param vendedorId Id del vendedor al que se la va a agregar el medio de
      * pago.
      * @return medio de pago agregado.
+     * @throws co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException
      */
-    public MedioPagoEntity addMedioPago(Long vendedorId, MedioPagoEntity medio)
+    public MedioPagoEntity addMedioPago(Long vendedorId, MedioPagoEntity medio) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "Inicia proceso de agregarle un medio de pago a un vendedor con id = {0}", vendedorId);
+        if(medioPagoPersistence.findByNumberAndVendedor(vendedorId, medio.getNumeroTarjeta()) != null) {
+            throw new BusinessLogicException("Ya existe un medio de pago con este número.");
+        }
         VendedorEntity vendedorEntity = vendedorPersistence.find(vendedorId);
         vendedorEntity.getMediosPago().add(medio);
         medio.setVendedor(vendedorEntity);
@@ -47,7 +56,6 @@ public class VendedorMedioPagoLogic
 
     /**
      * Retorna una lista con los medios de pago del vendedor.
-     *
      * @param vendedorId Id del vendedor.
      * @return lista con los medios de pago.
      */
@@ -59,7 +67,6 @@ public class VendedorMedioPagoLogic
 
     /**
      * Retorna el medio de pago asociado al vendedor.
-     *
      * @param vendedorId Id del vendedor.
      * @param medioPagoId Id del medio de pago.
      * @return medio de pago asociado al vendedor.
@@ -79,7 +86,6 @@ public class VendedorMedioPagoLogic
 
     /**
      * Reemplaza los medios de pago de un vendedor.
-     *
      * @param vendedorId Id del vendedor.
      * @param mediosPago Medios de pago que se agregarán.
      * @return lista de medios de pago actualizada.

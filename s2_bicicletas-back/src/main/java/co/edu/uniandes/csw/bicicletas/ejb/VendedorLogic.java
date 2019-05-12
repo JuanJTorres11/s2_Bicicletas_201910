@@ -19,10 +19,10 @@ public class VendedorLogic
 
     private static final Logger LOGGER = Logger.getLogger(VendedorLogic.class.getName());
 
-    @Inject
     /**
      * Persistencia de vendedor para probar sus métodos.
      */
+    @Inject
     private VendedorPersistence pVendedor;
 
     /**
@@ -155,8 +155,8 @@ public class VendedorLogic
      */
     public VendedorEntity updateVendedor(VendedorEntity nuevo) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de creación de usuario ");
-        if (nuevo.getLogin() == null || !nuevo.getLogin().equals(""))
+        LOGGER.log(Level.INFO, "Inicia proceso de actualización de vendedor");
+        if (nuevo.getLogin() == null || nuevo.getLogin().equals(""))
         {
             throw new BusinessLogicException("El login no es valido");
         }
@@ -188,7 +188,6 @@ public class VendedorLogic
 
     /**
      * Se elimina al vendedor con id dado
-     *
      * @param id ID del vendedor a eliminar.
      */
     public void deleteVendedor(Long id)

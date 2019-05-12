@@ -70,6 +70,27 @@ public class MedioPagoPersistence {
     public MedioPagoEntity findByNumber(Long numero) {
         LOGGER.log(Level.INFO, "Consultando medio de pago por número ", numero);
         // Se crea un query para buscar editoriales con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
+        TypedQuery query = em.createQuery("Select e From MedioPagoEntity e where (e.numeroTarjeta = :numero)", MedioPagoEntity.class);
+        // Se remplaza el placeholder ":name" con el valor del argumento 
+        query = query.setParameter("numero", numero);
+        // Se invoca el query se obtiene la lista resultado
+        List<MedioPagoEntity> sameName = query.getResultList();
+        MedioPagoEntity result;
+        if (sameName == null) {
+            result = null;
+        } else if (sameName.isEmpty()) {
+            result = null;
+        } else {
+            result = sameName.get(0);
+        }
+        LOGGER.log(Level.INFO, "Saliendo de consultar medio de pago por número ", numero);
+        return result;
+    }
+    
+    public MedioPagoEntity findByNumberAndVendedor (Long idVendedor, Long numero)
+    {
+        LOGGER.log(Level.INFO, "Consultando medio de pago por número ", numero);
+        // Se crea un query para buscar editoriales con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
         TypedQuery query = em.createQuery("Select e From MedioPagoEntity e where e.numeroTarjeta = :numero", MedioPagoEntity.class);
         // Se remplaza el placeholder ":name" con el valor del argumento 
         query = query.setParameter("numero", numero);

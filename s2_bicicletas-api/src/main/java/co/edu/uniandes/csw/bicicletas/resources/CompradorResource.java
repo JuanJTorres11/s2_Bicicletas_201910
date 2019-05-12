@@ -83,7 +83,7 @@ public class CompradorResource {
      */
     @GET
     @Path("{pCompradorId: \\d+}")
-    public CompradorDTO getComprador(@PathParam("pCompradorId") long pCompradorId) {
+    public CompradorDetailDTO getComprador(@PathParam("pCompradorId") long pCompradorId) {
         LOGGER.log(Level.INFO, "CompradorResource getComprador: input: {0}", pCompradorId);
         CompradorEntity CompradorEntity = logica.getComprador(pCompradorId);
         if (CompradorEntity == null) {
@@ -119,7 +119,8 @@ public class CompradorResource {
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void eliminarComprador(@PathParam("id") long id) {
+    public void eliminarComprador(@PathParam("id") long id) throws BusinessLogicException
+    {
         LOGGER.log(Level.INFO, "CompradorResource deleteComprador: input: {0}", id);
         if (logica.getComprador(id) == null) {
             throw new WebApplicationException("El recurso /comprador/" + id + " no existe.", 404);

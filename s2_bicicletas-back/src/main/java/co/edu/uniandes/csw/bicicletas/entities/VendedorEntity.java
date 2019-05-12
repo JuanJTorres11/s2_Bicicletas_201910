@@ -22,17 +22,30 @@ import uk.co.jemos.podam.common.PodamStrategyValue;
 public class VendedorEntity extends UsuarioEntity
 {
 
+    /**
+     * Telefono del vendedor.
+     */
     @PodamStrategyValue(TelefonoStrategy.class)
     private Long telefono;
 
+    /**
+     * Lista de ventas asociadas al vendedor.
+     */
     @PodamExclude
     @OneToMany(mappedBy = "vendedor", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<VentaEntity> ventas;
 
+    /**
+     * Lista de medios de pago asociadas al vendedor.
+     */
     @PodamExclude
     @OneToMany(mappedBy = "vendedor", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MedioPagoEntity> mediosPago;
 
+    /**
+     * 
+     * Constructor vacio.
+     */
     public VendedorEntity ()
     {
         this.nombre = "";
