@@ -156,7 +156,7 @@ public class BicicletaLogic {
      */
     public void verificarReglasNegocioBicicleta(BicicletaEntity bicicletaEntity) throws BusinessLogicException {
         
-        if (bicicletaEntity.getAlbum() == null || bicicletaEntity.getAlbum().length == 0) {
+        if (bicicletaEntity.getAlbum() == null || bicicletaEntity.getAlbum().size() == 0) {
             throw new BusinessLogicException("La bicicleta debe tener al menos 1 foto \"");
         }
 
