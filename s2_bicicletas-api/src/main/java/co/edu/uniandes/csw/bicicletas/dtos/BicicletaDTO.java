@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.bicicletas.dtos;
 
 import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  *
@@ -48,7 +49,7 @@ public class BicicletaDTO implements Serializable {
     /**
      * Las rutas de las imagenes de la bicicleta
      */
-    private String[] album;
+    private ArrayList<String> album;
 
     /**
      * La marca de la bicicleta
@@ -117,7 +118,7 @@ public class BicicletaDTO implements Serializable {
      */
     public BicicletaEntity toEntity() {
         BicicletaEntity bicicletaEntity = new BicicletaEntity();
-        bicicletaEntity.setAlbum(this.album);
+        bicicletaEntity.setAlbum(this.getAlbum());
         bicicletaEntity.setDescripcion(this.descripcion);
         bicicletaEntity.setId(this.id);
         bicicletaEntity.setPrecio(this.precio);
@@ -209,20 +210,7 @@ public class BicicletaDTO implements Serializable {
         this.stock = stock;
     }
 
-    /**
-     * @return the album
-     */
-    public String[] getAlbum() {
-        return album;
-    }
-
-    /**
-     * @param album the album to set
-     */
-    public void setAlbum(String[] album) {
-        this.album = album;
-    }
-
+    
     /**
      * @return the marca
      */
@@ -291,6 +279,20 @@ public class BicicletaDTO implements Serializable {
      */
     public void setCalificacion(Double calificacion) {
         this.calificacion = calificacion;
+    }
+
+    /**
+     * @return the album
+     */
+    public ArrayList<String> getAlbum() {
+        return album;
+    }
+
+    /**
+     * @param album the album to set
+     */
+    public void setAlbum(ArrayList<String> album) {
+        this.album = album;
     }
 
 }
