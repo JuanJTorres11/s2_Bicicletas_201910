@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -35,12 +36,13 @@ public class CompradorEntity extends UsuarioEntity {
     private List<OrdenEntity> ordenes;
     
    @PodamExclude
-   @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
+//   @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
+   @ManyToMany
    private List<BicicletaEntity> listaDeDeseos;
 
-   @PodamExclude
-   @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
-   private List<BicicletaEntity> carrito;
+//   @PodamExclude
+//   @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
+//   private List<BicicletaEntity> carrito;
 //    
 //    @PodamExclude
 //    @OneToMany(mappedBy = "comprador"
@@ -98,24 +100,24 @@ public class CompradorEntity extends UsuarioEntity {
           return listaDeDeseos;
       }
 
-    /** 
-     * Carrito de un comprador. 
-     * @param bicicletasCarrito
-     */
+//    /** 
+//     * Carrito de un comprador. 
+//     * @param bicicletasCarrito
+//     */
+//    
+//    public void setCarrito(List<BicicletaEntity> bicicletasCarrito)
+//    {
+//        this.carrito = bicicletasCarrito;
+//    }
     
-    public void setCarrito(List<BicicletaEntity> bicicletasCarrito)
-    {
-        this.carrito = bicicletasCarrito;
-    }
-    
-    /**
-     * Retorna el carrito de un comprador. 
-     * @return la lista del carrito
-      */
-
-      public List<BicicletaEntity> getCarrito()
-      {
-          return carrito;
-      }
+//    /**
+//     * Retorna el carrito de un comprador. 
+//     * @return la lista del carrito
+//      */
+//
+//      public List<BicicletaEntity> getCarrito()
+//      {
+//          return carrito;
+//      }
 
 }
