@@ -164,11 +164,17 @@ public class VentaPersistenceTest {
         @Test
     public void findAllTest()
     {
-//        List<VentaEntity> list = new ArrayList<VentaEntity>();
-//        vp.findAll();
         List<VentaEntity> list = vp.findAll();
-        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
-        Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
+        Assert.assertEquals(data.size(), list.size());
+        for (VentaEntity ent : list) {
+            boolean found = false;
+            for (VentaEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
     }
     /**
      * Test de buscar una venta por su id.

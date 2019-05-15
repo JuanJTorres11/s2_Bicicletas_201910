@@ -47,8 +47,9 @@ public class VentaLogic {
             throw new BusinessLogicException("Ya existe una venta con dicho id \"" + pVenta.getId() + "\"");
         }
 
-        if (pVenta.getFactura() == null) {
-            throw new BusinessLogicException("La ruta de la imagen no puede estar vacío.");
+        if (!pVenta.getFactura().isEmpty()) {
+        } else {
+            throw new BusinessLogicException("La ruta de la factura no puede estar vacío.");
         } 
         if (vp.findById(pVenta.getId()) != null) {
             throw new BusinessLogicException("Ya existe un comprador con el nombre \"" + pVenta.getId() + "\"");
@@ -58,8 +59,8 @@ public class VentaLogic {
             throw new BusinessLogicException("El precio no puede ser un valor menor a 0.");
         }
 
-        if (pVenta.getFotos().length < 0) {
-            throw new BusinessLogicException("La ruta de la imagen no puede estar vacío.");
+        if (pVenta.getFotos().length > 0) {
+            throw new BusinessLogicException("La ruta de la imagen no puede estar vacío auqi esotas.");
         }
 
         vp.create(pVenta);

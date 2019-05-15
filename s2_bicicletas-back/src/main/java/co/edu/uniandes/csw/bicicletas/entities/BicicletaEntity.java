@@ -12,6 +12,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -75,15 +76,12 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private CategoriaEntity categoria;
     
-     @PodamExclude
-    @ManyToOne
-//    (mappedBy = "bicicleta", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private CompradorEntity comprador;
-     
-//    @PodamExclude
-//    @OneToMany(mappedBy = "bicicleta", cascade = CascadeType.PERSIST, orphanRemoval = true)
-//    @ManyToOne
-//    private List<CompradorEntity> listaDeseos = new ArrayList<CompradorEntity>();
+    /**
+     * El comprador de la bicicleta.
+     */
+    @PodamExclude
+    @ManyToMany
+   private List<CompradorEntity> compradores = new ArrayList<CompradorEntity>();
 
     /**
      * Las reseñas asociadas a la bicicleta
@@ -270,30 +268,17 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     /**
      * @return the carrito
      */
-    public CompradorEntity getComprador() {
-        return comprador;
+    public List<CompradorEntity> getComprador() {
+        return compradores;
     }
 
     /**
      * @param carrito the carrito to set
      */
-    public void setComprador(CompradorEntity pComprador) {
-        this.comprador = pComprador;
+    public void setComprador(List<CompradorEntity> pComprador) {
+        this.compradores = pComprador;
     }
-//
-//    /**
-//     * @return the listaDeseos
-//     */
-//    public List<CompradorEntity> getListaDeseos() {
-//        return listaDeseos;
-//    }
-//
-//    /**
-//     * @param listaDeseos the listaDeseos to set
-//     */
-//    public void setListaDeseos(List<CompradorEntity> listaDeseos) {
-//        this.listaDeseos = listaDeseos;
-//    }
+
 
 
    

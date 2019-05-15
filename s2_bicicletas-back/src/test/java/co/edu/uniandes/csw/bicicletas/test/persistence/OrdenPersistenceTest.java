@@ -146,4 +146,15 @@ public class OrdenPersistenceTest {
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getId(), newEntity.getId());
     }
+    
+    /**
+     * Test de eliminacion de una orden.
+     */
+     @Test
+    public void deleteTest() {
+        OrdenEntity orden = data.get(0);
+        ordenPersistence.delete(orden.getId());
+        OrdenEntity borrado = em.find(OrdenEntity.class, orden.getId());
+        Assert.assertNull(borrado);
+    }
 }
