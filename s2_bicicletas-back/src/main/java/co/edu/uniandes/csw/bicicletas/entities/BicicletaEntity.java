@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -56,7 +58,9 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     /**
      * Las rutas de las imagenes de la bicicleta
      */
-    private String[] album;
+    @ElementCollection
+    @CollectionTable(name = "albumImages")
+    private ArrayList<String> album;
 
     /**
      * La marca de la bicicleta
@@ -179,20 +183,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
         this.stock = stock;
     }
 
-    /**
-     * @return the album
-     */
-    public String[] getAlbum() {
-        return album;
-    }
-
-    /**
-     * @param album the album to set
-     */
-    public void setAlbum(String[] album) {
-        this.album = album;
-    }
-
+   
     /**
      * @return the marca
      */
@@ -264,6 +255,20 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     }
 
     /**
+     * @return the album
+     */
+    public ArrayList<String> getAlbum() {
+        return album;
+    }
+
+    /**
+     * @param album the album to set
+     */
+    public void setAlbum(ArrayList<String> album) {
+        this.album = album;
+    }
+  
+    /**
      * @return the carrito
      */
     public CompradorEntity getComprador() {
@@ -290,6 +295,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
 //    public void setListaDeseos(List<CompradorEntity> listaDeseos) {
 //        this.listaDeseos = listaDeseos;
 //    }
+
 
    
 }
