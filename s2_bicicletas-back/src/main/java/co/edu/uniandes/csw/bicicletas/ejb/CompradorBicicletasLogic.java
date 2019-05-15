@@ -41,7 +41,7 @@ public class CompradorBicicletasLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de agregarle una bicicleta a un comprador con id = {0}", compradorId);
         CompradorEntity compradorEntity = compradorPersistence.find(compradorId);
         BicicletaEntity bicicletaEntity = bicicletaPersistence.find(bicicletaId);
-        bicicletaEntity.setComprador(compradorEntity);
+        bicicletaEntity.getComprador().add(compradorEntity);
         LOGGER.log(Level.INFO, "Termina proceso de agregarle una bicicleta a un comprador con id = {0}", compradorId);
         return bicicletaEntity;
     }
