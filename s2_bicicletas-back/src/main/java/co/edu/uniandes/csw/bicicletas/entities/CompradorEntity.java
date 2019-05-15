@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.bicicletas.entities;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.CascadeType;
@@ -26,27 +27,27 @@ public class CompradorEntity extends UsuarioEntity {
     
     private static final Logger LOGGER = Logger.getLogger(VendedorEntity.class.getName());
       
-      
+    /**
+     * Lista de medio de pago de un comprador.
+     */  
     @PodamExclude
     @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MedioPagoEntity> mediosPago;
     
+    /**
+     * lista de ordenes de un comprador
+     */
     @PodamExclude
     @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<OrdenEntity> ordenes;
     
-   @PodamExclude
-//   @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
-   @ManyToMany
-   private List<BicicletaEntity> listaDeDeseos;
-
-//   @PodamExclude
-//   @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
-//   private List<BicicletaEntity> carrito;
-//    
-//    @PodamExclude
-//    @OneToMany(mappedBy = "comprador"
-//    private BicicletaDTO bicicletaDTO;
+    /*
+    *Lista de deseos de un comprador
+    */
+  @PodamExclude
+   @ManyToMany(mappedBy = "compradores")
+   private List<BicicletaEntity> listaDeDeseos = new ArrayList<BicicletaEntity>();
+          
     
     public CompradorEntity()
     {
