@@ -17,22 +17,20 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class ItemCarritoEntity extends BaseEntity implements Serializable {
-    
+
     /**
-    * Cantidad de productos que entrar al carrito.
-    */
+     * Cantidad de productos que entrar al carrito.
+     */
     private Integer cantidad;
-    
-    
+
     @PodamExclude
     @ManyToOne
     private CompradorEntity comprador;
-    
+
     @PodamExclude
     @OneToOne
     private BicicletaEntity bicicleta;
-    
-    
+
     /**
      * Constructor vacio
      */
@@ -81,7 +79,5 @@ public class ItemCarritoEntity extends BaseEntity implements Serializable {
     public void setBicicleta(BicicletaEntity bicicleta) {
         this.bicicleta = bicicleta;
     }
-    
-    
-    
+
 }

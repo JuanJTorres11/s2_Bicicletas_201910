@@ -20,12 +20,12 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class ItemCarritoPersistence {
-    
+
     /**
      * Logger que permite imprimir eventos
      */
     private static final Logger LOGGER = Logger.getLogger(OrdenPersistence.class.getName());
-    
+
     /**
      * Manejador de la persistencia
      */
@@ -44,17 +44,18 @@ public class ItemCarritoPersistence {
         LOGGER.log(Level.INFO, "Saliendo de crear un item nuevo");
         return itemEntity;
     }
-    
-        /**
+
+    /**
      * Devuelve todas los items de la base de datos.
      *
-     * @return una lista con todas las listas de items que encuentre en la base de datos.
+     * @return una lista con todas las listas de items que encuentre en la base
+     * de datos.
      */
     public List<ItemCarritoEntity> findAll() {
         TypedQuery<ItemCarritoEntity> query = em.createQuery("select u from ItemCarritoEntity u", ItemCarritoEntity.class);
         return query.getResultList();
     }
-    
+
     /**
      * Busca si hay algun item con el id que se envía de argumento
      *
@@ -65,8 +66,8 @@ public class ItemCarritoPersistence {
         LOGGER.log(Level.INFO, "Consultando item con id={0}", itemId);
         return em.find(ItemCarritoEntity.class, itemId);
     }
-    
-         /**
+
+    /**
      *
      * Borra un item de la base de datos recibiendo como argumento el id de la
      * orden.
@@ -77,15 +78,15 @@ public class ItemCarritoPersistence {
         ItemCarritoEntity enti = em.find(ItemCarritoEntity.class, id);
         em.remove(enti);
     }
-    
+
     /**
      * Buscar un item
      *
      * Busca si hay algun item con un id específico
      *
      * @param id El ID del item con respecto al cual se busca
-     * @return La item encontrada o null. Nota: Si existe uno o mas.
-     * devuelve siempre la primera que encuentra
+     * @return La item encontrada o null. Nota: Si existe uno o mas. devuelve
+     * siempre la primera que encuentra
      */
     public ItemCarritoEntity findById(Long id) {
 
@@ -105,13 +106,14 @@ public class ItemCarritoPersistence {
         }
         return ret;
     }
-    
-       /**
-    * Actualiza un item.
-    * @param itemEntity el item que viene con los nuevos cambios. Por ejemplo
-    * el precio pudo cambiar. En ese caso, se haria uso del método update.
-    * @return un item con los cambios aplicados.
-    */
+
+    /**
+     * Actualiza un item.
+     *
+     * @param itemEntity el item que viene con los nuevos cambios. Por ejemplo
+     * el precio pudo cambiar. En ese caso, se haria uso del método update.
+     * @return un item con los cambios aplicados.
+     */
     public ItemCarritoEntity update(ItemCarritoEntity itemEntity) {
         LOGGER.log(Level.INFO, "Actualizando item con id = {0}", itemEntity.getId());
         LOGGER.log(Level.INFO, "Saliendo de actualizar el item con id = {0}", itemEntity.getId());

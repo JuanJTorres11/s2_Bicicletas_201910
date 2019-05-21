@@ -111,7 +111,7 @@ public class CompradorLogicTest {
             data.add(entity);
         }
     }
-    
+
     /**
      * Test que verifica si estan todos los elementos de la lista con el de la
      * base de datos.
@@ -140,7 +140,6 @@ public class CompradorLogicTest {
             Logger.getLogger(VendedorLogicTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
     /**
      * Verifica que no hayan dos compradores con el mismo login.

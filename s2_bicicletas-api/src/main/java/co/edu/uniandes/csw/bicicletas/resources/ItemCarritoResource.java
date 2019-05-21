@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.bicicletas.resources;
 
-
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.dtos.ItemCarritoDTO;
 import co.edu.uniandes.csw.bicicletas.entities.ItemCarritoEntity;
@@ -31,33 +30,36 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author Juan Lozano
  */
-
 @Path("itemCarrito")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
 
 public class ItemCarritoResource {
-    
+
     private static final Logger LOGGER = Logger.getLogger(BicicletaResource.class.getName());
     
+    /**
+     * constante que declara que no existe.
+     */
+    private static final String NO = "no existe";
+
     @Inject
     private ItemCarritoLogic logic;
-    
-       /**
+
+    /**
      * Crea una nueva bicicleta con la informacion que se recibe en el cuerpo de
      * la petición y se regresa un objeto identico con un id auto-generado por
      * la base de datos.
      *
-     * @param pItem {@link BicicletaDTO} - La bicicleta que se desea
-     * guardar.
+     * @param pItem {@link BicicletaDTO} - La bicicleta que se desea guardar.
      * @return JSON {@link BicicletaDTO} - La bicicleta guardada con el atributo
      * id autogenerado.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
      * Error de lógica que se genera cuando ya existe la bicicleta
      */
     @POST
-    public ItemCarritoDTO createItemCarrito(ItemCarritoDTO pItem) throws BusinessLogicException{
+    public ItemCarritoDTO createItemCarrito(ItemCarritoDTO pItem) throws BusinessLogicException {
 
         LOGGER.log(Level.INFO, "ItemCompraResource createItemCompra: input: {0}", pItem);
         ItemCarritoEntity itemEntity = pItem.toEntity();
@@ -67,12 +69,12 @@ public class ItemCarritoResource {
         return nuevoItemDTO;
 
     }
-    
-        /**
+
+    /**
      * Busca el item con el id asociado recibido en la URL y lo devuelve.
      *
-     * @param itemCarritoId Identificador del item que se esta buscando.
-     * Este debe ser una cadena de dígitos.
+     * @param itemCarritoId Identificador del item que se esta buscando. Este
+     * debe ser una cadena de dígitos.
      * @return JSON {@link ItemCarritoDTO} - el item buscado
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el item.
@@ -85,19 +87,19 @@ public class ItemCarritoResource {
         ItemCarritoEntity entity = logic.getItemCarrito(itemCarritoId);
 
         if (entity == null) {
-            throw new WebApplicationException("El recurso /itemCarrito/" + itemCarritoId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /itemCarrito/" + itemCarritoId + NO, 404);
         }
         ItemCarritoDTO itemDTO = new ItemCarritoDTO(entity);
         LOGGER.log(Level.INFO, "ItemCarritoResource getItemCarrito: output: {0}", itemDTO);
 
         return itemDTO;
     }
-    
-        /**
+
+    /**
      * Busca y devuelve todos los items que existen en la aplicacion.
      *
-     * @return JSONArray {@link ItemsCarritoDTO} - Los items encontrados
-     * en la aplicación. Si no hay, retorna una lista vacía.
+     * @return JSONArray {@link ItemsCarritoDTO} - Los items encontrados en la
+     * aplicación. Si no hay, retorna una lista vacía.
      */
     @GET
     public List<ItemCarritoDTO> getItemCarritos() {
@@ -106,8 +108,8 @@ public class ItemCarritoResource {
         LOGGER.log(Level.INFO, "ItemCarritosResource getItemCarritos: output: {0}", listaItems);
         return listaItems;
     }
-    
-        /**
+
+    /**
      * /**
      * Actualiza la bicicleta con el id recibido en la URL con la información
      * que se recibe en el cuerpo de la petición.
@@ -116,7 +118,8 @@ public class ItemCarritoResource {
      * @param itemCarrito
      * @return la bicicleta actualizada
      * @throws BusinessLogicException
-     * @throws WebApplicationException {@link WebApplicationExceptionMapper} - cuando el recurso no existe
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * cuando el recurso no existe
      */
     @PUT
     @Path("{itemCarritoId: \\d+}")
@@ -124,13 +127,13 @@ public class ItemCarritoResource {
         LOGGER.log(Level.INFO, "ItemCarritoResource updateItemCarrito: input: id: {0} , item: {1}", new Object[]{itemId, itemCarrito});
         itemCarrito.setId(itemId);
         if (logic.getItemCarrito(itemId) == null) {
-            throw new WebApplicationException("El recurso /itemCarrito/" + itemId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /itemCarrito/" + itemId + NO, 404);
         }
         ItemCarritoDTO detailDTO = new ItemCarritoDTO(logic.updateItemCarrito(itemCarrito.toEntity()));
         LOGGER.log(Level.INFO, "ItemCarritoResource updateItemCarrito: output: {0}", detailDTO);
         return detailDTO;
     }
-    
+
     /**
      * Elimina la bicicleta con el id recibido
      *
@@ -143,13 +146,13 @@ public class ItemCarritoResource {
         LOGGER.log(Level.INFO, "ItemCarritoResource deleteItemCarrito: input: {0}", itemId);
         ItemCarritoEntity entity = logic.getItemCarrito(itemId);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /itemCarrito/" + itemId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /itemCarrito/" + itemId + NO, 404);
         }
         logic.deleteItemCarrito(itemId);
         LOGGER.info("ItemCarritoResource deleteItemCarrito: output: void");
     }
-    
-        /**
+
+    /**
      * Convierte una lista de entidades a DTO.
      *
      * Este método convierte una lista de objetos BicicletaEntity a una lista de
@@ -166,5 +169,5 @@ public class ItemCarritoResource {
         }
         return list;
     }
-    
+
 }

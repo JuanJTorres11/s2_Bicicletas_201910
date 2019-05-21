@@ -6,35 +6,31 @@
 package co.edu.uniandes.csw.bicicletas.dtos;
 
 import java.io.Serializable;
-import javax.persistence.ManyToOne;
 import co.edu.uniandes.csw.bicicletas.entities.ItemCarritoEntity;
-
 
 /**
  *
  * @author Juan Lozano
  */
-public class ItemCarritoDTO implements Serializable{
-    
+public class ItemCarritoDTO implements Serializable {
+
     /**
      * Identificador del item del carrito.
      */
     private Long id;
-    
+
     /**
      * Cantidad de productos que entrar al carrito.
      */
     private Integer cantidad;
-    
-    public ItemCarritoDTO(ItemCarritoEntity itemEntity)
-    {
-        if (itemEntity != null)
-        {
+
+    public ItemCarritoDTO(ItemCarritoEntity itemEntity) {
+        if (itemEntity != null) {
             this.id = itemEntity.getId();
             this.cantidad = itemEntity.getCantidad();
         }
     }
-    
+
     public ItemCarritoEntity toEntity() {
         ItemCarritoEntity itemEntity = new ItemCarritoEntity();
         itemEntity.setId(this.id);
@@ -69,5 +65,5 @@ public class ItemCarritoDTO implements Serializable{
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
-    
+
 }

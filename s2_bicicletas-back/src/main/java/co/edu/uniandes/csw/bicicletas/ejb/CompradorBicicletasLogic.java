@@ -22,17 +22,18 @@ import javax.inject.Inject;
  */
 @Stateless
 public class CompradorBicicletasLogic {
-    
+
     private static final Logger LOGGER = Logger.getLogger(CategoriaBicicletasLogic.class.getName());
-    
+
     @Inject
     private BicicletaPersistence bicicletaPersistence;
 
     @Inject
     private CompradorPersistence compradorPersistence;
-    
+
     /**
      * Agrega un nueva bicicleta al comprador.
+     *
      * @param bicicletaId Id de la bicicleta que se desea agregar.
      * @param compradorId Id del comprador al que se la va a agregar.
      * @return bicicleta agregada.
@@ -45,9 +46,10 @@ public class CompradorBicicletasLogic {
         LOGGER.log(Level.INFO, "Termina proceso de agregarle una bicicleta a un comprador con id = {0}", compradorId);
         return bicicletaEntity;
     }
-    
-     /**
+
+    /**
      * Retorna una lista con las bicicleta de un comprador.
+     *
      * @param compradorId Id del comprador.
      * @return lista con las bicicletas.
      */
@@ -55,9 +57,10 @@ public class CompradorBicicletasLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar las bicicletas de un comprador con id = {0}", compradorId);
         return compradorPersistence.find(compradorId).getListaDeseos();
     }
-    
-        /**
+
+    /**
      * Retorna la bicicleta asociada al comprador.
+     *
      * @param compradorId Id del comprador.
      * @param bicicletaId id de la bicicleta.
      * @return bicicleta asociada al comprador.
@@ -74,5 +77,5 @@ public class CompradorBicicletasLogic {
         }
         throw new BusinessLogicException("La bicicleta no está asociada a la comprador");
     }
-    
+
 }

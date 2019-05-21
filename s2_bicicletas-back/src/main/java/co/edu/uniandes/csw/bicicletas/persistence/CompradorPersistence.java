@@ -80,7 +80,7 @@ public class CompradorPersistence {
         return query.getResultList();
     }
 
-        /**
+    /**
      * Buscar una comprador
      *
      * Busca si hay algun comprador con un login específico
