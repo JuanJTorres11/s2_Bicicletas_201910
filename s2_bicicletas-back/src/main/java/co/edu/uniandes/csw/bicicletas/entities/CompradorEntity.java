@@ -34,6 +34,13 @@ public class CompradorEntity extends UsuarioEntity {
     @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MedioPagoEntity> mediosPago;
     
+        /**
+     * Lista de medio de pago de un comprador.
+     */  
+    @PodamExclude
+    @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<ItemCarritoEntity> items;
+    
     /**
      * lista de ordenes de un comprador
      */
@@ -120,5 +127,19 @@ public class CompradorEntity extends UsuarioEntity {
 //      {
 //          return carrito;
 //      }
+
+    /**
+     * @return the items
+     */
+    public List<ItemCarritoEntity> getItems() {
+        return items;
+    }
+
+    /**
+     * @param items the items to set
+     */
+    public void setItems(List<ItemCarritoEntity> items) {
+        this.items = items;
+    }
 
 }
