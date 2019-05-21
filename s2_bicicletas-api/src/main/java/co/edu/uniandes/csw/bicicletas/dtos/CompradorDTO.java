@@ -12,26 +12,25 @@ import java.io.Serializable;
  *
  * @author Juan Lozano
  */
-public class CompradorDTO extends UsuarioDTO implements Serializable{
-    
+public class CompradorDTO extends UsuarioDTO implements Serializable {
+
     /**
      * Metodo constructor de la clase CompradorDTO
      */
-   public CompradorDTO()
-   {
-       super();
-   }
-        
-       public CompradorDTO(CompradorEntity pComprador)
-    {
+    public CompradorDTO() {
+        super();
+    }
+
+    public CompradorDTO(CompradorEntity pComprador) {
         super(pComprador);
     }
-   /**
-    * Metodo que convierte un compradorEntity
-    * @return retorna un compradorEntity
-    */
-    public CompradorEntity toEntity()
-    {
+
+    /**
+     * Metodo que convierte un compradorEntity
+     *
+     * @return retorna un compradorEntity
+     */
+    public CompradorEntity toEntity() {
         CompradorEntity vendedor = new CompradorEntity();
         vendedor.setId(id);
         vendedor.setNombre(nombre);

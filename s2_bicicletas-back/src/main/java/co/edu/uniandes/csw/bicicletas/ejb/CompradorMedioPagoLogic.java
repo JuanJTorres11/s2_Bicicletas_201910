@@ -20,18 +20,21 @@ import javax.inject.Inject;
  * @author estudiante
  */
 public class CompradorMedioPagoLogic {
+
     private static final Logger LOGGER = Logger.getLogger(CompradorMedioPagoLogic.class.getName());
-    
+
     @Inject
     private CompradorPersistence compradorPersistence;
-    
+
     @Inject
     private MedioPagoPersistence medioPagoPersistence;
-    
+
     /**
      * Agrega un nuevo medio de pago al comprador.
+     *
      * @param medioPagoId Id del medio de pago que se desea agregar.
-     * @param compradorId Id del comprador al que se la va a agregar el medio de pago.
+     * @param compradorId Id del comprador al que se la va a agregar el medio de
+     * pago.
      * @return medio de pago agregado.
      */
     public MedioPagoEntity addMedioPago(Long medioPagoId, Long compradorId) {
@@ -42,9 +45,10 @@ public class CompradorMedioPagoLogic {
         LOGGER.log(Level.INFO, "Termina proceso de agregarle un medio de pago al comprador con id = {0}", compradorId);
         return medioPagoEntity;
     }
-    
+
     /**
      * Retorna una lista con los medios de pago del comprador.
+     *
      * @param compradorId Id del comprador.
      * @return lista con los medios de pago.
      */
@@ -52,9 +56,10 @@ public class CompradorMedioPagoLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar los medios de pago del comprador con id = {0}", compradorId);
         return compradorPersistence.find(compradorId).getMediosPago();
     }
-    
+
     /**
      * Retorna el medio de pago asociado al comprador.
+     *
      * @param compradorId Id del comprador.
      * @param medioPagoId Id del medio de pago.
      * @return medio de pago asociado al comprador.
@@ -71,9 +76,10 @@ public class CompradorMedioPagoLogic {
         }
         throw new BusinessLogicException("El libro no está asociado a la comprador");
     }
-    
+
     /**
      * Reemplaza los medios de pago de un comprador.
+     *
      * @param compradorId Id del comprador.
      * @param mediosPago Medios de pago que se agregarán.
      * @return lista de medios de pago actualizada.

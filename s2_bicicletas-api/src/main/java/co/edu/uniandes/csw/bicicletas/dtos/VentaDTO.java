@@ -18,7 +18,7 @@ public class VentaDTO implements Serializable {
      * Atributo que representa el identificador de la venta.
      */
     private Long id;
-    
+
     /**
      * Atributo que representa la factura.
      */
@@ -133,6 +133,7 @@ public class VentaDTO implements Serializable {
 
     /**
      * Obtiene el ID asociado a la bicicleta
+     *
      * @return the id
      */
     public Long getId() {
@@ -148,6 +149,7 @@ public class VentaDTO implements Serializable {
 
     /**
      * Obtiene todas las fotos asociadas a la bicicleta.
+     *
      * @return the fotos
      */
     public String[] getFotos() {
@@ -156,6 +158,7 @@ public class VentaDTO implements Serializable {
 
     /**
      * Cambia las fotos que recibe por las que pudiese tener.
+     *
      * @param fotos the fotos to set
      */
     public void setFotos(String[] fotos) {

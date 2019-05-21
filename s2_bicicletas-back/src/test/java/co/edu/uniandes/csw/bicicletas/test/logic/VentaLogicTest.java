@@ -126,9 +126,8 @@ public class VentaLogicTest {
             Logger.getLogger(VendedorLogicTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-        @Test
+
+    @Test
     public void findAllTest() {
         List<VentaEntity> list = logica.getVentas();
         Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
@@ -159,8 +158,6 @@ public class VentaLogicTest {
         Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
     }
 
-
-
     @Test
     public void updateTest() {
         try {
@@ -175,7 +172,7 @@ public class VentaLogicTest {
             Logger.getLogger(VendedorLogicTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * Prueba para eliminar una venta.
      *
