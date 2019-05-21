@@ -197,9 +197,10 @@ INSERT INTO BicicletaEntity (id, calificacion, descripcion, referencia, precio, 
                      values (670, 4, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam', 'Kids A-126', 330000, 0, 80, 510, 150);
 INSERT INTO albumImages(bicicletaentity_id,album) values(670,'https://media.4rgos.it/i/Argos/6879675_R_Z001A?w=750&h=440&qlt=70');
 
-
+insert into ItemCarritoEntity values (1, 500);
 
 SELECT * FROM ResenaEntity;
 SELECT * FROM BicicletaEntity;
 SELECT * FROM CategoriaEntity;
 SELECT * FROM MarcaEntity;
+select * from ItemCarritoEntity;

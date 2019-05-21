@@ -81,10 +81,9 @@ public class CompradorLogic {
      */
     public List<CompradorEntity> getCompradores() {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las editoriales");
-        // Note que, por medio de la inyección de dependencias se llama al método "findAll()" que se encuentra en la persistencia.
-        List<CompradorEntity> compradores = cp.findAll();
+        List<CompradorEntity> ventas = cp.findAll();
         LOGGER.log(Level.INFO, "Termina proceso de consultar todas las editoriales");
-        return compradores;
+        return ventas;
     }
 
     /**

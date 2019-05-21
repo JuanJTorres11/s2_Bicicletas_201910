@@ -59,7 +59,7 @@ public class VentaLogic {
             throw new BusinessLogicException("El precio no puede ser un valor menor a 0.");
         }
 
-        if (pVenta.getFotos().length > 0) {
+        if (pVenta.getFotos().length < 0) {
             throw new BusinessLogicException("La ruta de la imagen no puede estar vacío auqi esotas.");
         }
 
