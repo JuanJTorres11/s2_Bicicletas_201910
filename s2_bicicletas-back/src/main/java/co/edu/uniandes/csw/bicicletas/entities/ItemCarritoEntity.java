@@ -7,6 +7,9 @@ package co.edu.uniandes.csw.bicicletas.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -19,6 +22,15 @@ public class ItemCarritoEntity extends BaseEntity implements Serializable {
     * Cantidad de productos que entrar al carrito.
     */
     private Integer cantidad;
+    
+    
+    @PodamExclude
+    @ManyToOne
+    private CompradorEntity comprador;
+    
+    @PodamExclude
+    @OneToOne
+    private BicicletaEntity bicicleta;
     
     
     /**
@@ -40,6 +52,34 @@ public class ItemCarritoEntity extends BaseEntity implements Serializable {
      */
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
+    }
+
+    /**
+     * @return the comprador
+     */
+    public CompradorEntity getComprador() {
+        return comprador;
+    }
+
+    /**
+     * @param comprador the comprador to set
+     */
+    public void setComprador(CompradorEntity comprador) {
+        this.comprador = comprador;
+    }
+
+    /**
+     * @return the bicicleta
+     */
+    public BicicletaEntity getBicicleta() {
+        return bicicleta;
+    }
+
+    /**
+     * @param bicicleta the bicicleta to set
+     */
+    public void setBicicleta(BicicletaEntity bicicleta) {
+        this.bicicleta = bicicleta;
     }
     
     
