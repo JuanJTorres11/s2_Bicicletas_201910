@@ -6,10 +6,12 @@
 package co.edu.uniandes.csw.bicicletas.entities;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -25,26 +27,34 @@ public class CompradorEntity extends UsuarioEntity {
     
     private static final Logger LOGGER = Logger.getLogger(VendedorEntity.class.getName());
       
-      
+    /**
+     * Lista de medio de pago de un comprador.
+     */  
     @PodamExclude
     @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<MedioPagoEntity> mediosPago;
     
+        /**
+     * Lista de medio de pago de un comprador.
+     */  
+    @PodamExclude
+    @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private List<ItemCarritoEntity> items;
+    
+    /**
+     * lista de ordenes de un comprador
+     */
     @PodamExclude
     @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<OrdenEntity> ordenes;
     
-   @PodamExclude
-   @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
-   private List<BicicletaEntity> listaDeDeseos;
-
-   @PodamExclude
-   @OneToMany(mappedBy = "comprador", cascade = CascadeType.PERSIST, orphanRemoval = true)
-   private List<BicicletaEntity> carrito;
-//    
-//    @PodamExclude
-//    @OneToMany(mappedBy = "comprador"
-//    private BicicletaDTO bicicletaDTO;
+    /*
+    *Lista de deseos de un comprador
+    */
+  @PodamExclude
+   @ManyToMany(mappedBy = "compradores")
+   private List<BicicletaEntity> listaDeDeseos = new ArrayList<BicicletaEntity>();
+          
     
     public CompradorEntity()
     {
@@ -98,24 +108,38 @@ public class CompradorEntity extends UsuarioEntity {
           return listaDeDeseos;
       }
 
-    /** 
-     * Carrito de un comprador. 
-     * @param bicicletasCarrito
-     */
+//    /** 
+//     * Carrito de un comprador. 
+//     * @param bicicletasCarrito
+//     */
+//    
+//    public void setCarrito(List<BicicletaEntity> bicicletasCarrito)
+//    {
+//        this.carrito = bicicletasCarrito;
+//    }
     
-    public void setCarrito(List<BicicletaEntity> bicicletasCarrito)
-    {
-        this.carrito = bicicletasCarrito;
-    }
-    
-    /**
-     * Retorna el carrito de un comprador. 
-     * @return la lista del carrito
-      */
+//    /**
+//     * Retorna el carrito de un comprador. 
+//     * @return la lista del carrito
+//      */
+//
+//      public List<BicicletaEntity> getCarrito()
+//      {
+//          return carrito;
+//      }
 
-      public List<BicicletaEntity> getCarrito()
-      {
-          return carrito;
-      }
+    /**
+     * @return the items
+     */
+    public List<ItemCarritoEntity> getItems() {
+        return items;
+    }
+
+    /**
+     * @param items the items to set
+     */
+    public void setItems(List<ItemCarritoEntity> items) {
+        this.items = items;
+    }
 
 }

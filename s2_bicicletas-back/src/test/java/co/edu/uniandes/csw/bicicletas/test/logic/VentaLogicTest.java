@@ -175,5 +175,18 @@ public class VentaLogicTest {
             Logger.getLogger(VendedorLogicTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    /**
+     * Prueba para eliminar una venta.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test
+    public void deleteBicicletaTest() throws BusinessLogicException {
+        VentaEntity entity = data.get(1);
+        logica.deleteVenta(entity.getId());
+        VentaEntity deleted = em.find(VentaEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
 
 }

@@ -9,23 +9,29 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
- * Clase que representa una biciclceta en la persistencia y permite su serialización
+ * Clase que representa una biciclceta en la persistencia y permite su
+ * serialización
+ *
  * @author Andrea
  */
 @Entity
 public class BicicletaEntity extends BaseEntity implements Serializable {
 
-     /**
+    /**
      * La calificacion promedio de la bicicleta
      */
     private Double calificacion;
-    
+
     /**
      * La descripcion de la bicicleta
      */
@@ -36,7 +42,6 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
      */
     private String referencia;
 
-    
     /**
      * El precio de la bicicleta
      */
@@ -55,7 +60,9 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     /**
      * Las rutas de las imagenes de la bicicleta
      */
-    private String[] album;
+    @ElementCollection
+    @CollectionTable(name = "albumImages")
+    private ArrayList<String> album;
 
     /**
      * La marca de la bicicleta
@@ -63,23 +70,20 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private MarcaEntity marca;
-    
+
     /**
      * LA categoria de la bicicleta
      */
     @PodamExclude
     @ManyToOne
     private CategoriaEntity categoria;
-    
-     @PodamExclude
-    @ManyToOne
-//    (mappedBy = "bicicleta", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private CompradorEntity comprador;
-     
-//    @PodamExclude
-//    @OneToMany(mappedBy = "bicicleta", cascade = CascadeType.PERSIST, orphanRemoval = true)
-//    @ManyToOne
-//    private List<CompradorEntity> listaDeseos = new ArrayList<CompradorEntity>();
+
+    /**
+     * El comprador de la bicicleta.
+     */
+    @PodamExclude
+    @ManyToMany
+    private List<CompradorEntity> compradores = new ArrayList<CompradorEntity>();
 
     /**
      * Las reseñas asociadas a la bicicleta
@@ -87,7 +91,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToMany(mappedBy = "bicicleta", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<ResenaEntity> resenas = new ArrayList<ResenaEntity>();
-    
+
     /**
      * La orden asociada a la bicicleta
      */
@@ -95,6 +99,14 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     @ManyToOne
     private OrdenEntity orden;
 
+    /**
+     * La orden asociada a un item
+     */
+    
+    @PodamExclude
+    @OneToOne
+    private ItemCarritoEntity item;
+    
     /**
      * Constructor vacio
      */
@@ -104,6 +116,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
 
     /**
      * Devuelve la descripcion de la bicicleta
+     *
      * @return the descripcion
      */
     public String getDescripcion() {
@@ -112,6 +125,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
 
     /**
      * Modifica la descripcion de la bicicleta
+     *
      * @param descripcion the descripcion to set
      */
     public void setDescripcion(String descripcion) {
@@ -120,6 +134,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
 
     /**
      * Devuelve la referencia de la bicicleta
+     *
      * @return the referencia
      */
     public String getReferencia() {
@@ -128,6 +143,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
 
     /**
      * Modifica la referencia de la bicicleta
+     *
      * @param referencia the referencia to set
      */
     public void setReferencia(String referencia) {
@@ -136,6 +152,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
 
     /**
      * Devuelve el precio de la bicicleta
+     *
      * @return the precio
      */
     public Double getPrecio() {
@@ -144,6 +161,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
 
     /**
      * Modifica el precio de la bicicleta
+     *
      * @param precio the precio to set
      */
     public void setPrecio(Double precio) {
@@ -176,20 +194,6 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
      */
     public void setStock(Integer stock) {
         this.stock = stock;
-    }
-
-    /**
-     * @return the album
-     */
-    public String[] getAlbum() {
-        return album;
-    }
-
-    /**
-     * @param album the album to set
-     */
-    public void setAlbum(String[] album) {
-        this.album = album;
     }
 
     /**
@@ -233,7 +237,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     public void setResenas(List<ResenaEntity> resenas) {
         this.resenas = resenas;
     }
-    
+
     /**
      * @return the orden
      */
@@ -263,32 +267,45 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the carrito
+     * @return the album
      */
-    public CompradorEntity getComprador() {
-        return comprador;
+    public ArrayList<String> getAlbum() {
+        return album;
     }
 
     /**
-     * @param carrito the carrito to set
+     * @param album the album to set
      */
-    public void setComprador(CompradorEntity pComprador) {
-        this.comprador = pComprador;
+    public void setAlbum(ArrayList<String> album) {
+        this.album = album;
     }
-//
-//    /**
-//     * @return the listaDeseos
-//     */
-//    public List<CompradorEntity> getListaDeseos() {
-//        return listaDeseos;
-//    }
-//
-//    /**
-//     * @param listaDeseos the listaDeseos to set
-//     */
-//    public void setListaDeseos(List<CompradorEntity> listaDeseos) {
-//        this.listaDeseos = listaDeseos;
-//    }
 
-   
+    /**
+     * @return the carrito
+     */
+    public List<CompradorEntity> getCompradores() {
+        return compradores;
+    }
+
+    /**
+     * @param pComprador the carrito to set
+     */
+    public void setCompradores(List<CompradorEntity> pComprador) {
+        this.compradores = pComprador;
+    }
+
+    /**
+     * @return the item
+     */
+    public ItemCarritoEntity getItem() {
+        return item;
+    }
+
+    /**
+     * @param item the item to set
+     */
+    public void setItem(ItemCarritoEntity item) {
+        this.item = item;
+    }
+
 }
