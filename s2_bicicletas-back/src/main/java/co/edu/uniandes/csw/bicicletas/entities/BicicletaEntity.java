@@ -273,7 +273,7 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @param carrito the carrito to set
+     * @param pComprador the carrito to set
      */
     public void setComprador(List<CompradorEntity> pComprador) {
         this.compradores = pComprador;
