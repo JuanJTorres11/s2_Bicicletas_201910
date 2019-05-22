@@ -97,6 +97,21 @@ public class VentaResource {
         LOGGER.log(Level.INFO, "ventaResource updateVenta: output: {0}", detailDTO);
         return detailDTO;
     }
+    
+    /**
+     * Busca y devuelve todas las ventas que existen en un vendedor.
+     *
+     * @param vendedorId El ID del vendedor del cual se buscan las reseñas
+     * @return JSONArray {@link ResenaDTO} - Las reseñas encontradas en la
+     * bicicleta. Si no hay ninguna retorna una lista vacía.
+     */
+    @GET
+    public List<VentaDTO> getVentas(@PathParam("vendedorId") Long vendedorId) throws BusinessLogicException{
+         LOGGER.info("VentaResource getVentas: input: void");
+        List<VentaDTO> listVentas = listEntity2DetailDTO(logica.getVentas(vendedorId));
+        LOGGER.log(Level.INFO, "VentaResource getVentas: output: {0}", listVentas);
+        return listVentas;
+    }
 
     /**
      * Elimina una venta especifica.
@@ -113,17 +128,6 @@ public class VentaResource {
         }
         logica.deleteVenta(id);
         LOGGER.info("VentaResource deleteVenta: output: void");
-    }
-
-    /**
-     * Retorna una lista con todas las ventas registradas.
-     *
-     * @return la lista con las ventas.
-     */
-    @GET
-    public List<VentaDTO> darVendedores() {
-        List<VentaDTO> listaVentas = listEntity2DetailDTO(logica.getVentas());
-        return listaVentas;
     }
 
     /**

@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.persistence;
 
+import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
 import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import java.util.List;
 import java.util.logging.Level;
@@ -56,9 +57,19 @@ public class VentaPersistence {
      * "select u from VentaEntity u" es como un "select * from VentaEntity;" -
      * "SELECT * FROM table_name" en SQL.
      */
-    public List<VentaEntity> findAll() {
-        TypedQuery query = em.createQuery("select u from VentaEntity u", VentaEntity.class);
-        return query.getResultList();
+    public List<VentaEntity> findAll(Long vendedorId) {
+        
+        LOGGER.log(Level.INFO, "Consultando ventas de vendedor con id={0}", vendedorId);
+         TypedQuery<VentaEntity> q = em.createQuery("select p from VentaEntity p where (p.vendedor.id = :vendedorId))", VentaEntity.class);
+
+        q.setParameter("vendedorId", vendedorId);
+        List<VentaEntity> results = q.getResultList();
+         if (results == null) {
+            return null;
+        } else if (results.isEmpty()) {
+            return null;
+        } 
+        return results;
     }
 
     /**

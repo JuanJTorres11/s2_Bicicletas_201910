@@ -25,7 +25,7 @@ import javax.ws.rs.Produces;
  *
  * @author Juan Lozano
  */
-@Path("comprador")
+@Path("compradores")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
