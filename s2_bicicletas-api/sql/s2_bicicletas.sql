@@ -21,6 +21,8 @@ insert into CategoriaEntity (id, nombre) values (140, 'Playera');
 insert into CategoriaEntity (id, nombre) values (150, 'Kids');
 insert into CategoriaEntity (id, nombre) values (160, 'BMX');
 
+insert into CompradorEntity values (1, 'ricardo', 'ricardo@hotmail.com', '1234');
+
 insert into OrdenEntity (fecha, cantidad, costoTotal) values ('07/11/2018', 2, 104.04);
 insert into OrdenEntity (fecha, cantidad, costoTotal) values ('21/06/2018', 5, 126.01);
 insert into OrdenEntity (fecha, cantidad, costoTotal) values ('05/01/2019', 4, 169.68);
@@ -204,3 +206,5 @@ SELECT * FROM BicicletaEntity;
 SELECT * FROM CategoriaEntity;
 SELECT * FROM MarcaEntity;
 select * from ItemCarritoEntity;
+select * from VendedorEntity;
+select * from CompradorEntity;

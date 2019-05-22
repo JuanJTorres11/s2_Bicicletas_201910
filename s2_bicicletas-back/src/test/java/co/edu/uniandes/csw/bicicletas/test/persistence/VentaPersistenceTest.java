@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.test.persistence;
 
+import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
 import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import co.edu.uniandes.csw.bicicletas.persistence.VentaPersistence;
 import java.util.ArrayList;
@@ -53,6 +54,8 @@ public class VentaPersistenceTest {
      * Lista con las ventas de la BD
      */
     private ArrayList<VentaEntity> data = new ArrayList<>();
+    
+    private List<VendedorEntity> dataVendedor = new ArrayList<>();
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -113,21 +116,26 @@ public class VentaPersistenceTest {
     private void clearData() {
 
         em.createQuery("delete from VentaEntity").executeUpdate();
+        em.createQuery("delete from VendedorEntity").executeUpdate();
     }
 
     /**
      * Almacena la informacion creada para realizar las pruebas.
      */
     private void insertData() {
-
         PodamFactory factory = new PodamFactoryImpl();
+        for (int i = 0; i < 3; i++) {
+            VendedorEntity entityB = factory.manufacturePojo(VendedorEntity.class);
+            em.persist(entityB);
+            dataVendedor.add(entityB);
+        }
         for (int i = 0; i < 3; i++) {
 
             VentaEntity entity = factory.manufacturePojo(VentaEntity.class);
-
+            if(i == 0)
+                entity.setVendedor(dataVendedor.get(0));
             em.persist(entity);
-
-            data.add(entity);
+          data.add(entity);
         }
 
     }
@@ -155,24 +163,6 @@ public class VentaPersistenceTest {
         vp.update(nuevo);
         VentaEntity bd = em.find(VentaEntity.class, local.getId());
         Assert.assertEquals("No se actualizó correctamente", bd, nuevo);
-    }
-
-    /**
-     * Test de obtener toda la lista de las ventas.
-     */
-    @Test
-    public void findAllTest() {
-        List<VentaEntity> list = vp.findAll();
-        Assert.assertEquals(data.size(), list.size());
-        for (VentaEntity ent : list) {
-            boolean found = false;
-            for (VentaEntity entity : data) {
-                if (ent.getId().equals(entity.getId())) {
-                    found = true;
-                }
-            }
-            Assert.assertTrue(found);
-        }
     }
 
     /**

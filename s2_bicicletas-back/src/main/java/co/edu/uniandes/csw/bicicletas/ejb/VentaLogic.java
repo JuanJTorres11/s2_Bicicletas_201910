@@ -5,8 +5,10 @@
  */
 package co.edu.uniandes.csw.bicicletas.ejb;
 
+import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
 import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.bicicletas.persistence.VendedorPersistence;
 import co.edu.uniandes.csw.bicicletas.persistence.VentaPersistence;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,6 +28,12 @@ public class VentaLogic {
      */
     @Inject
     private VentaPersistence vp;
+    
+    /**
+     * Persistencia de la Vendedor.
+     */
+        @Inject
+    private VendedorPersistence persistenceVendedor;
     /**
      * logger.
      */
@@ -80,16 +88,22 @@ public class VentaLogic {
     }
 
     /**
-     * Retorna una lista con todas las ventas.
+     * Retorna las ventasEntitys asociadas a un vendedor
      *
-     * @return
+     * @return Una lista con todas las ventasEntity
+     * @throws BusinessLogicException Si el vendedor asociada no exite
      */
-    public List<VentaEntity> getVentas() {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar todas las editoriales");
-        // Note que, por medio de la inyección de dependencias se llama al método "findAll()" que se encuentra en la persistencia.
-        List<VentaEntity> ventas = vp.findAll();
-        LOGGER.log(Level.INFO, "Termina proceso de consultar todas las editoriales");
-        return ventas;
+    public List<VentaEntity> getVentas(Long vendedorId) throws BusinessLogicException{
+
+        LOGGER.log(Level.INFO, "Inicia proceso de buscar todas las ventas");
+        
+       //Verifica que lel vendedor exista
+         VendedorEntity entityVendedor = persistenceVendedor.find(vendedorId);
+       if(entityVendedor == null)
+            throw new BusinessLogicException("No existe una bicicleta con el id \"" + vendedorId + "\"");
+
+        LOGGER.log(Level.INFO, "Termina proceso de buscar todas las ventas");
+        return entityVendedor.getVentas();
     }
 
     /**
