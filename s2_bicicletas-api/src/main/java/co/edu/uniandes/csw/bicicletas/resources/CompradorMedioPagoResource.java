@@ -34,19 +34,22 @@ import javax.ws.rs.core.MediaType;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class CompradorMedioPagoResource {
+
     private final static Logger LOGGER = Logger.getLogger(CompradorMedioPagoResource.class.getName());
-    
+
     @Inject
     private CompradorMedioPagoLogic compradorMediosPagoLogic;
-    
+
     @Inject
     private MedioPagoLogic medioPagoLogic;
-    
+
     /**
      * Guarda un medio de pago en el comprador con el id dado.
+     *
      * @param compradorId Id del comprador.
      * @param medioPagoId Id del medio de pago.
-     * @return JSON {@link MedioPagoDTO} - Medio de pago guardado en el comprador.
+     * @return JSON {@link MedioPagoDTO} - Medio de pago guardado en el
+     * comprador.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el medio de pago.
      */
@@ -61,12 +64,13 @@ public class CompradorMedioPagoResource {
         LOGGER.log(Level.INFO, "EditorialMedioPagosResource addMedioPago: output: {0}", medioPagoDTO);
         return medioPagoDTO;
     }
-    
+
     /**
      * Busca y devuelve todos los medios de pagos de un comprador.
+     *
      * @param compradorsId Identificador del comprador que se esta buscando.
-     * @return JSONArray {@link MedioPagoDTO} - Los medios de pago encontrados en el
-     * comprador. Si no hay ninguno retorna una lista vacía.
+     * @return JSONArray {@link MedioPagoDTO} - Los medios de pago encontrados
+     * en el comprador. Si no hay ninguno retorna una lista vacía.
      */
     @GET
     public List<MedioPagoDTO> getMedioPagos(@PathParam("compradorsId") Long compradorsId) {
@@ -77,18 +81,19 @@ public class CompradorMedioPagoResource {
     }
 
     /**
-     * Busca el medio de pago con el id asociado dentro del comprador con id asociado.
+     * Busca el medio de pago con el id asociado dentro del comprador con id
+     * asociado.
      *
      * @param compradorsId Identificador del comprador que se esta buscando.
      * Este debe ser una cadena de dígitos.
-     * @param mediosPagoId Identificador del medio de pago que se esta buscando. Este debe
-     * ser una cadena de dígitos.
+     * @param mediosPagoId Identificador del medio de pago que se esta buscando.
+     * Este debe ser una cadena de dígitos.
      * @return JSON {@link MedioPagoDTO} - El medio de pago buscado
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el medio de pago.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra el medio de pago en el
-     * comprador.
+     * Error de lógica que se genera cuando no se encuentra el medio de pago en
+     * el comprador.
      */
     @GET
     @Path("{mediosPagoId: \\d+}")
@@ -103,14 +108,15 @@ public class CompradorMedioPagoResource {
     }
 
     /**
-     * Remplaza las instancias de MedioPago asociadas a una instancia de Comprador
+     * Remplaza las instancias de MedioPago asociadas a una instancia de
+     * Comprador
      *
      * @param compradorsId Identificador de la comprador que se esta
      * remplazando. Este debe ser una cadena de dígitos.
-     * @param mediosPago JSONArray {@link MedioPagoDTO} El arreglo de medio de pagos nuevo para el
-     * comprador.
-     * @return JSON {@link MedioPagoDTO} - El arreglo de medio de pagos guardado en el
-     * comprador.
+     * @param mediosPago JSONArray {@link MedioPagoDTO} El arreglo de medio de
+     * pagos nuevo para el comprador.
+     * @return JSON {@link MedioPagoDTO} - El arreglo de medio de pagos guardado
+     * en el comprador.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el medio de pago.
      */

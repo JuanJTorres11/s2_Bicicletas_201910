@@ -8,7 +8,6 @@ package co.edu.uniandes.csw.bicicletas.entities;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -42,7 +41,7 @@ public class VentaEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private VendedorEntity vendedor;
-    
+
     /**
      * Constructor de la clase VentaEntity
      */

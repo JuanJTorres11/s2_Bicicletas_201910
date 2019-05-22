@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.bicicletas.resources;
 
 import co.edu.uniandes.csw.bicicletas.dtos.CompradorDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.CompradorDetailDTO;
-import co.edu.uniandes.csw.bicicletas.dtos.VendedorDetailDTO;
 import co.edu.uniandes.csw.bicicletas.ejb.CompradorLogic;
 import co.edu.uniandes.csw.bicicletas.entities.CompradorEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
@@ -26,7 +25,7 @@ import javax.ws.rs.Produces;
  *
  * @author Juan Lozano
  */
-@Path("comprador")
+@Path("compradores")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
@@ -85,11 +84,11 @@ public class CompradorResource {
     @Path("{pCompradorId: \\d+}")
     public CompradorDetailDTO getComprador(@PathParam("pCompradorId") long pCompradorId) {
         LOGGER.log(Level.INFO, "CompradorResource getComprador: input: {0}", pCompradorId);
-        CompradorEntity CompradorEntity = logica.getComprador(pCompradorId);
-        if (CompradorEntity == null) {
-            throw new WebApplicationException("El recurso /comprador/" + pCompradorId + " no existe.", 404);
+        CompradorEntity compradorEntity = logica.getComprador(pCompradorId);
+        if (compradorEntity == null) {
+            throw new WebApplicationException("El recurso /comprador/" + pCompradorId + " no se encuentra.", 404);
         }
-        CompradorDetailDTO compradorDetailDTO = new CompradorDetailDTO(CompradorEntity);
+        CompradorDetailDTO compradorDetailDTO = new CompradorDetailDTO(compradorEntity);
         LOGGER.log(Level.INFO, "CompradorResource getComprador: output: {0}", compradorDetailDTO);
         return compradorDetailDTO;
     }
@@ -107,7 +106,7 @@ public class CompradorResource {
         LOGGER.log(Level.INFO, "CompradorResource updateComprador: input: id:{0} , Comprador: {1}", new Object[]{id, pComprador});
         pComprador.setId(id);
         if (logica.getComprador(id) == null) {
-            throw new WebApplicationException("El recurso /Comprador/" + id + " no existe.", 404);
+            throw new WebApplicationException("El recurso /Comprador/" + id + " no pudo ser encontrado.", 404);
         }
         CompradorDetailDTO compradorDetailDTO = new CompradorDetailDTO(logica.updateComprador(pComprador.toEntity()));
         LOGGER.log(Level.INFO, "CompradorResource updateComprador: output: {0}", compradorDetailDTO);
@@ -119,11 +118,10 @@ public class CompradorResource {
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void eliminarComprador(@PathParam("id") long id) throws BusinessLogicException
-    {
+    public void eliminarComprador(@PathParam("id") long id) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "CompradorResource deleteComprador: input: {0}", id);
         if (logica.getComprador(id) == null) {
-            throw new WebApplicationException("El recurso /comprador/" + id + " no existe.", 404);
+            throw new WebApplicationException("El recurso /comprador/" + id + " no existe en la BD.", 404);
         }
         logica.deleteComprador(id);
         LOGGER.info("EditorialResource deleteEditorial: output: void");

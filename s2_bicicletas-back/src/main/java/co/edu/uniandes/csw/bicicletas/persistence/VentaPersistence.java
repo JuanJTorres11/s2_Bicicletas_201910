@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.persistence;
 
+import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
 import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import java.util.List;
 import java.util.logging.Level;
@@ -12,7 +13,6 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 /**
@@ -57,9 +57,19 @@ public class VentaPersistence {
      * "select u from VentaEntity u" es como un "select * from VentaEntity;" -
      * "SELECT * FROM table_name" en SQL.
      */
-    public List<VentaEntity> findAll() {
-        TypedQuery query = em.createQuery("select u from VentaEntity u", VentaEntity.class);
-        return query.getResultList();
+    public List<VentaEntity> findAll(Long vendedorId) {
+        
+        LOGGER.log(Level.INFO, "Consultando ventas de vendedor con id={0}", vendedorId);
+         TypedQuery<VentaEntity> q = em.createQuery("select p from VentaEntity p where (p.vendedor.id = :vendedorId))", VentaEntity.class);
+
+        q.setParameter("vendedorId", vendedorId);
+        List<VentaEntity> results = q.getResultList();
+         if (results == null) {
+            return null;
+        } else if (results.isEmpty()) {
+            return null;
+        } 
+        return results;
     }
 
     /**
@@ -85,14 +95,14 @@ public class VentaPersistence {
         return em.merge(pComprador);
     }
 
-          /**
+    /**
      * Buscar una venta
      *
      * Busca si hay alguna venta con un login específico
      *
      * @param id El ID de la venta con respecto al cual se busca
-     * @return La venta encontrada o null. Nota: Si existe uno o mas.
-     * devuelve siempre la primera que encuentra
+     * @return La venta encontrada o null. Nota: Si existe uno o mas. devuelve
+     * siempre la primera que encuentra
      */
     public VentaEntity findById(Long id) {
 
@@ -113,21 +123,21 @@ public class VentaPersistence {
         return ret;
     }
 
-    public VentaEntity findByVendedor(Long vendedorId, Long ventaId)
-    {
+    public VentaEntity findByVendedor(Long vendedorId, Long ventaId) {
         LOGGER.log(Level.INFO, "Consultando la venta con id = {0} del vendedor con id = " + vendedorId, ventaId);
         TypedQuery<VentaEntity> q = em.createQuery("select m from VentaEntity m where (m.vendedor.id = :vendedorId) and (m.id = :ventaId)", VentaEntity.class);
         q.setParameter("vendedorId", vendedorId);
         q.setParameter("ventaId", ventaId);
         List<VentaEntity> results = q.getResultList();
         VentaEntity medio = null;
-        if (results == null)
+        if (results == null) {
             medio = null;
-          else if (results.isEmpty())
+        } else if (results.isEmpty()) {
             medio = null;
-          else if (results.size() >= 1)
+        } else if (results.isEmpty()) {
             medio = results.get(0);
-        
+        }
+
         LOGGER.log(Level.INFO, "Saliendo de consultar la venta con id = {0} del vendedor con id = " + vendedorId, ventaId);
         return medio;
     }
