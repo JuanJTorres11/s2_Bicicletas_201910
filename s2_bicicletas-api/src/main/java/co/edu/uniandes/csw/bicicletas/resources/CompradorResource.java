@@ -104,14 +104,13 @@ public class CompradorResource {
     @PUT
     @Path("{id: \\d+}")
     public CompradorDetailDTO actualizarComprador(@PathParam("id") long id, CompradorDTO pComprador) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "CompradorResource updateComprador: input: id:{0} , Comprador: {1}", new Object[]{id, pComprador});
-        pComprador.setId(id);
-        if (logica.getComprador(id) == null) {
-            throw new WebApplicationException("El recurso /Comprador/" + id + " no pudo ser encontrado.", 404);
+
+        CompradorEntity compradorEntity = logica.getComprador(id);
+        if (compradorEntity == null) {
+            throw new WebApplicationException("El recurso /compradores/" + id + " no existe.", 404);
         }
-        CompradorDetailDTO compradorDetailDTO = new CompradorDetailDTO(logica.updateComprador(pComprador.toEntity()));
-        LOGGER.log(Level.INFO, "CompradorResource updateComprador: output: {0}", compradorDetailDTO);
-        return compradorDetailDTO;
+        CompradorDetailDTO detailDTO = new CompradorDetailDTO(compradorEntity);
+        return detailDTO;
     }
 
     /**
