@@ -8,11 +8,12 @@ DELETE from VentaEntity;
 DELETE FROM OrdenEntity;
 DELETE FROM VendedorEntity;
 DELETE FROM CompradorEntity;
+DELETE FROM VentaEntity;
 
-INSERT INTO VendedorEntity (id, nombre, login, password) values (1,'Camilo Serrano', 'camilo@hotmail.com', 'abc123');
-INSERT INTO VendedorEntity (id, nombre, login, password) values (2,'Laura Hernandez', 'Laura@gmail.com', 'abc123');
-INSERT INTO VendedorEntity (id, nombre, login, password) values (3,'Benito Quintero', 'Bcam@outlook.com', 'abc123');
-INSERT INTO VendedorEntity (id, nombre, login, password) values (4, 'Luis Miguel', 'lm@gmail.com', '1234');
+INSERT INTO CompradorEntity (id, nombre, login, password) values (1,'Camilo Serrano', 'camilo@hotmail.com', 'abc123');
+INSERT INTO CompradorEntity (id, nombre, login, password) values (2,'Laura Hernandez', 'Laura@gmail.com', 'abc123');
+INSERT INTO CompradorEntity (id, nombre, login, password) values (3,'Benito Quintero', 'Bcam@outlook.com', 'abc123');
+INSERT INTO CompradorEntity (id, nombre, login, password) values (4, 'Luis Miguel', 'lm@gmail.com', '1234');
 
 insert into CategoriaEntity (id, nombre) values (100, 'Carreras');
 insert into CategoriaEntity (id, nombre) values (110, 'Urbana');
@@ -210,3 +211,4 @@ select * from ItemCarritoEntity;
 select * from OrdenEntity;
 select * from VendedorEntity;
 select * from CompradorEntity;
+select * from VentaEntity;

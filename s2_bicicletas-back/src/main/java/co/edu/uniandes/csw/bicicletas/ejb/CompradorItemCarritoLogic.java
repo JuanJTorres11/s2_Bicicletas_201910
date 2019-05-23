@@ -5,9 +5,11 @@
  */
 package co.edu.uniandes.csw.bicicletas.ejb;
 
+import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import co.edu.uniandes.csw.bicicletas.entities.CompradorEntity;
 import co.edu.uniandes.csw.bicicletas.entities.ItemCarritoEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.bicicletas.persistence.BicicletaPersistence;
 import co.edu.uniandes.csw.bicicletas.persistence.CompradorPersistence;
 import co.edu.uniandes.csw.bicicletas.persistence.ItemCarritoPersistence;
 import javax.ejb.Stateless;
@@ -29,8 +31,10 @@ public class CompradorItemCarritoLogic {
     @Inject
     private ItemCarritoPersistence itemPersistence;
 
-    @Inject
+   @Inject
     private CompradorPersistence compradorPersistence;
+    @Inject
+    private BicicletaPersistence bicicletaPersistence;
 
     /**
      * Agregar un item a un comprador
@@ -40,13 +44,27 @@ public class CompradorItemCarritoLogic {
      * item.
      * @return El item creado.
      */
-    public ItemCarritoEntity addBook(Long itemId, Long compradorId) {
+    public ItemCarritoEntity addItemCarrito(Long compradorId, ItemCarritoEntity item) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de agregarle un item a un comprador con id = {0}", compradorId);
-        CompradorEntity compradorEntity = compradorPersistence.find(compradorId);
-        ItemCarritoEntity itemEntity = itemPersistence.find(itemId);
-        itemEntity.setComprador(compradorEntity);
+         
+           BicicletaEntity bike = bicicletaPersistence.find(item.getBicicleta().getId());
+        if(bike == null)
+            throw new BusinessLogicException("No existe una bicicleta con el id \"" + item.getBicicleta().getId() + "\"");
+
+        CompradorEntity compr = compradorPersistence.find(compradorId);
+        if(compr == null){
+          throw new BusinessLogicException("No existe una comprador con el id \"" + item.getBicicleta().getId() + "\"");
+            
+        }
+        if (item.getCantidad() < 0) {
+            throw new BusinessLogicException("La cantidad debe estar establecida como un valor mayor a 0");
+        }
+   
+        item.setComprador(compr);
+        item.setBicicleta(bike);
+        itemPersistence.create(item);
         LOGGER.log(Level.INFO, "Termina proceso de agregarle un libro a la editorial con id = {0}", compradorId);
-        return itemEntity;
+        return item;
     }
 
     /**
@@ -55,9 +73,13 @@ public class CompradorItemCarritoLogic {
      * @param compradorId El ID del comprador buscada
      * @return La lista de item del comprador
      */
-    public List<ItemCarritoEntity> getBooks(Long compradorId) {
+    public List<ItemCarritoEntity> getItemsCarrito(Long compradorId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar los items asociados al comprador con id = {0}", compradorId);
-        return compradorPersistence.find(compradorId).getItems();
+      CompradorEntity compr = compradorPersistence.find(compradorId);
+        if(compr == null){
+        throw new BusinessLogicException("No existe una comprador con el id \"" + compradorId + "\"");
+    }
+        return compr.getItems();
     }
 
     /**
@@ -68,37 +90,58 @@ public class CompradorItemCarritoLogic {
      * @return El item encontrado dentro del comprador.
      * @throws BusinessLogicException Si el item no se encuentra en la comprador
      */
-    public ItemCarritoEntity getBook(Long compradorId, Long itemId) throws BusinessLogicException {
+    public ItemCarritoEntity getItemCarrito(Long compradorId, Long itemId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el item con id = {0} del comprador con id = " + compradorId, itemId);
-        List<ItemCarritoEntity> items = compradorPersistence.find(compradorId).getItems();
-        ItemCarritoEntity itemEntity = itemPersistence.find(itemId);
-        int index = items.indexOf(itemEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de consultar el item con id = {0} de un comprador con id = " + compradorId, itemId);
-        if (index >= 0) {
-            return items.get(index);
+    
+       CompradorEntity compr = compradorPersistence.find(compradorId);
+        if(compr == null){
+        throw new BusinessLogicException("No existe una comprador con el id \"" + compradorId + "\"");
         }
-        throw new BusinessLogicException("El item no está asociado al comprador");
+  
+        ItemCarritoEntity t = itemPersistence.find(compradorId,itemId );
+        
+        return t;
     }
 
-    /**
-     * Remplazar items de un comprador
-     *
-     * @param items Lista de items que serán los del comprador.
-     * @param compradorId El id del comprador que se quiere actualizar.
-     * @return La lista de items actualizada.
+
+     /**
+     * Elimina una resena
+     * @param compradorId el id de la bicicleta a la que se quiere añadir la reseña
+     * @param itemId id de la resena que se quiere borrar
+     * @throws BusinessLogicException Si la reseña o la bicicleta asociada no exiten
      */
-    public List<ItemCarritoEntity> replaceBooks(Long compradorId, List<ItemCarritoEntity> items) {
-        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el comprador  con id = {0}", compradorId);
-        CompradorEntity compradorEntity = compradorPersistence.find(compradorId);
-        List<ItemCarritoEntity> itemList = itemPersistence.findAll();
-        for (ItemCarritoEntity items2 : itemList) {
-            if (items.contains(items2)) {
-                items2.setComprador(compradorEntity);
-            } else if (items2.getComprador() != null && items2.getComprador().equals(compradorEntity)) {
-                items2.setComprador(null);
-            }
-        }
-        LOGGER.log(Level.INFO, "Termina proceso de actualizar un comprador con id = {0}", compradorId);
-        return items;
+    public void deleteItemCarrito(Long compradorId, Long itemId) throws BusinessLogicException {
+
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la resena con id = {0}", itemId);
+        ItemCarritoEntity buscada = getItemCarrito(compradorId, itemId);
+        
+        if(buscada == null)
+            throw new BusinessLogicException("El item con id = " + itemId + " no existe o no está asociada al comprador =" + compradorId + "\"");
+        
+        itemPersistence.delete(buscada.getId());
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la item con id = {0}", itemId);
     }
+    
+     public ItemCarritoEntity ubdateItemCarrito(Long compradorId, ItemCarritoEntity item) throws BusinessLogicException{
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar una resena con id", item.getId());
+           
+             BicicletaEntity bike = bicicletaPersistence.find(item.getBicicleta().getId());
+        if(bike == null)
+            throw new BusinessLogicException("No existe una bicicleta con el id \"" + item.getBicicleta().getId() + "\"");
+
+        CompradorEntity compr = compradorPersistence.find(compradorId);
+        if(compr == null){
+          throw new BusinessLogicException("No existe una comprador con el id \"" + item.getBicicleta().getId() + "\"");
+            
+        }
+   
+        item.setBicicleta(bike);
+        item.setComprador(compr);
+        itemPersistence.update(item);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar una resena con id", item.getId());
+        return item;
+    }
+    
+    
+    
 }

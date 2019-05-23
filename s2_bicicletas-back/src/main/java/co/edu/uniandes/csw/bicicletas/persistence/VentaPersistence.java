@@ -134,7 +134,7 @@ public class VentaPersistence {
             medio = null;
         } else if (results.isEmpty()) {
             medio = null;
-        } else if (results.isEmpty()) {
+        } else {
             medio = results.get(0);
         }
 

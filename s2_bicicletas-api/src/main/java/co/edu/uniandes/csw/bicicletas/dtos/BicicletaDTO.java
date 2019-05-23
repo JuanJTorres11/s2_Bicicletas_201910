@@ -25,6 +25,11 @@ public class BicicletaDTO implements Serializable {
      * La descripcion de la bicicleta
      */
     private String descripcion;
+    
+     /**
+     * La referencia de la bicicleta
+     */
+    private Integer descuento;
 
     /**
      * La referencia de la bicicleta
@@ -89,6 +94,7 @@ public class BicicletaDTO implements Serializable {
             this.stock = bikeEntity.getStock();
             this.album = bikeEntity.getAlbum();
             this.calificacion = bikeEntity.getCalificacion();
+            this.descuento = bikeEntity.getDescuento();
             
 
             if (bikeEntity.getCategoria() != null) {
@@ -126,6 +132,7 @@ public class BicicletaDTO implements Serializable {
         bicicletaEntity.setStock(this.stock);
         bicicletaEntity.setUsada(this.usada);
         bicicletaEntity.setCalificacion(this.calificacion);
+        bicicletaEntity.setDescuento(this.descuento);
         if (this.marca != null) {
             bicicletaEntity.setMarca(this.marca.toEntity());
         }
@@ -293,6 +300,20 @@ public class BicicletaDTO implements Serializable {
      */
     public void setAlbum(ArrayList<String> album) {
         this.album = album;
+    }
+
+    /**
+     * @return the descuento
+     */
+    public Integer getDescuento() {
+        return descuento;
+    }
+
+    /**
+     * @param descuento the descuento to set
+     */
+    public void setDescuento(Integer descuento) {
+        this.descuento = descuento;
     }
 
 }

@@ -86,7 +86,7 @@ public class MarcaBicicletasResource {
      * en la marca. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List<BicicletaDetailDTO> getBicicletas(@PathParam("marcaNombre") String marcaNombre) {
+    public List<BicicletaDetailDTO> getBicicletas(@PathParam("marcaId") Long marcaNombre) {
         List<BicicletaDetailDTO> listaDetailDTOs = listEntity2DTO(marcaBicicletasLogic.getBicicletas(marcaNombre));
         return listaDetailDTOs;
     }
