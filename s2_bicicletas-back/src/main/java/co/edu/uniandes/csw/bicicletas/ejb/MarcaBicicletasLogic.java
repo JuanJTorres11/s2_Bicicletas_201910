@@ -55,8 +55,8 @@ public class MarcaBicicletasLogic {
      * @param marcaNombre El ID de la bicicleta buscada
      * @return La lista de bicicletas de la marca
      */
-    public List<BicicletaEntity> getBicicletas(String marcaNombre) {
-        return marcaPersistence.findByName(marcaNombre).getBicicletasMarca();
+    public List<BicicletaEntity> getBicicletas(long marcaNombre) {
+        return marcaPersistence.find(marcaNombre).getBicicletasMarca();
     }
     
     /**
