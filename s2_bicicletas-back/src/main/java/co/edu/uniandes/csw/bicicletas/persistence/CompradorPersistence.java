@@ -7,10 +7,12 @@ package co.edu.uniandes.csw.bicicletas.persistence;
 
 import co.edu.uniandes.csw.bicicletas.entities.CompradorEntity;
 import java.util.List;
+import java.util.logging.Level;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.util.logging.Logger;
 
 /**
  *
@@ -103,6 +105,34 @@ public class CompradorPersistence {
             result = logins.get(0);
         }
 
+        return result;
+    }
+    
+        /**
+     * Busca un vendedor por su login y contraseña
+     * @param login Login del vendedor
+     * @param contrasena Contraseña del vendedor
+     * @return Vendedor con 
+     */
+    public CompradorEntity authVendedor (String login, String contrasena)
+    {
+        //LOGGER.log(Level.INFO, "Se autenticará al vendedor con login: ", login);
+        TypedQuery query = em.createQuery("Select e From CompradorEntity e where e.login = :log and e.password = :pass", CompradorEntity.class);
+        query = query.setParameter("log", login);
+        query = query.setParameter("pass", contrasena);
+        List<CompradorEntity> vendedores = query.getResultList();
+        CompradorEntity result;
+
+        if (vendedores == null || vendedores.isEmpty())
+        {
+            result = null;
+        }
+        else
+        {
+            result = vendedores.get(0);
+        }
+
+        //LOGGER.log(Level.INFO, "Saliendo de autenticar al vendedor con login: {0}", login);
         return result;
     }
 }
