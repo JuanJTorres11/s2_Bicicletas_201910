@@ -274,7 +274,12 @@ insert into ResenaEntity (bicicleta_id, titulo, descripcion, calificacion) value
 
 insert into ItemCarritoEntity values (1, 500);
 
-  
+--en promocion
+
+INSERT INTO BicicletaEntity (id, calificacion, descripcion, referencia, precio, usada, stock, marca_id, categoria_id, descuento) 
+                     values (1000, 4, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam', 'Play A-123', 330000, 0, 80, 510, 150, 20);
+INSERT INTO albumImages(bicicletaentity_id,album) values(1000,'https://carrascoesciclismo.es/wp-content/uploads/2016/11/Bicicleta-para-ni%C3%B1o-de-8-a%C3%B1os-verde.jpg');
+
 
 
 
