@@ -94,7 +94,7 @@ public class VendedorVentaResource
     @Path("{ventaId: \\d+}")
     public VentaDTO getVenta(@PathParam("vendedorId") Long vendedorId, @PathParam("ventaId") Long ventaId) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "VendedorVentasResource getVenta: input: vendedorsID: {0} , mediosPagoId: {1}", new Object[]
+        LOGGER.log(Level.INFO, "VendedorVentasResource getVenta: input: vendedorsID: {0} , ventaId: {1}", new Object[]
         {
             vendedorId, ventaId
         });

@@ -69,7 +69,7 @@ public class VendedorVentaLogic
      */
     public VentaEntity getVenta(Long vendedorId, Long ventaId) throws BusinessLogicException
     {
-        LOGGER.log(Level.INFO, "Inicia proceso de consultar el venta con id = {0} del vendedor con id: {1}", new Object[] {vendedorId, ventaId});
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar la venta con id = {1} del vendedor con id: {0}", new Object[] {vendedorId, ventaId});
         VentaEntity venta = ventaPersistence.findByVendedor(vendedorId, ventaId);
         LOGGER.log(Level.INFO, "Termina proceso de consultar el venta con id = {0} del vendedor con id: {1}", new Object[] {vendedorId, ventaId});
         if (venta == null)
