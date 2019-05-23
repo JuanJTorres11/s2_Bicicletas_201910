@@ -96,7 +96,7 @@ public class CompradorLogicTest {
      * Borra toda la información de la base de datos
      */
     private void clearData() {
-        em.createQuery("delete from VendedorEntity").executeUpdate();
+        em.createQuery("delete from CompradorEntity").executeUpdate();
         data.clear();
     }
 
@@ -110,6 +110,17 @@ public class CompradorLogicTest {
             em.persist(entity);
             data.add(entity);
         }
+    }
+
+    /**
+     * Test que verifica si estan todos los elementos de la lista con el de la
+     * base de datos.
+     */
+    @Test
+    public void findAllTest() {
+        List<CompradorEntity> list = logica.getCompradores();
+        Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
+        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
     }
 
     /**
@@ -127,25 +138,6 @@ public class CompradorLogicTest {
             Assert.assertEquals("lo que retorna la base de datos no es lo que se esperaba", resultado, userBd);
         } catch (BusinessLogicException ex) {
             Logger.getLogger(VendedorLogicTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /**
-     * Test que verifica si estan todos los elementos de la lista con el de la
-     * base de datos.
-     */
-    @Test
-    public void findAllTest() {
-        List<CompradorEntity> list = logica.getCompradores();
-        Assert.assertEquals(data.size(), list.size());
-        for (CompradorEntity entity : list) {
-            boolean found = false;
-            for (CompradorEntity storedEntity : data) {
-                if (entity.getId().equals(storedEntity.getId())) {
-                    found = true;
-                }
-            }
-            Assert.assertTrue(found);
         }
     }
 

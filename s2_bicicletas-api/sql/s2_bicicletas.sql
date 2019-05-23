@@ -9,12 +9,19 @@ DELETE FROM OrdenEntity;
 DELETE FROM VendedorEntity;
 DELETE FROM CompradorEntity;
 
+INSERT INTO VendedorEntity (id, nombre, login, password) values (1,'Camilo Serrano', 'camilo@hotmail.com', 'abc123');
+INSERT INTO VendedorEntity (id, nombre, login, password) values (2,'Laura Hernandez', 'Laura@gmail.com', 'abc123');
+INSERT INTO VendedorEntity (id, nombre, login, password) values (3,'Benito Quintero', 'Bcam@outlook.com', 'abc123');
+INSERT INTO VendedorEntity (id, nombre, login, password) values (4, 'Luis Miguel', 'lm@gmail.com', '1234');
+
 insert into CategoriaEntity (id, nombre) values (100, 'Carreras');
 insert into CategoriaEntity (id, nombre) values (110, 'Urbana');
 insert into CategoriaEntity (id, nombre) values (120, 'Mountain');
 insert into CategoriaEntity (id, nombre) values (140, 'Playera');
 insert into CategoriaEntity (id, nombre) values (150, 'Kids');
 insert into CategoriaEntity (id, nombre) values (160, 'BMX');
+
+insert into CompradorEntity values (1, 'ricardo', 'ricardo@hotmail.com', '1234');
 
 insert into OrdenEntity (fecha, cantidad, costoTotal) values ('07/11/2018', 2, 104.04);
 insert into OrdenEntity (fecha, cantidad, costoTotal) values ('21/06/2018', 5, 126.01);
@@ -192,9 +199,12 @@ INSERT INTO BicicletaEntity (id, calificacion, descripcion, referencia, precio, 
                      values (670, 4, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam', 'Kids A-126', 330000, 0, 80, 510, 150);
 INSERT INTO albumImages(bicicletaentity_id,album) values(670,'https://media.4rgos.it/i/Argos/6879675_R_Z001A?w=750&h=440&qlt=70');
 
-
+insert into ItemCarritoEntity values (1, 500);
 
 SELECT * FROM ResenaEntity;
 SELECT * FROM BicicletaEntity;
 SELECT * FROM CategoriaEntity;
 SELECT * FROM MarcaEntity;
+select * from ItemCarritoEntity;
+select * from VendedorEntity;
+select * from CompradorEntity;

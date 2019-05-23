@@ -65,4 +65,41 @@ public class OrdenPersistence {
         LOGGER.log(Level.INFO, "Consultando editorial con id={0}", ordenesId);
         return em.find(OrdenEntity.class, ordenesId);
     }
+    
+    /**
+     * Busca una orden asociada a un comprador. 
+     *@param compradorId comprador asociado.
+     * @param ordenId: id correspondiente a la orden buscada.
+     * @return una orden.
+     */
+    public OrdenEntity findByComprador(Long compradorId, Long ordenId)
+    {
+        LOGGER.log(Level.INFO, "Consultando la orden con id = {0} del comprador con id = " + compradorId, ordenId);
+        TypedQuery<OrdenEntity> q = em.createQuery("select m from OrdenEntity m where (m.comprador.id = :compradorId) and (m.id = :ordenId)", OrdenEntity.class);
+        q.setParameter("compradorId", compradorId);
+        q.setParameter("ordenId", ordenId);
+        List<OrdenEntity> results = q.getResultList();
+        OrdenEntity medio = null;
+        if (results == null)
+            medio = null;
+          else if (results.isEmpty())
+            medio = null;
+          else if (results.size() >= 1)
+            medio = results.get(0);
+        
+        LOGGER.log(Level.INFO, "Saliendo de consultar la orden con id = {0} del comprador con id = " + compradorId, ordenId);
+        return medio;
+    }
+    
+     /**
+     *
+     * Borra una orden de la base de datos recibiendo como argumento el id de la
+     * orden.
+     *
+     * @param Id: id correspondiente a la orden a borrar.
+     */
+    public void delete(Long id) {
+        OrdenEntity enti = em.find(OrdenEntity.class, id);
+        em.remove(enti);
+    }
 }

@@ -5,8 +5,8 @@
  */
 package co.edu.uniandes.csw.bicicletas.test.persistence;
 
-import co.edu.uniandes.csw.bicicletas.entities.OrdenEntity;
-import co.edu.uniandes.csw.bicicletas.persistence.OrdenPersistence;
+import co.edu.uniandes.csw.bicicletas.entities.ItemCarritoEntity;
+import co.edu.uniandes.csw.bicicletas.persistence.ItemCarritoPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
@@ -26,13 +26,13 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author Mateo
+ * @author Juan Lozano
  */
 @RunWith(Arquillian.class)
-public class OrdenPersistenceTest {
-
+public class ItemCarritoPersistenceTest {
+    
     @Inject
-    private OrdenPersistence ordenPersistence;
+    private ItemCarritoPersistence itemPersistence;
 
 
     @PersistenceContext
@@ -41,9 +41,9 @@ public class OrdenPersistenceTest {
     @Inject
     UserTransaction utx;
 
-    private List<OrdenEntity> data = new ArrayList<OrdenEntity>();
-
-    /**
+    private List<ItemCarritoEntity> data = new ArrayList<ItemCarritoEntity>();
+    
+        /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
      * archivo beans.xml para resolver la inyección de dependencias.
@@ -51,13 +51,13 @@ public class OrdenPersistenceTest {
     @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(OrdenEntity.class.getPackage())
-                .addPackage(OrdenPersistence.class.getPackage())
+                .addPackage(ItemCarritoEntity.class.getPackage())
+                .addPackage(ItemCarritoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-
-
+    
+    
      /**
      * Configuración inicial de la prueba.
      */
@@ -78,11 +78,13 @@ public class OrdenPersistenceTest {
             }
         }
     }
-    /**
+    
+        /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
-        em.createQuery("delete from OrdenEntity").executeUpdate();
+        em.createQuery("delete from ItemCarritoEntity").executeUpdate();
+        data.clear();
     }
 
     /**
@@ -93,40 +95,40 @@ public class OrdenPersistenceTest {
         PodamFactory factory = new PodamFactoryImpl();
 
         for (int i = 0; i < 3; i++) {
-            OrdenEntity entity = factory.manufacturePojo(OrdenEntity.class);
+            ItemCarritoEntity entity = factory.manufacturePojo(ItemCarritoEntity.class);
 
             em.persist(entity);
             data.add(entity);
         }
     }
-
-   /**
-     * Prueba para crear un Orden.
+    
+    /**
+     * Prueba para crear un entity.
      */
     @Test
-    public void createOrdenTest() {
+    public void createItemTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        OrdenEntity newEntity = factory.manufacturePojo(OrdenEntity.class);
+        ItemCarritoEntity newEntity = factory.manufacturePojo(ItemCarritoEntity.class);
 
-        OrdenEntity result = ordenPersistence.create(newEntity);
+        ItemCarritoEntity result = itemPersistence.create(newEntity);
 
         Assert.assertNotNull(result);
 
-        OrdenEntity entity = em.find(OrdenEntity.class, result.getId());
+        ItemCarritoEntity entity = em.find(ItemCarritoEntity.class, result.getId());
 
         Assert.assertEquals(newEntity.getId(), entity.getId());
     }
-
+    
     /**
      * Prueba para consultar la lista de premios.
      */
     @Test
-    public void getOrdensTest() {
-        List<OrdenEntity> list = ordenPersistence.findAll();
+    public void getitemsTest() {
+        List<ItemCarritoEntity> list = itemPersistence.findAll();
         Assert.assertEquals(data.size(), list.size());
-        for (OrdenEntity ent : list) {
+        for (ItemCarritoEntity ent : list) {
             boolean found = false;
-            for (OrdenEntity entity : data) {
+            for (ItemCarritoEntity entity : data) {
                 if (ent.getId().equals(entity.getId())) {
                     found = true;
                 }
@@ -134,27 +136,43 @@ public class OrdenPersistenceTest {
             Assert.assertTrue(found);
         }
     }
-
-
+    
     /**
      * Prueba para consultar un Orden.
      */
     @Test
-    public void getOrdenTest() {
-        OrdenEntity entity = data.get(0);
-        OrdenEntity newEntity = ordenPersistence.find(entity.getId());
+    public void getItemTest() {
+        ItemCarritoEntity entity = data.get(0);
+       
+        ItemCarritoEntity newEntity = itemPersistence.find(entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getId(), newEntity.getId());
     }
     
-    /**
+        /**
      * Test de eliminacion de una orden.
      */
      @Test
     public void deleteTest() {
-        OrdenEntity orden = data.get(0);
-        ordenPersistence.delete(orden.getId());
-        OrdenEntity borrado = em.find(OrdenEntity.class, orden.getId());
+        ItemCarritoEntity item = data.get(0);
+        itemPersistence.delete(item.getId());
+        ItemCarritoEntity borrado = em.find(ItemCarritoEntity.class, item.getId());
         Assert.assertNull(borrado);
     }
+    
+        @Test
+    public void updateTest() {
+
+        PodamFactory factory = new PodamFactoryImpl();
+
+        Long idActualizar = data.get(0).getId();
+        ItemCarritoEntity nueevoItem = factory.manufacturePojo(ItemCarritoEntity.class);
+        nueevoItem.setId(idActualizar);
+        itemPersistence.update(nueevoItem);
+
+        ItemCarritoEntity recuperada = itemPersistence.find(idActualizar);
+
+        Assert.assertEquals(nueevoItem.getCantidad(), recuperada.getCantidad());
+    }
+    
 }

@@ -170,4 +170,17 @@ public class OrdenLogicTest {
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
     }
+    
+    /**
+     * Prueba para eliminar una venta.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test
+    public void deleteBicicletaTest() throws BusinessLogicException {
+        OrdenEntity entity = data.get(1);
+        ordenLogic.deleteOrden(entity.getId());
+        OrdenEntity deleted = em.find(OrdenEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
 }

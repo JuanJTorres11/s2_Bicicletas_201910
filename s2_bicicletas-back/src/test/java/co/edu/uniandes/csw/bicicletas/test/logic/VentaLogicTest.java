@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.bicicletas.test.logic;
 
 import co.edu.uniandes.csw.bicicletas.ejb.VentaLogic;
+import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
 import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.VentaPersistence;
@@ -59,6 +60,8 @@ public class VentaLogicTest {
      * Lista con los datos a probar
      */
     private List<VentaEntity> data = new ArrayList<VentaEntity>();
+    
+    private List<VendedorEntity> dataVendedor = new ArrayList<>();
 
     @Deployment
     public static JavaArchive createDeployment() {
@@ -97,6 +100,7 @@ public class VentaLogicTest {
      */
     private void clearData() {
         em.createQuery("delete from VentaEntity").executeUpdate();
+        em.createQuery("delete from VendedorEntity").executeUpdate();
         data.clear();
     }
 
@@ -106,7 +110,14 @@ public class VentaLogicTest {
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
+            VendedorEntity entityV = factory.manufacturePojo(VendedorEntity.class);
+            em.persist(entityV);
+            dataVendedor.add(entityV);
+        }
+        for (int i = 0; i < 3; i++) {
+
             VentaEntity entity = factory.manufacturePojo(VentaEntity.class);
+            entity.setVendedor(dataVendedor.get(1));
             em.persist(entity);
             data.add(entity);
         }
@@ -126,13 +137,22 @@ public class VentaLogicTest {
             Logger.getLogger(VendedorLogicTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-        @Test
-    public void findAllTest() {
-        List<VentaEntity> list = logica.getVentas();
-        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
-        Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
+
+    @Test
+    public void findAllTest() throws BusinessLogicException {
+
+        List<VentaEntity> VentasEncontradas = logica.getVentas(dataVendedor.get(1).getId());
+        Assert.assertEquals(VentasEncontradas.size(), data.size());
+         boolean existe = false;
+        for (VentaEntity r : data) {
+            for (VentaEntity r2 : VentasEncontradas) {
+                if (r.getId().equals(r2.getId())) {
+                    existe = true;
+                    break;
+                }
+            }
+        }
+        Assert.assertTrue(existe);
     }
 
     @Test(expected = BusinessLogicException.class)
@@ -159,8 +179,6 @@ public class VentaLogicTest {
         Assert.assertEquals("lo que retorna la bd no es lo que se espera", userLocal, userBd);
     }
 
-
-
     @Test
     public void updateTest() {
         try {
@@ -174,6 +192,19 @@ public class VentaLogicTest {
         } catch (BusinessLogicException ex) {
             Logger.getLogger(VendedorLogicTest.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    /**
+     * Prueba para eliminar una venta.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test
+    public void deleteBicicletaTest() throws BusinessLogicException {
+        VentaEntity entity = data.get(1);
+        logica.deleteVenta(entity.getId());
+        VentaEntity deleted = em.find(VentaEntity.class, entity.getId());
+        Assert.assertNull(deleted);
     }
 
 }

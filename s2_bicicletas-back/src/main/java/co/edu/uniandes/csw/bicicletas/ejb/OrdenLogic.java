@@ -80,6 +80,17 @@ public class OrdenLogic {
     }
     
     /**
+     * Elimina una orden asignada por parametro.
+     *
+     * @param id de la orden a eliminar.
+     */
+    public void deleteOrden(Long id) {
+        LOGGER.log(Level.INFO, "Inicia proceso de borrar la orden con id = {0}", id);
+        ordenPersistence.delete(id);
+        LOGGER.log(Level.INFO, "Termina proceso de borrar la orden con id = {0}", id);
+    }
+    
+    /**
      * Verifica las reglas de negocio de creación de una orden
      * @param fecha Fecha de la orden
      * @param cantidad Cantidad de bicicletas compradas en la orden

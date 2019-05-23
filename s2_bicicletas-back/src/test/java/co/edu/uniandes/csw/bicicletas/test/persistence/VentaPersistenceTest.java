@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.test.persistence;
 
+import co.edu.uniandes.csw.bicicletas.entities.VendedorEntity;
 import co.edu.uniandes.csw.bicicletas.entities.VentaEntity;
 import co.edu.uniandes.csw.bicicletas.persistence.VentaPersistence;
 import java.util.ArrayList;
@@ -30,64 +31,65 @@ import org.junit.Before;
  */
 @RunWith(Arquillian.class)
 public class VentaPersistenceTest {
-    
+
     /**
      * persistencia de la veta.
      */
     @Inject
-    private VentaPersistence vp; 
-    
+    private VentaPersistence vp;
+
     /**
      * Entity manager.
      */
     @PersistenceContext
     private EntityManager em;
-    
+
     /**
      * User Transaction
      */
     @Inject
     private UserTransaction utx;
-    
+
     /**
      * Lista con las ventas de la BD
      */
     private ArrayList<VentaEntity> data = new ArrayList<>();
     
-      /**
+    private List<VendedorEntity> dataVendedor = new ArrayList<>();
+
+    /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
      * archivo beans.xml para resolver la inyección de dependencias.
      */
-   @Deployment
-   public static JavaArchive createDeployment() {
+    @Deployment
+    public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
-            .addPackage(VentaEntity.class.getPackage())
-            .addPackage(VentaPersistence.class.getPackage())
-            .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
-            .addAsManifestResource("META-INF/beans.xml", "beans.xml");
+                .addPackage(VentaEntity.class.getPackage())
+                .addPackage(VentaPersistence.class.getPackage())
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
     /**
      * Realiza unos escenarios aleatorios para poder crear las pruebas.
-   */
+     */
     @Test
-    public void createTest()
-    {
+    public void createTest() {
         PodamFactory factory = new PodamFactoryImpl();
-        
+
         VentaEntity newEntity = factory.manufacturePojo(VentaEntity.class);
-        
+
         VentaEntity ve = vp.create(newEntity);
-        
+
         Assert.assertNotNull(ve);
-        
+
         VentaEntity ve2 = em.find(VentaEntity.class, ve.getId());
-        
+
         Assert.assertEquals(ve2.getId(), ve.getId());
     }
-    
-         /**
+
+    /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -112,44 +114,48 @@ public class VentaPersistenceTest {
      * limpia la informacion anterior creada.
      */
     private void clearData() {
-        
+
         em.createQuery("delete from VentaEntity").executeUpdate();
+        em.createQuery("delete from VendedorEntity").executeUpdate();
     }
 
     /**
      * Almacena la informacion creada para realizar las pruebas.
      */
     private void insertData() {
-       
-       PodamFactory factory = new PodamFactoryImpl();
+        PodamFactory factory = new PodamFactoryImpl();
+        for (int i = 0; i < 3; i++) {
+            VendedorEntity entityB = factory.manufacturePojo(VendedorEntity.class);
+            em.persist(entityB);
+            dataVendedor.add(entityB);
+        }
         for (int i = 0; i < 3; i++) {
 
             VentaEntity entity = factory.manufacturePojo(VentaEntity.class);
-
+            if(i == 0)
+                entity.setVendedor(dataVendedor.get(0));
             em.persist(entity);
-
-            data.add(entity);
+          data.add(entity);
         }
 
     }
-    
+
     /**
      * Test de eliminacion de una venta.
      */
-     @Test
+    @Test
     public void deleteTest() {
         VentaEntity venta = data.get(0);
         vp.delete(venta.getId());
         VentaEntity borrado = em.find(VentaEntity.class, venta.getId());
         Assert.assertNull(borrado);
     }
-    
+
     /**
      * Test de actualizar una venta.
      */
     @Test
-    public void updateTest()
-    {
+    public void updateTest() {
         VentaEntity local = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
         VentaEntity nuevo = factory.manufacturePojo(VentaEntity.class);
@@ -158,24 +164,12 @@ public class VentaPersistenceTest {
         VentaEntity bd = em.find(VentaEntity.class, local.getId());
         Assert.assertEquals("No se actualizó correctamente", bd, nuevo);
     }
-        /**
-         * Test de obtener toda la lista de las ventas.
-         */
-        @Test
-    public void findAllTest()
-    {
-//        List<VentaEntity> list = new ArrayList<VentaEntity>();
-//        vp.findAll();
-        List<VentaEntity> list = vp.findAll();
-        Assert.assertEquals("el tamaño de las listas debería ser igual", data.size(), list.size());
-        Assert.assertTrue("La lista no tiene a todos los elementos esperados", list.containsAll(data));
-    }
+
     /**
      * Test de buscar una venta por su id.
      */
-        @Test
-    public void findByIdTest()
-    {
+    @Test
+    public void findByIdTest() {
         VentaEntity venta = data.get(0);
         VentaEntity ventaBd = vp.findById(venta.getId());
         Assert.assertNotNull("Lo que retorna la bd no debería se null", ventaBd);
