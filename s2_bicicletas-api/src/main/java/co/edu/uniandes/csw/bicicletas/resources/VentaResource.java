@@ -108,7 +108,7 @@ public class VentaResource {
     @GET
     public List<VentaDTO> getVentas(@PathParam("vendedorId") Long vendedorId) throws BusinessLogicException{
          LOGGER.info("VentaResource getVentas: input: void");
-        List<VentaDTO> listVentas = listEntity2DetailDTO(logica.getVentas(vendedorId));
+        List<VentaDTO> listVentas = listEntity2DetailDTO(logica.getVentas(vendedorId)); 
         LOGGER.log(Level.INFO, "VentaResource getVentas: output: {0}", listVentas);
         return listVentas;
     }

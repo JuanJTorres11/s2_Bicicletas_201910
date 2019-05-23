@@ -46,6 +46,22 @@ public class CompradorBicicletasLogic {
         LOGGER.log(Level.INFO, "Termina proceso de agregarle una bicicleta a un comprador con id = {0}", compradorId);
         return bicicletaEntity;
     }
+    
+      /**
+     * Agrega un nueva bicicleta al comprador.
+     *
+     * @param bicicletaId Id de la bicicleta que se desea agregar.
+     * @param compradorId Id del comprador al que se la va a agregar.
+     * @return bicicleta agregada.
+     */
+    public BicicletaEntity removeBicicleta(Long bicicletaId, Long compradorId) {
+        LOGGER.log(Level.INFO, "Inicia proceso de agregarle una bicicleta a un comprador con id = {0}", compradorId);
+        CompradorEntity compradorEntity = compradorPersistence.find(compradorId);
+        BicicletaEntity bicicletaEntity = bicicletaPersistence.find(bicicletaId);
+        bicicletaEntity.getCompradores().remove(compradorEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de agregarle una bicicleta a un comprador con id = {0}", compradorId);
+        return bicicletaEntity;
+    }
 
     /**
      * Retorna una lista con las bicicleta de un comprador.
