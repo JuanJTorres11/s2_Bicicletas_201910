@@ -51,7 +51,8 @@ public class CompradorResource {
      * la base de datos.
      *
      * @param pComprador
-     * @return
+     * @return JSON {@link CompradorDTO} El vendedor creado en base de datos
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper}
      */
     @POST
     public CompradorDTO crearComprador(CompradorDTO pComprador) throws BusinessLogicException {
@@ -64,10 +65,9 @@ public class CompradorResource {
     }
 
     /**
-     * Obtiene una lista con todos los compradores.
-     *
-     * @return
-     */
+    * Retorna la lista de todos los vendedores
+    * @return JSONArray {@link CompradorDetailDTO} 
+    */
     @GET
     public List<CompradorDetailDTO> darCompradores() {
         List<CompradorDetailDTO> listaCompradores = listEntity2DetailDTO(logica.getCompradores());
@@ -78,7 +78,7 @@ public class CompradorResource {
      * retorna al comprador dado un id.
      *
      * @param pCompradorId id del comprador a buscar.
-     * @return retorna el comprador del id respectivo.
+     * @return JSON {@link CompradorDetailDTO} retorna el comprador del id respectivo.
      */
     @GET
     @Path("{pCompradorId: \\d+}")
@@ -97,7 +97,7 @@ public class CompradorResource {
      * actualiza la informacion de un comprador ya registrado.
      *
      * @param id dle comprador que se desea actualizar.
-     * @return el nuevo objeto actualizado que se encuentra en la base de datos.
+     * @return JSON {@link CompradorDetailDTO} el nuevo objeto actualizado que se encuentra en la base de datos.
      * @throws BusinessLogicException
      */
     @PUT

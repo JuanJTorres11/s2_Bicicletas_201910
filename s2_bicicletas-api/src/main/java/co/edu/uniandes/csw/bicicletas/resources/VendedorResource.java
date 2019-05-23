@@ -116,7 +116,7 @@ public class VendedorResource
      *
      * @param id id del vendedor a actualizar
      * @param vendedor objeto con la información actualizada
-     * @return El nuevo objeto guardado en la base de datos.
+     * @return JSON {@link VendedorDetailDTO} El nuevo objeto guardado en la base de datos.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper}
      * Se lanza si alguno de los datos a
      * actualizar incumple con las reglas de negocio.
