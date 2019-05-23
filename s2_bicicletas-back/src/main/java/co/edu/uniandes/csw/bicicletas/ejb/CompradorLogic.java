@@ -105,7 +105,7 @@ public class CompradorLogic {
     }
 
     /**
-     * Se actualiza un nuevo vendedor
+     * Se actualiza un nuevo comprador
      *
      * @param pComprador usuario a actualizar en el sistema
      * @return el Comprador actualizado
@@ -149,6 +149,24 @@ public class CompradorLogic {
         }
         LOGGER.log(Level.INFO, "Termina proceso de consultar el comprador con id = {0}", id);
         return compradorEntity;
+    }
+    
+        /**
+     * Encuentra un comprador por su login y contraseña
+     * @param login Login del comprador
+     * @param contrasena Contraseña del comprador
+     * @return comprador buscado (si existe)
+     */
+    public CompradorEntity authComprador(String login, String contrasena)
+    {
+        LOGGER.log(Level.INFO, "Se buscará el comprador con login {0}", login);
+        CompradorEntity buscado = cp.authVendedor(login, contrasena);
+        if (buscado == null)
+        {
+            LOGGER.log(Level.SEVERE, "No existe el comprador con login {0}", login);
+        }
+        LOGGER.log(Level.INFO, "Se termina la busqueda del comprador con login {0}", login);
+        return buscado;
     }
 
 }

@@ -55,6 +55,7 @@ INSERT INTO MedioPagoEntity (numerotarjeta, tipocredito, tipotarjeta, vendedor_i
 INSERT INTO MedioPagoEntity (numerotarjeta, tipocredito, tipotarjeta, vendedor_id, direccion, fechavencimiento) values (5382350133466355, null, 'Debito', 4, 'Cra 53 #74-81', '01/22');
 INSERT INTO VentaEntity (precio, factura, fotos, vendedor_id) values (123000, 'factura.pdf', CAST (X'FFFF' AS BLOB), 2);
 
+INSERT INTO CompradorEntity (id, nombre, login, password) values (2,'Andres', 'andres@', '1234');
 --BICICLETAS URBANA
 INSERT INTO BicicletaEntity (id, calificacion, descripcion, referencia, precio, usada, stock, marca_id, categoria_id) 
                      values (300, 5, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam', 'Winora D-125', 850000, 1, 20, 300, 110);
@@ -206,5 +207,6 @@ SELECT * FROM BicicletaEntity;
 SELECT * FROM CategoriaEntity;
 SELECT * FROM MarcaEntity;
 select * from ItemCarritoEntity;
+select * from OrdenEntity;
 select * from VendedorEntity;
 select * from CompradorEntity;

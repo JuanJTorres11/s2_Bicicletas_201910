@@ -36,7 +36,7 @@
 					"raw": "{ \n\t\"nombre\": \"Ejemplo 1\",\n\t\n    \"login\":\"ejem.1\",\n\n    \"password\":\"abc123\",\n    \n    \"telefono\": 1231231234\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/comprador",
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/compradores",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -45,7 +45,7 @@
 					"path": [
 						"s2_bicicletas-api",
 						"api",
-						"comprador"
+						"compradores"
 					]
 				}
 			},
@@ -91,7 +91,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/comprador/{{new_id}}?",
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/compradores/{{new_id}}?",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -100,7 +100,7 @@
 					"path": [
 						"s2_bicicletas-api",
 						"api",
-						"comprador",
+						"compradores",
 						"{{new_id}}"
 					],
 					"query": [
@@ -154,7 +154,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/comprador?",
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/compradores?",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -163,7 +163,7 @@
 					"path": [
 						"s2_bicicletas-api",
 						"api",
-						"comprador"
+						"compradores"
 					],
 					"query": [
 						{
@@ -214,7 +214,7 @@
 					"raw": "{\n\t\"nombre\": \"Ejemplo 2\",\n\t\n    \"login\":\"ejem.2\",\n\n    \"password\":\"123abc\",\n    \n    \"telefono\": 1231231234\n\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/comprador/{{new_id}}?",
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/compradores/{{new_id}}?",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -223,7 +223,7 @@
 					"path": [
 						"s2_bicicletas-api",
 						"api",
-						"comprador",
+						"compradores",
 						"{{new_id}}"
 					],
 					"query": [
@@ -259,7 +259,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/comprador/{{new_id}}",
+					"raw": "http://{{ip}}:{{puerto}}/s2_bicicletas-api/api/compradores/{{new_id}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -268,7 +268,7 @@
 					"path": [
 						"s2_bicicletas-api",
 						"api",
-						"comprador",
+						"compradores",
 						"{{new_id}}"
 					]
 				}
