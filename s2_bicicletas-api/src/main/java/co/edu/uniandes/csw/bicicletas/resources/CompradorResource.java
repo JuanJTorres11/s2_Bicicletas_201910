@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.bicicletas.resources;
 
 import co.edu.uniandes.csw.bicicletas.dtos.CompradorDTO;
 import co.edu.uniandes.csw.bicicletas.dtos.CompradorDetailDTO;
+import co.edu.uniandes.csw.bicicletas.dtos.InicioSesionDTO;
 import co.edu.uniandes.csw.bicicletas.ejb.CompradorLogic;
 import co.edu.uniandes.csw.bicicletas.entities.CompradorEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
@@ -81,8 +82,8 @@ public class CompradorResource {
      * @return JSON {@link CompradorDetailDTO} retorna el comprador del id respectivo.
      */
     @GET
-    @Path("{pCompradorId: \\d+}")
-    public CompradorDetailDTO getComprador(@PathParam("pCompradorId") long pCompradorId) {
+    @Path("{id: \\d+}")
+    public CompradorDetailDTO getComprador(@PathParam("id") long pCompradorId) {
         LOGGER.log(Level.INFO, "CompradorResource getComprador: input: {0}", pCompradorId);
         CompradorEntity compradorEntity = logica.getComprador(pCompradorId);
         if (compradorEntity == null) {
@@ -125,6 +126,27 @@ public class CompradorResource {
         }
         logica.deleteComprador(id);
         LOGGER.info("EditorialResource deleteEditorial: output: void");
+    }
+    
+        /**
+     * Retorna un vendedor por su login y contraseña
+     * @param credenciales login y password del vendeodr a buscar
+     * @return JSON {@link VendedorDetailDTO} el vendedor si existe
+     */
+    @POST
+    @Path("/auth")
+    public CompradorDetailDTO autenticarComprador(InicioSesionDTO credenciales) throws WebApplicationException
+    {
+        LOGGER.log(Level.INFO, "Se buscará al vendedor por sus credenciales");
+        CompradorEntity vE = logica.authComprador(credenciales.getLogin(), credenciales.getPassword());
+        if (vE != null)
+        {
+            return new CompradorDetailDTO(vE);
+        }
+        else
+        {
+            throw new WebApplicationException("El vendedor con no existe", 404);
+        }
     }
 
     /**
