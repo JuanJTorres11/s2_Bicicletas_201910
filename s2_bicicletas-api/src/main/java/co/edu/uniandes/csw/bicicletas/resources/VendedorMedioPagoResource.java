@@ -3,9 +3,11 @@ package co.edu.uniandes.csw.bicicletas.resources;
 import co.edu.uniandes.csw.bicicletas.dtos.MedioPagoDTO;
 import co.edu.uniandes.csw.bicicletas.ejb.MedioPagoLogic;
 import co.edu.uniandes.csw.bicicletas.ejb.VendedorMedioPagoLogic;
+import co.edu.uniandes.csw.bicicletas.entities.MedioPagoEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.mappers.BusinessLogicExceptionMapper;
 import co.edu.uniandes.csw.bicicletas.mappers.WebApplicationExceptionMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -82,7 +84,7 @@ public class VendedorMedioPagoResource
      *
      * @param vendedorId Identificador del vendedor que se esta buscando. Este
      * debe ser una cadena de dígitos.
-     * @param mediosPagoId Identificador del medio de pago que se esta buscando.
+     * @param numero Identificador del medio de pago que se esta buscando.
      * Este debe ser una cadena de dígitos.
      * @return JSON {@link MedioPagoDTO} - El medio de pago buscado
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
@@ -92,18 +94,18 @@ public class VendedorMedioPagoResource
      * el vendedor.
      */
     @GET
-    @Path("{mediosPagoId: \\d+}")
-    public MedioPagoDTO getMedioPago(@PathParam("vendedorId") Long vendedorId, @PathParam("mediosPagoId") Long mediosPagoId) throws BusinessLogicException
+    @Path("{numero: \\d+}")
+    public MedioPagoDTO getMedioPago(@PathParam("vendedorId") Long vendedorId, @PathParam("numero") Long numero) throws BusinessLogicException
     {
         LOGGER.log(Level.INFO, "VendedorMedioPagosResource getMedioPago: input: vendedorsID: {0} , mediosPagoId: {1}", new Object[]
         {
-            vendedorId, mediosPagoId
+            vendedorId, numero
         });
-        if (medioPagoLogic.getMedioPago(mediosPagoId) == null)
+        if (medioPagoLogic.getMedioPagoPorNumero(numero) == null)
         {
-            throw new WebApplicationException("El recurso /vendedores/" + vendedorId + "/mediosPago/" + mediosPagoId + " no existe", 404);
+            throw new WebApplicationException("El recurso /vendedores/" + vendedorId + "/mediosPago/" + numero + " no existe", 404);
         }
-        MedioPagoDTO medioPagoDTO = new MedioPagoDTO(vendedorMediosPagoLogic.getMedioPago(vendedorId, mediosPagoId));
+        MedioPagoDTO medioPagoDTO = new MedioPagoDTO(vendedorMediosPagoLogic.getMedioPago(vendedorId, numero));
         LOGGER.log(Level.INFO, "VendedorMedioPagosResource getMedioPago: output: {0}", medioPagoDTO);
         return medioPagoDTO;
     }
@@ -130,13 +132,13 @@ public class VendedorMedioPagoResource
         });
         for (MedioPagoDTO medioPago : mediosPago)
         {
+            System.out.println(medioPago.getDireccion());
             if (medioPagoLogic.getMedioPagoPorNumero(medioPago.getNumeroTarjeta()) == null)
             {
                 throw new WebApplicationException("El recurso /mediosPago/" + medioPago.getNumeroTarjeta() + " no existe.", 404);
             }
         }
-        MedioPagoDTO dto = new MedioPagoDTO();
-        List<MedioPagoDTO> listaDetailDTOs = dto.mediosPagoListEntity2DTO(vendedorMediosPagoLogic.replaceMedioPagos(vendedorId, dto.mediosPagoListDTO2Entity(mediosPago)));
+        List<MedioPagoDTO> listaDetailDTOs = mediosPagoListEntity2DTO(vendedorMediosPagoLogic.replaceMedioPagos(vendedorId, mediosPagoListDTO2Entity(mediosPago)));
         LOGGER.log(Level.INFO, "VendedorMedioPagosResource replaceMedioPagos: output: {0}", listaDetailDTOs);
         return listaDetailDTOs;
     }
@@ -154,5 +156,37 @@ public class VendedorMedioPagoResource
         if (getMedioPago(vendedorId, mediosPagoId) == null)
             throw new WebApplicationException("El recurso /mediosPago/ con id: "  + mediosPagoId + " no existe. ", 404);
         vendedorMediosPagoLogic.eliminarMedioPago(vendedorId, mediosPagoId);
+    }
+    
+    /**
+     * Convierte una lista de MedioPagoEntity a una lista de MedioPagoDTO.
+     *
+     * @param entityList Lista de MedioPagoEntity a convertir.
+     * @return Lista de MedioPagoDTO convertida.
+     */
+    public List<MedioPagoDTO> mediosPagoListEntity2DTO(List<MedioPagoEntity> entityList)
+    {
+        List<MedioPagoDTO> list = new ArrayList();
+        for (MedioPagoEntity entity : entityList)
+        {
+            list.add(new MedioPagoDTO(entity));
+        }
+        return list;
+    }
+    
+    /**
+     * Convierte una lista de MedioPagoDTO a una lista de MedioPagoEntity.
+     *
+     * @param dtos Lista de MedioPagoDTO a convertir.
+     * @return Lista de MedioPagoEntity convertida.
+     */
+    public List<MedioPagoEntity> mediosPagoListDTO2Entity(List<MedioPagoDTO> dtos)
+    {
+        List<MedioPagoEntity> list = new ArrayList<>();
+        for (MedioPagoDTO dto : dtos)
+        {
+            list.add(dto.toEntity());
+        }
+        return list;
     }
 }
