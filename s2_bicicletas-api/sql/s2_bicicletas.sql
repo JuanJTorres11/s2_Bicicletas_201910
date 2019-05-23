@@ -190,16 +190,24 @@ INSERT INTO albumImages(bicicletaentity_id,album) values(640,'https://isabela.iw
 INSERT INTO BicicletaEntity (id, calificacion, descripcion, referencia, precio, usada, stock, marca_id, categoria_id) 
                      values (650, 4, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam', 'Kids A-124', 3670000, 0, 80, 510, 150);
 INSERT INTO albumImages(bicicletaentity_id,album) values(650,'https://isabela.iweb.co.uk/image/aHR0cHM6Ly93d3cucmFsZWlnaC5jby51ay9tZWRpYS9jYXRhbG9nL3Byb2R1Y3QvbS9vL21vbDE2Z3JfMl8xLmpwZw%3D%3D/?q=75&w=2646&h=2646&e=1209600&t=outbound');
+INSERT INTO ResenaEntity(id, bicicleta_id, titulo, descripcion, calificacion) values (3, 650, 'Me encanta', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore', 4); 
 
 INSERT INTO BicicletaEntity (id, calificacion, descripcion, referencia, precio, usada, stock, marca_id, categoria_id) 
                      values (660, 4, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam', 'Kids A-125', 380000, 0, 10, 510, 150);
 INSERT INTO albumImages(bicicletaentity_id,album) values(660,'https://cdn.shopify.com/s/files/1/1250/7975/products/FROGBIKES_43_ORANGE_grande.jpg?v=1551997109');
+INSERT INTO ResenaEntity(id, bicicleta_id, titulo, descripcion, calificacion) values (2, 660, 'Muy buena', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore', 4); 
 
 INSERT INTO BicicletaEntity (id, calificacion, descripcion, referencia, precio, usada, stock, marca_id, categoria_id) 
                      values (670, 4, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam', 'Kids A-126', 330000, 0, 80, 510, 150);
 INSERT INTO albumImages(bicicletaentity_id,album) values(670,'https://media.4rgos.it/i/Argos/6879675_R_Z001A?w=750&h=440&qlt=70');
 
+INSERT INTO ResenaEntity(id, bicicleta_id, titulo, descripcion, calificacion) values (1, 670, 'Muy buena', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore', 4); 
+
 insert into ItemCarritoEntity values (1, 500);
+
+  
+
+
 
 SELECT * FROM ResenaEntity;
 SELECT * FROM BicicletaEntity;
