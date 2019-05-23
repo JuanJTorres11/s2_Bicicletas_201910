@@ -141,4 +141,18 @@ public class VentaPersistence {
         LOGGER.log(Level.INFO, "Saliendo de consultar la venta con id = {0} del vendedor con id = " + vendedorId, ventaId);
         return medio;
     }
+
+    public List<VentaEntity> findPendientes()
+    {
+        LOGGER.log(Level.INFO, "Consultando ventas ");
+         TypedQuery<VentaEntity> q = em.createQuery("select p from VentaEntity p where p.aprobado IS NULL", VentaEntity.class);
+
+        List<VentaEntity> results = q.getResultList();
+         if (results == null) {
+            return null;
+        } else if (results.isEmpty()) {
+            return null;
+        } 
+        return results;
+    }
 }
