@@ -58,6 +58,10 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
     private Integer stock;
 
     /**
+     * Indica el porcentaje de descuento de la bicicletas 
+     */
+    private Integer descuento;
+    /**
      * Las rutas de las imagenes de la bicicleta
      */
     @ElementCollection
@@ -306,6 +310,20 @@ public class BicicletaEntity extends BaseEntity implements Serializable {
      */
     public void setItem(ItemCarritoEntity item) {
         this.item = item;
+    }
+
+    /**
+     * @return the descuento
+     */
+    public Integer getDescuento() {
+        return descuento;
+    }
+
+    /**
+     * @param descuento the descuento to set
+     */
+    public void setDescuento(Integer descuento) {
+        this.descuento = descuento;
     }
 
 }

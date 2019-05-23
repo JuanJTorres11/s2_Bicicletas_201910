@@ -5,7 +5,10 @@
  */
 package co.edu.uniandes.csw.bicicletas.test.logic;
 
+import co.edu.uniandes.csw.bicicletas.ejb.CompradorItemCarritoLogic;
 import co.edu.uniandes.csw.bicicletas.ejb.ItemCarritoLogic;
+import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
+import co.edu.uniandes.csw.bicicletas.entities.CompradorEntity;
 import co.edu.uniandes.csw.bicicletas.entities.ItemCarritoEntity;
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.persistence.ItemCarritoPersistence;
@@ -43,7 +46,7 @@ public class ItemCarritoLogicTest {
      * van a probar.
      */
     @Inject
-    private ItemCarritoLogic itemLogic;
+    private CompradorItemCarritoLogic itemLogic;
     
     /**
      * Contexto de Persistencia que se va a utilizar para acceder a la Base de
@@ -63,7 +66,8 @@ public class ItemCarritoLogicTest {
      * Lista que tiene los datos de prueba.
      */
     private List<ItemCarritoEntity> data = new ArrayList<ItemCarritoEntity>();
-    
+    private CompradorEntity c;
+    private BicicletaEntity bc;
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
@@ -113,10 +117,15 @@ public class ItemCarritoLogicTest {
     private void insertData() {
         
       PodamFactory factory = new PodamFactoryImpl();
+        c = factory.manufacturePojo(CompradorEntity.class);
+        bc = factory.manufacturePojo(BicicletaEntity.class);
+        em.persist(c);
+        em.persist(bc);
         for (int i = 0; i < 3; i++) {
 
             ItemCarritoEntity entity = factory.manufacturePojo(ItemCarritoEntity.class);
-
+            entity.setComprador(c);
+            entity.setBicicleta(bc);
             em.persist(entity);
 
             data.add(entity);
@@ -135,7 +144,9 @@ public class ItemCarritoLogicTest {
         {
             PodamFactory factory = new PodamFactoryImpl();
             ItemCarritoEntity nuevo = factory.manufacturePojo(ItemCarritoEntity.class);
-            ItemCarritoEntity resultado = itemLogic.createItemCarrito(nuevo);
+            nuevo.setComprador(c);
+            nuevo.setBicicleta(bc);
+            ItemCarritoEntity resultado = itemLogic.addItemCarrito(c.getId(), nuevo);
             Assert.assertNotNull("lo que retorna el método no debería ser null", resultado);
             ItemCarritoEntity userBd = em.find(resultado.getClass(), resultado.getId());
             Assert.assertNotNull("lo que retorna la base de datos no debería ser null", userBd);
@@ -151,8 +162,8 @@ public class ItemCarritoLogicTest {
      * Prueba para consultar la lista de items.
      */
     @Test
-    public void getItemCarritosTest() {
-        List<ItemCarritoEntity> list = itemLogic.getItemCarritos();
+    public void getItemCarritosTest() throws BusinessLogicException {
+        List<ItemCarritoEntity> list = itemLogic.getItemsCarrito(c.getId());
         Assert.assertEquals(data.size(), list.size());
         for (ItemCarritoEntity entity : list) {
             boolean found = false;
@@ -169,9 +180,9 @@ public class ItemCarritoLogicTest {
      * Prueba para consultar un item .
      */
     @Test
-    public void getItemCarritoTest() {
+    public void getItemCarritoTest() throws BusinessLogicException {
         ItemCarritoEntity entity = data.get(0);
-        ItemCarritoEntity resultEntity = itemLogic.getItemCarrito(entity.getId());
+        ItemCarritoEntity resultEntity = itemLogic.getItemCarrito(c.getId(), entity.getId());
         Assert.assertNotNull(resultEntity);
         Assert.assertEquals(entity.getId(), resultEntity.getId());
     }
@@ -189,7 +200,9 @@ public class ItemCarritoLogicTest {
             PodamFactory factory = new PodamFactoryImpl();
             ItemCarritoEntity nuevo = factory.manufacturePojo(ItemCarritoEntity.class);
             nuevo.setId(local.getId());
-            itemLogic.updateItemCarrito(nuevo);
+            nuevo.setComprador(c);
+            nuevo.setBicicleta(bc);
+            itemLogic.ubdateItemCarrito(c.getId(), nuevo);
             ItemCarritoEntity bd = em.find(ItemCarritoEntity.class, local.getId());
             Assert.assertEquals("No se actualizó correctamente", bd, nuevo);
         }
@@ -207,7 +220,7 @@ public class ItemCarritoLogicTest {
     @Test
     public void deleteItemTest() throws BusinessLogicException {
         ItemCarritoEntity entity = data.get(0);
-        itemLogic.deleteItemCarrito(entity.getId());
+        itemLogic.deleteItemCarrito(c.getId(), entity.getId());
         ItemCarritoEntity deleted = em.find(ItemCarritoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }

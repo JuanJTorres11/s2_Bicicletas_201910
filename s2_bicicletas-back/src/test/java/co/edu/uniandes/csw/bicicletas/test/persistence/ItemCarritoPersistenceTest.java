@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.bicicletas.test.persistence;
 
+import co.edu.uniandes.csw.bicicletas.entities.CompradorEntity;
 import co.edu.uniandes.csw.bicicletas.entities.ItemCarritoEntity;
 import co.edu.uniandes.csw.bicicletas.persistence.ItemCarritoPersistence;
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class ItemCarritoPersistenceTest {
     @PersistenceContext
     private EntityManager em;
 
+    private CompradorEntity c;
     @Inject
     UserTransaction utx;
 
@@ -93,9 +95,11 @@ public class ItemCarritoPersistenceTest {
      */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-
+         c = factory.manufacturePojo(CompradorEntity.class);
+         em.persist(c);
         for (int i = 0; i < 3; i++) {
             ItemCarritoEntity entity = factory.manufacturePojo(ItemCarritoEntity.class);
+            entity.setComprador(c);
 
             em.persist(entity);
             data.add(entity);
@@ -124,7 +128,7 @@ public class ItemCarritoPersistenceTest {
      */
     @Test
     public void getitemsTest() {
-        List<ItemCarritoEntity> list = itemPersistence.findAll();
+        List<ItemCarritoEntity> list = itemPersistence.findAll(c.getId());
         Assert.assertEquals(data.size(), list.size());
         for (ItemCarritoEntity ent : list) {
             boolean found = false;
@@ -144,7 +148,7 @@ public class ItemCarritoPersistenceTest {
     public void getItemTest() {
         ItemCarritoEntity entity = data.get(0);
        
-        ItemCarritoEntity newEntity = itemPersistence.find(entity.getId());
+        ItemCarritoEntity newEntity = itemPersistence.find(c.getId(), entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getId(), newEntity.getId());
     }
@@ -167,10 +171,11 @@ public class ItemCarritoPersistenceTest {
 
         Long idActualizar = data.get(0).getId();
         ItemCarritoEntity nueevoItem = factory.manufacturePojo(ItemCarritoEntity.class);
+        nueevoItem.setComprador(c);
         nueevoItem.setId(idActualizar);
         itemPersistence.update(nueevoItem);
 
-        ItemCarritoEntity recuperada = itemPersistence.find(idActualizar);
+        ItemCarritoEntity recuperada = itemPersistence.find(c.getId(), idActualizar);
 
         Assert.assertEquals(nueevoItem.getCantidad(), recuperada.getCantidad());
     }

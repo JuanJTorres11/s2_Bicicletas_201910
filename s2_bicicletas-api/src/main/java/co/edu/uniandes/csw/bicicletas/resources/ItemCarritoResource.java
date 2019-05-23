@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.bicicletas.resources;
 
 import co.edu.uniandes.csw.bicicletas.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.bicicletas.dtos.ItemCarritoDTO;
+import co.edu.uniandes.csw.bicicletas.ejb.CompradorItemCarritoLogic;
 import co.edu.uniandes.csw.bicicletas.entities.ItemCarritoEntity;
 import co.edu.uniandes.csw.bicicletas.ejb.ItemCarritoLogic;
 import java.text.ParseException;
@@ -45,7 +46,7 @@ public class ItemCarritoResource {
     private static final String NO = "no existe";
 
     @Inject
-    private ItemCarritoLogic logic;
+    private CompradorItemCarritoLogic logic;
 
     /**
      * Crea una nueva bicicleta con la informacion que se recibe en el cuerpo de
@@ -59,11 +60,11 @@ public class ItemCarritoResource {
      * Error de lógica que se genera cuando ya existe la bicicleta
      */
     @POST
-    public ItemCarritoDTO createItemCarrito(ItemCarritoDTO pItem) throws BusinessLogicException {
+    public ItemCarritoDTO createItemCarrito(@PathParam("compradorId") Long compradorId, ItemCarritoDTO pItem) throws BusinessLogicException {
 
         LOGGER.log(Level.INFO, "ItemCompraResource createItemCompra: input: {0}", pItem);
         ItemCarritoEntity itemEntity = pItem.toEntity();
-        ItemCarritoEntity nuevaEntity = logic.createItemCarrito(itemEntity);
+        ItemCarritoEntity nuevaEntity = logic.addItemCarrito(compradorId, itemEntity);
         ItemCarritoDTO nuevoItemDTO = new ItemCarritoDTO(nuevaEntity);
         LOGGER.log(Level.INFO, "ItemCarritoResource createItemCompra: output: {0}", nuevoItemDTO);
         return nuevoItemDTO;
@@ -81,10 +82,10 @@ public class ItemCarritoResource {
      */
     @GET
     @Path("{itemCarritoId: \\d+}")
-    public ItemCarritoDTO getItemCarrito(@PathParam("itemCarritoId") Long itemCarritoId) throws WebApplicationException {
+    public ItemCarritoDTO getItemCarrito(@PathParam("compradorId") Long compradorId, @PathParam("itemCarritoId") Long itemCarritoId) throws WebApplicationException, BusinessLogicException {
 
         LOGGER.log(Level.INFO, "ItemCarritoResource getItemCarrito: input: {0}", itemCarritoId);
-        ItemCarritoEntity entity = logic.getItemCarrito(itemCarritoId);
+        ItemCarritoEntity entity = logic.getItemCarrito(compradorId, itemCarritoId);
 
         if (entity == null) {
             throw new WebApplicationException("El recurso /itemCarrito/" + itemCarritoId + NO, 404);
@@ -102,9 +103,9 @@ public class ItemCarritoResource {
      * aplicación. Si no hay, retorna una lista vacía.
      */
     @GET
-    public List<ItemCarritoDTO> getItemCarritos() {
+    public List<ItemCarritoDTO> getItemCarritos(@PathParam("compradorId") Long compradorId) throws BusinessLogicException {
         LOGGER.info("ItemCarritoResource getItemCarritos: input: void");
-        List<ItemCarritoDTO> listaItems = listEntity2DetailDTO(logic.getItemCarritos());
+        List<ItemCarritoDTO> listaItems = listEntity2DetailDTO(logic.getItemsCarrito(compradorId));
         LOGGER.log(Level.INFO, "ItemCarritosResource getItemCarritos: output: {0}", listaItems);
         return listaItems;
     }
@@ -123,13 +124,13 @@ public class ItemCarritoResource {
      */
     @PUT
     @Path("{itemCarritoId: \\d+}")
-    public ItemCarritoDTO updateItemCarrito(@PathParam("itemCarritoId") Long itemId, ItemCarritoDTO itemCarrito) throws BusinessLogicException, WebApplicationException {
+    public ItemCarritoDTO updateItemCarrito(@PathParam("compradorId") Long compradorId, @PathParam("itemCarritoId") Long itemId, ItemCarritoDTO itemCarrito) throws BusinessLogicException, WebApplicationException {
         LOGGER.log(Level.INFO, "ItemCarritoResource updateItemCarrito: input: id: {0} , item: {1}", new Object[]{itemId, itemCarrito});
         itemCarrito.setId(itemId);
-        if (logic.getItemCarrito(itemId) == null) {
+        if (logic.getItemCarrito(compradorId, itemId) == null) {
             throw new WebApplicationException("El recurso /itemCarrito/" + itemId + NO, 404);
         }
-        ItemCarritoDTO detailDTO = new ItemCarritoDTO(logic.updateItemCarrito(itemCarrito.toEntity()));
+        ItemCarritoDTO detailDTO = new ItemCarritoDTO(logic.ubdateItemCarrito(compradorId, itemCarrito.toEntity()));
         LOGGER.log(Level.INFO, "ItemCarritoResource updateItemCarrito: output: {0}", detailDTO);
         return detailDTO;
     }
@@ -141,14 +142,14 @@ public class ItemCarritoResource {
      */
     @DELETE
     @Path("{itemCarritoId: \\d+}")
-    public void deleteItemCarrito(@PathParam("itemCarritoId") Long itemId) throws BusinessLogicException, WebApplicationException {
+    public void deleteItemCarrito(@PathParam("compradorId") Long compradorId, @PathParam("itemCarritoId") Long itemId) throws BusinessLogicException, WebApplicationException {
 
         LOGGER.log(Level.INFO, "ItemCarritoResource deleteItemCarrito: input: {0}", itemId);
-        ItemCarritoEntity entity = logic.getItemCarrito(itemId);
+        ItemCarritoEntity entity = logic.getItemCarrito(compradorId, itemId);
         if (entity == null) {
             throw new WebApplicationException("El recurso /itemCarrito/" + itemId + NO, 404);
         }
-        logic.deleteItemCarrito(itemId);
+        logic.deleteItemCarrito(compradorId, itemId);
         LOGGER.info("ItemCarritoResource deleteItemCarrito: output: void");
     }
 

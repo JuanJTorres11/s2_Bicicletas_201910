@@ -51,9 +51,10 @@ public class ItemCarritoPersistence {
      * @return una lista con todas las listas de items que encuentre en la base
      * de datos.
      */
-    public List<ItemCarritoEntity> findAll() {
-        TypedQuery<ItemCarritoEntity> query = em.createQuery("select u from ItemCarritoEntity u", ItemCarritoEntity.class);
-        return query.getResultList();
+    public List<ItemCarritoEntity> findAll(Long compradorId) {
+        TypedQuery<ItemCarritoEntity> query = em.createQuery("select u from ItemCarritoEntity u where (u.comprador.id = :compradorId)", ItemCarritoEntity.class);
+          query.setParameter("compradorId", compradorId);
+         return query.getResultList();
     }
 
     /**
@@ -62,9 +63,22 @@ public class ItemCarritoPersistence {
      * @param itemId: id correspondiente al item buscada.
      * @return un item.
      */
-    public ItemCarritoEntity find(long itemId) {
+    public ItemCarritoEntity find(Long compradorId, long itemId) {
         LOGGER.log(Level.INFO, "Consultando item con id={0}", itemId);
-        return em.find(ItemCarritoEntity.class, itemId);
+          TypedQuery<ItemCarritoEntity> q = em.createQuery("select p from ItemCarritoEntity p where (p.comprador.id = :compradorId) and (p.id = :itemId)", ItemCarritoEntity.class);
+
+        q.setParameter("compradorId", compradorId);
+        q.setParameter("itemId", itemId);
+        List<ItemCarritoEntity> results = q.getResultList();
+        ItemCarritoEntity item = null;
+        if (results == null) {
+            item = null;
+        } else if (results.isEmpty()) {
+            item = null;
+        } else if (results.size() >= 1) {
+            item = results.get(0);
+        }
+        return item;
     }
 
     /**
@@ -72,7 +86,7 @@ public class ItemCarritoPersistence {
      * Borra un item de la base de datos recibiendo como argumento el id de la
      * orden.
      *
-     * @param Id: id correspondiente al item a borrar.
+     * @param id: id correspondiente al item a borrar.
      */
     public void delete(Long id) {
         ItemCarritoEntity enti = em.find(ItemCarritoEntity.class, id);
