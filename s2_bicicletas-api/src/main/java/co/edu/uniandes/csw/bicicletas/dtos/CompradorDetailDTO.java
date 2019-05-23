@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.bicicletas.entities.BicicletaEntity;
 import co.edu.uniandes.csw.bicicletas.entities.CompradorEntity;
 import co.edu.uniandes.csw.bicicletas.entities.MedioPagoEntity;
 import co.edu.uniandes.csw.bicicletas.entities.OrdenEntity;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class CompradorDetailDTO extends CompradorDTO {
     }
 
     public CompradorDetailDTO(CompradorEntity pComprador) {
-        super();
+        super(pComprador);
         List<OrdenEntity> ordenes = pComprador.getOrdenes();
 
         List<MedioPagoEntity> pagos = pComprador.getMediosPago();
@@ -50,6 +51,46 @@ public class CompradorDetailDTO extends CompradorDTO {
                 listaDeDeseosDTO.add(new BicicletaDTO(bE));
             }
         }
+    }
+    
+        /**
+     * Crea un objeto de tipo VendedorEntity con los atributos de las listas.
+     *
+     * @return
+     */
+    @Override
+    public CompradorEntity toEntity()
+    {
+        CompradorEntity comprador = super.toEntity();
+        if (ordenDTO != null)
+        {
+            ArrayList<OrdenEntity> ordenesEntity = new ArrayList<>();
+            for (OrdenDTO orden : ordenDTO)
+            {
+                ordenesEntity.add(orden.toEntity());
+            }
+            comprador.setOrdenes(ordenesEntity);
+        }
+        if (medioPagoDTO != null)
+        {
+            ArrayList<MedioPagoEntity> pagos = new ArrayList<>();
+            for (MedioPagoDTO medios : medioPagoDTO)
+            {
+                pagos.add(medios.toEntity());
+            }
+            comprador.setMediosPago(pagos);
+        }
+        
+                if (medioPagoDTO != null)
+        {
+            ArrayList<BicicletaEntity> deseos = new ArrayList<>();
+            for (BicicletaDTO deseosDTO : listaDeDeseosDTO)
+            {
+                deseos.add(deseosDTO.toEntity());
+            }
+            comprador.setListaDeseos(deseos);
+        }
+        return comprador;
     }
 
     /**
