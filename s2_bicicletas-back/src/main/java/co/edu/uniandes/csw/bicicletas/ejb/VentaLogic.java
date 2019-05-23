@@ -106,6 +106,17 @@ public class VentaLogic {
         return entityVendedor.getVentas();
     }
 
+    public List<VentaEntity> findAllVentasPendientes()
+    {
+        LOGGER.log(Level.INFO, "se buscarán todos las ventas");
+        List<VentaEntity> ventas = vp.findPendientes();
+        if (ventas == null || ventas.isEmpty())
+        {
+            LOGGER.log(Level.SEVERE, "No existen vendedores");
+        }
+        LOGGER.log(Level.INFO, "Se termina la busqueda de las ventas");
+        return ventas;
+    }
     /**
      * Actualiza una venta.
      *

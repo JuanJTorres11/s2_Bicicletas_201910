@@ -39,7 +39,7 @@ public class VentaResource {
     /**
      * Constante que declara que algo no existe.
      */
-    public final static String NO = "no existe";
+    private final static String No_Existe = "no existe";
 
     @Inject
     VentaLogic logica;
@@ -72,13 +72,29 @@ public class VentaResource {
         LOGGER.log(Level.INFO, "ventaResource getVenta: input: {0}", pVentaId);
         VentaEntity VentaEntity = logica.getVenta(pVentaId);
         if (VentaEntity == null) {
-            throw new WebApplicationException("El recurso /ventas/" + pVentaId + NO, 404);
+            throw new WebApplicationException("El recurso /ventas/" + pVentaId + No_Existe, 404);
         }
         VentaDTO ventaDTO = new VentaDTO(VentaEntity);
         LOGGER.log(Level.INFO, "VentaResource Venta: output: {0}", ventaDTO);
         return ventaDTO;
     }
 
+    /**
+    * Retorna la lista de todos los vendedores
+    * @return JSONArray {@link VentaDTO} 
+    */
+    @GET
+    public List<VentaDTO> darVentasPendientes()
+    {
+        LOGGER.log(Level.INFO, "Se dará la lista con todos las ventas");
+        List<VentaDTO> ventas = new ArrayList<>();
+        List<VentaEntity> vEntity = logica.findAllVentasPendientes();
+        for (VentaEntity v : vEntity)
+        {
+            ventas.add(new VentaDTO(v));
+        }
+        return ventas;
+    }
     /**
      * Actualiza la informacion de la venta especificada.
      *
@@ -91,26 +107,11 @@ public class VentaResource {
         LOGGER.log(Level.INFO, "VentaResource updateVenta: input: id:{0} , Venta: {1}", new Object[]{id, pVenta});
         pVenta.setId(id);
         if (logica.getVenta(id) == null) {
-            throw new WebApplicationException("El recurso /venta/" + id + NO, 404);
+            throw new WebApplicationException("El recurso /venta/" + id + No_Existe, 404);
         }
         VentaDTO detailDTO = new VentaDTO(logica.updateVenta(pVenta.toEntity()));
         LOGGER.log(Level.INFO, "ventaResource updateVenta: output: {0}", detailDTO);
         return detailDTO;
-    }
-    
-    /**
-     * Busca y devuelve todas las ventas que existen en un vendedor.
-     *
-     * @param vendedorId El ID del vendedor del cual se buscan las reseñas
-     * @return JSONArray {@link ResenaDTO} - Las reseñas encontradas en la
-     * bicicleta. Si no hay ninguna retorna una lista vacía.
-     */
-    @GET
-    public List<VentaDTO> getVentas(@PathParam("vendedorId") Long vendedorId) throws BusinessLogicException{
-         LOGGER.info("VentaResource getVentas: input: void");
-        List<VentaDTO> listVentas = listEntity2DetailDTO(logica.getVentas(vendedorId)); 
-        LOGGER.log(Level.INFO, "VentaResource getVentas: output: {0}", listVentas);
-        return listVentas;
     }
 
     /**
@@ -124,7 +125,7 @@ public class VentaResource {
     public void eliminarVenta(@PathParam("id") long id) {
         LOGGER.log(Level.INFO, "VentaResource deleteVenta: input: {0}", id);
         if (logica.getVenta(id) == null) {
-            throw new WebApplicationException("El recurso /venta/" + id + NO, 404);
+            throw new WebApplicationException("El recurso /venta/" + id + No_Existe, 404);
         }
         logica.deleteVenta(id);
         LOGGER.info("VentaResource deleteVenta: output: void");
